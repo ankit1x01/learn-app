@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-ui:      "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-reading: "Nunito", system-ui, sans-serif;
+  --font-data:    "Inter", system-ui, sans-serif;
+
+  /* ── Backgrounds ── */
+  --color-background:          #F7F6F3;
+  --color-surface:             #FFFFFF;
+  --color-surface-variant:     #F0EEE9;
+  --color-border:              #E8E5DF;
+
+  /* ── Brand ── */
+  --color-primary:             #2563EB;
+  --color-primary-container:   #EFF6FF;
+  --color-primary-border:      #BFDBFE;
+
+  /* ── Semantic ── */
+  --color-success:             #15803D;
+  --color-success-container:   #F0FDF4;
+  --color-warning:             #B45309;
+  --color-warning-container:   #FFFBEB;
+  --color-error:               #B91C1C;
+  --color-error-container:     #FEF2F2;
+  --color-excellence:          #6D28D9;
+  --color-excellence-container:#F5F3FF;
+
+  /* ── Text ── */
+  --color-on-surface:          #1C1917;
+  --color-on-surface-2:        #292524;
+  --color-on-surface-variant:  #78716C;
+  --color-on-surface-muted:    #A8A29E;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  body {
+    background-color: #F7F6F3;
+    color: #1C1917;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* ── Utilities ────────────────────────────────────────────────────────────── */
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Font utilities */
+  .font-ui      { font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
+  .font-reading { font-family: "Nunito", system-ui, sans-serif; }
+  .font-data    { font-family: "Inter", system-ui, sans-serif; }
+
+  /*
+   * .prose — apply to any block of lengthy reading content
+   * Uses Nunito: round letterforms, high x-height, humanist structure
+   * Reduces reading fatigue for 30+ minute study sessions
+   */
+  .prose {
+    font-family: "Nunito", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.78;
+    color: #292524;
+    letter-spacing: 0.008em;
+  }
+  .prose p + p { margin-top: 0.85em; }
+  .prose strong { font-weight: 700; color: #1C1917; }
+
+  /*
+   * .question-text — for MCQ / concept question stems
+   * Slightly larger, generous line-height — critical for comprehension
+   */
+  .question-text {
+    font-family: "Nunito", system-ui, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.82;
+    color: #1C1917;
+    letter-spacing: 0.005em;
+  }
+
+  /* Streak badge */
+  .streak-badge {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 12px;
+    font-weight: 700;
+    color: #B45309;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+
+  /* Subject color tokens */
+  .subject-physics   { color: #1D4ED8; background: #EFF6FF; }
+  .subject-chemistry { color: #6D28D9; background: #F5F3FF; }
+  .subject-biology   { color: #166534; background: #F0FDF4; }
+  .subject-cs        { color: #0E7490; background: #ECFEFF; }
+}
+
+/* ── Components ───────────────────────────────────────────────────────────── */
+
+@layer components {
+
+  /* ── Card: clean white, warm border, subtle shadow ── */
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E8E5DF;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  /* Legacy alias — maps card to new card style */
+  .card,
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E8E5DF;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  /* ── Primary button ── */
+  .btn-primary {
+    width: 100%;
+    padding: 15px 24px;
+    border-radius: 12px;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 120ms ease, transform 100ms ease, box-shadow 120ms ease;
+    background: #2563EB;
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.28);
+  }
+  .btn-primary:hover  { background: #1D4ED8; box-shadow: 0 4px 14px rgba(37,99,235,0.32); }
+  .btn-primary:active { transform: scale(0.98); box-shadow: none; }
+
+  /* ── Subject cards ── */
+  .subject-card {
+    transition: box-shadow 200ms ease, border-color 200ms ease;
+  }
+  .subject-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border-color: #BFDBFE;
+  }
+
+  /* ── Banner shimmer — removed, kept as no-op ── */
+  .banner-shimmer { position: relative; }
+}

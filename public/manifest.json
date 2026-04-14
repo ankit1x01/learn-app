@@ -1,0 +1,20 @@
+{
+  "name": "Smriti — Master What Matters",
+  "short_name": "Smriti",
+  "description": "AI-powered spaced repetition for serious exam prep. Master concepts, not just answers.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7F6F3",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "en-IN"
+}

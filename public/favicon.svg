@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Rounded square background -->
+  <rect width="64" height="64" rx="16" fill="#2563EB"/>
+
+  <!-- Neural spark / brain node icon -->
+  <!-- Central node -->
+  <circle cx="32" cy="32" r="5" fill="white"/>
+
+  <!-- Top connection -->
+  <line x1="32" y1="27" x2="32" y2="16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="32" cy="13" r="3.5" fill="white" opacity="0.85"/>
+
+  <!-- Bottom-left connection -->
+  <line x1="28.5" y1="35.5" x2="20" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="18" cy="51" r="3.5" fill="white" opacity="0.85"/>
+
+  <!-- Bottom-right connection -->
+  <line x1="35.5" y1="35.5" x2="44" y2="48" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="46" cy="51" r="3.5" fill="white" opacity="0.85"/>
+
+  <!-- Left arm -->
+  <line x1="27" y1="31" x2="15" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="12" cy="27" r="3" fill="white" opacity="0.6"/>
+
+  <!-- Right arm -->
+  <line x1="37" y1="31" x2="49" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="52" cy="27" r="3" fill="white" opacity="0.6"/>
+</svg>

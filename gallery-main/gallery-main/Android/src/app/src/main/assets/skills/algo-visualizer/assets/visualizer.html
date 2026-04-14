@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>Algorithm Visualizer</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0d1117;color:#e6edf3;font-family:'Courier New',monospace;min-height:100vh;padding:16px;user-select:none}
+    h1{font-size:16px;color:#58a6ff;text-align:center;margin-bottom:4px;text-transform:uppercase;letter-spacing:2px}
+    #subtitle{font-size:11px;color:#8b949e;text-align:center;margin-bottom:16px}
+    #canvas-wrap{background:#161b22;border-radius:12px;padding:12px;border:1px solid #30363d;position:relative}
+    canvas{display:block;width:100%;border-radius:8px}
+    #info{margin-top:10px;background:#161b22;border-radius:8px;padding:10px;border:1px solid #30363d;min-height:44px}
+    #step-text{font-size:12px;color:#f0883e;line-height:1.5}
+    #controls{display:flex;gap:8px;margin-top:12px;justify-content:center;flex-wrap:wrap}
+    button{background:#21262d;border:1px solid #30363d;color:#e6edf3;padding:8px 16px;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit}
+    button:active{background:#388bfd;border-color:#388bfd}
+    button.primary{background:#238636;border-color:#238636;font-weight:bold}
+    button.primary:active{background:#2ea043}
+    #stats{display:flex;gap:12px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+    .stat{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 12px;text-align:center}
+    .stat-val{font-size:18px;color:#58a6ff;font-weight:bold}
+    .stat-lbl{font-size:10px;color:#8b949e;margin-top:2px}
+    #legend{display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+    .leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#8b949e}
+    .leg-dot{width:12px;height:12px;border-radius:3px}
+    #progress{height:3px;background:#21262d;border-radius:2px;margin-top:10px}
+    #progress-bar{height:3px;background:#388bfd;border-radius:2px;width:0%;transition:width 0.1s}
+  </style>
+</head>
+<body>
+<h1 id="title">Algorithm Visualizer</h1>
+<div id="subtitle">Step-by-step animation</div>
+
+<div id="canvas-wrap">
+  <canvas id="c" height="180"></canvas>
+</div>
+
+<div id="info"><div id="step-text">Press Play to start the visualization...</div></div>
+
+<div id="stats">
+  <div class="stat"><div class="stat-val" id="stat-comp">0</div><div class="stat-lbl">Comparisons</div></div>
+  <div class="stat"><div class="stat-val" id="stat-swap">0</div><div class="stat-lbl">Swaps/Ops</div></div>
+  <div class="stat"><div class="stat-val" id="stat-step">0</div><div class="stat-lbl">Step</div></div>
+</div>
+
+<div id="legend">
+  <div class="leg"><div class="leg-dot" style="background:#58a6ff"></div>Default</div>
+  <div class="leg"><div class="leg-dot" style="background:#f0883e"></div>Comparing</div>
+  <div class="leg"><div class="leg-dot" style="background:#3fb950"></div>Sorted/Found</div>
+  <div class="leg"><div class="leg-dot" style="background:#ff7b72"></div>Swapping</div>
+  <div class="leg"><div class="leg-dot" style="background:#bc8cff"></div>Pivot</div>
+</div>
+
+<div id="progress"><div id="progress-bar"></div></div>
+
+<div id="controls">
+  <button id="btn-prev">◀ Prev</button>
+  <button class="primary" id="btn-play">▶ Play</button>
+  <button id="btn-next">Next ▶</button>
+  <button id="btn-reset">↺ Reset</button>
+  <button id="btn-speed">Speed: 1x</button>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const algo = params.get('algo') || 'bubble_sort';
+const arr = (params.get('arr') || '').split(',').map(Number).filter(n => !isNaN(n));
+const target = params.get('target') !== null ? parseInt(params.get('target')) : null;
+
+const COLORS = {
+  default: '#58a6ff',
+  compare: '#f0883e',
+  swap: '#ff7b72',
+  sorted: '#3fb950',
+  pivot: '#bc8cff',
+  found: '#3fb950',
+  searching: '#f0883e',
+  eliminated: '#30363d',
+};
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+document.getElementById('title').textContent = algo.replace(/_/g,' ').toUpperCase();
+
+// Generate all steps for the chosen algorithm
+function generateSteps(algorithm, inputArr) {
+  const steps = [];
+  const a = [...inputArr];
+
+  function snap(colors, message, extraHighlight) {
+    steps.push({ arr: [...a], colors: {...colors}, message, extraHighlight });
+  }
+
+  if (algorithm === 'bubble_sort') {
+    let comps = 0, swaps = 0;
+    const sorted = new Set();
+    for (let i = 0; i < a.length - 1; i++) {
+      for (let j = 0; j < a.length - 1 - i; j++) {
+        comps++;
+        snap({ [j]: 'compare', [j+1]: 'compare' }, `Comparing a[${j}]=${a[j]} and a[${j+1}]=${a[j+1]}. Comparisons: ${comps}`);
+        if (a[j] > a[j+1]) {
+          swaps++;
+          [a[j], a[j+1]] = [a[j+1], a[j]];
+          snap({ [j]: 'swap', [j+1]: 'swap' }, `Swap! a[${j}] and a[${j+1}]. Swaps: ${swaps}`);
+        }
+      }
+      sorted.add(a.length - 1 - i);
+      const sc = {};
+      sorted.forEach(k => sc[k] = 'sorted');
+      snap(sc, `Pass ${i+1} complete. Largest element bubbled to position ${a.length-1-i}.`);
+    }
+    sorted.add(0);
+    const sc = {};
+    sorted.forEach(k => sc[k] = 'sorted');
+    snap(sc, `Bubble Sort complete! ${comps} comparisons, ${swaps} swaps.`);
+
+  } else if (algorithm === 'selection_sort') {
+    let comps = 0, swaps = 0;
+    for (let i = 0; i < a.length - 1; i++) {
+      let minIdx = i;
+      snap({ [i]: 'pivot' }, `Finding minimum from index ${i}...`);
+      for (let j = i+1; j < a.length; j++) {
+        comps++;
+        snap({ [minIdx]: 'pivot', [j]: 'compare' }, `Comparing a[${j}]=${a[j]} with current min a[${minIdx}]=${a[minIdx]}. Comparisons: ${comps}`);
+        if (a[j] < a[minIdx]) minIdx = j;
+      }
+      if (minIdx !== i) {
+        swaps++;
+        [a[i], a[minIdx]] = [a[minIdx], a[i]];
+        snap({ [i]: 'swap', [minIdx]: 'swap' }, `Placing minimum at index ${i}. Swaps: ${swaps}`);
+      }
+      const sc = {};
+      for (let k = 0; k <= i; k++) sc[k] = 'sorted';
+      snap(sc, `Index ${i} is now in final position.`);
+    }
+    const sc = {};
+    for (let k = 0; k < a.length; k++) sc[k] = 'sorted';
+    snap(sc, `Selection Sort complete! ${comps} comparisons, ${swaps} swaps.`);
+
+  } else if (algorithm === 'insertion_sort') {
+    let comps = 0, swaps = 0;
+    snap({ [0]: 'sorted' }, 'Starting: first element is trivially sorted.');
+    for (let i = 1; i < a.length; i++) {
+      const key = a[i];
+      let j = i - 1;
+      snap({ [i]: 'compare' }, `Inserting a[${i}]=${key} into sorted portion.`);
+      while (j >= 0 && a[j] > key) {
+        comps++;
+        a[j+1] = a[j];
+        swaps++;
+        snap({ [j]: 'swap', [j+1]: 'swap' }, `Shifting a[${j}]=${a[j]} right. Comparisons: ${comps}`);
+        j--;
+      }
+      a[j+1] = key;
+      const sc = {};
+      for (let k = 0; k <= i; k++) sc[k] = 'sorted';
+      snap(sc, `a[${j+1}] = ${key} inserted correctly.`);
+    }
+    const sc = {};
+    for (let k = 0; k < a.length; k++) sc[k] = 'sorted';
+    snap(sc, `Insertion Sort complete! ${comps} comparisons, ${swaps} shifts.`);
+
+  } else if (algorithm === 'quick_sort') {
+    let comps = 0, swaps = 0;
+    function qs(low, high) {
+      if (low < high) {
+        const pivot = a[high];
+        snap({ [high]: 'pivot' }, `Pivot = ${pivot} at index ${high}.`);
+        let i = low - 1;
+        for (let j = low; j < high; j++) {
+          comps++;
+          snap({ [high]: 'pivot', [j]: 'compare' }, `Comparing a[${j}]=${a[j]} with pivot ${pivot}. Comparisons: ${comps}`);
+          if (a[j] <= pivot) {
+            i++;
+            swaps++;
+            [a[i], a[j]] = [a[j], a[i]];
+            snap({ [high]: 'pivot', [i]: 'swap', [j]: 'swap' }, `a[${i}] and a[${j}] swapped. Swaps: ${swaps}`);
+          }
+        }
+        swaps++;
+        [a[i+1], a[high]] = [a[high], a[i+1]];
+        snap({ [i+1]: 'sorted' }, `Pivot ${pivot} placed at final position ${i+1}.`);
+        qs(low, i);
+        qs(i+2, high);
+      }
+    }
+    qs(0, a.length - 1);
+    const sc = {};
+    for (let k = 0; k < a.length; k++) sc[k] = 'sorted';
+    snap(sc, `Quick Sort complete! ${comps} comparisons, ${swaps} swaps.`);
+
+  } else if (algorithm === 'merge_sort') {
+    let comps = 0, merges = 0;
+    function ms(arr, left) {
+      if (arr.length <= 1) return arr;
+      const mid = Math.floor(arr.length / 2);
+      const L = ms(arr.slice(0, mid), left);
+      const R = ms(arr.slice(mid), left + mid);
+      const merged = [];
+      let i = 0, j = 0;
+      snap({ [left+i]: 'compare', [left+mid+j]: 'compare' }, `Merging subarrays of size ${L.length} and ${R.length}.`);
+      while (i < L.length && j < R.length) {
+        comps++;
+        if (L[i] <= R[j]) { merged.push(L[i++]); }
+        else { merged.push(R[j++]); }
+        merges++;
+      }
+      while (i < L.length) merged.push(L[i++]);
+      while (j < R.length) merged.push(R[j++]);
+      for (let k = 0; k < merged.length; k++) a[left + k] = merged[k];
+      const sc = {};
+      for (let k = 0; k < merged.length; k++) sc[left+k] = 'swap';
+      snap(sc, `Merged: [${merged.join(', ')}]. Total merges: ${merges}`);
+      return merged;
+    }
+    ms([...a], 0);
+    const sc = {};
+    for (let k = 0; k < a.length; k++) sc[k] = 'sorted';
+    snap(sc, `Merge Sort complete! ${comps} comparisons, ${merges} merge ops.`);
+
+  } else if (algorithm === 'binary_search') {
+    const sorted = [...a].sort((x,y) => x-y);
+    for (let k = 0; k < sorted.length; k++) a[k] = sorted[k];
+    const tgt = target !== null ? target : sorted[Math.floor(sorted.length/2)];
+    document.getElementById('subtitle').textContent = `Searching for ${tgt} in sorted array`;
+    let low = 0, high = a.length - 1, comps = 0, found = false;
+    snap({}, `Array sorted. Searching for target = ${tgt}.`);
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2);
+      comps++;
+      const sc = {};
+      for (let k = 0; k < low; k++) sc[k] = 'eliminated';
+      for (let k = high+1; k < a.length; k++) sc[k] = 'eliminated';
+      sc[mid] = 'compare';
+      snap(sc, `low=${low}, high=${high}, mid=${mid}. Checking a[${mid}]=${a[mid]}. Comparisons: ${comps}`);
+      if (a[mid] === tgt) {
+        const fc = {};
+        for (let k = 0; k < a.length; k++) fc[k] = k === mid ? 'found' : 'eliminated';
+        snap(fc, `Found ${tgt} at index ${mid}! ${comps} comparisons. Time: O(log n)`);
+        found = true;
+        break;
+      } else if (a[mid] < tgt) {
+        low = mid + 1;
+        snap(sc, `${a[mid]} < ${tgt}, search right half.`);
+      } else {
+        high = mid - 1;
+        snap(sc, `${a[mid]} > ${tgt}, search left half.`);
+      }
+    }
+    if (!found) {
+      snap({}, `${tgt} not found in array. ${comps} comparisons.`);
+    }
+  }
+
+  return steps;
+}
+
+const steps = generateSteps(algo, arr);
+let currentStep = 0;
+let playing = false;
+let playInterval = null;
+let speeds = [1, 2, 0.5];
+let speedIdx = 0;
+let comparisons = 0, swapOps = 0;
+
+function draw(stepIdx) {
+  const step = steps[stepIdx];
+  if (!step) return;
+
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const W = rect.width - 24;
+  const H = 180;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  ctx.clearRect(0, 0, W, H);
+
+  const n = step.arr.length;
+  const maxVal = Math.max(...step.arr, 1);
+  const barW = Math.floor((W - 8) / n) - 2;
+  const gap = Math.floor((W - 8 - barW * n) / (n + 1));
+
+  step.arr.forEach((val, i) => {
+    const x = gap + i * (barW + gap) + 4;
+    const barH = Math.max(6, Math.floor((val / maxVal) * (H - 40)));
+    const y = H - barH - 20;
+    const color = COLORS[step.colors[i]] || COLORS.default;
+
+    // Bar
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.roundRect(x, y, barW, barH, 3);
+    ctx.fill();
+
+    // Value label
+    ctx.fillStyle = '#e6edf3';
+    ctx.font = `bold ${barW > 20 ? 11 : 9}px Courier New`;
+    ctx.textAlign = 'center';
+    ctx.fillText(val, x + barW/2, y - 4);
+
+    // Index label
+    ctx.fillStyle = '#8b949e';
+    ctx.font = `9px Courier New`;
+    ctx.fillText(i, x + barW/2, H - 4);
+  });
+
+  document.getElementById('step-text').textContent = step.message;
+  document.getElementById('stat-step').textContent = `${stepIdx+1}/${steps.length}`;
+  document.getElementById('progress-bar').style.width = `${((stepIdx+1)/steps.length)*100}%`;
+
+  // Count stats
+  let c = 0, s = 0;
+  for (let k = 0; k <= stepIdx; k++) {
+    const msg = steps[k].message;
+    if (msg.includes('Comparison')) {
+      const m = msg.match(/Comparisons: (\d+)/);
+      if (m) c = parseInt(m[1]);
+    }
+    if (msg.includes('Swap') || msg.includes('swap') || msg.includes('merges') || msg.includes('merge ops')) {
+      const m = msg.match(/(?:Swaps|shifts|merges|merge ops): (\d+)/);
+      if (m) s = parseInt(m[1]);
+    }
+  }
+  document.getElementById('stat-comp').textContent = c;
+  document.getElementById('stat-swap').textContent = s;
+}
+
+function stopPlay() {
+  clearInterval(playInterval);
+  playing = false;
+  document.getElementById('btn-play').textContent = '▶ Play';
+}
+
+function startPlay() {
+  playing = true;
+  document.getElementById('btn-play').textContent = '⏸ Pause';
+  playInterval = setInterval(() => {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      draw(currentStep);
+    } else {
+      stopPlay();
+    }
+  }, 600 / speeds[speedIdx]);
+}
+
+document.getElementById('btn-play').addEventListener('click', () => {
+  if (playing) stopPlay();
+  else {
+    if (currentStep >= steps.length - 1) currentStep = 0;
+    startPlay();
+  }
+});
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  stopPlay();
+  if (currentStep < steps.length - 1) { currentStep++; draw(currentStep); }
+});
+
+document.getElementById('btn-prev').addEventListener('click', () => {
+  stopPlay();
+  if (currentStep > 0) { currentStep--; draw(currentStep); }
+});
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  stopPlay();
+  currentStep = 0;
+  draw(currentStep);
+});
+
+document.getElementById('btn-speed').addEventListener('click', () => {
+  speedIdx = (speedIdx + 1) % speeds.length;
+  const labels = ['1x', '2x', '0.5x'];
+  document.getElementById('btn-speed').textContent = `Speed: ${labels[speedIdx]}`;
+  if (playing) { stopPlay(); startPlay(); }
+});
+
+draw(0);
+</script>
+</body>
+</html>

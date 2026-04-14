@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Big O Reference</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0d1117;color:#e6edf3;font-family:-apple-system,sans-serif;padding:16px;font-size:13px}
+    h1{color:#58a6ff;font-size:18px;margin-bottom:4px}
+    .sub{color:#8b949e;font-size:11px;margin-bottom:16px}
+    .section{margin-bottom:20px}
+    .section-title{font-size:13px;font-weight:bold;color:#f0883e;margin-bottom:8px;padding:4px 8px;background:#161b22;border-left:3px solid #f0883e;border-radius:0 4px 4px 0}
+    table{width:100%;border-collapse:collapse;font-size:11px}
+    th{background:#161b22;color:#8b949e;padding:6px 8px;text-align:left;font-weight:600;border-bottom:1px solid #30363d}
+    td{padding:6px 8px;border-bottom:1px solid #21262d;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    .name{color:#e6edf3;font-weight:500}
+    .O1{color:#3fb950;font-weight:bold}
+    .Olog{color:#3fb950}
+    .On{color:#f0883e}
+    .Onlog{color:#f0883e}
+    .On2{color:#ff7b72}
+    .O2n{color:#ff7b72;font-weight:bold}
+    .filter-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .chip{background:#21262d;border:1px solid #30363d;color:#8b949e;padding:4px 10px;border-radius:20px;font-size:11px;cursor:pointer}
+    .chip.active{background:#388bfd;border-color:#388bfd;color:#fff}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .leg{display:flex;align-items:center;gap:4px;font-size:10px;color:#8b949e}
+    .leg-dot{width:8px;height:8px;border-radius:50%}
+  </style>
+</head>
+<body>
+<h1>Big O Cheat Sheet</h1>
+<div class="sub">Time &amp; Space Complexity Reference</div>
+
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#3fb950"></div>O(1)/O(log n) — Excellent</div>
+  <div class="leg"><div class="leg-dot" style="background:#f0883e"></div>O(n)/O(n log n) — Good</div>
+  <div class="leg"><div class="leg-dot" style="background:#ff7b72"></div>O(n²)+ — Avoid</div>
+</div>
+
+<div class="filter-wrap" id="filters"></div>
+<div id="content"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const initCat = params.get('cat') || 'all';
+
+const DATA = {
+  sorting: {
+    title: 'Sorting Algorithms',
+    cols: ['Algorithm', 'Best', 'Average', 'Worst', 'Space'],
+    rows: [
+      ['Bubble Sort',     'O(n)',      'O(n²)',     'O(n²)',     'O(1)'],
+      ['Selection Sort',  'O(n²)',     'O(n²)',     'O(n²)',     'O(1)'],
+      ['Insertion Sort',  'O(n)',      'O(n²)',     'O(n²)',     'O(1)'],
+      ['Merge Sort',      'O(n log n)','O(n log n)','O(n log n)','O(n)'],
+      ['Quick Sort',      'O(n log n)','O(n log n)','O(n²)',     'O(log n)'],
+      ['Heap Sort',       'O(n log n)','O(n log n)','O(n log n)','O(1)'],
+      ['Counting Sort',   'O(n+k)',    'O(n+k)',    'O(n+k)',    'O(k)'],
+      ['Radix Sort',      'O(nk)',     'O(nk)',     'O(nk)',     'O(n+k)'],
+    ],
+  },
+  searching: {
+    title: 'Searching Algorithms',
+    cols: ['Algorithm', 'Best', 'Average', 'Worst', 'Space'],
+    rows: [
+      ['Linear Search',  'O(1)',     'O(n)',    'O(n)',    'O(1)'],
+      ['Binary Search',  'O(1)',     'O(log n)','O(log n)','O(1)'],
+      ['BFS',            'O(1)',     'O(V+E)',  'O(V+E)', 'O(V)'],
+      ['DFS',            'O(1)',     'O(V+E)',  'O(V+E)', 'O(V)'],
+    ],
+  },
+  array: {
+    title: 'Array / List',
+    cols: ['Operation', 'Average', 'Worst', 'Space'],
+    rows: [
+      ['Access',    'O(1)',   'O(1)',   'O(n)'],
+      ['Search',    'O(n)',   'O(n)',   'O(n)'],
+      ['Insert',    'O(n)',   'O(n)',   'O(n)'],
+      ['Append',    'O(1)*', 'O(n)',   'O(n)'],
+      ['Delete',    'O(n)',   'O(n)',   'O(n)'],
+    ],
+  },
+  linked_list: {
+    title: 'Linked List',
+    cols: ['Operation', 'Average', 'Worst', 'Space'],
+    rows: [
+      ['Access',           'O(n)',  'O(n)',  'O(n)'],
+      ['Search',           'O(n)',  'O(n)',  'O(n)'],
+      ['Insert (head)',    'O(1)',  'O(1)',  'O(n)'],
+      ['Insert (tail)',    'O(n)',  'O(n)',  'O(n)'],
+      ['Delete (head)',    'O(1)',  'O(1)',  'O(n)'],
+      ['Delete (search)',  'O(n)',  'O(n)',  'O(n)'],
+    ],
+  },
+  tree: {
+    title: 'Trees',
+    cols: ['Structure/Op', 'Average', 'Worst', 'Space'],
+    rows: [
+      ['BST Search',        'O(log n)', 'O(n)',     'O(n)'],
+      ['BST Insert',        'O(log n)', 'O(n)',     'O(n)'],
+      ['BST Delete',        'O(log n)', 'O(n)',     'O(n)'],
+      ['AVL Search',        'O(log n)', 'O(log n)', 'O(n)'],
+      ['AVL Insert',        'O(log n)', 'O(log n)', 'O(n)'],
+      ['Red-Black Search',  'O(log n)', 'O(log n)', 'O(n)'],
+      ['Trie Search',       'O(m)',     'O(m)',     'O(ALPHABET*n)'],
+      ['Trie Insert',       'O(m)',     'O(m)',     'O(ALPHABET*n)'],
+    ],
+  },
+  graph: {
+    title: 'Graph Algorithms',
+    cols: ['Algorithm', 'Time', 'Space'],
+    rows: [
+      ['BFS',               'O(V+E)', 'O(V)'],
+      ['DFS',               'O(V+E)', 'O(V)'],
+      ["Dijkstra's",        'O((V+E) log V)', 'O(V)'],
+      ['Bellman-Ford',      'O(VE)',   'O(V)'],
+      ['Floyd-Warshall',    'O(V³)',   'O(V²)'],
+      ["Kruskal's MST",     'O(E log E)', 'O(V)'],
+      ["Prim's MST",        'O((V+E) log V)', 'O(V)'],
+      ['Topological Sort',  'O(V+E)', 'O(V)'],
+    ],
+  },
+  heap: {
+    title: 'Heap / Priority Queue',
+    cols: ['Operation', 'Time', 'Space'],
+    rows: [
+      ['Peek (min/max)', 'O(1)',     'O(n)'],
+      ['Push',          'O(log n)', 'O(n)'],
+      ['Pop',           'O(log n)', 'O(n)'],
+      ['Heapify',       'O(n)',     'O(n)'],
+      ['Search',        'O(n)',     'O(n)'],
+    ],
+  },
+  hash: {
+    title: 'Hash Map / Set',
+    cols: ['Operation', 'Average', 'Worst', 'Space'],
+    rows: [
+      ['Search',  'O(1)', 'O(n)', 'O(n)'],
+      ['Insert',  'O(1)', 'O(n)', 'O(n)'],
+      ['Delete',  'O(1)', 'O(n)', 'O(n)'],
+    ],
+  },
+};
+
+const CATS = Object.keys(DATA);
+const ALL = ['all', ...CATS];
+
+function colorClass(val) {
+  if (val === 'O(1)' || val.includes('log n') && !val.includes('n log')) return 'O1';
+  if (val === 'O(log n)' || val.includes('O(m)')) return 'Olog';
+  if (val.includes('n log') || val.includes('n+') || val.includes('nk') || val === 'O(n)') return 'On';
+  if (val.includes('n²') || val.includes('VE') || val.includes('V³')) return 'On2';
+  if (val.includes('2^') || val.includes('n!')) return 'O2n';
+  return 'On';
+}
+
+function renderSection(key) {
+  const d = DATA[key];
+  let html = `<div class="section"><div class="section-title">${d.title}</div><table>`;
+  html += '<tr>' + d.cols.map(c => `<th>${c}</th>`).join('') + '</tr>';
+  d.rows.forEach(row => {
+    html += '<tr>';
+    row.forEach((cell, i) => {
+      const cls = i === 0 ? 'name' : colorClass(cell);
+      html += `<td class="${cls}">${cell}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</table></div>';
+  return html;
+}
+
+function render(cat) {
+  const keys = cat === 'all' ? CATS : [cat];
+  document.getElementById('content').innerHTML = keys.map(renderSection).join('');
+  document.querySelectorAll('.chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.cat === cat);
+  });
+}
+
+// Filters
+const fWrap = document.getElementById('filters');
+ALL.forEach(cat => {
+  const chip = document.createElement('div');
+  chip.className = 'chip' + (cat === initCat ? ' active' : '');
+  chip.dataset.cat = cat;
+  chip.textContent = cat.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  chip.addEventListener('click', () => render(cat));
+  fWrap.appendChild(chip);
+});
+
+render(initCat);
+</script>
+</body>
+</html>
