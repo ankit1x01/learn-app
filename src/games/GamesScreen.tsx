@@ -1,11 +1,11 @@
 // src/games/GamesScreen.tsx
 import { useState } from 'react'
-import { Shuffle, Clock, Link2, Sword, ChevronLeft } from 'lucide-react'
+import { Shuffle, Clock, Link2, Sword, ChevronLeft, Hand, Brain, Headphones, Target } from 'lucide-react'
 import { GameRunner } from './GameRunner'
 import { GameConfig } from './types'
-import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout } from './data/dsa-dummy'
+import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout, dsaBalloonTap, dsaRetention, dsaAudioLecture, dsaBubbleMatch } from './data/dsa-dummy'
 
-type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout'
+type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match'
 
 interface GameMeta {
   id: Tab
@@ -54,13 +54,53 @@ const GAMES: GameMeta[] = [
     textDark: '#7C2D12',
     foldColor: 'rgba(0,0,0,0.13)',
   },
+  {
+    id: 'balloon-tap',
+    label: 'Balloons',
+    tagline: 'Pop the right word',
+    icon: Hand,
+    bg: '#A78BFA',
+    textDark: '#1E1B4B',
+    foldColor: 'rgba(0,0,0,0.13)',
+  },
+  {
+    id: 'retention',
+    label: 'Memory',
+    tagline: 'What did you see?',
+    icon: Brain,
+    bg: '#2DD4BF',
+    textDark: '#134E4A',
+    foldColor: 'rgba(0,0,0,0.12)',
+  },
+  {
+    id: 'audio-lecture',
+    label: 'Lecture',
+    tagline: 'Listen & recall',
+    icon: Headphones,
+    bg: '#6366F1',
+    textDark: '#1E1B4B',
+    foldColor: 'rgba(0,0,0,0.13)',
+  },
+  {
+    id: 'bubble-match',
+    label: 'Bubble Match',
+    tagline: 'Drag & sort facts',
+    icon: Target,
+    bg: '#F97316',
+    textDark: '#431407',
+    foldColor: 'rgba(0,0,0,0.13)',
+  },
 ]
 
 const CONFIGS: Record<Tab, GameConfig> = {
-  'this-or-that': dsaThisOrThat,
-  chrono: dsaChrono,
-  links: dsaLinks,
-  knockout: dsaKnockout,
+  'this-or-that':  dsaThisOrThat,
+  chrono:          dsaChrono,
+  links:           dsaLinks,
+  knockout:        dsaKnockout,
+  'balloon-tap':   dsaBalloonTap,
+  retention:       dsaRetention,
+  'audio-lecture': dsaAudioLecture,
+  'bubble-match':  dsaBubbleMatch,
 }
 
 interface Props {

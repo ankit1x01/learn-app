@@ -52,8 +52,51 @@ export interface KnockoutConfig extends GameBase {
   answers: Record<string, string>
 }
 
+export interface BalloonTapConfig extends GameBase {
+  type: 'balloon-tap'
+  pairs: Array<{ id: number; a: string; b: string }>
+}
+
+export interface RetentionConfig extends GameBase {
+  type: 'retention'
+  pool: Array<{ id: string; label: string }>
+}
+
+export interface BubbleMatchConfig extends GameBase {
+  type: 'bubble-match'
+  entities: Array<{
+    id: string
+    name: string
+    color: string          // CSS hsl color
+    facts: string[]        // correct fact texts
+  }>
+}
+
+export interface AudioLectureConfig extends GameBase {
+  type: 'audio-lecture'
+  title: string
+  concepts: [string, string, string]
+  passage: string         // full text TTS reads aloud
+  displayPassage: string  // same text with ___ where blanks are; order of ___ maps 1:1 to blanks array by index
+  blanks: Array<{
+    id: string
+    answer: string        // exact word/phrase that fills this blank
+  }>
+  chips: string[]         // draggable chips (answers + 2 distractors); shuffled at runtime in the component
+  questions: Array<{
+    id: string
+    prompt: string
+    options: [string, string, string, string]
+    answer: string
+  }>
+}
+
 export type GameConfig =
   | ThisOrThatConfig
   | ChronoConfig
   | LinksConfig
   | KnockoutConfig
+  | BalloonTapConfig
+  | RetentionConfig
+  | AudioLectureConfig
+  | BubbleMatchConfig

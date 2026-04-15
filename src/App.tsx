@@ -32,6 +32,14 @@ import { updateStabilityWithPredictionError } from './core/fsrs';
 import type { Screen } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 
+// --- Capacitor Plugins ---
+import { StatusBar as CapStatusBar, Style } from '@capacitor/status-bar';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { Keyboard } from '@capacitor/keyboard';
+import { Network } from '@capacitor/network';
+import { App as CapApp } from '@capacitor/app';
+
 // ─── Main App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -41,6 +49,44 @@ export default function App() {
   const [qIndex, setQIndex] = useState(0);
   const [courseDay, setCourseDay] = useState(1);
   const { concepts, onUpdateConcept, dbReady } = useConceptStore(CONFIG.concepts);
+
+  // Initialize Capacitor Plugins
+  React.useEffect(() => {
+    const initNativeFeatures = async () => {
+      try {
+        // Native Status Bar to match app theme
+        await CapStatusBar.setStyle({ style: Style.Light });
+        await CapStatusBar.setBackgroundColor({ color: '#F7F6F3' });
+
+        // Lock App to Portrait to prevent exam/game layouts from breaking
+        await ScreenOrientation.lock({ orientation: 'portrait-primary' as any }).catch(() => {});
+
+        // Hide Splash Screen once React is ready
+        await SplashScreen.hide();
+
+        // Keyboard tuning (prevent input overlaps)
+        await Keyboard.setScroll({ isDisabled: false });
+        
+        // Listeners for App lifecycles
+        await CapApp.addListener('appStateChange', ({ isActive }) => {
+           console.log('App is active: ', isActive);
+        });
+
+        await Network.addListener('networkStatusChange', status => {
+           console.log('Network connected: ', status.connected);
+        });
+      } catch (err) {
+        console.warn("Capacitor plugins not available (likely running in web).", err);
+      }
+    };
+
+    initNativeFeatures();
+
+    return () => {
+      CapApp.removeAllListeners().catch(() => {});
+      Network.removeAllListeners().catch(() => {});
+    };
+  }, []);
 
   const liveGlobalStats = useMemo(() => computeGlobalStats(concepts), [concepts]);
 
@@ -74,7 +120,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F7F6F3] selection:bg-[#BFDBFE] selection:text-[#1D4ED8] overflow-x-hidden">
-      <StatusBar />
 
       <AnimatePresence mode="wait">
         <motion.div

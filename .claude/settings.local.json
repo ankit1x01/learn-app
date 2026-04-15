@@ -59,7 +59,20 @@
       "Bash(cp src/syllabus/dsa/config.ts src/data/dsa/config.ts)",
       "Bash(cp src/syllabus/dsa/concepts.ts src/data/dsa/concepts.ts)",
       "Bash(cp src/syllabus/itplacement/config.ts src/data/itplacement/config.ts)",
-      "Bash(node scripts/fix-theme.mjs)"
+      "Bash(node scripts/fix-theme.mjs)",
+      "Bash(grep -v \"//\")",
+      "Read(//c/Users/Ankit/Desktop/**)",
+      "WebSearch",
+      "WebFetch(domain:screensdesign.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:uiland.design)",
+      "WebFetch(domain:www.commonsense.org)",
+      "WebFetch(domain:support.elevateapp.com)",
+      "WebFetch(domain:elevateapp.com)",
+      "WebFetch(domain:themindcompany.com)",
+      "WebFetch(domain:www.makeuseof.com)",
+      "WebFetch(domain:www.iphonelife.com)",
+      "WebFetch(domain:www.techradar.com)"
     ]
   }
 }

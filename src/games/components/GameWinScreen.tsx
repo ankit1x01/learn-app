@@ -1,5 +1,7 @@
 // src/games/components/GameWinScreen.tsx
-import { Trophy, RotateCcw } from 'lucide-react'
+import { Trophy, RotateCcw, Share2 } from 'lucide-react'
+import { Share } from '@capacitor/share'
+import { Haptics, ImpactStyle } from '@capacitor/haptics'
 import { GameResult } from '../types'
 
 interface Props {
@@ -8,8 +10,24 @@ interface Props {
 }
 
 export function GameWinScreen({ result, onPlayAgain }: Props) {
+  const handleShare = async () => {
+    Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
+    await Share.share({
+      title: 'CHITTA Exam Challenge',
+      text: `I just scored ${result.score}/100 in the ${result.gameType} exam minigame with only ${result.guesses} guesses! Can you beat my score??`,
+      url: 'https://chitta.app/',
+      dialogTitle: 'Share your High Score',
+    }).catch(() => {});
+  };
+
   return (
     <div className="flex flex-col items-center justify-center flex-1 px-6 py-10 gap-6">
+      <div className="flex w-full justify-end">
+        <button onClick={handleShare} className="p-3 bg-[#F0FDF4] text-[#15803D] rounded-full active:scale-95 transition-transform" aria-label="Share Score">
+          <Share2 size={24} />
+        </button>
+      </div>
+
       <div className="w-16 h-16 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] flex items-center justify-center">
         <Trophy size={28} className="text-[#15803D]" />
       </div>

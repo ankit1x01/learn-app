@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Toast } from '@capacitor/toast';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { RATINGS, QUEUE_LABELS, subjectColor, subjectBg, subjectEmoji } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
 import { SharePromptSheet } from '../components/SharePromptSheet';
@@ -116,6 +118,13 @@ export const LiveSession = ({
         lastStudiedAt: Date.now(), metacogAccuracy: newMetacogAccuracy,
         overconfidenceFlag: newOverconfidenceFlag, predictionErrorHistory: newPredictionErrorHistory,
       });
+      
+      if (wasCorrect) {
+        Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
+        Toast.show({ text: `Concepts Updated! Mastered +${Math.round(newStability)} days` }).catch(() => {});
+      }
+    } else if (selectedRating && selectedRating.outcome !== 'correct' && confidence !== null) {
+      Haptics.notification({ type: 'WARNING' as any }).catch(() => {});
     }
 
     const next = qIndex + 1;

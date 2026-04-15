@@ -1,5 +1,83 @@
 // src/games/data/dsa-dummy.ts
-import { ThisOrThatConfig, ChronoConfig, LinksConfig, KnockoutConfig } from '../types'
+import { ThisOrThatConfig, ChronoConfig, LinksConfig, KnockoutConfig, BalloonTapConfig, RetentionConfig, AudioLectureConfig, BubbleMatchConfig } from '../types'
+
+export const dsaAudioLecture: AudioLectureConfig = {
+  type: 'audio-lecture',
+  theme: 'Sorting Algorithm History',
+  subject: 'DSA',
+  title: 'History of Sorting',
+  concepts: ['Merge Sort', 'Quicksort', 'Timsort'],
+  passage:
+    'In 1945, John von Neumann invented Merge Sort as part of his work on early computers. ' +
+    'In 1959, Tony Hoare invented Quicksort at age 25 — it remains the fastest sorting algorithm in practice for most datasets. ' +
+    'In 2002, Tim Peters created Timsort, a hybrid of Merge Sort and Insertion Sort, now used in Python and Java.',
+  displayPassage:
+    'In ___, John von Neumann invented ___ as part of his work on early computers. ' +
+    'In 1959, Tony Hoare invented Quicksort at age 25 — it remains the fastest sorting algorithm in practice for most datasets. ' +
+    'In 2002, Tim Peters created ___, a hybrid of Merge Sort and Insertion Sort, now used in Python and Java.',
+  blanks: [
+    { id: 'b1', answer: '1945' },
+    { id: 'b2', answer: 'Merge Sort' },
+    { id: 'b3', answer: 'Timsort' },
+  ],
+  chips: ['1945', 'Merge Sort', 'Timsort', '1964', 'Heapsort'],
+  questions: [
+    {
+      id: 'q1',
+      prompt: 'Who invented Quicksort?',
+      options: ['Tony Hoare', 'Von Neumann', 'Tim Peters', 'J.W.J. Williams'],
+      answer: 'Tony Hoare',
+    },
+    {
+      id: 'q2',
+      prompt: 'Which language uses Timsort natively?',
+      options: ['Python', 'C', 'Rust', 'Go'],
+      answer: 'Python',
+    },
+    {
+      id: 'q3',
+      prompt: 'What year was Merge Sort invented?',
+      options: ['1945', '1959', '1964', '2002'],
+      answer: '1945',
+    },
+  ],
+}
+
+export const dsaBalloonTap: BalloonTapConfig = {
+  type: 'balloon-tap',
+  theme: 'DSA Concept Pairs',
+  subject: 'DSA',
+  pairs: [
+    { id: 1, a: 'Stack',    b: 'LIFO'       },
+    { id: 2, a: 'Queue',    b: 'FIFO'       },
+    { id: 3, a: 'BFS',      b: 'Level-order'},
+    { id: 4, a: 'DFS',      b: 'Depth-first'},
+    { id: 5, a: 'O(1)',     b: 'Constant'   },
+    { id: 6, a: 'O(n)',     b: 'Linear'     },
+    { id: 7, a: 'Heap',     b: 'Priority Q' },
+    { id: 8, a: 'HashMap',  b: 'O(1) lookup'},
+  ],
+}
+
+export const dsaRetention: RetentionConfig = {
+  type: 'retention',
+  theme: 'DSA Memory Training',
+  subject: 'DSA',
+  pool: [
+    { id: 'r1',  label: 'Stack'     },
+    { id: 'r2',  label: 'Queue'     },
+    { id: 'r3',  label: 'O(1)'      },
+    { id: 'r4',  label: 'O(n)'      },
+    { id: 'r5',  label: 'BFS'       },
+    { id: 'r6',  label: 'DFS'       },
+    { id: 'r7',  label: 'Heap'      },
+    { id: 'r8',  label: 'Graph'     },
+    { id: 'r9',  label: 'Tree'      },
+    { id: 'r10', label: 'Hash Map'  },
+    { id: 'r11', label: 'Binary'    },
+    { id: 'r12', label: 'Recursion' },
+  ],
+}
 
 export const dsaThisOrThat: ThisOrThatConfig = {
   type: 'this-or-that',
@@ -143,4 +221,48 @@ export const dsaKnockout: KnockoutConfig = {
     'quick_vs_bfs':        'quick',
     'binary_vs_quick':     'binary',
   },
+}
+
+export const dsaBubbleMatch: BubbleMatchConfig = {
+  type: 'bubble-match',
+  theme: 'Data Structure Fundamentals',
+  subject: 'DSA',
+  entities: [
+    {
+      id: 'stack',
+      name: 'STACK',
+      color: 'hsl(280, 60%, 78%)',     // soft purple
+      facts: [
+        'LIFO order',
+        'push & pop',
+        'DFS uses it',
+        'call frames',
+        'browser back',
+      ],
+    },
+    {
+      id: 'queue',
+      name: 'QUEUE',
+      color: 'hsl(210, 65%, 75%)',     // soft blue
+      facts: [
+        'FIFO order',
+        'enqueue / dequeue',
+        'BFS uses it',
+        'printer spool',
+        'O(1) insert',
+      ],
+    },
+    {
+      id: 'heap',
+      name: 'HEAP',
+      color: 'hsl(340, 65%, 75%)',     // soft pink
+      facts: [
+        'root = min/max',
+        'priority queue',
+        'O(log n) insert',
+        "Dijkstra's algo",
+        'heapify O(n)',
+      ],
+    },
+  ],
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { motion, AnimatePresence, Variants } from "motion/react";
-import { cn } from "@/lib/utils";
 
 export interface CognitiveItemProps {
   /** Uniquely identifies the item for AnimatePresence/layout */
@@ -71,12 +70,9 @@ export const CognitiveItem: React.FC<CognitiveItemProps> = ({
             y: 6, // Move down to compress the shadow
             boxShadow: `0 0px 0 ${shadowColor}`, // Flatten the shadow
           } : {}}
-          className={cn(
-            "relative flex items-center justify-center select-none outline-none",
-            "rounded-2xl border-2 border-white/20 px-6 py-4 font-bold text-white shadow-sm",
-            disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
-            className
-          )}
+          className={`relative flex items-center justify-center select-none outline-none rounded-2xl border-2 border-white/20 px-6 py-4 font-bold text-white shadow-sm ${
+            disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+          } ${className || ""}`}
           style={{
             backgroundColor: color,
             // Solid, unblurred bottom drop shadow creates the 3D thickness

@@ -4,7 +4,9 @@ import { isDue } from '../core/fsrs';
 import { CONFIG, totalConcepts } from '../lib/config';
 import type { Screen } from '../types';
 import type { SessionItem, SubjectStats } from '../core/types';
-import { TrendingUp, Calendar, ArrowRight, CheckCircle2, Award, Flame, BarChart2, GitBranch, Layers, Link2, Zap } from 'lucide-react';
+import { TrendingUp, Calendar, ArrowRight, CheckCircle2, Award, Flame, BarChart2, GitBranch, Layers, Link2, Zap, Share2 } from 'lucide-react';
+import { Share } from '@capacitor/share';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 const SUBJECT_ICONS: Record<string, React.ElementType> = {
   'Foundations':               Layers,
@@ -38,8 +40,25 @@ export const SessionComplete = ({
 
   const totalAutomatic = Object.values(globalStats).reduce((s, x) => s + x.auto, 0);
 
+  const handleShare = async () => {
+    Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
+    await Share.share({
+      title: 'CHITTA Spaced Repetition',
+      text: `I just completed a hardcore learning session! I now have ${totalAutomatic} concepts fully locked into my automatic long-term memory for NEET 2026. Join me on CHITTA!`,
+      url: 'https://chitta.app/',
+    }).catch(() => {});
+  };
+
   return (
     <div className="pt-14 pb-28 px-4 max-w-md mx-auto">
+
+      {/* ── Top Nav Actions ── */}
+      <div className="flex w-full justify-between items-center mb-6">
+        <h2 className="text-[#1C1917] font-bold text-[18px]" style={{ fontFamily: JKS }}>Overview</h2>
+        <button onClick={handleShare} className="p-2.5 bg-[#E8E5DF] text-[#44403C] rounded-full active:scale-95 transition-transform" aria-label="Share Overall Progress">
+          <Share2 size={18} />
+        </button>
+      </div>
 
       {/* ── Hero card ── */}
       <motion.div

@@ -1,7 +1,8 @@
 // src/games/components/ThisOrThat.tsx
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo, useCallback, useMemo } from "react";
 import { motion, useAnimation, PanInfo } from "motion/react";
-import { CheckCircle, XCircle, HelpCircle } from "lucide-react";
+import { ArrowLeft, Info, Layers } from "lucide-react";
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { ThisOrThatConfig, GameResult } from "../types";
 import { GameWinScreen } from "./GameWinScreen";
 
@@ -11,15 +12,15 @@ interface Props {
 
 type Assignment = "A" | "B" | null;
 
-// Vivid card palette — each card gets a unique colour (Learned-app style)
+// Vivid card palette — each card gets a unique colour
 const CARD_PALETTE = [
   "#4ADE80", // green
-  "#FB923C", // orange
-  "#A78BFA", // purple
   "#FCD34D", // yellow
-  "#2DD4BF", // teal
   "#60A5FA", // blue
   "#F472B6", // pink
+  "#FB923C", // orange
+  "#A78BFA", // purple
+  "#2DD4BF", // teal
   "#A3E635", // lime
   "#F87171", // coral
   "#818CF8", // indigo
@@ -41,10 +42,18 @@ function calcScore(cards: CardState[], guesses: number) {
   return Math.max(0, base - penalty);
 }
 
-function DraggableCard({ card, assign, configA, configB }: any) {
+const DraggableCard = memo(function DraggableCard({ card, assign, isTop, depth, total }: any) {
   const controls = useAnimation();
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Stack styling constraints
+  const scale = isTop ? 1 : 1 - depth * 0.04;
+  const translateY = isTop ? 0 : depth * -12;
+  const rotate = isTop ? 0 : depth % 2 === 0 ? -2 : 3;
 
   async function handleDragEnd(_: any, info: PanInfo) {
+    if (!isTop) return;
+
     const colA = document.getElementById("col-A")?.getBoundingClientRect();
     const colB = document.getElementById("col-B")?.getBoundingClientRect();
 
@@ -53,73 +62,71 @@ function DraggableCard({ card, assign, configA, configB }: any) {
 
     const isInside = (rect: DOMRect | undefined) => {
       if (!rect) return false;
+      // Slight padding tolerance
       return (
-        dropX >= rect.left &&
-        dropX <= rect.right &&
-        dropY >= rect.top &&
-        dropY <= rect.bottom
+        dropX >= rect.left - 20 &&
+        dropX <= rect.right + 20 &&
+        dropY >= rect.top - 20 &&
+        dropY <= rect.bottom + 20
       );
     };
 
     if (isInside(colA)) {
       assign(card.id, "A");
+      Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
     } else if (isInside(colB)) {
       assign(card.id, "B");
+      Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
     } else {
-      controls.start({ x: 0, y: 0 });
+      controls.start({ x: 0, y: 0, scale: isTop ? 1 : 1 - depth * 0.04, rotate: isTop ? 0 : depth % 2 === 0 ? -2 : 3, transition: { type: "spring", stiffness: 300, damping: 20 } });
+      Haptics.vibrate().catch(() => {});
     }
   }
 
   return (
     <motion.div
-      drag
+      ref={cardRef}
+      drag={isTop}
       dragSnapToOrigin
-      dragElastic={0.8}
+      dragElastic={0.6}
       onDragEnd={handleDragEnd}
       animate={controls}
-      whileHover={{ scale: 1.02 }}
+      initial={{ scale, y: translateY, rotate }}
+      whileHover={isTop ? { scale: 1.02 } : undefined}
       whileDrag={{
-        scale: 1.05,
+        scale: 1.08,
+        rotate: isTop ? (Math.random() > 0.5 ? 2 : -2) : 0,
         zIndex: 50,
-        boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        boxShadow: "0 25px 30px -5px rgba(0, 0, 0, 0.15)",
       }}
-      className="flex items-center justify-between px-5 py-4 rounded-3xl cursor-grab active:cursor-grabbing relative bg-white border-[2.5px] border-black/5"
+      className={`absolute w-full h-[220px] rounded-[30px] ${isTop ? "cursor-grab active:cursor-grabbing" : ""}`}
       style={{
         background: card.color,
         boxShadow: "0 4px 0 rgba(0,0,0,0.18), 0 8px 16px rgba(0,0,0,0.08)",
+        border: "2px solid #000",
         touchAction: "none",
+        transformOrigin: "bottom center",
+        zIndex: total - depth,
       }}
     >
-      <div className="flex flex-col gap-0.5 opacity-40 px-1 py-1 rounded pointer-events-none absolute left-2">
-        <div
-          className="w-1 h-1 rounded-full"
-          style={{ background: "#78716C" }}
-        />
-        <div
-          className="w-1 h-1 rounded-full"
-          style={{ background: "#78716C" }}
-        />
-        <div
-          className="w-1 h-1 rounded-full"
-          style={{ background: "#78716C" }}
-        />
-      </div>
-      <span
-        className="text-[14px] font-bold ml-4 pointer-events-none select-none"
-        style={{
-          color: "rgba(0,0,0,0.72)",
-          fontFamily: "Plus Jakarta Sans, system-ui",
-        }}
-      >
-        {card.label}
-      </span>
-      <div className="flex gap-2 pointer-events-none opacity-50">
-        <span className="text-[10px] font-bold uppercase">Drag up</span>
-      </div>
+      {/* Top Left Label */}
+      {isTop && (
+        <div className="absolute top-4 left-5 pr-4">
+          <span
+            className="text-[32px] font-black leading-tight tracking-tight text-left block"
+            style={{
+              color: "#000",
+              fontFamily: "Plus Jakarta Sans, system-ui",
+              letterSpacing: "-0.01em"
+            }}
+          >
+            {card.label}
+          </span>
+        </div>
+      )}
     </motion.div>
   );
-}
+});
 
 export function ThisOrThat({ config }: Props) {
   const startTime = useRef(Date.now());
@@ -135,74 +142,77 @@ export function ThisOrThat({ config }: Props) {
   const [hintsUsed, setHintsUsed] = useState(0);
   const [result, setResult] = useState<GameResult | null>(null);
 
-  const unassigned = cards.filter(
+  const unassigned = useMemo(() => cards.filter(
     (c) => c.status !== "correct" && c.assigned === null,
-  );
-  const colA = cards.filter((c) => c.status === "correct" && c.correct === "A");
-  const colB = cards.filter((c) => c.status === "correct" && c.correct === "B");
-  const pendingA = cards.filter(
-    (c) => c.assigned === "A" && c.status !== "correct",
-  );
-  const pendingB = cards.filter(
-    (c) => c.assigned === "B" && c.status !== "correct",
-  );
+  ), [cards]);
 
-  function assign(id: string, col: "A" | "B") {
+  const assign = useCallback((id: string, col: "A" | "B") => {
     setCards((prev) =>
       prev.map((c) =>
         c.id === id ? { ...c, assigned: col, status: "idle" } : c,
       ),
     );
-  }
+  }, []);
 
-  function handleCheck() {
-    const allAssigned = cards
-      .filter((c) => c.status !== "correct")
-      .every((c) => c.assigned !== null);
-    if (!allAssigned) return;
+  const handleCheck = useCallback(() => {
+    setGuesses((g) => g + 1);
 
-    const newGuesses = guesses + 1;
-    setGuesses(newGuesses);
+    let mistakesCount = 0;
 
-    const updated = cards.map((c) => {
-      if (c.status === "correct") return c;
-      if (c.assigned === c.correct) return { ...c, status: "correct" as const };
-      return { ...c, status: "wrong" as const };
-    });
+    setCards((prev) => {
+      const updated = prev.map((c) => {
+        if (c.status === "correct") return c;
+        if (c.assigned === c.correct) return { ...c, status: "correct" as const };
+        mistakesCount++;
+        return { ...c, status: "wrong" as const };
+      });
 
-    setCards(updated);
-
-    setTimeout(() => {
-      const reset = updated.map((c) =>
-        c.status === "wrong"
-          ? { ...c, status: "idle" as const, assigned: null }
-          : c,
-      );
-      setCards(reset);
-
-      const allCorrect = reset.every((c) => c.status === "correct");
-      if (allCorrect) {
-        const finalResult: GameResult = {
-          gameType: "this-or-that",
-          score: calcScore(reset, newGuesses),
-          guesses: newGuesses,
-          hintsUsed,
-          timeMs: Date.now() - startTime.current,
-        };
-        config.onComplete?.(finalResult);
-        setResult(finalResult);
+      if (mistakesCount === 0) {
+        Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
+      } else {
+        Haptics.notification({ type: 'ERROR' as any }).catch(() => {});
       }
-    }, 900);
-  }
 
-  function handleHint() {
+      // Schedule reset for wrongs
+      setTimeout(() => {
+        setCards((current) => {
+          const reset = current.map((c) =>
+            c.status === "wrong"
+              ? { ...c, status: "idle" as const, assigned: null }
+              : c,
+          );
+
+          const allCorrect = reset.every((c) => c.status === "correct");
+          if (allCorrect) {
+            const finalResult: GameResult = {
+              gameType: "this-or-that",
+              score: calcScore(reset, guesses + 1),
+              guesses: guesses + 1,
+              hintsUsed,
+              timeMs: Date.now() - startTime.current,
+            };
+            config.onComplete?.(finalResult);
+            setResult(finalResult);
+          }
+          return reset;
+        });
+      }, 900);
+
+      return updated;
+    });
+  }, [guesses, hintsUsed, config]);
+
+  // Auto-check when all cards have been assigned
+  // (Disabled) User must explicitly tap "Guess" like in original screenshot
+
+  const handleHint = useCallback(() => {
     const unset = cards.find(
       (c) => c.assigned === null && c.status !== "correct",
     );
     if (!unset) return;
     setHintsUsed((h) => h + 1);
     assign(unset.id, unset.correct);
-  }
+  }, [cards, assign]);
 
   function handleReset() {
     setCards(
@@ -219,211 +229,189 @@ export function ThisOrThat({ config }: Props) {
     startTime.current = Date.now();
   }
 
-  if (result)
-    return <GameWinScreen result={result} onPlayAgain={handleReset} />;
+  if (result) return <GameWinScreen result={result} onPlayAgain={handleReset} />;
 
-  const allPending = cards
-    .filter((c) => c.status !== "correct")
-    .every((c) => c.assigned !== null);
+  // Render Staggered Placeholders and placed cards for a given column
+  const renderColumnItems = (colId: "A" | "B") => {
+    const assignedCards = cards.filter(c => c.assigned === colId);
+    
+    return (
+      <div className="absolute inset-x-0 inset-y-0 overflow-visible pointer-events-none px-2">
+        {/* Render placeholder shapes in the background faintly */}
+        {Array.from({ length: config.cards.length }).map((_, i) => (
+           <div 
+             key={`slot-${i}`} 
+             className="absolute rounded-[18px] shrink-0"
+             style={{ 
+               width: '80%',
+               height: '110px',
+               top: i * 75 + 16, 
+               left: i % 2 === 0 ? '8px' : 'auto',
+               right: i % 2 === 1 ? '8px' : 'auto',
+               border: '1.5px solid rgba(0,0,0,0.06)',
+               zIndex: 0
+             }} 
+           />
+        ))}
+
+        {/* Render actual assigned cards in the foreground stacked */}
+        {assignedCards.map((c, i) => (
+          <motion.div
+            key={c.id}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ 
+              scale: 1, 
+              opacity: 1, 
+              x: c.status === "wrong" ? [-5, 5, -5, 5, 0] : 0, // Shake if wrong
+            }}
+            transition={{ type: "spring", bounce: 0.5, duration: 0.5 }}
+            className="absolute rounded-[18px] shadow-sm overflow-hidden"
+            style={{ 
+              width: '80%',
+              height: '110px',
+              background: c.color,
+              top: i * 75 + 16,
+              left: i % 2 === 0 ? '8px' : 'auto',
+              right: i % 2 === 1 ? '8px' : 'auto',
+              zIndex: i + 1,
+              border: "2px solid #000",
+              pointerEvents: "auto",
+            }}
+            drag
+            dragSnapToOrigin
+            dragElastic={0.6}
+            onDragEnd={(_, info) => {
+              // Allows picking a card back up from a column and putting it in another column
+              const dropX = info.point.x;
+              const colTarget = document.getElementById(colId === "A" ? "col-B" : "col-A")?.getBoundingClientRect();
+              
+              if (colTarget && dropX >= colTarget.left && dropX <= colTarget.right) {
+                assign(c.id, colId === "A" ? "B" : "A");
+              }
+            }}
+            whileDrag={{
+              scale: 1.05,
+              zIndex: 50,
+              boxShadow: "0 25px 30px -5px rgba(0, 0, 0, 0.15)",
+            }}
+          >
+             <div className="absolute top-3 left-4 pr-3">
+               <span className="text-[17px] font-bold text-black leading-tight text-left block" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.01em" }}>
+                 {c.label}
+               </span>
+             </div>
+          </motion.div>
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <div className="flex flex-col h-full" style={{ background: "#F5F0E8" }}>
-      {/* Sub-header */}
-      <div className="px-4 py-3">
-        <p
-          className="text-[11px] font-semibold uppercase tracking-widest"
-          style={{
-            color: "#9CA3AF",
-            fontFamily: "Plus Jakarta Sans, system-ui",
-          }}
-        >
-          {config.subject}
-        </p>
-        <h2
-          className="text-[20px] font-black text-[#1C1917] mt-0.5"
-          style={{
-            fontFamily: "Plus Jakarta Sans, system-ui",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {config.theme}
-        </h2>
-        {/* Attempt dots */}
-        {guesses > 0 && (
-          <div className="flex gap-1 mt-2">
-            {Array.from({ length: guesses }, (_, i) => (
-              <div
-                key={i}
-                className="w-4 h-4 rounded-full flex items-center justify-center"
-                style={{ background: "#FEE2E2" }}
-              >
-                <XCircle size={10} color="#EF4444" />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Two columns */}
-      <div className="grid grid-cols-2 gap-3 px-4" id="this-that-columns">
-        {(["A", "B"] as const).map((col) => {
-          const cfg = col === "A" ? config.columnA : config.columnB;
-          const correct = col === "A" ? colA : colB;
-          const pending = col === "A" ? pendingA : pendingB;
-          const colAccent = col === "A" ? "#14532D" : "#3730A3";
-          const colBg = col === "A" ? "#F0FDF4" : "#EEF2FF";
-          const colBorder = col === "A" ? "#BBF7D0" : "#C7D2FE";
-
-          return (
-            <div
-              key={col}
-              id={`col-${col}`}
-              className="rounded-3xl p-4 min-h-[160px] relative transition-transform"
-              style={{
-                background: colBg,
-                border: `2.5px solid ${colBorder}`,
-                boxShadow: `0 6px 0 ${colBorder}`,
-              }}
-            >
-              <p
-                className="text-[14px] font-black mb-1"
-                style={{
-                  color: colAccent,
-                  fontFamily: "Plus Jakarta Sans, system-ui",
-                }}
-              >
-                {cfg.label}
-              </p>
-              <p
-                className="text-[11px] mb-3"
-                style={{
-                  color: colAccent,
-                  opacity: 0.75,
-                  fontFamily: "Inter, system-ui",
-                }}
-              >
-                {cfg.description}
-              </p>
-
-              <div className="flex flex-col gap-1.5">
-                {/* Confirmed correct */}
-                {correct.map((c) => (
-                  <div
-                    key={c.id}
-                    className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl"
-                    style={{
-                      background: c.color,
-                      boxShadow: "0 2px 0 rgba(0,0,0,0.14)",
-                    }}
-                  >
-                    <CheckCircle size={11} color="rgba(0,0,0,0.45)" />
-                    <span
-                      className="text-[11px] font-bold"
-                      style={{
-                        color: "rgba(0,0,0,0.70)",
-                        fontFamily: "Plus Jakarta Sans, system-ui",
-                      }}
-                    >
-                      {c.label}
-                    </span>
-                  </div>
-                ))}
-                {/* Pending assigned */}
-                {pending.map((c) => (
-                  <div
-                    key={c.id}
-                    className="flex items-center justify-between px-2.5 py-2 rounded-xl"
-                    style={{
-                      background: c.status === "wrong" ? "#FEE2E2" : c.color,
-                      border:
-                        c.status === "wrong" ? "1.5px solid #FCA5A5" : "none",
-                      boxShadow:
-                        c.status === "wrong"
-                          ? "none"
-                          : "0 2px 0 rgba(0,0,0,0.14)",
-                      opacity: c.status === "wrong" ? 0.8 : 1,
-                    }}
-                  >
-                    <span
-                      className="text-[11px] font-bold"
-                      style={{
-                        color:
-                          c.status === "wrong" ? "#B91C1C" : "rgba(0,0,0,0.70)",
-                        fontFamily: "Plus Jakarta Sans, system-ui",
-                      }}
-                    >
-                      {c.label}
-                    </span>
-                    <button
-                      onClick={() => assign(c.id, col === "A" ? "B" : "A")}
-                      className="ml-1 opacity-50"
-                    >
-                      <XCircle size={12} color="#666" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Unassigned pool */}
-      <div className="flex-1 overflow-y-auto px-4 pt-3">
-        <p
-          className="text-[11px] font-semibold uppercase tracking-wider mb-2"
-          style={{
-            color: "#9CA3AF",
-            fontFamily: "Plus Jakarta Sans, system-ui",
-          }}
-        >
-          Unsorted · {unassigned.length} left
-        </p>
-        <div className="flex flex-col gap-2">
-          {unassigned.map((card) => (
-            <DraggableCard
-              key={card.id}
-              card={card}
-              assign={assign}
-              configA={config.columnA}
-              configB={config.columnB}
-            />
-          ))}
+    <div className="flex flex-col h-full relative overflow-hidden" style={{ background: "#FDFCFB" }}>
+      {/* Header Titles */}
+      <div className="flex justify-between items-start px-6 pt-16 pb-6">
+        <div className="flex-1">
+          <h1 className="text-[28px] font-black text-[#1C1917] leading-tight" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.02em" }}>
+            {config.columnA.label}
+          </h1>
+          <p className="text-[12px] font-medium text-[#44403C] mt-0.5 leading-tight">
+            {config.columnA.description}
+          </p>
+        </div>
+        <div className="flex-1 text-right">
+          <h1 className="text-[28px] font-black text-[#1C1917] leading-tight" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.02em" }}>
+            {config.columnB.label}
+          </h1>
+          <p className="text-[12px] font-medium text-[#44403C] mt-0.5 leading-tight">
+            {config.columnB.description}
+          </p>
         </div>
       </div>
 
-      {/* Footer */}
-      <div
-        className="px-4 py-4 flex gap-3"
-        style={{ borderTop: "1px solid #E3DDD5" }}
-      >
-        <button
-          onClick={handleHint}
-          className="flex items-center gap-1.5 px-4 py-3 rounded-2xl text-[14px] font-bold active:translate-y-1 transition-transform"
-          style={{
-            background: "#F0EEE9",
-            color: "#78716C",
-            border: "2px solid #E3DDD5",
-            boxShadow: "0 4px 0 #D4CFC8",
-            fontFamily: "Plus Jakarta Sans, system-ui",
-          }}
+      {/* Drop Zone Columns */}
+      <div className="flex gap-4 px-4 flex-1 min-h-0 mb-2 z-0 relative">
+        {/* Column A */}
+        <div
+          id="col-A"
+          className="flex-1 relative rounded-[16px] overflow-y-auto overflow-x-hidden"
+          style={{ background: "#EBE8E3" }}
         >
-          <HelpCircle size={18} />
-          Hint
-        </button>
-        <button
-          onClick={handleCheck}
-          disabled={!allPending}
-          className="flex-1 py-3 rounded-2xl text-[16px] font-black transition-all active:translate-y-1"
-          style={{
-            background: allPending ? "#1C1917" : "#E5E1DC",
-            color: allPending ? "#FFFFFF" : "#A8A29E",
-            fontFamily: "Plus Jakarta Sans, system-ui",
-            boxShadow: allPending ? "0 4px 0 #44403C" : "0 4px 0 #D4CFC8",
-          }}
+          {renderColumnItems("A")}
+        </div>
+
+        {/* Column B */}
+        <div
+          id="col-B"
+          className="flex-1 relative rounded-[16px] overflow-y-auto overflow-x-hidden"
+          style={{ background: "#EBE8E3" }}
         >
-          Check
-        </button>
+          {renderColumnItems("B")}
+        </div>
+      </div>
+
+      {/* Spacing & Counter */}
+      {unassigned.length > 0 && (
+        <div className="flex justify-center items-center gap-1.5 mt-2 mb-2 text-[#1C1917] font-black">
+          <Layers size={16} strokeWidth={2.5} />
+          <span className="text-[15px]">{unassigned.length}</span>
+        </div>
+      )}
+
+      {/* Card Stack / Guess Button Area */}
+      <div className="relative flex justify-center pb-8 h-[240px] px-6 items-end">
+        {unassigned.length > 0 ? (
+          <div className="relative w-[180px] h-full flex justify-center">
+            {[...unassigned].reverse().map((card, index) => {
+              const isTop = index === unassigned.length - 1;
+              const depth = unassigned.length - 1 - index;
+              return (
+                <DraggableCard
+                  key={card.id}
+                  card={card}
+                  isTop={isTop}
+                  depth={depth}
+                  total={unassigned.length}
+                  assign={assign}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="w-full flex gap-4 items-center mb-6">
+            <button
+              onClick={handleCheck}
+              className="flex-1 h-[60px] bg-[#1C1917] rounded-[30px] flex items-center justify-center relative active:scale-95 transition-transform"
+            >
+              <span className="text-white font-bold text-[18px]" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.01em" }}>
+                Guess
+              </span>
+              <div 
+                className="absolute -top-1.5 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center font-black text-xs"
+                style={{ border: "2px solid #1C1917", color: "#1C1917" }}
+              >
+                {Math.max(0, 5 - guesses)}
+              </div>
+            </button>
+
+            <button
+              onClick={handleHint}
+              className="w-[60px] h-[60px] bg-white rounded-full flex items-center justify-center relative active:scale-95 transition-transform shrink-0"
+              style={{
+                border: "2px solid #1C1917",
+              }}
+            >
+              <span className="font-bold text-[#1C1917] text-[15px]" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.01em" }}>
+                Hint
+              </span>
+              <div 
+                className="absolute -top-1.5 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center font-black text-xs"
+                style={{ border: "2px solid #1C1917", color: "#1C1917" }}
+              >
+                {3 - hintsUsed}
+              </div>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
