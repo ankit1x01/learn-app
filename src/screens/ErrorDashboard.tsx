@@ -76,12 +76,12 @@ const buildClusters = (concepts: Concept[]): ErrorCluster[] => {
 };
 
 const SUBJECT_COLORS: Record<string, string> = {
-  'Foundations': 'text-[#94A3B8]', 'Arrays & Search': 'text-primary',
-  'Strings & Data Structures': 'text-[#0E7490]', 'Trees & Graphs': 'text-[#15803D]', 'DP & Greedy': 'text-[#B45309]'
+  'Foundations': 'text-[var(--color-on-surface-variant)]', 'Arrays & Search': 'text-primary',
+  'Strings & Data Structures': 'text-[var(--color-subject-cs)]', 'Trees & Graphs': 'text-[var(--color-success)]', 'DP & Greedy': 'text-[var(--color-warning)]'
 };
 const SUBJECT_BG: Record<string, string> = {
-  'Foundations': 'bg-[#94A3B8]/10', 'Arrays & Search': 'bg-primary/10',
-  'Strings & Data Structures': 'bg-[#ECFEFF]', 'Trees & Graphs': 'bg-[#F0FDF4]', 'DP & Greedy': 'bg-[#FFFBEB]'
+  'Foundations': 'bg-[color:var(--color-on-surface-variant)]/10', 'Arrays & Search': 'bg-primary/10',
+  'Strings & Data Structures': 'bg-[color:var(--color-subject-cs-container)]', 'Trees & Graphs': 'bg-[color:var(--color-success-container)]', 'DP & Greedy': 'bg-[color:var(--color-warning-container)]'
 };
 
 export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
