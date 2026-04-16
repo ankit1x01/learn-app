@@ -43,12 +43,12 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
       <div className="mt-4 mb-6">
         <div className="flex items-center gap-2 mb-1">
           <Brain size={14} className="text-primary" />
-          <span className="text-[12px] uppercase tracking-[0.3em] text-[#6B7280] font-bold">28-Day Course</span>
+          <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>28-Day Course</span>
         </div>
         <h1 className="text-3xl font-ui font-black tracking-tight mb-1">
           How to <span className="text-primary">Learn</span> Anything
         </h1>
-        <p className="text-[#6B7280] text-xs">Cognitive Architecture · Meta-Learning System · 1 concept/day</p>
+        <p className="text-xs" style={{ color: 'var(--color-on-surface-variant)' }}>Cognitive Architecture · Meta-Learning System · 1 concept/day</p>
       </div>
 
       {/* ── Progress ring ── */}
@@ -58,7 +58,7 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
             <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
             <circle
               cx="36" cy="36" r="30" fill="none"
-              stroke="#6C63FF" strokeWidth="6"
+              stroke="var(--color-subject-chemistry)" strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={`${2 * Math.PI * 30}`}
               strokeDashoffset={`${2 * Math.PI * 30 * (1 - progress / 100)}`}
@@ -74,14 +74,14 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
           <p className="font-ui font-bold text-base mb-0.5">
             {totalDone === 0 ? 'Not started' : totalDone === totalLessons ? 'Complete!' : `Day ${totalDone} done`}
           </p>
-          <p className="text-[11px] text-[#6B7280] leading-snug">
+          <p className="text-[11px] leading-snug" style={{ color: 'var(--color-on-surface-variant)' }}>
             {totalDone}/{totalLessons} lessons · {totalLessons - totalDone} remaining
           </p>
           {nextDay && (
             <button
               onClick={() => handleLessonClick(nextDay)}
               className="mt-2 px-3 py-1.5 rounded-xl text-[12px] font-bold uppercase tracking-widest text-background"
-              style={{ background: 'linear-gradient(135deg, #6C63FF, #4A42D0)' }}
+              style={{ background: 'linear-gradient(135deg, var(--color-subject-chemistry), #4A42D0)' }}
             >
               Continue → Day {nextDay}
             </button>
@@ -103,13 +103,13 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
                 <span className="font-ui font-bold text-sm" style={{ color: phase.color }}>
                   Phase {phase.phase} — {phase.title}
                 </span>
-                <span className="text-[#78716C] text-[12px] ml-2">Days {phase.days}</span>
+                <span className="text-[12px] ml-2" style={{ color: 'var(--color-on-surface-muted)' }}>Days {phase.days}</span>
               </div>
               <span className="ml-auto text-[12px] font-bold" style={{ color: phase.color }}>
                 {phaseDone}/{phaseLessons.length}
               </span>
             </div>
-            <p className="text-[12px] text-[#78716C] mb-3 px-1">{phase.desc}</p>
+            <p className="text-[12px] mb-3 px-1" style={{ color: 'var(--color-on-surface-muted)' }}>{phase.desc}</p>
 
             {/* Lesson rows */}
             <div className="space-y-2">
@@ -125,35 +125,35 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
                     transition={{ delay: lesson.day * 0.02 }}
                     onClick={() => handleLessonClick(lesson.day)}
                     className={`w-full card rounded-2xl p-4 text-left flex items-center gap-3 transition-all duration-200 border ${
-                      isDone ? 'border-[#BBF7D0]'
-                      : isNext ? 'border-[#BFDBFE]'
-                      : 'border-[#E8E5DF]'
+                      isDone ? 'border-[var(--color-success-container)]'
+                      : isNext ? 'border-[var(--color-primary-container)]'
+                      : 'border-[var(--color-border)]'
                     }`}
                   >
                     {/* Status icon */}
                     <div
                       className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
                       style={{
-                        background: isDone ? '#F0FDF4' : isNext ? '#EFF6FF' : '#F7F6F3',
-                        border: '1px solid #E8E5DF',
+                        background: isDone ? 'var(--color-success-container)' : isNext ? 'var(--color-primary-container)' : 'var(--color-surface-container)',
+                        border: '1px solid var(--color-border)',
                       }}
                     >
                       {isDone
-                        ? <CheckCircle2 size={16} className="text-[#15803D]" />
-                        : <BookOpen size={15} className="text-[#2563EB]" />
+                        ? <CheckCircle2 size={16} style={{ color: 'var(--color-success)' }} />
+                        : <BookOpen size={15} style={{ color: 'var(--color-primary)' }} />
                       }
                     </div>
 
                     {/* Text */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 mb-0.5">
-                        <span className="text-[12px] font-bold uppercase tracking-normal text-[#78716C]">Day {lesson.day}</span>
+                        <span className="text-[12px] font-bold uppercase tracking-normal" style={{ color: 'var(--color-on-surface-muted)' }}>Day {lesson.day}</span>
                         {isNext && (
-                          <span className="px-1.5 py-0.5 rounded text-[11px] font-bold bg-[#EFF6FF] text-[#2563EB]">NEXT</span>
+                          <span className="px-1.5 py-0.5 rounded text-[11px] font-bold" style={{ background: 'var(--color-primary-container)', color: 'var(--color-primary)' }}>NEXT</span>
                         )}
                       </div>
                       <p className="font-ui font-bold text-sm leading-tight truncate">{lesson.title}</p>
-                      <p className="text-[12px] text-[#78716C] mt-0.5 truncate">{lesson.principle}</p>
+                      <p className="text-[12px] mt-0.5 truncate" style={{ color: 'var(--color-on-surface-muted)' }}>{lesson.principle}</p>
                     </div>
 
                     <ChevronRight size={14} className="text-[#A8A29E] shrink-0" />

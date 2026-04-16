@@ -54,8 +54,8 @@ export const SessionComplete = ({
 
       {/* ── Top Nav Actions ── */}
       <div className="flex w-full justify-between items-center mb-6">
-        <h2 className="text-[#1C1917] font-bold text-[18px]" style={{ fontFamily: JKS }}>Overview</h2>
-        <button onClick={handleShare} className="p-2.5 bg-[#E8E5DF] text-[#44403C] rounded-full active:scale-95 transition-transform" aria-label="Share Overall Progress">
+        <h2 className="text-xl font-bold mb-3" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>Overview</h2>
+        <button onClick={handleShare} className="p-2.5 text-[var(--color-on-surface-variant)] rounded-full active:scale-95 transition-transform" style={{ background: 'var(--color-surface-variant)' }} aria-label="Share Overall Progress">
           <Share2 size={18} />
         </button>
       </div>
@@ -66,38 +66,38 @@ export const SessionComplete = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25 }}
         className="card p-6 mb-4 text-center mt-5"
-        style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}
+        style={{ background: 'var(--color-success-container)', border: '1px solid var(--color-success-container)' }}
       >
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white border border-[#BBF7D0] mx-auto mb-3">
-          <Award size={28} className="text-[#15803D]" />
+        <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white border mx-auto mb-3" style={{ borderColor: 'var(--color-success-container)' }}>
+          <Award size={28} style={{ color: 'var(--color-success)' }} />
         </div>
-        <p className="text-[13px] font-semibold text-[#15803D] mb-1" style={{ fontFamily: JKS }}>
+        <p className="text-[13px] font-semibold mb-1" style={{ fontFamily: JKS, color: 'var(--color-success)' }}>
           Session Complete
         </p>
-        <h1 className="text-[52px] font-bold text-[#1C1917] tabular-nums leading-none mb-1" style={{ fontFamily: JKS }}>
-          94<span className="text-[24px] font-medium text-[#78716C]">%</span>
+        <h1 className="text-[52px] font-bold tabular-nums leading-none mb-1" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
+          94<span className="text-[24px] font-medium" style={{ color: 'var(--color-on-surface-muted)' }}>%</span>
         </h1>
-        <p className="text-[13px] text-[#78716C]">Focus Intensity · Excellent</p>
+        <p className="text-[13px]" style={{ color: 'var(--color-on-surface-muted)' }}>Focus Intensity · Excellent</p>
       </motion.div>
 
       {/* ── Mastery progress ── */}
       <div className="card p-5 mb-4">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#F0FDF4]">
-            <TrendingUp size={15} className="text-[#15803D]" />
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'var(--color-success-container)' }}>
+            <TrendingUp size={15} style={{ color: 'var(--color-success)' }} />
           </div>
-          <span className="text-[13px] font-semibold text-[#78716C]" style={{ fontFamily: JKS }}>
+          <span className="text-[13px] font-semibold" style={{ fontFamily: JKS, color: 'var(--color-on-surface-muted)' }}>
             Total Mastered
           </span>
         </div>
         <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-[36px] font-bold text-[#1C1917] tabular-nums" style={{ fontFamily: JKS }}>
+          <span className="text-[36px] font-bold tabular-nums" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
             {totalAutomatic}
           </span>
-          <span className="text-[14px] font-semibold text-[#15803D] flex items-center gap-1">
-            +12 today <Flame size={13} className="text-[#B45309]" />
+          <span className="text-[14px] font-semibold flex items-center gap-1" style={{ color: 'var(--color-success)' }}>
+            +12 today <Flame size={13} style={{ color: 'var(--color-warning)' }} />
           </span>
-          <span className="ml-auto text-[12px] text-[#A8A29E]">/ {totalConcepts}</span>
+          <span className="ml-auto text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>/ {totalConcepts}</span>
         </div>
         <div className="h-2 w-full rounded-full overflow-hidden bg-[#E8E5DF]">
           <motion.div
@@ -111,7 +111,7 @@ export const SessionComplete = ({
 
       {/* ── Subject mix ── */}
       <div className="card p-5 mb-4">
-        <p className="text-[13px] font-semibold text-[#78716C] mb-3" style={{ fontFamily: JKS }}>
+        <p className="text-[13px] font-semibold mb-3" style={{ fontFamily: JKS, color: 'var(--color-on-surface-muted)' }}>
           Subject Mix
         </p>
         <div className="flex gap-2">
