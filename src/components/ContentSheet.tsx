@@ -26,6 +26,8 @@ interface LoadedImage {
   dataURI: string;
 }
 
+import { m3SpatialDefault } from '../lib/m3-motion';
+
 export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
   const [note, setNote]           = useState('');
   const [savedNote, setSavedNote] = useState('');
@@ -109,32 +111,38 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
       className="fixed inset-0 z-[90] flex flex-col justify-end"
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-[#F7F6F3]/95 " />
+      <div className="absolute inset-0" style={{ background: 'var(--color-scrim)' }} />
 
       <motion.div
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+        transition={m3SpatialDefault}
         onClick={e => e.stopPropagation()}
-        className="relative z-10 bg-surface rounded-t-[2.5rem] border-t border-[#E8E5DF] shadow-[0_-20px_60px_rgba(0,0,0,0.5)] max-h-[90vh] flex flex-col"
+        className="relative z-10 max-h-[90vh] flex flex-col"
+        style={{
+          background: 'var(--color-surface-container-low)',
+          borderRadius: '28px 28px 0 0',
+          borderTop: '1px solid var(--color-border)',
+          boxShadow: 'var(--shadow-elevation-3)',
+        }}
       >
-        {/* Handle */}
+        {/* M3 Drag Handle */}
         <div className="flex justify-center pt-3 pb-1 shrink-0">
-          <div className="w-10 h-1 rounded-full bg-[#F0EEE9]" />
+          <div style={{ width: 32, height: 4, borderRadius: 9999, background: 'var(--color-surface-variant)' }} />
         </div>
 
         {/* Header */}
         <div className="flex items-start justify-between px-6 pb-4 pt-2 shrink-0">
           <div className="flex-1 min-w-0 pr-4">
             <div className="flex items-center gap-2 mb-1">
-              <StickyNote size={12} className="text-[#0E7490]" />
-              <span className="text-[12px] uppercase tracking-widest text-[#0E7490] font-bold">My Notes</span>
+              <StickyNote size={12} style={{ color: 'var(--color-subject-cs)' }} />
+              <span className="text-[12px] uppercase tracking-widest font-bold" style={{ color: 'var(--color-subject-cs)' }}>My Notes</span>
             </div>
             <h2 className="font-ui font-bold text-base leading-tight">{label}</h2>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl bg-[#F0EEE9] hover:bg-[#F0EEE9] transition-colors mt-1 shrink-0">
-            <X size={16} className="text-[#6B7280]" />
+          <button onClick={onClose} className="btn-icon mt-1 shrink-0">
+            <X size={16} />
           </button>
         </div>
 
@@ -148,7 +156,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
             <>
               {/* ── Note section ── */}
               <div className="mb-6">
-                <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-2">
+                <p className="text-[12px] uppercase tracking-widest font-bold mb-2" style={{ color: 'var(--color-on-surface-variant)' }}>
                   Text Note
                 </p>
                 <textarea
@@ -156,19 +164,21 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                   onChange={e => setNote(e.target.value)}
                   placeholder="Write your understanding, approach, edge cases…"
                   rows={5}
-                  className="w-full bg-[#F0EEE9] border border-[#E8E5DF] rounded-2xl p-4 text-sm text-[#1C1917] placeholder:text-[#78716C] focus:outline-none focus:border-[#A5F3FC] resize-none leading-relaxed"
+                  className="w-full rounded-2xl p-4 text-sm resize-none leading-relaxed focus:outline-none"
+              style={{ background: 'var(--color-surface-container)', border: '1px solid var(--color-border)', color: 'var(--color-on-surface)' }}
                 />
                 <div className="flex gap-2 mt-2">
                   <button
                     onClick={handleSaveNote}
                     disabled={!noteChanged && !note}
-                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-[11px] uppercase tracking-widest transition-all ${
+                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-[11px] uppercase tracking-widest transition-all border"
+                    style={
                       noteSaved
-                        ? 'bg-[#F0FDF4] border border-[#BBF7D0] text-[#15803D]'
+                        ? { background: 'var(--color-success-container)', borderColor: 'var(--color-success)', color: 'var(--color-on-success-container)' }
                         : noteChanged
-                        ? 'bg-[#ECFEFF] border border-[#A5F3FC] text-[#0E7490]'
-                        : 'bg-[#F0EEE9] border border-[#E8E5DF] text-[#78716C]'
-                    }`}
+                        ? { background: 'var(--color-primary-container)', borderColor: 'var(--color-primary-border)', color: 'var(--color-on-primary-container)' }
+                        : { background: 'var(--color-surface-container)', borderColor: 'var(--color-border)', color: 'var(--color-on-surface-variant)' }
+                    }
                   >
                     {noteSaved ? <Check size={14} /> : <StickyNote size={14} />}
                     {noteSaved ? 'Saved!' : 'Save Note'}
@@ -176,7 +186,8 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                   {savedNote && (
                     <button
                       onClick={handleDeleteNote}
-                      className="px-4 py-3 rounded-xl bg-[#FEF2F2] border border-[#FECACA] text-[#B91C1C]"
+                      className="px-4 py-3 rounded-xl border"
+                      style={{ background: 'var(--color-error-container)', borderColor: 'var(--color-error)', color: 'var(--color-on-error-container)' }}
                     >
                       <Trash2 size={14} />
                     </button>
@@ -187,12 +198,13 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
               {/* ── Images section ── */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold">
+                  <p className="text-[12px] uppercase tracking-widest font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>
                     Images ({images.length})
                   </p>
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F5F3FF] border border-[#F472B6]/20 text-[#7C3AED] text-[12px] font-bold uppercase tracking-widest"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] font-bold uppercase tracking-widest"
+                    style={{ background: 'var(--color-primary-container)', color: 'var(--color-on-primary-container)', border: '1px solid var(--color-primary-border)' }}
                   >
                     <Camera size={11} />
                     Add Photo
@@ -212,7 +224,8 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                 {images.length === 0 ? (
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full border border-dashed border-[#E8E5DF] rounded-2xl py-8 flex flex-col items-center gap-2 text-[#78716C] hover:border-[#E8E5DF] transition-colors"
+                    className="w-full border border-dashed rounded-2xl py-8 flex flex-col items-center gap-2 transition-colors"
+                    style={{ borderColor: 'var(--color-border)', color: 'var(--color-on-surface-variant)' }}
                   >
                     <Image size={24} />
                     <span className="text-xs">Tap to add a photo of your handwritten notes</span>
@@ -228,7 +241,8 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                         />
                         <button
                           onClick={() => handleDeleteImage(img)}
-                          className="absolute top-1.5 right-1.5 p-1 rounded-full bg-[#F7F6F3]/95 text-[#B91C1C]"
+                          className="absolute top-1.5 right-1.5 p-1 rounded-full"
+                          style={{ background: 'rgba(255,251,254,0.95)', color: 'var(--color-error)' }}
                         >
                           <Trash2 size={12} />
                         </button>
@@ -237,7 +251,8 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                     {/* Add more */}
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="aspect-square rounded-xl border border-dashed border-[#E8E5DF] flex items-center justify-center text-[#78716C] hover:border-[#E8E5DF]"
+                      className="aspect-square rounded-xl border border-dashed flex items-center justify-center"
+                      style={{ borderColor: 'var(--color-border)', color: 'var(--color-on-surface-variant)' }}
                     >
                       <Plus size={20} />
                     </button>

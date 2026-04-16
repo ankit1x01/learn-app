@@ -10,6 +10,8 @@ import { DEMO_SESSION, type DemoConcept } from '../data/demo-session';
 import { askLlm } from '../lib/llm';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
+import { m3SpatialDefault, m3SpatialFast, m3EffectsEase } from '../lib/m3-motion';
+
 const playSound = (type: 'tick' | 'success' | 'buzzer' | 'chime') => {
   try {
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -55,8 +57,6 @@ const playSound = (type: 'tick' | 'success' | 'buzzer' | 'chime') => {
   } catch(e) { /* ignore */ }
 };
 
-const JKS = "'Plus Jakarta Sans', system-ui, sans-serif";
-const NUN = "'Nunito', system-ui, sans-serif";
 
 const SUBJECT_ICON: Record<string, React.ElementType> = {
   'Arrays & Search':           BarChart2,
@@ -114,34 +114,35 @@ function resetState(): SessionState {
 
 const KoshaCard = ({ onNext }: { onNext: () => void }) => {
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
-      <div className="flex items-center gap-2 mb-4 text-[#A8A29E] font-bold uppercase tracking-widest text-[12px]">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={m3SpatialDefault}>
+      <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
         <Activity size={14} className="text-[#0E7490]" /> Pre-Session Kosha Check
       </div>
-      <h2 className="text-[28px] font-black text-[#1C1917] mb-2 leading-tight" style={{ fontFamily: JKS }}>
+      <h2 className="text-display-large-emphasized mb-2 leading-tight" style={{ color: 'var(--color-on-surface)' }}>
         How are you feeling right now?
       </h2>
-      <p className="text-[15px] text-[#78716C] mb-6 leading-relaxed" style={{ fontFamily: NUN }}>
+      <p className="text-[15px] mb-6 leading-relaxed font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
         Your mental state primes your brain for the optimal learning band.
       </p>
 
       <div className="grid grid-cols-1 gap-3 mb-8">
         {[
-          { label: 'Highly Focused', desc: 'Ready for deep logical work', icon: Brain, color: '#2563EB' },
+          { label: 'Highly Focused', desc: 'Ready for deep logical work', icon: Brain, color: 'var(--color-primary)' },
           { label: 'A bit fatigued', desc: 'Need shorter, high-impact notes', icon: Wind, color: '#B45309' },
           { label: 'Exam Stressed', desc: 'Time pressure is high currently', icon: Timer, color: '#DC2626' }
         ].map((btn, i) => (
           <button 
             key={i}
             onClick={onNext}
-            className="w-full p-4 rounded-xl border border-[#E8E5DF] text-left hover:bg-gray-50 flex items-center gap-4 transition-colors"
+            className="w-full p-4 rounded-m3-lg text-left hover:bg-gray-50 flex items-center gap-4 transition-colors"
+            style={{ border: '1px solid var(--color-border)' }}
           >
             <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: `${btn.color}15`, color: btn.color }}>
               <btn.icon size={20} />
             </div>
             <div>
-              <p className="font-bold text-[16px] text-[#1C1917]" style={{ fontFamily: JKS }}>{btn.label}</p>
-              <p className="text-[13px] text-[#78716C]">{btn.desc}</p>
+              <p className="font-bold text-[16px] font-ui" style={{ color: 'var(--color-on-surface)' }}>{btn.label}</p>
+              <p className="text-[13px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>{btn.desc}</p>
             </div>
           </button>
         ))}
@@ -180,16 +181,17 @@ const PauseCard = ({ onNext }: { onNext: () => void }) => {
           <div className="w-16 h-16 rounded-full bg-blue-500 opacity-20 relative z-10" />
         </motion.div>
         
-        <h2 className="text-[24px] font-black text-[#1C1917] mb-2 leading-tight" style={{ fontFamily: JKS }}>
+        <h2 className="text-[24px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
           Nididhyasanam Pause
         </h2>
-        <p className="text-[15px] text-[#78716C] mb-8 leading-relaxed max-w-[260px]" style={{ fontFamily: NUN }}>
+        <p className="text-[15px] mb-8 leading-relaxed max-w-[260px]" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-on-surface-variant)' }}>
           Take a deep breath. Allowing your mind to rest for {timeLeft}s spikes BDNF levels to consolidate the memory you just learned.
         </p>
 
         <button
           onClick={onNext}
-          className="px-8 py-3 rounded-full font-bold text-[13px] uppercase tracking-widest text-[#2563EB] bg-[#EFF6FF] border border-[#BFDBFE] transition-colors hover:bg-blue-100"
+          className="px-8 py-3 rounded-full font-bold text-[13px] uppercase tracking-widest transition-colors"
+          style={{ color: 'var(--color-primary)', background: 'var(--color-primary-container)', border: '1px solid var(--color-primary-border)' }}
         >
           Skip Rest ({timeLeft}s)
         </button>
@@ -202,7 +204,7 @@ const PauseCard = ({ onNext }: { onNext: () => void }) => {
 
 const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => void }) => {
   const [selected, setSelected] = useState<'a' | 'b' | null>(null);
-  const color = SUBJECT_COLOR[concept.subject] ?? '#2563EB';
+  const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
   const opts = concept.predictOptions || {
     a: 'It involves caching subproblems to avoid redundant recalculation.',
     b: 'It involves walking sequence from left and right simultaneously.',
@@ -218,13 +220,13 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
-      <div className="flex items-center gap-2 mb-4 text-[#A8A29E] font-bold uppercase tracking-widest text-[12px]">
+      <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
         <Zap size={14} className="text-[#B45309]" /> Prediction Error Phase
       </div>
-      <h2 className="text-[28px] font-black text-[#1C1917] mb-2 leading-tight" style={{ fontFamily: JKS }}>
+      <h2 className="text-[28px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         Before you learn about <span style={{ color }}>{concept.title}</span>...
       </h2>
-      <p className="text-[15px] text-[#78716C] mb-6 leading-relaxed" style={{ fontFamily: NUN }}>
+      <p className="text-[15px] mb-6 leading-relaxed" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-on-surface-variant)' }}>
         Pick the statement that you think is true. (Don't overthink it!)
       </p>
       
@@ -237,14 +239,16 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
               onClick={() => handleSelect(choice)}
               disabled={selected !== null}
               className={`p-4 rounded-2xl border text-left flex items-start gap-4 transition-all duration-200 ${
-                isSelected ? 'border-2 ring-2 ring-opacity-20' : 'border-[#E8E5DF] hover:bg-gray-50'
+                isSelected ? 'border-2 ring-2 ring-opacity-20' : 'hover:bg-gray-50'
               } ${selected !== null && !isSelected ? 'opacity-50 grayscale' : 'opacity-100'}`}
-              style={isSelected ? { borderColor: color, ['--tw-ring-color' as string]: color } : {}}
+              style={isSelected
+                ? { borderColor: color, ['--tw-ring-color' as string]: color }
+                : { border: '1.5px solid var(--color-border)' }}
             >
-              <div className="w-6 h-6 rounded-full border border-current font-bold uppercase shrink-0 flex items-center justify-center text-[12px]" style={{ color: isSelected ? color : '#A8A29E' }}>
+              <div className="w-6 h-6 rounded-full border border-current font-bold uppercase shrink-0 flex items-center justify-center text-[12px]" style={{ color: isSelected ? color : 'var(--color-on-surface-muted)' }}>
                 {choice}
               </div>
-              <p className="text-[14px] text-[#1C1917] pt-0.5 leading-relaxed font-bold" style={{ fontFamily: NUN }}>
+              <p className="text-[14px] pt-0.5 leading-relaxed font-bold" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-on-surface)' }}>
                 {opts[choice]}
               </p>
             </button>
@@ -258,10 +262,10 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
             <div className={`p-4 rounded-xl mb-2 flex gap-3 items-start ${selected === opts.correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
               {selected === opts.correct ? <CheckCircle2 className="text-green-600 shrink-0 mt-0.5" size={18} /> : <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />}
               <div>
-                <p className={`text-[14px] font-bold ${selected === opts.correct ? 'text-green-800' : 'text-red-800'}`} style={{ fontFamily: JKS }}>
+                <p className={`text-[14px] font-bold ${selected === opts.correct ? 'text-green-800' : 'text-red-800'}`} style={{ fontFamily: 'var(--font-ui)' }}>
                   {selected === opts.correct ? 'Correct Intuition!' : 'Not Quite!'}
                 </p>
-                <p className={`text-[13px] leading-relaxed mt-1 ${selected === opts.correct ? 'text-green-700' : 'text-red-700'}`} style={{ fontFamily: NUN }}>
+                <p className={`text-[13px] leading-relaxed mt-1 ${selected === opts.correct ? 'text-green-700' : 'text-red-700'}`} style={{ fontFamily: 'var(--font-body)' }}>
                   {opts.explanation}
                 </p>
               </div>
@@ -280,7 +284,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
         onClick={onNext}
         disabled={selected === null}
         className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center transition-all disabled:opacity-50"
-        style={{ background: color, fontFamily: JKS }}
+        style={{ background: color, fontFamily: 'var(--font-ui)' }}
       >
         Continue <ChevronRight size={16} className="ml-1" />
       </button>
@@ -294,7 +298,7 @@ const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   const [score, setScore] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [streamText, setStreamText] = useState('');
-  const color = SUBJECT_COLOR[concept.subject] ?? '#2563EB';
+  const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
 
   const handleSimulate = async () => {
     setSimulating(true);
@@ -328,21 +332,21 @@ const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
-      <div className="flex items-center gap-2 mb-4 text-[#A8A29E] font-bold uppercase tracking-widest text-[12px]">
+      <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
         <Layers size={14} className="text-[#0E7490]" /> Active Processing
       </div>
-      <h2 className="text-[28px] font-black text-[#1C1917] mb-2 leading-tight" style={{ fontFamily: JKS }}>
+      <h2 className="text-[28px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         The Feynman Technique
       </h2>
-      <p className="text-[15px] text-[#78716C] mb-6 leading-relaxed" style={{ fontFamily: NUN }}>
+      <p className="text-[15px] mb-6 leading-relaxed" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-on-surface-variant)' }}>
         Explain the exact trick or formula for <strong>{concept.title}</strong> back to the AI in one sentence.
       </p>
       
       {!score && !simulating ? (
         <>
           <textarea
-            className="w-full p-4 rounded-2xl border border-[#E8E5DF] mb-5 min-h-[120px] text-[15px] resize-none outline-none focus:ring-2 focus:border-transparent transition-all"
-            style={{ fontFamily: NUN, '--tw-ring-color': color } as React.CSSProperties}
+            className="w-full p-4 rounded-2xl mb-5 min-h-[120px] text-[15px] resize-none outline-none focus:ring-2 focus:border-transparent transition-all"
+            style={{ fontFamily: 'var(--font-body)', '--tw-ring-color': color, border: '1px solid var(--color-border)' } as React.CSSProperties}
             placeholder="So basically, you just have to..."
             value={text}
             onChange={e => setText(e.target.value)}
@@ -352,7 +356,7 @@ const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
             onClick={handleSimulate}
             disabled={text.trim().length < 10 || simulating}
             className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center transition-all disabled:opacity-50"
-            style={{ background: color, fontFamily: JKS }}
+            style={{ background: color, fontFamily: 'var(--font-ui)' }}
           >
             Submit to AI
           </button>
@@ -379,7 +383,7 @@ const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
             <button
               onClick={onNext}
               className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center transition-all"
-              style={{ background: color, fontFamily: JKS }}
+              style={{ background: color, fontFamily: 'var(--font-ui)' }}
             >
               Continue <ChevronRight size={16} className="ml-1" />
             </button>
@@ -391,14 +395,14 @@ const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
 };
 
 const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => void }) => {
-  const color = SUBJECT_COLOR[concept.subject] ?? '#2563EB';
+  const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
-      <div className="flex items-center gap-2 mb-4 text-[#A8A29E] font-bold uppercase tracking-widest text-[12px]">
+      <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
         <BarChart2 size={14} className="text-[#6D28D9]" /> Solidification Phase
       </div>
-      <h2 className="text-[28px] font-black text-[#1C1917] mb-6 leading-tight" style={{ fontFamily: JKS }}>
+      <h2 className="text-[28px] font-black mb-6 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         How confident do you feel about this now?
       </h2>
 
@@ -411,11 +415,12 @@ const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
           <button 
             key={i}
             onClick={onNext}
-            className="w-full p-4 rounded-xl border border-[#E8E5DF] text-left hover:bg-gray-50 flex items-center justify-between transition-colors"
+            className="w-full p-4 rounded-m3-lg text-left hover:bg-gray-50 flex items-center justify-between transition-colors"
+            style={{ border: '1px solid var(--color-border)' }}
           >
             <div>
-              <p className="font-bold text-[16px] text-[#1C1917]" style={{ fontFamily: JKS }}>{btn.label}</p>
-              <p className="text-[13px] text-[#78716C]">{btn.desc}</p>
+              <p className="font-bold text-[16px] font-ui" style={{ color: 'var(--color-on-surface)' }}>{btn.label}</p>
+              <p className="text-[13px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>{btn.desc}</p>
             </div>
             <div className="w-3 h-3 rounded-full" style={{ background: btn.val }} />
           </button>
@@ -423,7 +428,7 @@ const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
       </div>
 
       <div className="text-center">
-        <p className="text-[12px] text-[#A8A29E] font-bold uppercase tracking-widest">Calculates next Spaced Repetition interval</p>
+        <p className="text-[12px] font-bold uppercase tracking-widest" style={{ color: 'var(--color-on-surface-muted)' }}>Calculates next Spaced Repetition interval</p>
       </div>
     </motion.div>
   );
@@ -445,8 +450,8 @@ const CodeBlock = ({ code }: { code: string }) => (
 
 const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => void }) => {
   const Icon = SUBJECT_ICON[concept.subject] ?? BookOpen;
-  const color = SUBJECT_COLOR[concept.subject] ?? '#2563EB';
-  const bg    = SUBJECT_BG[concept.subject]   ?? '#EFF6FF';
+  const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
+  const bg    = SUBJECT_BG[concept.subject]   ?? 'var(--color-primary-container)';
   const [revealed, setRevealed] = useState(false);
 
   return (
@@ -462,22 +467,22 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
           <Icon size={16} style={{ color }} />
         </div>
         <span className="text-[12px] font-bold uppercase tracking-widest" style={{ color }}>{concept.subject}</span>
-        <span className="ml-auto text-[11px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide bg-[#F0EEE9] text-[#78716C]">
+        <span className="ml-auto text-[11px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide" style={{ background: 'var(--color-background)', color: 'var(--color-on-surface-variant)' }}>
           {concept.tag}
         </span>
       </div>
 
       {/* Title */}
-      <h2 className="text-[24px] font-black text-[#1C1917] mb-1 leading-tight" style={{ fontFamily: JKS }}>
+      <h2 className="text-[24px] font-black mb-1 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         {concept.title}
       </h2>
-      <p className="text-[12px] text-[#A8A29E] mb-5 uppercase tracking-widest font-bold">
+      <p className="text-[12px] mb-5 uppercase tracking-widest font-bold" style={{ color: 'var(--color-on-surface-muted)' }}>
         {concept.contentType === 'video' ? 'Watch · then answer MCQs' : 'Read · then answer MCQs'}
       </p>
 
       {/* Video embed */}
       {concept.contentType === 'video' && concept.youtubeId && (
-        <div className="rounded-2xl overflow-hidden mb-5 border border-[#E8E5DF]" style={{ aspectRatio: '16/9' }}>
+        <div className="rounded-2xl overflow-hidden mb-5" style={{ aspectRatio: '16/9', border: '1px solid var(--color-border)' }}>
           <iframe
             width="100%" height="100%"
             src={`https://www.youtube.com/embed/${concept.youtubeId}?rel=0&modestbranding=1`}
@@ -492,7 +497,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
       {/* Infographic card */}
       <div className="card rounded-2xl p-5 mb-4 border" style={{ borderColor: `${color}25` }}>
         {/* Headline */}
-        <p className="text-[15px] font-bold text-[#1C1917] mb-4 leading-snug" style={{ fontFamily: JKS }}>
+        <p className="text-[15px] font-bold mb-4 leading-snug" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
           {concept.visual.headline}
         </p>
 
@@ -504,7 +509,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
                    style={{ background: bg, color }}>
                 {i + 1}
               </div>
-              <p className="text-[14px] text-[#292524] leading-relaxed" style={{ fontFamily: NUN }}>
+              <p className="text-[14px] leading-relaxed" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-on-surface)' }}>
                 {b}
               </p>
             </div>
@@ -521,10 +526,10 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
         <div className="flex gap-3 items-start relative z-10 w-full">
           <Zap size={14} className="text-[#B45309] shrink-0 mt-0.5" />
           <div className="w-full">
-            <p className="text-[13px] text-[#92400E] leading-relaxed font-bold mb-1" style={{ fontFamily: NUN }}>
+            <p className="text-[13px] text-[#92400E] leading-relaxed font-bold mb-1" style={{ fontFamily: 'var(--font-body)' }}>
               Elaborative Interrogation 
             </p>
-            <p className={`text-[13px] leading-relaxed transition-all duration-500 ease-in-out ${revealed ? 'text-[#92400E] blur-none' : 'text-transparent select-none blur-[4px]'}`} style={{ fontFamily: NUN }}>
+            <p className={`text-[13px] leading-relaxed transition-all duration-500 ease-in-out ${revealed ? 'text-[#92400E] blur-none' : 'text-transparent select-none blur-[4px]'}`} style={{ fontFamily: 'var(--font-body)' }}>
               <span className="font-bold">Why it works: </span>{concept.visual.tip}
             </p>
           </div>
@@ -547,7 +552,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
       <button
         onClick={onDone}
         className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center gap-2"
-        style={{ background: color, fontFamily: JKS }}
+        style={{ background: color, fontFamily: 'var(--font-ui)' }}
       >
         I've read this — Start MCQs <ChevronRight size={16} />
       </button>
@@ -621,18 +626,18 @@ const MCQCard = ({
         <div className="flex-1 flex gap-1">
           {concept.mcqs.map((_, i) => (
             <div key={i} className="flex-1 h-1 rounded-full"
-                 style={{ background: i <= mcqIdx ? color : '#E8E5DF' }} />
+                 style={{ background: i <= mcqIdx ? color : 'var(--color-border)' }} />
           ))}
         </div>
       </div>
 
       <div className="flex justify-between items-center mb-5">
-        <p className="text-[17px] font-bold text-[#1C1917] leading-snug flex-1" style={{ fontFamily: JKS }}>
+        <p className="text-[17px] font-bold leading-snug flex-1" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
           {mcq.question}
         </p>
         <div className="w-10 h-10 ml-3 rounded-full border-2 flex items-center justify-center font-bold relative shrink-0"
-             style={{ borderColor: timeLeft <= 5 && !revealed ? '#DC2626' : '#E8E5DF', 
-                      color: timeLeft <= 5 && !revealed ? '#DC2626' : '#78716C' }}>
+             style={{ borderColor: timeLeft <= 5 && !revealed ? '#DC2626' : 'var(--color-border)',
+                      color: timeLeft <= 5 && !revealed ? '#DC2626' : 'var(--color-on-surface-variant)' }}>
           {timeLeft}
           {timeLeft <= 5 && !revealed && (
             <motion.div
@@ -650,16 +655,16 @@ const MCQCard = ({
         {mcq.options.map((opt, i) => {
           const _isChosen  = isChosen(i);
           const isCorrect = i === mcq.correct;
-          let border = '#E8E5DF';
-          let bg     = '#FFFFFF';
-          let textColor = '#1C1917';
+          let border = 'var(--color-border)';
+          let bg     = 'var(--color-surface-container-lowest)';
+          let textColor = 'var(--color-on-surface)';
 
           if (revealed) {
-            if (isCorrect)                  { border = '#15803D'; bg = '#F0FDF4'; textColor = '#166534'; }
-            else if (_isChosen && !isCorrect){ border = '#DC2626'; bg = '#FEF2F2'; textColor = '#B91C1C'; }
+            if (isCorrect)                  { border = 'var(--color-success)'; bg = 'var(--color-success-container)'; textColor = 'var(--color-success)'; }
+            else if (_isChosen && !isCorrect){ border = 'var(--color-error)'; bg = 'var(--color-error-container)'; textColor = 'var(--color-error)'; }
             else if (timeoutHappened && !isCorrect) { /* Default styling for unchosen wrong */ }
           } else if (_isChosen) {
-            border = color; bg = `${color}10`;
+            border = 'var(--color-primary)'; bg = 'var(--color-primary-container)';
           }
 
           return (
@@ -668,18 +673,18 @@ const MCQCard = ({
               onClick={() => !revealed && handleChooseLocal(i)}
               disabled={revealed}
               className="w-full p-4 rounded-2xl text-left flex items-center gap-3 transition-all duration-150"
-              style={{ border: `1.5px solid ${border}`, background: bg }}
+              style={{ border: _isChosen && !revealed ? `2px solid ${border}` : `1.5px solid ${border}`, background: bg }}
             >
               <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 text-[11px] font-black"
-                   style={{ borderColor: revealed && isCorrect ? '#15803D' : revealed && _isChosen ? '#DC2626' : _isChosen ? color : '#E8E5DF',
-                            color: revealed && isCorrect ? '#15803D' : revealed && _isChosen ? '#DC2626' : _isChosen ? color : '#A8A29E' }}>
+                   style={{ borderColor: revealed && isCorrect ? 'var(--color-success)' : revealed && _isChosen ? 'var(--color-error)' : _isChosen ? 'var(--color-primary)' : 'var(--color-border)',
+                            color: revealed && isCorrect ? 'var(--color-success)' : revealed && _isChosen ? 'var(--color-error)' : _isChosen ? 'var(--color-primary)' : 'var(--color-on-surface-muted)' }}>
                 {revealed && isCorrect
                   ? <CheckCircle2 size={13} />
                   : revealed && _isChosen && !isCorrect
                   ? <XCircle size={13} />
                   : String.fromCharCode(65 + i)}
               </div>
-              <span className="text-[14px] leading-snug" style={{ fontFamily: NUN, color: textColor }}>
+              <span className="text-[14px] leading-snug" style={{ fontFamily: 'var(--font-body)', color: textColor }}>
                 {opt}
               </span>
             </button>
@@ -729,7 +734,7 @@ const MCQCard = ({
                 <CheckCircle2 size={14} /> Correct!
               </h3>
               <p className="text-[12px] font-bold text-[#15803D] uppercase tracking-widest mb-1 mt-2">Explanation</p>
-              <p className="text-[13px] text-[#166534] leading-relaxed mb-4" style={{ fontFamily: NUN }}>
+              <p className="text-[13px] text-[#166534] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>
                 {mcq.explanation}
               </p>
 
@@ -756,7 +761,7 @@ const MCQCard = ({
           ) : (
             <>
               <p className="text-[12px] font-bold text-[#15803D] uppercase tracking-widest mb-1 mt-2">Explanation</p>
-              <p className="text-[13px] text-[#166534] leading-relaxed" style={{ fontFamily: NUN }}>
+              <p className="text-[13px] text-[#166534] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
                 {mcq.explanation}
               </p>
             </>
@@ -770,8 +775,8 @@ const MCQCard = ({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={onNext}
-          className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center gap-2"
-          style={{ background: color, fontFamily: JKS }}
+          className="w-full py-4 font-bold text-[13px] uppercase tracking-widest flex items-center justify-center gap-2"
+          style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', borderRadius: 'var(--radius-m3-full)', fontFamily: 'var(--font-ui)' }}
         >
           {isLast ? 'Next Concept' : 'Next Question'} <ChevronRight size={16} />
         </motion.button>
@@ -783,8 +788,8 @@ const MCQCard = ({
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           onClick={() => onChoose(chosen)}
-          className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white"
-          style={{ background: color, fontFamily: JKS }}
+          className="w-full py-4 font-bold text-[13px] uppercase tracking-widest"
+          style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', borderRadius: 'var(--radius-m3-full)', fontFamily: 'var(--font-ui)' }}
         >
           Check Answer
         </motion.button>
@@ -807,11 +812,11 @@ const DoneScreen = ({ correctCount, total, onRestart, setScreen }: {
          style={{ background: '#FFFBEB', border: '2px solid #FDE68A' }}>
       <Flame size={36} className="text-[#B45309]" />
     </div>
-    <p className="text-[12px] uppercase tracking-[0.3em] text-[#A8A29E] font-bold mb-2">Session complete</p>
-    <h1 className="text-[52px] font-black text-[#1C1917] leading-none mb-1" style={{ fontFamily: JKS }}>
-      {correctCount}<span className="text-[24px] font-medium text-[#78716C]">/{total}</span>
+    <p className="text-[12px] uppercase tracking-[0.3em] font-bold mb-2" style={{ color: 'var(--color-on-surface-muted)' }}>Session complete</p>
+    <h1 className="text-[52px] font-black leading-none mb-1" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
+      {correctCount}<span className="text-[24px] font-medium" style={{ color: 'var(--color-on-surface-variant)' }}>/{total}</span>
     </h1>
-    <p className="text-[14px] text-[#78716C] mb-2">correct answers</p>
+    <p className="text-[14px] mb-2" style={{ color: 'var(--color-on-surface-variant)' }}>correct answers</p>
     <div className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFFBEB] border border-[#FDE68A] mb-10">
       <Flame size={14} className="text-[#B45309]" />
       <span className="text-[13px] font-bold text-[#B45309]">Streak alive</span>
@@ -819,15 +824,15 @@ const DoneScreen = ({ correctCount, total, onRestart, setScreen }: {
     <div className="w-full space-y-3">
       <button
         onClick={onRestart}
-        className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white"
-        style={{ background: '#2563EB', fontFamily: JKS }}
+        className="w-full py-4 font-bold text-[13px] uppercase tracking-widest"
+        style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', borderRadius: 'var(--radius-m3-full)', fontFamily: 'var(--font-ui)' }}
       >
         Restart Demo
       </button>
       <button
         onClick={() => setScreen('dashboard')}
-        className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-[#6B7280]"
-        style={{ background: '#F0EEE9', fontFamily: JKS }}
+        className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest"
+        style={{ background: 'var(--color-background)', color: 'var(--color-on-surface-variant)', fontFamily: 'var(--font-ui)' }}
       >
         Back to Home
       </button>
@@ -918,23 +923,25 @@ export const DemoSession: React.FC<{ setScreen: (s: Screen) => void }> = ({ setS
       <div className="flex items-center gap-3 mt-4 mb-4">
         <button
           onClick={() => setScreen('dashboard')}
-          className="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-[#E8E5DF]"
+          className="w-9 h-9 rounded-xl flex items-center justify-center bg-white"
+          style={{ border: '1px solid var(--color-border)' }}
         >
           <ChevronLeft size={18} className="text-[#6B7280]" />
         </button>
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-[12px] font-bold text-[#78716C] uppercase tracking-widest" style={{ fontFamily: JKS }}>
+            <span className="text-[12px] font-bold uppercase tracking-widest" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface-variant)' }}>
               DSA Session
             </span>
-            <span className="text-[12px] font-bold text-[#A8A29E]" style={{ fontFamily: JKS }}>
+            <span className="text-[12px] font-bold" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface-muted)' }}>
               {conceptIndex + 1} / {totalConcepts}
             </span>
           </div>
           {/* Progress bar */}
-          <div className="h-1.5 w-full rounded-full bg-[#E8E5DF] overflow-hidden">
+          <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: 'var(--color-border)' }}>
             <motion.div
-              className="h-full rounded-full bg-[#2563EB]"
+              className="h-full rounded-full"
+              style={{ background: 'var(--color-primary)' }}
               animate={{ width: `${progressPct}%` }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             />
@@ -949,7 +956,7 @@ export const DemoSession: React.FC<{ setScreen: (s: Screen) => void }> = ({ setS
             key={c.id}
             className="flex-1 h-1 rounded-full transition-all duration-300"
             style={{
-              background: i < conceptIndex ? '#15803D' : i === conceptIndex ? '#2563EB' : '#E8E5DF',
+              background: i < conceptIndex ? '#15803D' : i === conceptIndex ? 'var(--color-primary)' : 'var(--color-border)',
             }}
           />
         ))}

@@ -318,20 +318,26 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-[#F7F6F3]/95 " />
+      <div className="absolute inset-0" style={{ background: 'var(--color-scrim)' }} />
 
       {/* Sheet */}
       <motion.div
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+        transition={{ type: 'spring', stiffness: 380, damping: 31 }}
         onClick={e => e.stopPropagation()}
-        className="relative z-10 bg-surface rounded-t-[2.5rem] border-t border-[#E8E5DF] shadow-[0_-20px_60px_rgba(0,0,0,0.5)] max-h-[90vh] flex flex-col"
+        className="relative z-10 max-h-[90vh] flex flex-col"
+        style={{
+          background: 'var(--color-surface-container-low)',
+          borderRadius: '28px 28px 0 0',
+          borderTop: '1px solid var(--color-border)',
+          boxShadow: 'var(--shadow-elevation-3)',
+        }}
       >
-        {/* Handle */}
+        {/* M3 Drag Handle */}
         <div className="flex justify-center pt-3 pb-1 shrink-0">
-          <div className="w-10 h-1 rounded-full bg-[#F0EEE9]" />
+          <div style={{ width: 32, height: 4, borderRadius: 9999, background: 'var(--color-surface-variant)' }} />
         </div>
 
         {/* Header */}
@@ -344,21 +350,23 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
             <h2 className="font-ui font-bold text-lg leading-tight truncate">{problemName}</h2>
             <p className="text-[11px] text-[#6B7280] mt-0.5">Identify the DSA pattern to apply</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl bg-[#F0EEE9] hover:bg-[#F0EEE9] transition-colors mt-1 shrink-0">
-            <X size={16} className="text-[#6B7280]" />
+          <button onClick={onClose} className="btn-icon mt-1 shrink-0">
+            <X size={16} />
           </button>
         </div>
 
         {/* Mode tabs */}
         <div className="px-6 mb-4 shrink-0">
-          <div className="flex gap-2 p-1 bg-[#F0EEE9] rounded-2xl">
+          <div className="flex gap-2 p-1 rounded-2xl" style={{ background: 'var(--color-surface-container)' }}>
             {(['keywords', 'constraint'] as const).map(m => (
               <button
                 key={m}
                 onClick={() => setMode(m)}
-                className={`flex-1 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all ${
-                  mode === m ? 'bg-[#F59E0B] text-background' : 'text-[#6B7280] hover:text-[#374151]'
-                }`}
+                className="flex-1 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all"
+                style={mode === m
+                  ? { background: 'var(--color-warning-container)', color: 'var(--color-on-warning-container)' }
+                  : { background: 'transparent', color: 'var(--color-on-surface-variant)' }
+                }
               >
                 {m === 'keywords' ? '🔍 Keywords' : '📊 Constraint n'}
               </button>
@@ -455,7 +463,8 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
                   value={constraintInput}
                   onChange={e => setConstraintInput(e.target.value)}
                   placeholder="e.g. 100000 or 1e5"
-                  className="w-full bg-[#F0EEE9] border border-[#E8E5DF] rounded-xl px-4 py-3 text-sm text-[#1C1917] placeholder:text-[#78716C] focus:outline-none focus:border-[#F59E0B]/40 font-mono"
+                  className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none font-mono"
+                  style={{ background: 'var(--color-surface-container)', border: '1px solid var(--color-border)', color: 'var(--color-on-surface)' }}
                   inputMode="numeric"
                 />
               </div>
@@ -516,7 +525,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
                     </div>
 
                     {/* Complexity reference */}
-                    <div className="bg-[#F0EEE9] border border-[#E8E5DF] rounded-2xl p-4">
+                    <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface-container)', border: '1px solid var(--color-border)' }}>
                       <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-3">
                         Time Limit Reference
                       </p>
@@ -587,7 +596,7 @@ const PatternCard: React.FC<{ match: PatternMatch; rank: number }> = ({ match, r
       </div>
 
       {/* Confidence bar */}
-      <div className="h-1 bg-[#F0EEE9] rounded-full mb-2 overflow-hidden">
+      <div className="h-1 rounded-full mb-2 overflow-hidden" style={{ background: 'var(--color-surface-container)' }}>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${barWidth}%` }}

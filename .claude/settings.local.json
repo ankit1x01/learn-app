@@ -72,7 +72,27 @@
       "WebFetch(domain:themindcompany.com)",
       "WebFetch(domain:www.makeuseof.com)",
       "WebFetch(domain:www.iphonelife.com)",
-      "WebFetch(domain:www.techradar.com)"
+      "WebFetch(domain:www.techradar.com)",
+      "WebFetch(domain:m3.material.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:gist.github.com)",
+      "WebFetch(domain:material-web.dev)",
+      "WebFetch(domain:api.flutter.dev)",
+      "WebFetch(domain:anvil.works)",
+      "WebFetch(domain:www.christianfindlay.com)",
+      "WebFetch(domain:supercharge.design)",
+      "WebFetch(domain:nimafarzin-pr.medium.com)",
+      "WebFetch(domain:konstantin-denerz.com)",
+      "WebFetch(domain:dt.in.th)",
+      "WebFetch(domain:softaai.com)",
+      "WebFetch(domain:www.lorenzovainigli.com)",
+      "WebFetch(domain:designfornative.com)",
+      "WebFetch(domain:zoewave.medium.com)",
+      "WebFetch(domain:composables.com)",
+      "WebFetch(domain:support.symfonium.app)",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:pub.dev)"
     ]
   }
 }

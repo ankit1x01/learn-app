@@ -354,20 +354,26 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-[#F7F6F3]/95 " />
+      <div className="absolute inset-0" style={{ background: 'var(--color-scrim)' }} />
 
       {/* Sheet */}
       <motion.div
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+        transition={{ type: 'spring', stiffness: 380, damping: 31 }}
         onClick={e => e.stopPropagation()}
-        className="relative z-10 bg-surface rounded-t-[2.5rem] border-t border-[#E8E5DF] shadow-[0_-20px_60px_rgba(0,0,0,0.5)] max-h-[85vh] flex flex-col"
+        className="relative z-10 max-h-[85vh] flex flex-col"
+        style={{
+          background: 'var(--color-surface-container-low)',
+          borderRadius: '28px 28px 0 0',
+          borderTop: '1px solid var(--color-border)',
+          boxShadow: 'var(--shadow-elevation-3)',
+        }}
       >
-        {/* Handle */}
+        {/* M3 Drag Handle */}
         <div className="flex justify-center pt-3 pb-1 shrink-0">
-          <div className="w-10 h-1 rounded-full bg-[#F0EEE9]" />
+          <div style={{ width: 32, height: 4, borderRadius: 9999, background: 'var(--color-surface-variant)' }} />
         </div>
 
         {/* Header */}
@@ -380,8 +386,8 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
             <h2 className="font-ui font-bold text-lg leading-tight truncate">{conceptName}</h2>
             <p className="text-[11px] text-[#6B7280] mt-0.5">{subject} · {chapter}</p>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl bg-[#F0EEE9] hover:bg-[#F0EEE9] transition-colors mt-1 shrink-0">
-            <X size={16} className="text-[#6B7280]" />
+          <button onClick={onClose} className="btn-icon mt-1 shrink-0">
+            <X size={16} />
           </button>
         </div>
 
@@ -391,7 +397,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
           {!selected ? (
             <>
               {/* Technique grid */}
-              <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-4">
+              <p className="text-[12px] uppercase tracking-widest font-bold mb-4" style={{ color: 'var(--color-on-surface-variant)' }}>
                 Choose a learning technique — prompt copies to clipboard
               </p>
               <div className="grid grid-cols-2 gap-3">
@@ -399,10 +405,11 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                   <button
                     key={tech.id}
                     onClick={() => handleSelect(tech)}
-                    className={`p-4 rounded-2xl border border-[#E8E5DF] text-left transition-all active:scale-[0.97] ${tech.bg} hover:border-[#E8E5DF]`}
+                    className={`p-4 rounded-2xl text-left transition-all active:scale-[0.97] ${tech.bg}`}
+                    style={{ border: '1px solid var(--color-border)' }}
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <div className={`p-2 rounded-xl bg-[#F0EEE9]`}>
+                      <div className="p-2 rounded-xl" style={{ background: 'var(--color-surface-container)' }}>
                         <tech.icon size={16} className={tech.color} />
                       </div>
                       <span className={`text-[12px] font-bold px-1.5 py-0.5 rounded-full bg-[#F0EEE9] text-[#6B7280] uppercase tracking-wider`}>
@@ -437,7 +444,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
               </div>
 
               {/* Prompt preview */}
-              <div className="bg-[#F0EEE9] border border-[#E8E5DF] rounded-2xl p-4 mb-4 max-h-48 overflow-y-auto">
+              <div className="rounded-2xl p-4 mb-4 max-h-48 overflow-y-auto" style={{ background: 'var(--color-surface-container)', border: '1px solid var(--color-border)' }}>
                 <p className="text-[11px] text-[#6B7280] font-mono leading-relaxed whitespace-pre-wrap">
                   {prompt}
                 </p>
@@ -447,11 +454,11 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
               <div className="flex gap-2 mb-4">
                 <button
                   onClick={handleCopy}
-                  className={`flex-1 py-4 rounded-2xl font-ui font-bold tracking-widest text-sm flex items-center justify-center gap-2 transition-all ${
-                    copied
-                      ? 'bg-[#15803D] text-background'
-                      : 'bg-primary text-background hover:opacity-90'
-                  }`}
+                  className="flex-1 py-4 rounded-2xl font-ui font-bold tracking-widest text-sm flex items-center justify-center gap-2 transition-all"
+                  style={copied
+                    ? { background: 'var(--color-success)', color: 'var(--color-on-success)' }
+                    : { background: 'var(--color-primary)', color: 'var(--color-on-primary)' }
+                  }
                 >
                   {copied ? <Check size={18} /> : <Copy size={18} />}
                   {copied ? 'COPIED!' : 'COPY PROMPT'}
@@ -460,11 +467,11 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                 {canShare && (
                   <button
                     onClick={handleShare}
-                    className={`px-4 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border ${
-                      shared
-                        ? 'bg-[#F0FDF4] border-[#BBF7D0] text-[#15803D]'
-                        : 'bg-[#F0EEE9] border-[#E8E5DF] text-[#374151] hover:bg-[#F0EEE9]'
-                    }`}
+                    className="px-4 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all border"
+                  style={shared
+                    ? { background: 'var(--color-success-container)', borderColor: 'var(--color-success)', color: 'var(--color-on-success-container)' }
+                    : { background: 'var(--color-surface-container)', borderColor: 'var(--color-border)', color: 'var(--color-on-surface)' }
+                  }
                     title="Share via Android share sheet"
                   >
                     {shared ? <Check size={18} /> : <Share2 size={18} />}
