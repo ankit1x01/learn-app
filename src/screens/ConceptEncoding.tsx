@@ -49,13 +49,13 @@ export const ConceptEncoding = ({
         <span className={`px-3 py-1 ${subjectBg(concept.subject)} ${subjectColor(concept.subject)} rounded-full text-[12px] font-bold tracking-widest uppercase flex items-center gap-1.5`}>
           <Zap size={11} fill="currentColor" /> New Concept
         </span>
-        <span className="px-3 py-1 rounded-full text-[12px] font-bold tracking-widest uppercase bg-[#F0EEE9] text-[#78716C]">
+        <span className="px-3 py-1 rounded-full text-[12px] font-bold tracking-widest uppercase" style={{ background: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)' }}>
           {concept.subject}
         </span>
         <TierBadge tier={concept.pyqTier} />
       </div>
 
-      <p className="text-[12px] uppercase tracking-[0.2em] text-[#78716C] font-bold mb-3">{concept.chapter} · Unit {concept.unit}</p>
+      <p className="text-[12px] uppercase tracking-[0.2em] font-bold mb-3" style={{ color: 'var(--color-on-surface-variant)' }}>{concept.chapter} · Unit {concept.unit}</p>
 
       {/* Visual area */}
       <div className="aspect-square rounded-[2rem] mb-6 overflow-hidden flex items-center justify-center relative"
@@ -64,7 +64,7 @@ export const ConceptEncoding = ({
           <div className="w-56 h-56 rounded-full border border-dashed animate-spin-slow" style={{ borderColor: 'rgba(108,99,255,0.2)' }} />
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-[#A8A29E] font-label italic text-sm text-center px-8">Diagram: {concept.name}</span>
+          <span style={{ color: 'var(--color-on-surface-muted)', fontStyle: 'italic', fontSize: '14px' }}>Diagram: {concept.name}</span>
         </div>
         <div className="absolute top-4 right-4 animate-float">
           <Zap size={24} className={subjectColor(concept.subject)} />
@@ -72,12 +72,12 @@ export const ConceptEncoding = ({
       </div>
 
       <h1 className="text-3xl font-ui font-black tracking-tight mb-1">{concept.name}</h1>
-      <p className="text-[#6B7280] italic mb-5 text-sm">{concept.chapter} · Unit {concept.unit}</p>
+      <p className="italic mb-5 text-sm" style={{ color: 'var(--color-on-surface-variant)' }}>{concept.chapter} · Unit {concept.unit}</p>
 
       {/* Encoding tip */}
       <div className="p-4 rounded-2xl mb-6 flex items-start gap-3" style={{ background: 'rgba(108,99,255,0.07)', border: '1px solid rgba(108,99,255,0.1)' }}>
         <Brain size={14} className="text-primary mt-0.5 shrink-0" />
-        <p className="font-reading text-[13px] text-[#374151] leading-relaxed" style={{ letterSpacing: '0.005em' }}>
+        <p className="font-reading text-[13px] leading-relaxed" style={{ color: 'var(--color-on-surface)', letterSpacing: '0.005em' }}>
           {subjectCfg?.encodingTip ?? 'Encode by writing it out from scratch without notes.'}
         </p>
       </div>
@@ -90,20 +90,20 @@ export const ConceptEncoding = ({
             onClick={() => setActiveModality(m.id)}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all shrink-0`}
             style={m.id === activeModality
-              ? { background: 'linear-gradient(135deg, #6C63FF, #4A42D0)', boxShadow: '0 4px 16px rgba(108,99,255,0.35)' }
+              ? { background: 'linear-gradient(135deg, var(--color-subject-chemistry), var(--color-subject-chemistry))', boxShadow: '0 4px 16px rgba(108,99,255,0.35)' }
               : { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }
             }
           >
-            <m.icon size={14} className={m.id === activeModality ? 'text-white' : 'text-[#6B7280]'} />
-            <span className={`text-[11px] font-bold uppercase tracking-widest ${m.id === activeModality ? 'text-white' : 'text-[#6B7280]'}`}>{m.label}</span>
+            <m.icon size={14} style={{ color: m.id === activeModality ? 'white' : 'var(--color-on-surface-variant)' }} />
+            <span className={`text-[11px] font-bold uppercase tracking-widest ${m.id === activeModality ? 'text-white' : ''}`} style={{ color: m.id === activeModality ? 'white' : 'var(--color-on-surface-variant)' }}>{m.label}</span>
           </button>
         ))}
       </div>
 
       {/* Content */}
-      <div className="space-y-4 text-[#6B7280] leading-relaxed mb-10">
+      <div className="space-y-4 leading-relaxed mb-10" style={{ color: 'var(--color-on-surface-variant)' }}>
         <p className="text-sm leading-relaxed">
-          Study the <strong className="text-[#1C1917]">{concept.name}</strong> pattern deeply. Understand the template,
+          Study the <strong style={{ color: 'var(--color-on-surface)' }}>{concept.name}</strong> pattern deeply. Understand the template,
           identify the trigger conditions, and practice applying it to at least 3 different problems
           before moving on.
         </p>
@@ -111,7 +111,7 @@ export const ConceptEncoding = ({
 
       {/* Layer 1 — Encoding depth selector */}
       <div className="mb-6">
-        <p className="text-[12px] uppercase tracking-[0.2em] text-[#78716C] font-bold mb-3">
+        <p className="text-[12px] uppercase tracking-[0.2em] font-bold mb-3" style={{ color: 'var(--color-on-surface-variant)' }}>
           How did you encode this?
         </p>
         <div className="space-y-2">
@@ -125,17 +125,17 @@ export const ConceptEncoding = ({
               onClick={() => setEncodingDepth(depth)}
               className="w-full p-3.5 rounded-2xl text-left transition-all duration-200 flex items-center gap-3"
               style={{
-                background: encodingDepth === depth ? 'rgba(37,99,235,0.08)' : '#FFFFFF',
-                border: `1px solid ${encodingDepth === depth ? '#BFDBFE' : '#E8E5DF'}`,
+                background: encodingDepth === depth ? 'rgba(103, 80, 164, 0.08)' : '#FFFFFF',
+                border: `1px solid ${encodingDepth === depth ? 'var(--color-primary-container)' : 'var(--color-border)'}`,
               }}
             >
               <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                   style={{ background: encodingDepth === depth ? '#EFF6FF' : '#F7F6F3' }}>
-                <Icon size={15} style={{ color: encodingDepth === depth ? '#2563EB' : '#6B7280' }} />
+                   style={{ background: encodingDepth === depth ? 'var(--color-primary-container)' : 'var(--color-surface-container)' }}>
+                <Icon size={15} style={{ color: encodingDepth === depth ? 'var(--color-primary)' : 'var(--color-on-surface-variant)' }} />
               </div>
               <div className="flex-1">
                 <div className="font-bold text-sm leading-tight">{label}</div>
-                <div className="text-[11px] text-[#6B7280] mt-0.5">{sub}</div>
+                <div className="text-[11px] mt-0.5" style={{ color: 'var(--color-on-surface-variant)' }}>{sub}</div>
               </div>
               <span className="text-[12px] font-bold shrink-0"
                     style={{ color: encodingDepth === depth ? '#2563EB' : '#C4BFBA' }}>
