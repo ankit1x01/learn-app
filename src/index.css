@@ -122,6 +122,19 @@
 
   /* ── Scrim ── */
   --color-scrim:                       rgba(0,0,0,0.32);
+
+  /* ── Subject accent colors (CHITTA-specific) ── */
+  --color-subject-physics:            #1D4ED8;
+  --color-subject-physics-container:  #EFF6FF;
+  --color-subject-chemistry:          #6D28D9;
+  --color-subject-chemistry-container:#F5F3FF;
+  --color-subject-biology:            #166534;
+  --color-subject-biology-container:  #F0FDF4;
+  --color-subject-cs:                 #0E7490;
+  --color-subject-cs-container:       #ECFEFF;
+
+  /* ── Warning border (for streak badge) ── */
+  --color-warning-border:             #FDE68A;
 }
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
@@ -190,7 +203,7 @@
 
   .streak-badge {
     background: var(--color-warning-container);
-    border: 1px solid #FDE68A;
+    border: 1px solid var(--color-warning-border);
     border-radius: 999px;
     padding: 0.25rem 0.6rem;
     display: inline-flex;
@@ -202,10 +215,10 @@
     font-family: var(--font-ui);
   }
 
-  .subject-physics   { color: #1D4ED8; background: #EFF6FF; }
-  .subject-chemistry { color: #6D28D9; background: #F5F3FF; }
-  .subject-biology   { color: #166534; background: #F0FDF4; }
-  .subject-cs        { color: #0E7490; background: #ECFEFF; }
+  .subject-physics   { color: var(--color-subject-physics);   background: var(--color-subject-physics-container); }
+  .subject-chemistry { color: var(--color-subject-chemistry); background: var(--color-subject-chemistry-container); }
+  .subject-biology   { color: var(--color-subject-biology);   background: var(--color-subject-biology-container); }
+  .subject-cs        { color: var(--color-subject-cs);        background: var(--color-subject-cs-container); }
 }
 
 /* ── Components ───────────────────────────────────────────────────────────── */
