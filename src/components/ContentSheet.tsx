@@ -124,7 +124,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
           background: 'var(--color-surface-container-low)',
           borderRadius: '28px 28px 0 0',
           borderTop: '1px solid var(--color-border)',
-          boxShadow: 'var(--shadow-elevation-3)',
+          boxShadow: 'var(--shadow-elevation-1)',
         }}
       >
         {/* M3 Drag Handle */}
@@ -233,7 +233,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
                     {images.map((img, i) => (
-                      <div key={i} className="relative rounded-xl overflow-hidden aspect-square bg-[#F0EEE9]">
+                      <div key={i} className="relative rounded-xl overflow-hidden aspect-square" style={{ background: 'var(--color-surface-container-high)' }}>
                         <img
                           src={img.dataURI}
                           alt={`note-${i}`}
