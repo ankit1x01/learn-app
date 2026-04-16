@@ -26,11 +26,11 @@ export const ChittaMap = ({
   );
 
   const stageColor: Record<Stage, string> = {
-    Automatic:  'bg-[#15803D]',
-    ExamReady:  'bg-[#B45309]',
-    Conscious:  'bg-[#2563EB]',
-    Fragile:    'bg-[#DC2626] animate-pulse',
-    Unseen:     'bg-[#C4BFBA]',
+    Automatic:  'bg-[color:var(--color-success)]',
+    ExamReady:  'bg-[color:var(--color-warning)]',
+    Conscious:  'bg-[color:var(--color-primary)]',
+    Fragile:    'bg-[color:var(--color-error)] animate-pulse',
+    Unseen:     'bg-[color:var(--color-surface-variant)]',
   };
   const stageSize: Record<Stage, string> = {
     Automatic:  'w-4 h-4',
@@ -58,7 +58,7 @@ export const ChittaMap = ({
   );
 
   return (
-    <div className="h-screen w-full bg-[#F7F6F3] relative overflow-hidden">
+    <div className="h-screen w-full relative overflow-hidden" style={{ background: 'var(--color-background)' }}>
       {/* Filter pills */}
       <div className="absolute top-16 left-0 w-full px-4 flex gap-2 overflow-x-auto no-scrollbar z-20 py-3">
         {filterOptions.map((f) => (
@@ -68,9 +68,9 @@ export const ChittaMap = ({
             className={`px-4 py-2 rounded-full text-[12px] font-bold uppercase tracking-widest transition-all shrink-0 ${
               filter === f
                 ? 'text-white'
-                : 'text-[#6B7280] border border-[#E8E5DF]'
+                : 'text-[var(--color-on-surface-variant)] border border-[var(--color-border)]'
             }`}
-            style={filter === f ? { background: '#2563EB' } : { background: '#FFFFFF' }}
+            style={filter === f ? { background: 'var(--color-primary)' } : { background: 'var(--color-surface-container-lowest)' }}
           >
             {f === 'All' ? f : `${subjectEmoji(f)} ${f}`}
           </button>
