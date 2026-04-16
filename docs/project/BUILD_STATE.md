@@ -1,6 +1,6 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-11 — **M3 Expressive design system fully implemented**
+> Last updated: 2026-04-16 — **M3 Expressive design system complete + M3 loading indicators deployed globally**
 
 ---
 
@@ -20,6 +20,35 @@
 - ✅ All stage colors updated (Automatic→success, Conscious→warning, Fragile→error, etc.)
 
 **Production build**: ✅ ZERO errors, zero TypeScript errors, zero lint warnings
+
+---
+
+## M3 Loading Indicators System ✅ COMPLETE
+
+**Global loading state management:**
+- ✅ `LoadingIndicator` component (sm/md/lg, fullscreen mode, M3 spring animations)
+- ✅ `ProgressBar` component (linear/indeterminate modes, sm/md sizes)
+- ✅ `LoadingContext` with React Context API (global state, no prop drilling)
+- ✅ `LoadingProvider` wrapping entire App.tsx (automatic overlay rendering)
+- ✅ Support for progress updates and custom messages
+- ✅ M3-compliant colors (primary spinner, on-surface track)
+- ✅ Integration examples for all screen types
+- ✅ Type-safe configuration (LoadingState interface)
+
+**Usage patterns documented:**
+- Pattern 1: Fullscreen spinner for modal operations (< 3 sec)
+- Pattern 2: Progress bar for long operations (with percentage)
+- Pattern 3: Indeterminate spinner for unknown-duration tasks
+- Pattern 4: Batch operations with streaming progress
+- Pattern 5: Error handling with automatic cleanup
+
+**Ready for integration in:**
+- Dashboard session builder (progress bar)
+- LiveSession answer submission (fullscreen spinner)
+- ConceptEncoding depth changes (quick spinner)
+- TopicsBank data loading (fullscreen spinner)
+- SessionComplete multi-phase analysis
+- Any async operation across the app
 
 ---
 
