@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { m3SpatialDefault, m3SpatialFast, m3EffectsEase } from '../lib/m3-motion';
 import { CONFIG, examReadiness, totalConcepts, totalExamQ, subjectBar } from '../lib/config';
+import { ShapePlaced } from '../components/M3Shapes';
 import type { Screen } from '../types';
 import type { SessionItem, SubjectStats } from '../core/types';
 import { getTimeOfDayNudge } from '../core/scheduler';
@@ -134,8 +135,10 @@ export const Dashboard = ({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={m3SpatialDefault}
-        className="card rounded-m3-xl p-5 mb-4"
+        className="card rounded-m3-xl p-5 mb-4 relative overflow-hidden"
       >
+        <ShapePlaced position="top-left" shape="blob" color="var(--color-primary)" opacity={0.08} size={40} />
+        <ShapePlaced position="bottom-right" shape="flower" color="var(--color-success)" opacity={0.08} size={36} />
         <div className="flex items-center gap-5">
           {/* Ring */}
           <div className="relative shrink-0" style={{ width: 110, height: 110 }}>
@@ -196,8 +199,9 @@ export const Dashboard = ({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.1 }}
-        className="card rounded-m3-xl p-5 mb-4"
+        className="card rounded-m3-xl p-5 mb-4 relative overflow-hidden"
       >
+        <ShapePlaced position="bottom-left" shape="clover" color="var(--color-warning)" opacity={0.1} size={44} animate={true} />
         <div className="flex items-center gap-2 mb-3">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'var(--color-success-container)' }}>
             <TrendingUp size={15} style={{ color: 'var(--color-success)' }} />
@@ -239,12 +243,13 @@ export const Dashboard = ({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ ...m3SpatialDefault, delay: 0.15 }}
-        className="flex items-center gap-3 px-4 py-3 rounded-m3-lg mb-4"
+        className="flex items-center gap-3 px-4 py-3 rounded-m3-lg mb-4 relative overflow-hidden"
         style={{
           background: isMorning ? 'var(--color-success-container)' : 'var(--color-primary-container)',
           border: `1px solid ${isMorning ? 'var(--color-success-container)' : 'var(--color-primary-border)'}`,
         }}
       >
+        <ShapePlaced position="bottom-right" shape="star" color={isMorning ? 'var(--color-success)' : 'var(--color-primary)'} opacity={0.15} size={32} animate={true} />
         <Clock size={14} style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)', flexShrink: 0 }} />
         <p className="text-[13px] font-medium font-body" style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }}>
           <span className="font-bold">Right now:</span> best for {nudge}
