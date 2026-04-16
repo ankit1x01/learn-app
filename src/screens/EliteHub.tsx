@@ -16,9 +16,9 @@ const MODES = [
     title: 'Ghana Patha',
     subtitle: 'Stage 4 — Interview Ready Drill',
     desc: '15-second hard cutoff. No hints. Pure automatic pattern recall.',
-    color: 'text-[#F59E0B]',
-    bg: 'bg-[#F59E0B]/10',
-    border: 'border-[#F59E0B]/20',
+    color: 'text-[var(--color-warning)]',
+    bg: 'bg-[color:var(--color-warning)]/10',
+    border: 'border-[var(--color-warning)]/20',
     badge: 'STAGE 4',
   },
   {
@@ -27,9 +27,9 @@ const MODES = [
     title: 'Stress Inoculation',
     subtitle: 'Interview Pressure Simulation',
     desc: 'Random timer. Auto-submit. Train pattern recall under cortisol.',
-    color: 'text-[#B91C1C]',
-    bg: 'bg-[#FEF2F2]',
-    border: 'border-[#FECACA]',
+    color: 'text-[var(--color-error)]',
+    bg: 'bg-[color:var(--color-error-container)]',
+    border: 'border-[var(--color-error-container)]',
     badge: 'PRESSURE',
   },
   {
@@ -38,9 +38,9 @@ const MODES = [
     title: 'Trap Immunity',
     subtitle: 'Kill Off-By-One Thinking',
     desc: 'Identify WHY common DSA traps seem right. Kills Stage 2 illusions.',
-    color: 'text-[#0E7490]',
-    bg: 'bg-[#ECFEFF]',
-    border: 'border-[#A5F3FC]',
+    color: 'text-[var(--color-subject-cs)]',
+    bg: 'bg-[color:var(--color-subject-cs-container)]',
+    border: 'border-[var(--color-subject-cs-container)]',
     badge: 'IMMUNITY',
   },
   {
@@ -60,9 +60,9 @@ const MODES = [
     title: 'Mock Interview',
     subtitle: '10 Problems · 45 Min · FAANG Pattern',
     desc: 'Full interview loop simulation. Real time pressure. Error report after.',
-    color: 'text-[#15803D]',
-    bg: 'bg-[#F0FDF4]',
-    border: 'border-[#BBF7D0]',
+    color: 'text-[var(--color-success)]',
+    bg: 'bg-[color:var(--color-success-container)]',
+    border: 'border-[var(--color-success-container)]',
     badge: 'FAANG',
   },
   {
@@ -82,9 +82,9 @@ const MODES = [
     title: 'How to Learn Anything',
     subtitle: '28-Day Cognitive Architecture Course',
     desc: 'Memory, retrieval, representation, feedback loops, compression. The science behind CHITTA.',
-    color: 'text-[#7C3AED]',
-    bg: 'bg-[#F5F3FF]',
-    border: 'border-[#F472B6]/20',
+    color: 'text-[var(--color-subject-chemistry)]',
+    bg: 'bg-[color:var(--color-subject-chemistry-container)]',
+    border: 'border-[var(--color-subject-chemistry-container)]',
     badge: 'COURSE',
   },
 ];
@@ -93,11 +93,11 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
   <div className="pt-16 pb-32 px-6 max-w-md mx-auto">
     <header className="mb-8">
       <div className="flex items-center gap-2 mb-1">
-        <Flame size={14} className="text-[#F59E0B]" />
-        <span className="text-[12px] uppercase tracking-[0.3em] text-[#6B7280] font-bold">Pro Mode</span>
+        <Flame size={14} style={{ color: 'var(--color-warning)' }} />
+        <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>Pro Mode</span>
       </div>
       <h1 className="text-4xl font-ui font-bold tracking-tight mb-1">
-        FAANG <span className="text-[#F59E0B]">Ready</span>
+        FAANG <span style={{ color: 'var(--color-warning)' }}>Ready</span>
       </h1>
       <p className="text-[#6B7280] text-xs font-label">
         {daysLeft} days to interview · {chittaScore} patterns automatic

@@ -139,15 +139,15 @@ export const LiveSession = ({
 
   // Queue badge colors
   const queueStyle: Record<string, { bg: string; color: string }> = {
-    review:    { bg: '#FEF2F2', color: '#B91C1C' },
-    new:       { bg: '#EFF6FF', color: '#1D4ED8' },
-    strengthen:{ bg: '#F0FDF4', color: '#166534' },
-    challenge: { bg: '#F5F3FF', color: '#6D28D9' },
+    review:    { bg: 'var(--color-error-container)', color: 'var(--color-on-error-container)' },
+    new:       { bg: 'var(--color-primary-container)', color: 'var(--color-on-primary-container)' },
+    strengthen:{ bg: 'var(--color-success-container)', color: 'var(--color-on-success-container)' },
+    challenge: { bg: 'var(--color-subject-chemistry-container)', color: 'var(--color-subject-chemistry)' },
   };
-  const qs = queueStyle[queue] ?? { bg: '#F7F6F3', color: '#78716C' };
+  const qs = queueStyle[queue] ?? { bg: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)' };
 
   return (
-    <div className="pt-12 pb-8 max-w-md mx-auto min-h-screen flex flex-col bg-[#F7F6F3]">
+    <div className="pt-12 pb-8 max-w-md mx-auto min-h-screen flex flex-col" style={{ background: 'var(--color-background)' }}>
 
       {/* ── Top progress bar ── */}
       <div className="h-1 bg-[#E8E5DF] w-full">
@@ -160,19 +160,19 @@ export const LiveSession = ({
       </div>
 
       {/* ── Header row ── */}
-      <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-[#E8E5DF]">
+      <div className="flex items-center justify-between px-4 py-3 bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
         <button
           onClick={() => setScreen('dashboard')}
-          className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#F7F6F3] border border-[#E8E5DF]"
+          className="w-9 h-9 rounded-xl flex items-center justify-center border" style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-border)' }}
         >
-          <X size={16} className="text-[#78716C]" />
+          <X size={16} style={{ color: 'var(--color-on-surface-muted)' }} />
         </button>
 
         <div className="flex items-center gap-2">
-          <span className="text-[15px] font-bold text-[#1C1917]" style={{ fontFamily: JKS }}>
+          <span className="text-[15px] font-bold" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
             Q{qIndex + 1}
           </span>
-          <span className="text-[14px] text-[#A8A29E]">/ {session.length}</span>
+          <span className="text-[14px]" style={{ color: 'var(--color-on-surface-muted)' }}>/ {session.length}</span>
         </div>
 
         {/* Question dots */}
@@ -184,7 +184,7 @@ export const LiveSession = ({
               style={{
                 width: i === qIndex ? 14 : 6,
                 height: 6,
-                background: i < qIndex ? '#15803D' : i === qIndex ? '#2563EB' : '#E8E5DF',
+                background: i < qIndex ? 'var(--color-success)' : i === qIndex ? 'var(--color-primary)' : 'var(--color-border)',
               }}
             />
           ))}
