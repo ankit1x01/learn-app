@@ -19,7 +19,7 @@ export const MorningRecall = ({ setScreen }: { setScreen: (s: Screen) => void })
   return (
     <div className="pt-20 pb-36 px-4 max-w-md mx-auto min-h-screen flex flex-col items-center">
       <div className="text-center mb-12">
-        <h2 className="text-5xl font-ui font-light text-[#292524] tracking-tighter mb-2">
+        <h2 className="text-5xl font-ui font-light tracking-tighter mb-2" style={{ color: 'var(--color-on-surface)' }}>
           {new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false })}
         </h2>
         <div className="h-px w-12 mx-auto" style={{ background: 'rgba(108,99,255,0.3)' }} />
@@ -37,19 +37,19 @@ export const MorningRecall = ({ setScreen }: { setScreen: (s: Screen) => void })
         </div>
 
         {current && (
-          <p className="text-[12px] uppercase tracking-widest text-[#78716C] mb-2">
+          <p className="text-[12px] uppercase tracking-widest mb-2" style={{ color: 'var(--color-on-surface-variant)' }}>
             {current.chapter} · Unit {current.unit}
           </p>
         )}
         <h1 className="text-2xl font-ui font-black leading-tight mb-4">{current?.name ?? 'Pattern Recall'}</h1>
-        <p className="text-[#6B7280] text-sm mb-8 leading-relaxed">
+        <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--color-on-surface-variant)' }}>
           Write the trigger conditions, the template, and one example problem where you'd use this.
         </p>
 
         <div className="space-y-5 mb-12">
           {['Trigger condition', 'Code template', 'Example problem'].map((label, i) => (
             <div key={i} className="pb-4" style={{ borderBottom: '1px solid rgba(108,99,255,0.15)' }}>
-              <span className="text-[12px] text-[#A8A29E] font-bold uppercase tracking-normal">{label}</span>
+              <span className="text-[12px] font-bold uppercase tracking-normal" style={{ color: 'var(--color-on-surface-muted)' }}>{label}</span>
               <div className="h-7 mt-1" />
             </div>
           ))}
@@ -65,7 +65,7 @@ export const MorningRecall = ({ setScreen }: { setScreen: (s: Screen) => void })
       </div>
 
       <div className="text-center space-y-4">
-        <p className="text-sm text-[#6B7280] leading-relaxed max-w-[240px]">
+        <p className="text-sm leading-relaxed max-w-[240px]" style={{ color: 'var(--color-on-surface-variant)' }}>
           {recallConcepts.length} concepts to recall · Your <span className="text-primary italic">chitta</span> consolidated patterns during sleep 🌙
         </p>
         <div className="flex justify-center gap-2 pt-2">
@@ -76,7 +76,7 @@ export const MorningRecall = ({ setScreen }: { setScreen: (s: Screen) => void })
               style={{
                 width: i === 0 ? 16 : 6,
                 height: 6,
-                background: i === 0 ? '#6C63FF' : 'rgba(255,255,255,0.08)',
+                background: i === 0 ? 'var(--color-subject-chemistry)' : 'rgba(255,255,255,0.08)',
                 boxShadow: i === 0 ? '0 0 10px rgba(108,99,255,0.5)' : 'none',
               }}
             />

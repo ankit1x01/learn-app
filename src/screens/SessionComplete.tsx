@@ -99,9 +99,10 @@ export const SessionComplete = ({
           </span>
           <span className="ml-auto text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>/ {totalConcepts}</span>
         </div>
-        <div className="h-2 w-full rounded-full overflow-hidden bg-[#E8E5DF]">
+        <div className="h-2 w-full rounded-full overflow-hidden" style={{ background: 'var(--color-border)' }}>
           <motion.div
-            className="h-full rounded-full bg-[#15803D]"
+            className="h-full rounded-full"
+            style={{ background: 'var(--color-success)' }}
             initial={{ width: 0 }}
             animate={{ width: `${(totalAutomatic / totalConcepts) * 100}%` }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
@@ -120,15 +121,16 @@ export const SessionComplete = ({
             return (
               <div
                 key={s.name}
-                className="flex-1 text-center py-3 rounded-xl border border-[#E8E5DF]"
+                className="flex-1 text-center py-3 rounded-xl border"
+                style={{ borderColor: 'var(--color-border)' }}
               >
                 <div className="flex justify-center mb-1">
                   <Icon size={16} className={s.color} />
                 </div>
-                <div className="text-[16px] font-bold text-[#1C1917] tabular-nums" style={{ fontFamily: JKS }}>
+                <div className="text-[16px] font-bold tabular-nums" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
                   {subjectBreakdown.pct[s.name]}%
                 </div>
-                <div className="text-[11px] text-[#A8A29E]">{subjectBreakdown.counts[s.name]}Q</div>
+                <div className="text-[11px]" style={{ color: 'var(--color-on-surface-muted)' }}>{subjectBreakdown.counts[s.name]}Q</div>
               </div>
             );
           })}
@@ -138,7 +140,7 @@ export const SessionComplete = ({
       {/* ── Stats grid ── */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         {[
-          { label: 'Questions',  value: session.length, color: '#1C1917' },
+          { label: 'Questions',  value: session.length, color: 'var(--color-on-surface)' },
           { label: 'Accuracy',   value: '72%',          color: '#2563EB' },
           { label: 'Mastered',   value: '+12',           color: '#15803D' },
           { label: 'Need Review',value: '+4',            color: '#B45309' },
