@@ -1,6 +1,6 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-16 — **M3 Expressive design system complete + M3 loading indicators deployed globally**
+> Last updated: 2026-04-16 — **M3 Expressive design system complete + M3 loading indicators deployed globally + Dashboard shapes integrated**
 
 ---
 
@@ -8,6 +8,7 @@
 
 **All screens updated with M3 color tokens:**
 - ✅ Core tokens in `src/index.css` (@theme block with all M3 colors/shapes/durations/elevations)
+- ✅ Shape scale fixed: radius-m3-xl 20px (was 28), radius-m3-2xl 32px (was 48)
 - ✅ DESIGN_SYSTEM.md rewritten (authoritative single source of truth)
 - ✅ Motion presets in `src/lib/m3-motion.ts` (6 Framer Motion spring presets with M3 physics)
 - ✅ BottomNav, ContentSheet, TierBadge, StatusBar (components fully M3-compliant)
@@ -18,6 +19,16 @@
 - ✅ Primary color migrated: #2563EB (old blue) → #6750A4 (Focus Violet)
 - ✅ All subject colors mapped to M3 tokens (Physics/Chemistry/Biology/CS)
 - ✅ All stage colors updated (Automatic→success, Conscious→warning, Fragile→error, etc.)
+
+**M3 Expressive Abstract Shapes:**
+- ✅ `src/components/M3Shapes.tsx` with 16 shape components (blob, clover, flower, star, diamond, heart, arch, wave, pill, triangle, circle, 2.5D layered, etc.)
+- ✅ `ShapePlaced()` utility for corner positioning + animation support
+- ✅ Dashboard integration:
+  - Mastery Ring Card: blob (top-left, 8% opacity) + flower (bottom-right, 8% opacity)
+  - Exam Readiness Card: clover (bottom-left, 10% opacity, animated)
+  - Time-of-Day Nudge: star (bottom-right, 15% opacity, rotating)
+- ✅ All shapes use M3 colors with low opacity for subtle visual expression
+- ✅ Framer Motion animations: pulsing blobs, rotating stars, floating 2.5D layers
 
 **Production build**: ✅ ZERO errors, zero TypeScript errors, zero lint warnings
 
