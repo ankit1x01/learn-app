@@ -50,6 +50,7 @@ export const Dashboard = ({
 }) => {
   const stats = globalStats;
   const [courseCompleted, setCourseCompleted] = useState(0);
+  const [selectedPill, setSelectedPill] = useState<string | null>(null);
 
   useEffect(() => {
     loadCourseProgress().then(map => setCourseCompleted(map.size));
@@ -109,33 +110,92 @@ export const Dashboard = ({
         </div>
       </div>
 
-      {/* ── 3 Stat Pills ── */}
-      <div className="flex gap-2.5 mb-4">
+      {/* ── 3 Stat Pills (Interactive) ── */}
+      <div className="flex gap-2.5 mb-6">
         {[
-          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)' },
-          { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)' },
-          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)' },
+          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)', help: totalAutomatic === 0 ? 'Start your first session to earn mastery' : null },
+          { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)', help: totalConscious === 0 ? 'Complete 2 more sessions to learn' : null },
+          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)', help: totalFading === 0 ? 'No concepts due for review yet' : null },
         ].map((s, i) => (
-          <motion.div
+          <motion.button
             key={s.label}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...m3SpatialDefault, delay: i * 0.05 }}
-            className="flex-1 rounded-m3-lg rounded-tl-sm p-3 text-center"
-            style={{ background: s.bg, border: `1px solid ${s.border}` }}
+            onClick={() => setSelectedPill(selectedPill === s.label ? null : s.label)}
+            className="flex-1 rounded-m3-lg rounded-tl-sm p-3 text-center cursor-pointer transition-all active:scale-95"
+            style={{ 
+              background: s.bg, 
+              border: `2px solid ${selectedPill === s.label ? s.color : s.border}`,
+              opacity: selectedPill === null || selectedPill === s.label ? 1 : 0.6
+            }}
+            title={s.help || undefined}
           >
             <span className="text-[24px] font-bold block tabular-nums font-ui" style={{ color: s.color }}>{s.value}</span>
             <span className="text-[12px] font-medium font-ui" style={{ color: s.color, opacity: 0.8 }}>{s.label}</span>
-          </motion.div>
+            {s.help && selectedPill === s.label && (
+              <span className="text-[10px] font-ui mt-1 block" style={{ color: s.color, opacity: 0.7 }}>{s.help}</span>
+            )}
+          </motion.button>
         ))}
       </div>
+
+      {/* ── Start Session Card (Primary CTA) ── */}
+      <motion.div 
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...m3SpatialDefault, delay: 0.2 }}
+        className="rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid"
+        style={{ background: 'var(--color-surface-container-low)', borderColor: 'var(--color-primary-border)' }}
+      >
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h3 className="text-title-emphasized" style={{ color: 'var(--color-on-surface)' }}>
+              Today's Session
+            </h3>
+            <p className="text-[13px] mt-0.5 font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
+              {session.length === 0 ? 'No patterns queued. Start fresh?' : `${session.length} pattern${session.length === 1 ? '' : 's'} queued`}
+            </p>
+          </div>
+          <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
+            <Target size={18} style={{ color: 'var(--color-primary)' }} />
+          </div>
+        </div>
+
+        {/* Session composition bar */}
+        <div className="h-2.5 w-full rounded-full overflow-hidden flex mb-2" style={{ background: 'var(--color-border)' }}>
+          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.review * 100}%` }} transition={m3SpatialDefault} style={{ background: '#B91C1C' }} className="h-full" />
+          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.new * 100}%` }} transition={m3SpatialDefault} style={{ background: 'var(--color-primary)' }} className="h-full" />
+          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.strengthen * 100}%` }} transition={m3SpatialDefault} style={{ background: '#15803D' }} className="h-full rounded-r-full" />
+        </div>
+        <div className="flex gap-4 mb-5">
+          {[
+            { label: 'Review',    pct: CONFIG.sessionComposition.review,    color: '#B91C1C' },
+            { label: 'New',       pct: CONFIG.sessionComposition.new,       color: 'var(--color-primary)' },
+            { label: 'Strengthen',pct: CONFIG.sessionComposition.strengthen,color: '#15803D' },
+          ].map(q => (
+            <div key={q.label} className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-full" style={{ background: q.color }} />
+              <span className="text-[12px] font-medium font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
+                {q.label} {Math.round(q.pct * 100)}%
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <button onClick={onStartSession} className="w-full py-[15px] rounded-m3-xl font-bold font-ui text-[15px] flex justify-center items-center gap-2 transition-all active:scale-[0.98]" style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)' }}>
+          <Play size={17} fill="currentColor" />
+          Start Session
+        </button>
+      </motion.div>
 
       {/* ── Mastery Ring Card ── */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={m3SpatialDefault}
-        className="card rounded-m3-xl p-5 mb-4 relative overflow-hidden"
+        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid"
+        style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
       >
         <ShapePlaced position="top-left" shape="blob" color="var(--color-primary)" opacity={0.08} size={40} />
         <ShapePlaced position="bottom-right" shape="flower" color="var(--color-success)" opacity={0.08} size={36} />
@@ -194,15 +254,16 @@ export const Dashboard = ({
         </div>
       </motion.div>
 
-      {/* ── Exam Readiness Card ── */}
+      {/* ── Exam Readiness Card (with Progress Ring) ── */}
       <motion.div 
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.1 }}
-        className="card rounded-m3-xl p-5 mb-4 relative overflow-hidden"
+        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid"
+        style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
       >
         <ShapePlaced position="bottom-left" shape="clover" color="var(--color-warning)" opacity={0.1} size={44} animate={true} />
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'var(--color-success-container)' }}>
             <TrendingUp size={15} style={{ color: 'var(--color-success)' }} />
           </div>
@@ -212,23 +273,51 @@ export const Dashboard = ({
           <span className="ml-auto text-[12px] font-ui" style={{ color: 'var(--color-on-surface-muted)' }}>/ {totalExamQ} Qs</span>
         </div>
 
-        <div className="flex items-baseline gap-2 mb-4">
-          <span className="text-display-large-emphasized tabular-nums leading-none" style={{ color: 'var(--color-success)' }}>
-            {totalReady}
-          </span>
-          <div>
-            <span className="text-[14px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>estimated correct</span>
-            <br />
-            <span className="text-[12px] font-ui" style={{ color: 'var(--color-on-surface-muted)' }}>Target: {CONFIG.examScoreTarget}+</span>
+        {/* Progress Ring + Main Stats */}
+        <div className="flex items-center gap-5 mb-4">
+          <div className="relative shrink-0" style={{ width: 90, height: 90 }}>
+            <svg width="90" height="90" viewBox="0 0 90 90" style={{ transform: 'rotate(-90deg)' }}>
+              {/* Track */}
+              <circle cx="45" cy="45" r="38" fill="none" stroke="var(--color-border)" strokeWidth="5" />
+              {/* Progress fill */}
+              <motion.circle 
+                cx="45" 
+                cy="45" 
+                r="38" 
+                fill="none" 
+                stroke="var(--color-success)" 
+                strokeWidth="5"
+                strokeDasharray={`${(totalReady / CONFIG.examScoreTarget) * (2 * Math.PI * 38)} ${2 * Math.PI * 38}`}
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span className="text-[24px] font-bold tabular-nums leading-none font-ui" style={{ color: 'var(--color-success)' }}>
+                {totalReady}
+              </span>
+              <span className="text-[10px] font-medium leading-none mt-0.5 font-ui" style={{ color: 'var(--color-on-surface-muted)' }}>
+                / {CONFIG.examScoreTarget}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <div className="mb-3">
+              <span className="text-[14px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>estimated correct</span>
+              <p className="text-[12px] font-ui mt-0.5" style={{ color: 'var(--color-on-surface-muted)' }}>
+                {totalReady >= CONFIG.examScoreTarget ? '✓ Target reached!' : `${CONFIG.examScoreTarget - totalReady} more to goal`}
+              </p>
+            </div>
           </div>
         </div>
 
+        {/* Subject Progress Pills */}
         <div className="flex gap-2">
           {subjectReadiness.map(s => (
             <div
               key={s.name}
-              className="flex-1 text-center py-2.5 rounded-m3-lg"
-              style={{ border: '1px solid var(--color-border)', background: 'var(--color-background)' }}
+              className="flex-1 text-center py-2.5 rounded-m3-lg border border-solid"
+              style={{ borderColor: 'var(--color-border)', background: 'var(--color-surface-container)' }}
             >
               <div className="text-[20px] mb-1">{s.emoji}</div>
               <div className="text-[16px] font-bold tabular-nums font-ui" style={{ color: 'var(--color-on-surface)' }}>{s.ready}</div>
@@ -243,10 +332,10 @@ export const Dashboard = ({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ ...m3SpatialDefault, delay: 0.15 }}
-        className="flex items-center gap-3 px-4 py-3 rounded-m3-lg mb-4 relative overflow-hidden"
+        className="flex items-center gap-3 px-4 py-3 rounded-m3-lg mb-4 relative overflow-hidden border border-solid"
         style={{
           background: isMorning ? 'var(--color-success-container)' : 'var(--color-primary-container)',
-          border: `1px solid ${isMorning ? 'var(--color-success-container)' : 'var(--color-primary-border)'}`,
+          borderColor: isMorning ? 'var(--color-success-container)' : 'var(--color-primary-border)',
         }}
       >
         <ShapePlaced position="bottom-right" shape="star" color={isMorning ? 'var(--color-success)' : 'var(--color-primary)'} opacity={0.15} size={32} animate={true} />
@@ -256,60 +345,14 @@ export const Dashboard = ({
         </p>
       </motion.div>
 
-      {/* ── Start Session Card ── */}
-      <motion.div 
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...m3SpatialDefault, delay: 0.2 }}
-        className="card rounded-m3-xl p-5 mb-4"
-      >
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <h3 className="text-title-emphasized" style={{ color: 'var(--color-on-surface)' }}>
-              Today's Session
-            </h3>
-            <p className="text-[13px] mt-0.5 font-body" style={{ color: 'var(--color-on-surface-variant)' }}>{session.length} patterns queued</p>
-          </div>
-          <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
-            <Target size={18} style={{ color: 'var(--color-primary)' }} />
-          </div>
-        </div>
-
-        {/* Session composition bar */}
-        <div className="h-2 w-full rounded-full overflow-hidden flex mb-2" style={{ background: 'var(--color-border)' }}>
-          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.review * 100}%` }} transition={m3SpatialDefault} style={{ background: '#B91C1C' }} className="h-full" />
-          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.new * 100}%` }} transition={m3SpatialDefault} style={{ background: 'var(--color-primary)' }} className="h-full" />
-          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.strengthen * 100}%` }} transition={m3SpatialDefault} style={{ background: '#15803D' }} className="h-full rounded-r-full" />
-        </div>
-        <div className="flex gap-4 mb-5">
-          {[
-            { label: 'Review',    pct: CONFIG.sessionComposition.review,    color: '#B91C1C' },
-            { label: 'New',       pct: CONFIG.sessionComposition.new,       color: 'var(--color-primary)' },
-            { label: 'Strengthen',pct: CONFIG.sessionComposition.strengthen,color: '#15803D' },
-          ].map(q => (
-            <div key={q.label} className="flex items-center gap-1.5">
-              <div className="w-2 h-2 rounded-full" style={{ background: q.color }} />
-              <span className="text-[12px] font-medium font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
-                {q.label} {Math.round(q.pct * 100)}%
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <button onClick={onStartSession} className="w-full py-[15px] rounded-m3-xl font-bold font-ui text-[15px] flex justify-center items-center gap-2 transition-all active:scale-[0.98]" style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)' }}>
-          <Play size={17} fill="currentColor" />
-          Start Session
-        </button>
-      </motion.div>
-
       {/* ── Demo Session Banner ── */}
       <motion.button
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.25 }}
         onClick={() => setScreen('demo-session')}
-        className="w-full card rounded-m3-xl p-4 mb-4 flex items-center gap-4 text-left"
-        style={{ background: 'var(--color-primary-container)', border: '1px solid var(--color-primary-border)' }}
+        className="w-full rounded-m3-xl p-4 mb-4 flex items-center gap-4 text-left border border-solid"
+        style={{ background: 'var(--color-primary-container)', borderColor: 'var(--color-primary-border)' }}
       >
         <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary)' }}>
           <Play size={22} fill="white" className="text-white ml-0.5" />
@@ -331,8 +374,8 @@ export const Dashboard = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.3 }}
         onClick={() => setScreen('games')}
-        className="w-full flex items-center justify-between px-4 py-3.5 bg-white rounded-m3-lg mb-4"
-        style={{ border: '1px solid var(--color-border)' }}
+        className="w-full flex items-center justify-between px-4 py-3.5 rounded-m3-lg mb-4 border border-solid"
+        style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
       >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
@@ -362,8 +405,8 @@ export const Dashboard = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...m3SpatialDefault, delay: 0.35 }}
             onClick={() => setScreen('course')}
-            className="w-full card rounded-m3-xl p-4 text-left flex items-center gap-3"
-            style={{ border: '1px solid var(--color-primary-border)' }}
+            className="w-full rounded-m3-xl p-4 text-left flex items-center gap-3 border border-solid"
+            style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-primary-border)' }}
           >
             <div className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary-container)' }}>
               <Brain size={20} style={{ color: 'var(--color-primary)' }} />
@@ -401,7 +444,8 @@ export const Dashboard = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...m3SpatialDefault, delay: 0.4 + (i * 0.05) }}
                 onClick={() => onSubjectClick(sub.name)}
-                className="w-full card rounded-m3-xl p-4 text-left flex items-center gap-3"
+                className="w-full rounded-m3-xl p-4 text-left flex items-center gap-3 border border-solid"
+                style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-border)' }}
               >
                 <div
                   className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0"
@@ -437,7 +481,7 @@ export const Dashboard = ({
         <p className="text-[13px] font-semibold mb-3 px-1 font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
           Subject Progress
         </p>
-        <div className="card overflow-hidden rounded-m3-xl" style={{ border: '1px solid var(--color-border)' }}>
+        <div className="overflow-hidden rounded-m3-xl border border-solid" style={{ background: 'var(--color-surface-container-high)', borderColor: 'var(--color-border)' }}>
           {subjectReadiness.map((sub, i) => {
             const autoPC  = Math.round((sub.stats.auto / sub.totalConcepts) * 100);
             const conscPC = Math.round((sub.stats.conscious / sub.totalConcepts) * 100);
@@ -449,8 +493,8 @@ export const Dashboard = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...m3SpatialDefault, delay: i * 0.05 }}
                 onClick={() => onSubjectClick(sub.name)}
-                className="w-full flex items-center gap-3 px-4 py-3.5 text-left bg-white hover:bg-gray-50 transition-colors"
-                style={{ borderBottom: isLast ? 'none' : '1px solid #F0EEE9' }}
+                className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors hover:opacity-80"
+                style={{ borderBottom: isLast ? 'none' : '1px solid var(--color-outline-variant)', background: 'var(--color-surface-container-high)' }}
               >
                 {/* Icon */}
                 <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center text-xl shrink-0" style={{ background: 'var(--color-background)', border: '1px solid var(--color-border)' }}>
