@@ -111,46 +111,66 @@ export const Dashboard = ({
       </div>
 
       {/* ── 3 Stat Pills (Interactive) ── */}
-      <div className="flex gap-2.5 mb-6">
+      <div className="flex gap-2.5 mb-6 relative">
         {[
-          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)', help: totalAutomatic === 0 ? 'Start your first session to earn mastery' : null },
-          { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)', help: totalConscious === 0 ? 'Complete 2 more sessions to learn' : null },
-          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)', help: totalFading === 0 ? 'No concepts due for review yet' : null },
+          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)', help: totalAutomatic === 0 ? '✨ Start your first session to earn mastery' : null, icon: '🏆' },
+          { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)', help: totalConscious === 0 ? '🌱 Complete 2 more sessions to grow' : null, icon: '📚' },
+          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)', help: totalFading === 0 ? '✓ No concepts due for review yet' : null, icon: '⏰' },
         ].map((s, i) => (
           <motion.button
             key={s.label}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 16, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: selectedPill === s.label ? 1.05 : 1 }}
-            transition={{ ...m3SpatialDefault, delay: i * 0.05, scale: { duration: 0.2 } }}
+            transition={{ ...m3SpatialDefault, delay: i * 0.05, scale: { duration: 0.3 } }}
             onClick={() => setSelectedPill(selectedPill === s.label ? null : s.label)}
-            className="flex-1 rounded-m3-lg rounded-tl-sm p-3 text-center cursor-pointer transition-all active:scale-95 hover:shadow-sm"
+            className="flex-1 rounded-m3-lg rounded-tl-sm p-3 text-center cursor-pointer transition-all active:scale-95 hover:shadow-md relative overflow-hidden group"
             style={{ 
               background: s.bg, 
               border: `2px solid ${selectedPill === s.label ? s.color : s.border}`,
-              opacity: selectedPill === null || selectedPill === s.label ? 1 : 0.6,
-              boxShadow: selectedPill === s.label ? `0 2px 8px ${s.color}20` : 'none'
+              opacity: selectedPill === null || selectedPill === s.label ? 1 : 0.65,
+              boxShadow: selectedPill === s.label 
+                ? `0 8px 16px ${s.color}30, 0 2px 8px ${s.color}20` 
+                : 'inset 0 1px 2px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.08)'
             }}
             title={s.help || undefined}
           >
-            <motion.span 
-              className="text-[24px] font-bold block tabular-nums font-ui"
-              animate={{ scale: selectedPill === s.label ? 1.1 : 1 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              style={{ color: s.color }}
-            >
-              {s.value}
-            </motion.span>
-            <span className="text-[12px] font-medium font-ui" style={{ color: s.color, opacity: 0.8 }}>{s.label}</span>
-            {s.help && selectedPill === s.label && (
+            {/* Ripple background on hover */}
+            <motion.div 
+              className="absolute inset-0 opacity-0 group-hover:opacity-20" 
+              style={{ background: s.color }}
+              initial={{ scale: 0 }}
+              whileHover={{ scale: 1.5 }}
+              transition={{ duration: 0.4 }}
+            />
+            
+            {/* Content */}
+            <div className="relative z-10">
+              {s.value > 0 && (
+                <div className="absolute -top-1 -right-1 text-[14px]" style={{ lineHeight: 1 }}>
+                  {s.icon}
+                </div>
+              )}
               <motion.span 
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-[10px] font-ui mt-1 block" 
-                style={{ color: s.color, opacity: 0.7 }}
+                className="text-[24px] font-bold block tabular-nums font-ui"
+                animate={{ scale: selectedPill === s.label ? 1.1 : 1, y: selectedPill === s.label ? -2 : 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                style={{ color: s.color }}
               >
-                {s.help}
+                {s.value}
               </motion.span>
-            )}
+              <span className="text-[12px] font-medium font-ui" style={{ color: s.color, opacity: 0.85 }}>{s.label}</span>
+              {s.help && selectedPill === s.label && (
+                <motion.span 
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-[10px] font-ui mt-1.5 block" 
+                  style={{ color: s.color, opacity: 0.8, fontWeight: 500 }}
+                >
+                  {s.help}
+                </motion.span>
+              )}
+            </div>
           </motion.button>
         ))}
       </div>
@@ -160,28 +180,62 @@ export const Dashboard = ({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.2 }}
-        className="rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid transition-all hover:shadow-md hover:scale-[1.01]"
-        style={{ background: 'var(--color-surface-container-low)', borderColor: 'var(--color-primary-border)' }}
+        className="rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1"
+        style={{ 
+          background: 'var(--color-surface-container-low)', 
+          borderColor: 'var(--color-primary-border)',
+          boxShadow: '0 8px 24px rgba(103, 80, 164, 0.12), inset 0 1px 2px rgba(255,255,255,0.4)'
+        }}
       >
-        <div className="flex items-start justify-between mb-4">
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 opacity-30" style={{
+          background: 'linear-gradient(135deg, rgba(103, 80, 164, 0.05) 0%, rgba(103, 80, 164, 0) 100%)'
+        }} />
+        
+        <div className="relative z-10 flex items-start justify-between mb-4">
           <div>
             <h3 className="text-title-emphasized" style={{ color: 'var(--color-on-surface)' }}>
               Today's Session
             </h3>
             <p className="text-[13px] mt-0.5 font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
-              {session.length === 0 ? 'No patterns queued. Start fresh?' : `${session.length} pattern${session.length === 1 ? '' : 's'} queued`}
+              {session.length === 0 
+                ? '🚀 No patterns queued. Start fresh?' 
+                : `✓ ${session.length} pattern${session.length === 1 ? '' : 's'} queued`}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
+          <motion.div 
+            className="w-10 h-10 rounded-m3-lg flex items-center justify-center" 
+            style={{ background: 'var(--color-primary-container)' }}
+            whileHover={{ rotate: 10, scale: 1.1 }}
+            transition={{ type: 'spring', stiffness: 400 }}
+          >
             <Target size={18} style={{ color: 'var(--color-primary)' }} />
-          </div>
+          </motion.div>
         </div>
 
-        {/* Session composition bar */}
+        {/* Session composition bar with stagger animation */}
         <div className="h-2.5 w-full rounded-full overflow-hidden flex mb-2" style={{ background: 'var(--color-border)' }}>
-          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.review * 100}%` }} transition={m3SpatialDefault} style={{ background: '#B91C1C' }} className="h-full" />
-          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.new * 100}%` }} transition={m3SpatialDefault} style={{ background: 'var(--color-primary)' }} className="h-full" />
-          <motion.div initial={{ width: 0 }} animate={{ width: `${CONFIG.sessionComposition.strengthen * 100}%` }} transition={m3SpatialDefault} style={{ background: '#15803D' }} className="h-full rounded-r-full" />
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${CONFIG.sessionComposition.review * 100}%` }} 
+            transition={{ ...m3SpatialDefault, delay: 0.1 }}
+            style={{ background: '#B91C1C' }} 
+            className="h-full rounded-l-full"
+          />
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${CONFIG.sessionComposition.new * 100}%` }} 
+            transition={{ ...m3SpatialDefault, delay: 0.15 }}
+            style={{ background: 'var(--color-primary)' }} 
+            className="h-full"
+          />
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${CONFIG.sessionComposition.strengthen * 100}%` }} 
+            transition={{ ...m3SpatialDefault, delay: 0.2 }}
+            style={{ background: '#15803D' }} 
+            className="h-full rounded-r-full"
+          />
         </div>
         <div className="flex gap-4 mb-5">
           {[
@@ -198,10 +252,27 @@ export const Dashboard = ({
           ))}
         </div>
 
-        <button onClick={onStartSession} className="w-full py-[15px] rounded-m3-xl font-bold font-ui text-[15px] flex justify-center items-center gap-2 transition-all active:scale-[0.98]" style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30)' }}>
+        <motion.button 
+          onClick={onStartSession} 
+          className="w-full py-[15px] rounded-m3-xl font-bold font-ui text-[15px] flex justify-center items-center gap-2 transition-all active:scale-[0.98] hover:shadow-lg relative overflow-hidden group"
+          style={{ 
+            background: 'var(--color-primary)', 
+            color: 'var(--color-on-primary)', 
+            boxShadow: '0px 4px 8px 1px rgba(103, 80, 164, 0.3), 0px 2px 4px 0px rgba(0, 0, 0, 0.15)'
+          }}
+          whileHover={{ y: -2 }}
+        >
+          {/* Button shine effect */}
+          <motion.div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-20"
+            style={{ background: 'rgba(255,255,255,0.3)' }}
+            initial={{ x: '-100%' }}
+            whileHover={{ x: '100%' }}
+            transition={{ duration: 0.6 }}
+          />
           <Play size={17} fill="currentColor" />
-          Start Session
-        </button>
+          <span className="relative z-10">Start Session</span>
+        </motion.button>
       </motion.div>
 
       {/* ── Mastery Ring Card ── */}
@@ -209,28 +280,53 @@ export const Dashboard = ({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={m3SpatialDefault}
-        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid"
-        style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
+        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:-translate-y-1"
+        style={{ 
+          background: 'var(--color-surface-lowest)', 
+          borderColor: 'var(--color-border)',
+          boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.5), 0 4px 12px rgba(0,0,0,0.08)'
+        }}
       >
-        <ShapePlaced position="top-left" shape="blob" color="var(--color-primary)" opacity={0.08} size={40} />
-        <ShapePlaced position="bottom-right" shape="flower" color="var(--color-success)" opacity={0.08} size={36} />
-        <div className="flex items-center gap-5">
+        {/* Subtle gradient background */}
+        <div className="absolute inset-0 opacity-40 pointer-events-none" style={{
+          background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.03) 0%, rgba(103, 80, 164, 0.03) 100%)'
+        }} />
+        
+        <ShapePlaced position="top-left" shape="blob" color="var(--color-primary)" opacity={0.08} size={40} animate={false} />
+        <ShapePlaced position="bottom-right" shape="flower" color="var(--color-success)" opacity={0.08} size={36} animate={false} />
+        <div className="flex items-center gap-5 relative z-10">
           {/* Ring */}
           <div className="relative shrink-0" style={{ width: 110, height: 110 }}>
             <svg width="110" height="110" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
               {/* Track */}
               <circle cx="50" cy="50" r={R} fill="none" stroke="var(--color-border)" strokeWidth="7" />
               {/* Conscious fill (primary) */}
-              <circle cx="50" cy="50" r={R} fill="none" stroke="var(--color-primary-border)" strokeWidth="7"
-                strokeDasharray={`${conscFill} ${C}`} strokeLinecap="round" />
+              <motion.circle 
+                cx="50" cy="50" r={R} fill="none" stroke="var(--color-primary-border)" strokeWidth="7"
+                strokeDasharray={`${conscFill} ${C}`} strokeLinecap="round"
+                initial={{ strokeDasharray: `0 ${C}` }}
+                animate={{ strokeDasharray: `${conscFill} ${C}` }}
+                transition={{ ...m3EffectsEase, delay: 0.3 }}
+              />
               {/* Auto fill (green) */}
-              <circle cx="50" cy="50" r={R} fill="none" stroke="var(--color-success)" strokeWidth="7"
-                strokeDasharray={`${autoFill} ${C}`} strokeLinecap="round" />
+              <motion.circle 
+                cx="50" cy="50" r={R} fill="none" stroke="var(--color-success)" strokeWidth="7"
+                strokeDasharray={`${autoFill} ${C}`} strokeLinecap="round"
+                initial={{ strokeDasharray: `0 ${C}` }}
+                animate={{ strokeDasharray: `${autoFill} ${C}` }}
+                transition={{ ...m3EffectsEase, delay: 0.2 }}
+              />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <span className="text-[28px] font-bold tabular-nums leading-none font-ui" style={{ color: 'var(--color-on-surface)' }}>
+              <motion.span 
+                className="text-[28px] font-bold tabular-nums leading-none font-ui" 
+                style={{ color: 'var(--color-on-surface)' }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ ...m3SpatialDefault, delay: 0.3 }}
+              >
                 {totalAutomatic}
-              </span>
+              </motion.span>
               <span className="text-[11px] font-medium leading-none mt-0.5 font-ui" style={{ color: 'var(--color-on-surface-muted)' }}>
                 / {totalConcepts}
               </span>
@@ -274,14 +370,27 @@ export const Dashboard = ({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.1 }}
-        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid"
-        style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
+        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:-translate-y-1"
+        style={{ 
+          background: 'var(--color-surface-lowest)', 
+          borderColor: 'var(--color-border)',
+          boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.5), 0 4px 12px rgba(0,0,0,0.08)'
+        }}
       >
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+          background: 'linear-gradient(135deg, rgba(21, 128, 61, 0.05) 0%, rgba(103, 80, 164, 0.03) 100%)'
+        }} />
+        
         <ShapePlaced position="bottom-left" shape="clover" color="var(--color-warning)" opacity={0.1} size={44} animate={true} />
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'var(--color-success-container)' }}>
+        <div className="flex items-center gap-2 mb-4 relative z-10">
+          <motion.div 
+            className="w-8 h-8 rounded-lg flex items-center justify-center" 
+            style={{ background: 'var(--color-success-container)' }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+          >
             <TrendingUp size={15} style={{ color: 'var(--color-success)' }} />
-          </div>
+          </motion.div>
           <span className="text-[13px] font-semibold font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
             Exam Readiness
           </span>
@@ -289,7 +398,7 @@ export const Dashboard = ({
         </div>
 
         {/* Progress Ring + Main Stats */}
-        <div className="flex items-center gap-5 mb-4">
+        <div className="flex items-center gap-5 mb-4 relative z-10">
           <div className="relative shrink-0" style={{ width: 90, height: 90 }}>
             <svg width="90" height="90" viewBox="0 0 90 90" style={{ transform: 'rotate(-90deg)' }}>
               {/* Track */}
@@ -344,20 +453,35 @@ export const Dashboard = ({
 
       {/* ── Time-of-Day Nudge ── */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.95, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.15 }}
-        className="flex items-center gap-3 px-4 py-3 rounded-m3-lg mb-4 relative overflow-hidden border border-solid"
+        className="flex items-center gap-3 px-4 py-3.5 rounded-m3-lg mb-4 relative overflow-hidden border border-solid transition-all hover:shadow-md hover:-translate-y-1"
         style={{
-          background: isMorning ? 'var(--color-success-container)' : 'var(--color-primary-container)',
-          borderColor: isMorning ? 'var(--color-success-container)' : 'var(--color-primary-border)',
+          background: isMorning 
+            ? 'linear-gradient(135deg, var(--color-success-container) 0%, rgba(21, 128, 61, 0.5) 100%)' 
+            : 'linear-gradient(135deg, var(--color-primary-container) 0%, rgba(103, 80, 164, 0.5) 100%)',
+          borderColor: isMorning ? 'var(--color-success)' : 'var(--color-primary)',
+          borderWidth: '1.5px',
+          boxShadow: `inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 12px ${isMorning ? 'rgba(21, 128, 61, 0.15)' : 'rgba(103, 80, 164, 0.15)'}`
         }}
       >
-        <ShapePlaced position="bottom-right" shape="star" color={isMorning ? 'var(--color-success)' : 'var(--color-primary)'} opacity={0.15} size={32} animate={true} />
-        <Clock size={14} style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)', flexShrink: 0 }} />
-        <p className="text-[13px] font-medium font-body" style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }}>
-          <span className="font-bold">Right now:</span> best for {nudge}
-        </p>
+        <ShapePlaced position="bottom-right" shape="star" color={isMorning ? 'var(--color-success)' : 'var(--color-primary)'} opacity={0.2} size={40} animate={true} />
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          style={{ flexShrink: 0 }}
+        >
+          <Clock size={16} style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }} />
+        </motion.div>
+        <div className="flex-1 relative z-10">
+          <p className="text-[13px] font-medium font-body" style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }}>
+            <span className="font-bold">💡 Pro tip:</span> {isMorning ? 'Perfect for learning new material' : 'Great for consolidating existing knowledge'}
+          </p>
+          <p className="text-[12px] font-body mt-0.5" style={{ color: isMorning ? 'rgba(21, 128, 61, 0.8)' : 'rgba(103, 80, 164, 0.8)' }}>
+            Best for {nudge}
+          </p>
+        </div>
       </motion.div>
 
       {/* ── Demo Session Banner ── */}
