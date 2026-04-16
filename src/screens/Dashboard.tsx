@@ -111,9 +111,9 @@ export const Dashboard = ({
       {/* ── 3 Stat Pills ── */}
       <div className="flex gap-2.5 mb-4">
         {[
-          { label: 'Mastered',  value: totalAutomatic, color: '#15803D', bg: '#F0FDF4', border: '#BBF7D0' },
+          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)' },
           { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)' },
-          { label: 'Fading',    value: totalFading,    color: '#B45309', bg: '#FFFBEB', border: '#FDE68A' },
+          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)' },
         ].map((s, i) => (
           <motion.div
             key={s.label}
@@ -146,7 +146,7 @@ export const Dashboard = ({
               <circle cx="50" cy="50" r={R} fill="none" stroke="var(--color-primary-border)" strokeWidth="7"
                 strokeDasharray={`${conscFill} ${C}`} strokeLinecap="round" />
               {/* Auto fill (green) */}
-              <circle cx="50" cy="50" r={R} fill="none" stroke="#15803D" strokeWidth="7"
+              <circle cx="50" cy="50" r={R} fill="none" stroke="var(--color-success)" strokeWidth="7"
                 strokeDasharray={`${autoFill} ${C}`} strokeLinecap="round" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
@@ -199,8 +199,8 @@ export const Dashboard = ({
         className="card rounded-m3-xl p-5 mb-4"
       >
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-[#F0FDF4]">
-            <TrendingUp size={15} className="text-[#15803D]" />
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'var(--color-success-container)' }}>
+            <TrendingUp size={15} style={{ color: 'var(--color-success)' }} />
           </div>
           <span className="text-[13px] font-semibold font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
             Exam Readiness
@@ -209,7 +209,7 @@ export const Dashboard = ({
         </div>
 
         <div className="flex items-baseline gap-2 mb-4">
-          <span className="text-display-large-emphasized text-[#15803D] tabular-nums leading-none">
+          <span className="text-display-large-emphasized tabular-nums leading-none" style={{ color: 'var(--color-success)' }}>
             {totalReady}
           </span>
           <div>
@@ -241,12 +241,12 @@ export const Dashboard = ({
         transition={{ ...m3SpatialDefault, delay: 0.15 }}
         className="flex items-center gap-3 px-4 py-3 rounded-m3-lg mb-4"
         style={{
-          background: isMorning ? '#F0FDF4' : 'var(--color-primary-container)',
-          border: `1px solid ${isMorning ? '#BBF7D0' : 'var(--color-primary-border)'}`,
+          background: isMorning ? 'var(--color-success-container)' : 'var(--color-primary-container)',
+          border: `1px solid ${isMorning ? 'var(--color-success-container)' : 'var(--color-primary-border)'}`,
         }}
       >
-        <Clock size={14} style={{ color: isMorning ? '#15803D' : 'var(--color-primary)', flexShrink: 0 }} />
-        <p className="text-[13px] font-medium font-body" style={{ color: isMorning ? '#166534' : 'var(--color-primary)' }}>
+        <Clock size={14} style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)', flexShrink: 0 }} />
+        <p className="text-[13px] font-medium font-body" style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }}>
           <span className="font-bold">Right now:</span> best for {nudge}
         </p>
       </motion.div>
