@@ -25,6 +25,9 @@ import { DemoSession }       from './screens/DemoSession';
 import { GamesScreen }       from './games/GamesScreen';
 import { StatusBar }          from './components/StatusBar';
 import { BottomNav }          from './components/BottomNav';
+import { LoadingProvider, useLoading } from './lib/LoadingContext';
+import { LoadingIndicator } from './components/LoadingIndicator';
+import { LinearProgressTop } from './components/ProgressBar';
 import { CONFIG, computeGlobalStats } from './lib/config';
 import { buildSession as buildSessionCore } from './core/session-builder';
 import { updateMetacogAccuracy } from './core/metacognition';
@@ -42,7 +45,7 @@ import { App as CapApp } from '@capacitor/app';
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
 
-export default function App() {
+function AppContent() {
   const [screen, setScreen] = useState<Screen>('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
   const [subjectFilter, setSubjectFilter] = useState<string | null>(null);
@@ -117,9 +120,19 @@ export default function App() {
   }, [dbReady, subjectFilter]);
 
   const totalAutomatic = concepts.filter(c => c.stage === 'Automatic' || c.stage === 'ExamReady').length;
+  const { loading } = useLoading();
 
   return (
-    <div className="min-h-screen selection:bg-[color:var(--color-primary-container)] selection:text-[color:var(--color-primary)] overflow-x-hidden" style={{ background: 'var(--color-background)' }}>
+    <>
+      <LinearProgressTop value={loading.progress || 0} show={loading.isLoading && !loading.fullscreen} />
+      {loading.isLoading && loading.fullscreen && (
+        <LoadingIndicator
+          size="md"
+          fullscreen
+          message={loading.message}
+        />
+      )}
+      <div className="min-h-screen selection:bg-[color:var(--color-primary-container)] selection:text-[color:var(--color-primary)] overflow-x-hidden" style={{ background: 'var(--color-background)' }}>
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -151,6 +164,15 @@ export default function App() {
       </AnimatePresence>
 
       <BottomNav current={screen} setScreen={setScreen} />
-    </div>
+      </div>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <LoadingProvider>
+      <AppContent />
+    </LoadingProvider>
   );
 }
