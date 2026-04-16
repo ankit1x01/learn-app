@@ -141,9 +141,9 @@ export const SessionComplete = ({
       <div className="grid grid-cols-2 gap-3 mb-4">
         {[
           { label: 'Questions',  value: session.length, color: 'var(--color-on-surface)' },
-          { label: 'Accuracy',   value: '72%',          color: '#2563EB' },
-          { label: 'Mastered',   value: '+12',           color: '#15803D' },
-          { label: 'Need Review',value: '+4',            color: '#B45309' },
+          { label: 'Accuracy',   value: '72%',          color: 'var(--color-primary)' },
+          { label: 'Mastered',   value: '+12',           color: 'var(--color-success)' },
+          { label: 'Need Review',value: '+4',            color: 'var(--color-warning)' },
         ].map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -152,7 +152,7 @@ export const SessionComplete = ({
             transition={{ delay: 0.1 + i * 0.06 }}
             className="card p-4"
           >
-            <p className="text-[12px] text-[#A8A29E] mb-1" style={{ fontFamily: JKS }}>{stat.label}</p>
+            <p className="text-[12px] mb-1" style={{ fontFamily: JKS, color: 'var(--color-on-surface-muted)' }}>{stat.label}</p>
             <span className="text-[28px] font-bold tabular-nums" style={{ color: stat.color, fontFamily: JKS }}>
               {stat.value}
             </span>
@@ -161,13 +161,13 @@ export const SessionComplete = ({
       </div>
 
       {/* ── AI Insight ── */}
-      <div className="card p-4 mb-4" style={{ background: '#EFF6FF', border: '1px solid #BFDBFE' }}>
+      <div className="card p-4 mb-4" style={{ background: 'var(--color-primary-container)', border: '1px solid var(--color-primary)' }}>
         <div className="flex gap-3 items-start">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white border border-[#BFDBFE] shrink-0">
-            <CheckCircle2 size={18} className="text-[#2563EB]" />
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white border shrink-0" style={{ borderColor: 'var(--color-primary)' }}>
+            <CheckCircle2 size={18} style={{ color: 'var(--color-primary)' }} />
           </div>
           <div>
-            <p className="text-[13px] font-semibold text-[#2563EB] mb-1" style={{ fontFamily: JKS }}>
+            <p className="text-[13px] font-semibold mb-1" style={{ fontFamily: JKS, color: 'var(--color-primary)' }}>
               AI Insight
             </p>
             <p className="prose" style={{ fontSize: '14px', lineHeight: '1.75' }}>
@@ -183,7 +183,7 @@ export const SessionComplete = ({
         const newCount = CONFIG.concepts.filter(c => c.stage === 'Unseen' && c.pyqTier === 1).length;
         return (
           <div className="card p-4 mb-5 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#FFFBEB] border border-[#FDE68A] shrink-0">
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center border shrink-0" style={{ background: 'var(--color-warning-container)', borderColor: 'var(--color-warning)' }}>
               <Calendar size={16} className="text-[#B45309]" />
             </div>
             <div>

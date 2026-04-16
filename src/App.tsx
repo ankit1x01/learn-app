@@ -56,7 +56,7 @@ export default function App() {
       try {
         // Native Status Bar to match app theme
         await CapStatusBar.setStyle({ style: Style.Light });
-        await CapStatusBar.setBackgroundColor({ color: '#F7F6F3' });
+        await CapStatusBar.setBackgroundColor({ color: getComputedStyle(document.documentElement).getPropertyValue('--color-background').trim() });
 
         // Lock App to Portrait to prevent exam/game layouts from breaking
         await ScreenOrientation.lock({ orientation: 'portrait-primary' as any }).catch(() => {});
@@ -119,7 +119,7 @@ export default function App() {
   const totalAutomatic = concepts.filter(c => c.stage === 'Automatic' || c.stage === 'ExamReady').length;
 
   return (
-    <div className="min-h-screen bg-[#F7F6F3] selection:bg-[#BFDBFE] selection:text-[#1D4ED8] overflow-x-hidden">
+    <div className="min-h-screen selection:bg-[color:var(--color-primary-container)] selection:text-[color:var(--color-primary)] overflow-x-hidden" style={{ background: 'var(--color-background)' }}>
 
       <AnimatePresence mode="wait">
         <motion.div
