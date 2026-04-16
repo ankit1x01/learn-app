@@ -1,6 +1,6 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-16 — **M3 Expressive design system complete + M3 loading indicators deployed globally + Dashboard shapes integrated**
+> Last updated: 2026-04-16 — **M3 Expressive shapes + Dashboard UX improvements**
 
 ---
 
@@ -34,7 +34,48 @@
 
 ---
 
-## M3 Loading Indicators System ✅ COMPLETE
+## Dashboard UX Improvements ✅ COMPLETE
+
+**High-priority design fixes (all 6 implemented):**
+
+1. **Section reorganization** - Move Today's Session after stat pills
+   - ✅ Better visual hierarchy
+   - ✅ Primary CTA visible without scrolling
+   - ✅ New order: Header → Pills → Session → Mastery → Exam → Time → Demo → Games → Courses → Progress
+
+2. **Interactive stat pills** - Convert to buttons with selection state
+   - ✅ Clickable with visual feedback (border highlight on active)
+   - ✅ Show contextual help messages for empty states
+   - ✅ Added selectedPill state tracking
+   - ✅ Empty state messages:
+     - "Start your first session to earn mastery"
+     - "Complete 2 more sessions to learn" 
+     - "No concepts due for review yet"
+
+3. **M3 Surface container hierarchy** - Replace flat white backgrounds
+   - ✅ Today's Session: surface-container-low (elevated, prominent)
+   - ✅ Mastery Ring: surface-lowest (recessed)
+   - ✅ Exam Readiness: surface-lowest (recessed)
+   - ✅ My Courses: surface-container (neutral)
+   - ✅ Subject Progress: surface-container-high (separated)
+   - ✅ Creates visual depth without shadows per M3 spec
+
+4. **Exam progress visualization** - Add circular progress ring
+   - ✅ SVG circle showing 8/40 with animated stroke
+   - ✅ Context messages:
+     - "32 more to goal" when below target
+     - "✓ Target reached!" when at/above target
+   - ✅ Uses M3 success color (green #146C2E)
+   - ✅ Replaces text-only display with visual progress
+
+5. **Standardize spacing** - Consistent padding across all cards
+   - ✅ All major cards now use p-5 (20px)
+   - ✅ Improves visual rhythm and hierarchy
+
+6. **Enhanced messaging** - Contextual copy for empty states
+   - ✅ Show hints when pills selected
+   - ✅ "2 patterns queued" vs. "No patterns queued. Start fresh?"
+   - ✅ Semantic language for action items
 
 **Global loading state management:**
 - ✅ `LoadingIndicator` component (sm/md/lg, fullscreen mode, M3 spring animations)
