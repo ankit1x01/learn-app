@@ -67,19 +67,19 @@ const SUBJECT_ICON: Record<string, React.ElementType> = {
 };
 
 const SUBJECT_COLOR: Record<string, string> = {
-  'Arrays & Search':           '#2563EB',
-  'Strings & Data Structures': '#0E7490',
-  'Trees & Graphs':            '#15803D',
-  'Foundations':               '#6B7280',
-  'DP & Greedy':               '#B45309',
+  'Arrays & Search':           'var(--color-subject-physics)',
+  'Strings & Data Structures': 'var(--color-subject-cs)',
+  'Trees & Graphs':            'var(--color-success)',
+  'Foundations':               'var(--color-on-surface-variant)',
+  'DP & Greedy':               'var(--color-warning)',
 };
 
 const SUBJECT_BG: Record<string, string> = {
-  'Arrays & Search':           '#EFF6FF',
-  'Strings & Data Structures': '#ECFEFF',
-  'Trees & Graphs':            '#F0FDF4',
-  'Foundations':               '#F3F4F6',
-  'DP & Greedy':               '#FFFBEB',
+  'Arrays & Search':           'var(--color-subject-physics-container)',
+  'Strings & Data Structures': 'var(--color-subject-cs-container)',
+  'Trees & Graphs':            'var(--color-success-container)',
+  'Foundations':               'var(--color-surface-container)',
+  'DP & Greedy':               'var(--color-warning-container)',
 };
 
 // ─── Session state persisted in localStorage ──────────────────────────────────
@@ -116,7 +116,7 @@ const KoshaCard = ({ onNext }: { onNext: () => void }) => {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={m3SpatialDefault}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <Activity size={14} className="text-[#0E7490]" /> Pre-Session Kosha Check
+        <Activity size={14} style={{ color: 'var(--color-subject-cs)' }} /> Pre-Session Kosha Check
       </div>
       <h2 className="text-display-large-emphasized mb-2 leading-tight" style={{ color: 'var(--color-on-surface)' }}>
         How are you feeling right now?
@@ -128,8 +128,8 @@ const KoshaCard = ({ onNext }: { onNext: () => void }) => {
       <div className="grid grid-cols-1 gap-3 mb-8">
         {[
           { label: 'Highly Focused', desc: 'Ready for deep logical work', icon: Brain, color: 'var(--color-primary)' },
-          { label: 'A bit fatigued', desc: 'Need shorter, high-impact notes', icon: Wind, color: '#B45309' },
-          { label: 'Exam Stressed', desc: 'Time pressure is high currently', icon: Timer, color: '#DC2626' }
+          { label: 'A bit fatigued', desc: 'Need shorter, high-impact notes', icon: Wind, color: 'var(--color-warning)' },
+          { label: 'Exam Stressed', desc: 'Time pressure is high currently', icon: Timer, color: 'var(--color-error)' }
         ].map((btn, i) => (
           <button 
             key={i}
@@ -221,7 +221,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <Zap size={14} className="text-[#B45309]" /> Prediction Error Phase
+        <Zap size={14} style={{ color: 'var(--color-warning)' }} /> Prediction Error Phase
       </div>
       <h2 className="text-[28px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         Before you learn about <span style={{ color }}>{concept.title}</span>...
@@ -271,7 +271,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
               </div>
             </div>
             {selected !== opts.correct && (
-              <div className="p-3 rounded-lg flex items-center gap-2 bg-[#FEF2F2] text-[#991B1B]">
+              <div className="p-3 rounded-lg flex items-center gap-2" style={{ background: 'var(--color-error-container)', color: 'var(--color-on-error-container)' }}>
                 <Flame size={16} />
                 <p className="text-[12px] font-bold">Neuroscience: Guessing wrong creates dopamine which locks the correct answer in next.</p>
               </div>
@@ -333,7 +333,7 @@ const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <Layers size={14} className="text-[#0E7490]" /> Active Processing
+        <Layers size={14} style={{ color: 'var(--color-subject-cs)' }} /> Active Processing
       </div>
       <h2 className="text-[28px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         The Feynman Technique
@@ -400,7 +400,7 @@ const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <BarChart2 size={14} className="text-[#6D28D9]" /> Solidification Phase
+        <BarChart2 size={14} style={{ color: 'var(--color-subject-chemistry)' }} /> Solidification Phase
       </div>
       <h2 className="text-[28px] font-black mb-6 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         How confident do you feel about this now?
@@ -408,9 +408,9 @@ const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
 
       <div className="grid grid-cols-1 gap-3 mb-8">
         {[
-          { label: 'Automatic', desc: 'Can apply it in my sleep', val: '#15803D' },
-          { label: 'Conscious', desc: 'I get it, but need to think', val: '#B45309' },
-          { label: 'Fragile', desc: 'Still a bit confused', val: '#DC2626' }
+          { label: 'Automatic', desc: 'Can apply it in my sleep', val: 'var(--color-success)' },
+          { label: 'Conscious', desc: 'I get it, but need to think', val: 'var(--color-warning)' },
+          { label: 'Fragile', desc: 'Still a bit confused', val: 'var(--color-error)' }
         ].map((btn, i) => (
           <button 
             key={i}
