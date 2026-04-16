@@ -77,6 +77,15 @@
    - ✅ "2 patterns queued" vs. "No patterns queued. Start fresh?"
    - ✅ Semantic language for action items
 
+**Dashboard shapes and hover interactions (all complete):**
+- ✅ How to Learn Anything: flower (top-right, 8%)
+- ✅ Subject course buttons: rotated shape cycle (diamond/pill/arch/wave/triangle), subject color at 10% opacity
+- ✅ Subject Progress rows: rotated shape cycle (star/triangle/pill/wave/arch), primary color 8% opacity
+- ✅ Hover feedback: all cards now have hover:shadow-md hover:-translate-y-1 transition-all
+- ✅ Demo Session Banner: interactive hover effects
+- ✅ Daily Games button: interactive hover effects
+- ✅ All implementations use M3 spring presets for smooth animations
+
 **Global loading state management:**
 - ✅ `LoadingIndicator` component (sm/md/lg, fullscreen mode, M3 spring animations)
 - ✅ `ProgressBar` component (linear/indeterminate modes, sm/md sizes)

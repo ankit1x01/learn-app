@@ -368,7 +368,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
           background: 'var(--color-surface-container-low)',
           borderRadius: '28px 28px 0 0',
           borderTop: '1px solid var(--color-border)',
-          boxShadow: 'var(--shadow-elevation-3)',
+          boxShadow: 'var(--shadow-elevation-1)',
         }}
       >
         {/* M3 Drag Handle */}

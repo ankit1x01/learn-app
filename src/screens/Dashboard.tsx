@@ -120,21 +120,36 @@ export const Dashboard = ({
           <motion.button
             key={s.label}
             initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...m3SpatialDefault, delay: i * 0.05 }}
+            animate={{ opacity: 1, y: 0, scale: selectedPill === s.label ? 1.05 : 1 }}
+            transition={{ ...m3SpatialDefault, delay: i * 0.05, scale: { duration: 0.2 } }}
             onClick={() => setSelectedPill(selectedPill === s.label ? null : s.label)}
-            className="flex-1 rounded-m3-lg rounded-tl-sm p-3 text-center cursor-pointer transition-all active:scale-95"
+            className="flex-1 rounded-m3-lg rounded-tl-sm p-3 text-center cursor-pointer transition-all active:scale-95 hover:shadow-sm"
             style={{ 
               background: s.bg, 
               border: `2px solid ${selectedPill === s.label ? s.color : s.border}`,
-              opacity: selectedPill === null || selectedPill === s.label ? 1 : 0.6
+              opacity: selectedPill === null || selectedPill === s.label ? 1 : 0.6,
+              boxShadow: selectedPill === s.label ? `0 2px 8px ${s.color}20` : 'none'
             }}
             title={s.help || undefined}
           >
-            <span className="text-[24px] font-bold block tabular-nums font-ui" style={{ color: s.color }}>{s.value}</span>
+            <motion.span 
+              className="text-[24px] font-bold block tabular-nums font-ui"
+              animate={{ scale: selectedPill === s.label ? 1.1 : 1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              style={{ color: s.color }}
+            >
+              {s.value}
+            </motion.span>
             <span className="text-[12px] font-medium font-ui" style={{ color: s.color, opacity: 0.8 }}>{s.label}</span>
             {s.help && selectedPill === s.label && (
-              <span className="text-[10px] font-ui mt-1 block" style={{ color: s.color, opacity: 0.7 }}>{s.help}</span>
+              <motion.span 
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-[10px] font-ui mt-1 block" 
+                style={{ color: s.color, opacity: 0.7 }}
+              >
+                {s.help}
+              </motion.span>
             )}
           </motion.button>
         ))}
@@ -145,7 +160,7 @@ export const Dashboard = ({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.2 }}
-        className="rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid"
+        className="rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid transition-all hover:shadow-md hover:scale-[1.01]"
         style={{ background: 'var(--color-surface-container-low)', borderColor: 'var(--color-primary-border)' }}
       >
         <div className="flex items-start justify-between mb-4">
@@ -351,7 +366,7 @@ export const Dashboard = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.25 }}
         onClick={() => setScreen('demo-session')}
-        className="w-full rounded-m3-xl p-4 mb-4 flex items-center gap-4 text-left border border-solid"
+        className="w-full rounded-m3-xl p-4 mb-4 flex items-center gap-4 text-left border border-solid transition-all hover:shadow-md hover:-translate-y-1"
         style={{ background: 'var(--color-primary-container)', borderColor: 'var(--color-primary-border)' }}
       >
         <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary)' }}>
@@ -374,7 +389,7 @@ export const Dashboard = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.3 }}
         onClick={() => setScreen('games')}
-        className="w-full flex items-center justify-between px-4 py-3.5 rounded-m3-lg mb-4 border border-solid"
+        className="w-full flex items-center justify-between px-4 py-3.5 rounded-m3-lg mb-4 border border-solid transition-all hover:shadow-md hover:-translate-y-1"
         style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
       >
         <div className="flex items-center gap-3">
@@ -405,9 +420,10 @@ export const Dashboard = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...m3SpatialDefault, delay: 0.35 }}
             onClick={() => setScreen('course')}
-            className="w-full rounded-m3-xl p-4 text-left flex items-center gap-3 border border-solid"
+            className="w-full rounded-m3-xl p-4 text-left flex items-center gap-3 border border-solid relative overflow-hidden transition-all hover:shadow-md hover:-translate-y-1"
             style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-primary-border)' }}
           >
+            <ShapePlaced position="top-right" shape="flower" color="var(--color-primary)" opacity={0.08} size={28} />
             <div className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary-container)' }}>
               <Brain size={20} style={{ color: 'var(--color-primary)' }} />
             </div>
@@ -437,6 +453,8 @@ export const Dashboard = ({
             const done = subStats.auto + subStats.conscious;
             const pct  = Math.round((done / sub.totalConcepts) * 100);
             const Icon = SUBJECT_ICONS[sub.name] ?? BookOpen;
+            const shapes = ['diamond', 'pill', 'arch', 'wave', 'triangle'] as const;
+            const shapeIndex = i % shapes.length;
             return (
               <motion.button
                 key={sub.name}
@@ -444,9 +462,10 @@ export const Dashboard = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...m3SpatialDefault, delay: 0.4 + (i * 0.05) }}
                 onClick={() => onSubjectClick(sub.name)}
-                className="w-full rounded-m3-xl p-4 text-left flex items-center gap-3 border border-solid"
+                className="w-full rounded-m3-xl p-4 text-left flex items-center gap-3 border border-solid relative overflow-hidden transition-all hover:shadow-md hover:-translate-y-1"
                 style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-border)' }}
               >
+                <ShapePlaced position="top-right" shape={shapes[shapeIndex]} color={sub.color} opacity={0.1} size={32} />
                 <div
                   className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0"
                   style={{ backgroundColor: 'var(--color-background)', border: '1px solid var(--color-border)' }}
@@ -486,6 +505,8 @@ export const Dashboard = ({
             const autoPC  = Math.round((sub.stats.auto / sub.totalConcepts) * 100);
             const conscPC = Math.round((sub.stats.conscious / sub.totalConcepts) * 100);
             const isLast  = i === subjectReadiness.length - 1;
+            const shapes = ['star', 'triangle', 'pill', 'wave', 'arch'] as const;
+            const shapeIndex = i % shapes.length;
             return (
               <motion.button
                 key={sub.name}
@@ -493,9 +514,15 @@ export const Dashboard = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...m3SpatialDefault, delay: i * 0.05 }}
                 onClick={() => onSubjectClick(sub.name)}
-                className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors hover:opacity-80"
-                style={{ borderBottom: isLast ? 'none' : '1px solid var(--color-outline-variant)', background: 'var(--color-surface-container-high)' }}
+                className="w-full flex items-center gap-3 px-4 py-3.5 text-left transition-all hover:opacity-90"
+                style={{ 
+                  borderBottom: isLast ? 'none' : '1px solid var(--color-outline-variant)', 
+                  background: 'var(--color-surface-container-high)',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
               >
+                <ShapePlaced position="bottom-right" shape={shapes[shapeIndex]} color="#6750A4" opacity={0.08} size={40} />
                 {/* Icon */}
                 <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center text-xl shrink-0" style={{ background: 'var(--color-background)', border: '1px solid var(--color-border)' }}>
                   {sub.emoji}
