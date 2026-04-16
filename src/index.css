@@ -1,46 +1,136 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-ui:      "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-reading: "Nunito", system-ui, sans-serif;
-  --font-data:    "Inter", system-ui, sans-serif;
+  --font-ui:      "Roboto", system-ui, sans-serif;
+  --font-body:    "Roboto", system-ui, sans-serif;
 
-  /* ── Backgrounds ── */
-  --color-background:          #F7F6F3;
-  --color-surface:             #FFFFFF;
-  --color-surface-variant:     #F0EEE9;
-  --color-border:              #E8E5DF;
+  /* ── M3 Shape Scale (exact dp values) ── */
+  --radius-m3-none:  0px;
+  --radius-m3-xs:    4px;
+  --radius-m3-sm:    8px;
+  --radius-m3-md:    12px;
+  --radius-m3-lg:    16px;
+  --radius-m3-xl:    28px;
+  --radius-m3-2xl:   48px;
+  --radius-m3-full:  9999px;
 
-  /* ── Brand ── */
-  --color-primary:             #2563EB;
-  --color-primary-container:   #EFF6FF;
-  --color-primary-border:      #BFDBFE;
+  /* ── M3 Core Easing ── */
+  --ease-m3-standard:              cubic-bezier(0.2, 0.0, 0, 1.0);
+  --ease-m3-standard-accelerate:   cubic-bezier(0.3, 0.0, 1, 1.0);
+  --ease-m3-standard-decelerate:   cubic-bezier(0.0, 0.0, 0, 1.0);
+  --ease-m3-emphasized:            cubic-bezier(0.2, 0.0, 0, 1.0);
+  --ease-m3-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  --ease-m3-emphasized-accelerate: cubic-bezier(0.3, 0.0, 0.8, 0.15);
 
-  /* ── Semantic ── */
-  --color-success:             #15803D;
-  --color-success-container:   #F0FDF4;
-  --color-warning:             #B45309;
-  --color-warning-container:   #FFFBEB;
-  --color-error:               #B91C1C;
-  --color-error-container:     #FEF2F2;
-  --color-excellence:          #6D28D9;
-  --color-excellence-container:#F5F3FF;
+  /* ── M3 Duration Tokens ── */
+  --duration-short1: 50ms;
+  --duration-short2: 100ms;
+  --duration-short3: 150ms;
+  --duration-short4: 200ms;
+  --duration-medium1: 250ms;
+  --duration-medium2: 300ms;
+  --duration-medium3: 350ms;
+  --duration-medium4: 400ms;
+  --duration-long1: 450ms;
+  --duration-long2: 500ms;
+  --duration-long3: 550ms;
+  --duration-long4: 600ms;
 
-  /* ── Text ── */
-  --color-on-surface:          #1C1917;
-  --color-on-surface-2:        #292524;
-  --color-on-surface-variant:  #78716C;
-  --color-on-surface-muted:    #A8A29E;
+  /* ── M3 Spacing (4dp grid) ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+
+  /* ── M3 Elevations (Shadows) ── */
+  --shadow-elevation-0: none;
+  --shadow-elevation-1: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
+  --shadow-elevation-2: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15);
+  --shadow-elevation-3: 0px 1px 3px 0px rgba(0,0,0,0.3), 0px 4px 8px 3px rgba(0,0,0,0.15);
+  --shadow-elevation-4: 0px 2px 3px 0px rgba(0,0,0,0.3), 0px 6px 10px 4px rgba(0,0,0,0.15);
+  --shadow-elevation-5: 0px 4px 4px 0px rgba(0,0,0,0.3), 0px 8px 12px 6px rgba(0,0,0,0.15);
+
+  /* ── M3 Background & Surface ── */
+  --color-background:                  #FFFBFE;
+  --color-on-background:               #1C1B1F;
+  --color-surface:                     #FFFBFE;
+  --color-on-surface:                  #1C1B1F;
+  --color-surface-variant:             #E7E0EC;
+  --color-on-surface-variant:          #49454F;
+
+  /* M3 Surface Container Family */
+  --color-surface-container-lowest:    #FFFFFF;
+  --color-surface-container-low:       #F7F2FA;
+  --color-surface-container:           #F3EDF7;
+  --color-surface-container-high:      #ECE6F0;
+  --color-surface-container-highest:   #E6E0E9;
+
+  --color-surface-dim:                 #DED8E1;
+  --color-surface-bright:              #FDFBFF;
+
+  /* ── M3 Outline ── */
+  --color-border:                      #CAC4D0;
+  --color-outline:                     #79747E;
+
+  /* ── M3 Primary (Focus Violet) ── */
+  --color-primary:                     #6750A4;
+  --color-on-primary:                  #FFFFFF;
+  --color-primary-container:           #EADDFF;
+  --color-on-primary-container:        #21005D;
+  --color-primary-border:              #D0BCFF;
+  --color-inverse-primary:             #D0BCFF;
+
+  /* ── M3 Secondary ── */
+  --color-secondary:                   #625B71;
+  --color-on-secondary:                #FFFFFF;
+  --color-secondary-container:         #E8DEF8;
+  --color-on-secondary-container:      #1D192B;
+
+  /* ── M3 Tertiary (Excellence) ── */
+  --color-excellence:                  #7D5260;
+  --color-on-excellence:               #FFFFFF;
+  --color-excellence-container:        #FFD8E4;
+  --color-on-excellence-container:     #31111D;
+
+  /* ── M3 Error ── */
+  --color-error:                       #B3261E;
+  --color-on-error:                    #FFFFFF;
+  --color-error-container:             #F9DEDC;
+  --color-on-error-container:          #410E0B;
+
+  /* ── Semantic Extensions (CHITTA-specific) ── */
+  --color-success:                     #146C2E;
+  --color-on-success:                  #FFFFFF;
+  --color-success-container:           #C4F6C7;
+  --color-on-success-container:        #064215;
+  --color-warning:                     #8C5000;
+  --color-on-warning:                  #FFFFFF;
+  --color-warning-container:           #FFDCBB;
+  --color-on-warning-container:        #4A2800;
+
+  /* ── Text Hierarchy Aliases ── */
+  --color-on-surface-2:                #322F35;
+  --color-on-surface-muted:            #79747E;
+
+  /* ── Scrim ── */
+  --color-scrim:                       rgba(0,0,0,0.32);
 }
 
 /* ── Base ─────────────────────────────────────────────────────────────────── */
 
 @layer base {
   body {
-    background-color: #F7F6F3;
-    color: #1C1917;
-    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: "Roboto", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -56,42 +146,50 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* Font utilities */
-  .font-ui      { font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
-  .font-reading { font-family: "Nunito", system-ui, sans-serif; }
-  .font-data    { font-family: "Inter", system-ui, sans-serif; }
+  .font-ui   { font-family: var(--font-ui); }
+  .font-body { font-family: var(--font-body); }
 
-  /*
-   * .prose — apply to any block of lengthy reading content
-   * Uses Nunito: round letterforms, high x-height, humanist structure
-   * Reduces reading fatigue for 30+ minute study sessions
-   */
   .prose {
-    font-family: "Nunito", system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 15px;
-    line-height: 1.78;
-    color: #292524;
-    letter-spacing: 0.008em;
-  }
-  .prose p + p { margin-top: 0.85em; }
-  .prose strong { font-weight: 700; color: #1C1917; }
-
-  /*
-   * .question-text — for MCQ / concept question stems
-   * Slightly larger, generous line-height — critical for comprehension
-   */
-  .question-text {
-    font-family: "Nunito", system-ui, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.82;
-    color: #1C1917;
+    line-height: 1.65;
+    color: var(--color-on-surface-2);
     letter-spacing: 0.005em;
   }
+  .prose p + p { margin-top: 12px; }
+  .prose strong { font-weight: 700; color: var(--color-on-surface); }
 
-  /* Streak badge */
+  .question-text {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.75;
+    color: var(--color-on-surface);
+    letter-spacing: 0;
+  }
+
+  .text-display-large-emphasized {
+    font-family: var(--font-ui);
+    font-size: 44px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .text-headline-emphasized {
+    font-family: var(--font-ui);
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+  .text-title-emphasized {
+    font-family: var(--font-ui);
+    font-size: 18px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
   .streak-badge {
-    background: #FFFBEB;
+    background: var(--color-warning-container);
     border: 1px solid #FDE68A;
     border-radius: 999px;
     padding: 0.25rem 0.6rem;
@@ -100,11 +198,10 @@
     gap: 0.3rem;
     font-size: 12px;
     font-weight: 700;
-    color: #B45309;
-    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    color: var(--color-warning);
+    font-family: var(--font-ui);
   }
 
-  /* Subject color tokens */
   .subject-physics   { color: #1D4ED8; background: #EFF6FF; }
   .subject-chemistry { color: #6D28D9; background: #F5F3FF; }
   .subject-biology   { color: #166534; background: #F0FDF4; }
@@ -115,55 +212,176 @@
 
 @layer components {
 
-  /* ── Card: clean white, warm border, subtle shadow ── */
+  /* ── Card: M3 Filled Card (Level 0) ── */
   .card {
-    background: #FFFFFF;
-    border: 1px solid #E8E5DF;
-    border-radius: 14px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    background: var(--color-surface-container-lowest);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-m3-md);
+    box-shadow: var(--shadow-elevation-0);
   }
 
-  /* Legacy alias — maps card to new card style */
-  .card,
-  .card {
-    background: #FFFFFF;
-    border: 1px solid #E8E5DF;
-    border-radius: 14px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  /* ── Card Elevated: M3 Elevated Card (Level 1) ── */
+  .card-elevated {
+    background: var(--color-surface-container-low);
+    border-radius: var(--radius-m3-md);
+    box-shadow: var(--shadow-elevation-1);
   }
 
-  /* ── Primary button ── */
+  /* ── Card Outlined ── */
+  .card-outlined {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-m3-md);
+    box-shadow: var(--shadow-elevation-0);
+  }
+
+  /* ── Primary Filled Button (M3: Full radius pill, 40dp height) ── */
   .btn-primary {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--radius-m3-full);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background var(--duration-short4) var(--ease-m3-standard),
+                box-shadow var(--duration-short4) var(--ease-m3-standard),
+                transform var(--duration-short3) var(--ease-m3-standard);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-elevation-0);
+  }
+  .btn-primary:hover {
+    background: color-mix(in srgb, var(--color-primary) 92%, var(--color-on-primary) 8%);
+    box-shadow: var(--shadow-elevation-1);
+  }
+  .btn-primary:active { transform: scale(0.98); box-shadow: var(--shadow-elevation-0); }
+
+  /* Full-width CTA variant */
+  .btn-primary-full {
     width: 100%;
-    padding: 15px 24px;
-    border-radius: 12px;
-    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.01em;
+    height: 56px;
+    padding: 0 24px;
+    border-radius: var(--radius-m3-full);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.1px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background 120ms ease, transform 100ms ease, box-shadow 120ms ease;
-    background: #2563EB;
-    color: #FFFFFF;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
     border: none;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(37,99,235,0.28);
+    box-shadow: var(--shadow-elevation-0);
+    transition: background var(--duration-short4) var(--ease-m3-standard),
+                box-shadow var(--duration-short4) var(--ease-m3-standard),
+                transform var(--duration-short3) var(--ease-m3-standard);
   }
-  .btn-primary:hover  { background: #1D4ED8; box-shadow: 0 4px 14px rgba(37,99,235,0.32); }
-  .btn-primary:active { transform: scale(0.98); box-shadow: none; }
+  .btn-primary-full:hover {
+    background: color-mix(in srgb, var(--color-primary) 92%, var(--color-on-primary) 8%);
+    box-shadow: var(--shadow-elevation-1);
+  }
+  .btn-primary-full:active { transform: scale(0.98); }
 
-  /* ── Subject cards ── */
+  /* ── Filled Tonal Button ── */
+  .btn-tonal {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--radius-m3-full);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+    border: none;
+    cursor: pointer;
+    transition: background var(--duration-short4) var(--ease-m3-standard);
+  }
+
+  /* ── Outlined Button ── */
+  .btn-outlined {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--radius-m3-full);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background var(--duration-short4) var(--ease-m3-standard);
+  }
+  .btn-outlined:hover {
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+
+  /* ── Text Button ── */
+  .btn-text {
+    height: 40px;
+    padding: 0 12px;
+    border-radius: var(--radius-m3-full);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--color-primary);
+    border: none;
+    cursor: pointer;
+    transition: background var(--duration-short4) var(--ease-m3-standard);
+  }
+  .btn-text:hover {
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+
+  /* ── Icon Button ── */
+  .btn-icon {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-m3-full);
+    background: transparent;
+    color: var(--color-on-surface-variant);
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background var(--duration-short3) var(--ease-m3-standard);
+  }
+  .btn-icon:hover {
+    background: color-mix(in srgb, var(--color-on-surface) 8%, transparent);
+  }
+
+  /* ── Subject card hover ── */
   .subject-card {
-    transition: box-shadow 200ms ease, border-color 200ms ease;
+    transition: box-shadow var(--duration-medium1) var(--ease-m3-standard),
+                border-color var(--duration-medium1) var(--ease-m3-standard);
   }
   .subject-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    border-color: #BFDBFE;
+    box-shadow: var(--shadow-elevation-2);
+    border-color: var(--color-primary-border);
   }
 
-  /* ── Banner shimmer — removed, kept as no-op ── */
   .banner-shimmer { position: relative; }
 }
