@@ -1,56 +1,84 @@
 import type { ExamTopicBank, TopicGroup } from './types';
 
-const REACT_GROUPS: TopicGroup[] = [
+const PHASE_1_GROUPS: TopicGroup[] = [
   {
-    group: 'Architecture & Internals', icon: 'account_tree', tier: 1, accentColor: '#61DAFB', accentBg: '#61DAFB20',
+    group: 'Web Fundamentals', icon: 'html', tier: 1, accentColor: '#E34F26', accentBg: '#E34F2620',
     topics: [
-      { topic: 'Core rendering', problems: [{ name: 'React Fiber & Reconciliation Deep Dive' }, { name: 'Concurrent Features & Suspense' }] },
-      { topic: 'Next.js', problems: [{ name: 'Server Components & App Router' }, { name: 'SSR/SSG/ISR Trade-offs & Streaming' }] },
-      { topic: 'State', problems: [{ name: 'Advanced State Management (Zustand, Jotai limits)' }] }
+      { topic: 'HTML & CSS', problems: [{ name: 'HTML5 Semantic Tags & Accessibility (a11y)' }, { name: 'CSS Flexbox, Grid & Responsive Design' }] }
+    ]
+  },
+  {
+    group: 'JS & TS Core', icon: 'data_object', tier: 1, accentColor: '#F7DF1E', accentBg: '#F7DF1E20',
+    topics: [
+      { topic: 'JavaScript Internals', problems: [{ name: 'Closures, Prototypes & Execution Context' }, { name: 'Promises, Async/Await & Event Loop' }] },
+      { topic: 'TypeScript', problems: [{ name: 'TS Interfaces, Generics & Utility Types' }] }
     ]
   }
 ];
 
-const NODE_GROUPS: TopicGroup[] = [
+const PHASE_2_GROUPS: TopicGroup[] = [
   {
-    group: 'V8 & Execution', icon: 'memory', tier: 1, accentColor: '#68A063', accentBg: '#68A06320',
+    group: 'React Framework', icon: 'integration_instructions', tier: 1, accentColor: '#61DAFB', accentBg: '#61DAFB20',
     topics: [
-      { topic: 'Engine Mechanics', problems: [{ name: 'V8 Engine & Garbage Collection' }, { name: 'Event Loop Phases & libuv' }] },
-      { topic: 'Advanced I/O', problems: [{ name: 'Streams, Buffers & Backpressure' }, { name: 'IPC & Worker Threads' }] },
-      { topic: 'Profiling', problems: [{ name: 'Memory Leaks & CPU Profiling' }] }
+      { topic: 'Components', problems: [{ name: 'React Components, Props & State' }, { name: 'Hooks Deep Dive (useEffect, useMemo, useCallback)' }] },
+      { topic: 'State & Architecture', problems: [{ name: 'React Context, Redux & Zustand' }] }
+    ]
+  },
+  {
+    group: 'Angular Framework', icon: 'shield', tier: 1, accentColor: '#DD0031', accentBg: '#DD003120',
+    topics: [
+      { topic: 'Core Angular', problems: [{ name: 'Angular Modules, Components & Directives' }] },
+      { topic: 'RxJS & DI', problems: [{ name: 'RxJS, Services & Dependency Injection' }] }
     ]
   }
 ];
 
-const ANGULAR_GROUPS: TopicGroup[] = [
+const PHASE_3_GROUPS: TopicGroup[] = [
   {
-    group: 'Enterprise Architecture', icon: 'shield', tier: 1, accentColor: '#DD0031', accentBg: '#DD003120',
+    group: 'Node & Express', icon: 'dns', tier: 1, accentColor: '#68A063', accentBg: '#68A06320',
     topics: [
-      { topic: 'Compiler & Rendering', problems: [{ name: 'Ivy Compiler & DOM Rendering' }, { name: 'Zone.js & OnPush Change Detection' }] },
-      { topic: 'Reactivity', problems: [{ name: 'RxJS Advanced Patterns' }, { name: 'Angular Signals' }] },
-      { topic: 'Micro-frontends', problems: [{ name: 'Module Federation' }] }
+      { topic: 'Core', problems: [{ name: 'Node.js Core Modules & NPM' }] },
+      { topic: 'Servers', problems: [{ name: 'Express.js & Middleware Architecture' }] }
+    ]
+  },
+  {
+    group: 'API Design', icon: 'api', tier: 1, accentColor: '#8B5CF6', accentBg: '#8B5CF620',
+    topics: [
+      { topic: 'REST & Security', problems: [{ name: 'RESTful API Design & Best Practices' }, { name: 'Authentication (JWT, OAuth, Cookies)' }] },
+      { topic: 'GraphQL', problems: [{ name: 'GraphQL Subscriptions & Apollo Server' }] }
     ]
   }
 ];
 
-const DB_GROUPS: TopicGroup[] = [
+const PHASE_4_GROUPS: TopicGroup[] = [
   {
-    group: 'Storage & Distributed Data', icon: 'storage', tier: 1, accentColor: '#336791', accentBg: '#33679120',
+    group: 'SQL & Relational', icon: 'database', tier: 1, accentColor: '#336791', accentBg: '#33679120',
     topics: [
-      { topic: 'Disk & Memory', problems: [{ name: 'B-Trees vs LSM Trees' }, { name: 'Redis Internals & Eviction Policies' }] },
-      { topic: 'Transactions', problems: [{ name: 'MVCC, Isolation Levels & Locks' }] },
-      { topic: 'Scaling', problems: [{ name: 'Sharding & Consistent Hashing' }, { name: 'Query Optimization' }] }
+      { topic: 'PostgreSQL', problems: [{ name: 'SQL Basics (Joins, Aggregations)' }, { name: 'PostgreSQL Advanced (Indexes, Transactions)' }] }
+    ]
+  },
+  {
+    group: 'NoSQL & Caching', icon: 'storage', tier: 1, accentColor: '#10B981', accentBg: '#10B98120',
+    topics: [
+      { topic: 'MongoDB', problems: [{ name: 'MongoDB Data Modeling & Aggregation Pipeline' }] },
+      { topic: 'Tools', problems: [{ name: 'Redis Fundamentals & Query Caching' }, { name: 'Prisma, TypeORM & Mongoose' }] }
     ]
   }
 ];
 
-const SYSTEM_GROUPS: TopicGroup[] = [
+const PHASE_5_GROUPS: TopicGroup[] = [
   {
-    group: 'System Design', icon: 'architecture', tier: 1, accentColor: '#8B5CF6', accentBg: '#8B5CF620',
+    group: 'Cloud & Infrastructure', icon: 'cloud', tier: 1, accentColor: '#F59E0B', accentBg: '#F59E0B20',
     topics: [
-      { topic: 'Distributed Systems', problems: [{ name: 'CAP Theorem & PACELC' }, { name: 'Event-Driven Architecture (Kafka/RabbitMQ)' }] },
-      { topic: 'Traffic & Scale', problems: [{ name: 'Rate Limiting Algorithms' }, { name: 'Load Balancing & Service Discovery' }] },
-      { topic: 'Observability', problems: [{ name: 'Distributed Tracing & Metrics' }] }
+      { topic: 'Containers & CI/CD', problems: [{ name: 'Docker Containerization & Docker Compose' }, { name: 'CI/CD Pipelines (GitHub Actions)' }] },
+      { topic: 'AWS', problems: [{ name: 'AWS Core Services (S3, EC2, RDS, Lambda)' }] }
+    ]
+  },
+  {
+    group: 'System Design', icon: 'architecture', tier: 1, accentColor: '#EC4899', accentBg: '#EC489920',
+    topics: [
+      { topic: 'Patterns', problems: [{ name: 'Microservices vs Monolith Architecture' }] },
+      { topic: 'Distributed Systems', problems: [{ name: 'CAP Theorem, Pub/Sub & Load Balancing' }] }
     ]
   }
 ];
@@ -59,12 +87,12 @@ export const seniorFsAdapter: ExamTopicBank = {
   examId: 'senior_fs',
   getGroups: (subjectName: string) => {
     switch (subjectName) {
-      case 'React 19 & Next.js Architecture': return REACT_GROUPS;
-      case 'Node.js Internals & V8': return NODE_GROUPS;
-      case 'Angular Enterprise Architecture': return ANGULAR_GROUPS;
-      case 'Advanced Databases & Storage': return DB_GROUPS;
-      case 'System Design & Scalability': return SYSTEM_GROUPS;
-      default: return [...REACT_GROUPS, ...NODE_GROUPS, ...ANGULAR_GROUPS, ...DB_GROUPS, ...SYSTEM_GROUPS];
+      case 'Phase 1: Web & JS/TS Foundations': return PHASE_1_GROUPS;
+      case 'Phase 2: Frontend Mastery (React & Angular)': return PHASE_2_GROUPS;
+      case 'Phase 3: Backend & APIs (Node.js)': return PHASE_3_GROUPS;
+      case 'Phase 4: Databases & Caching': return PHASE_4_GROUPS;
+      case 'Phase 5: Architect & System Design': return PHASE_5_GROUPS;
+      default: return [...PHASE_1_GROUPS, ...PHASE_2_GROUPS, ...PHASE_3_GROUPS, ...PHASE_4_GROUPS, ...PHASE_5_GROUPS];
     }
   }
 };
