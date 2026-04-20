@@ -21,7 +21,7 @@ export const EXAM_CARDS: ExamCard[] = [
     name: 'AI Engineer',
     icon: 'smart_toy',
     color: '#8B5CF6',
-    description: 'ML · DL · Generative AI',
+    description: 'GenAI · PyTorch · MLOps · RAG',
   },
   {
     id: 'dsa_faang',
@@ -66,6 +66,7 @@ export const EXAM_CARDS: ExamCard[] = [
     description: 'State PCS · MP-specific syllabus',
   },
 ];
+
 
 
 
