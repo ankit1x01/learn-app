@@ -12,7 +12,7 @@ import { DistractorTraining } from './screens/DistractorTraining';
 import { ErrorDashboard }     from './screens/ErrorDashboard';
 import { MockTest }           from './screens/MockTest';
 import { PreExamProtocol }    from './screens/PreExamProtocol';
-import { TopicsBank }         from './screens/TopicsBank';
+import { TopicsScreen }       from './screens/TopicsScreen';
 import { Dashboard }          from './screens/Dashboard';
 import { LiveSession }        from './screens/LiveSession';
 import { ConceptEncoding }    from './screens/ConceptEncoding';
@@ -155,7 +155,7 @@ function AppContent() {
           {screen === 'errors'     && <ErrorDashboard    setScreen={setScreen} concepts={concepts} />}
           {screen === 'mock'       && <MockTest          setScreen={setScreen} concepts={concepts} />}
           {screen === 'preexam'    && <PreExamProtocol   setScreen={setScreen} />}
-          {screen === 'topics'        && <TopicsBank        setScreen={setScreen} initialSearch={searchQuery} />}
+          {screen === 'topics'        && <TopicsScreen       setScreen={setScreen} />}
           {screen === 'course'        && <CourseDashboard   setScreen={setScreen} setCourseDay={setCourseDay} />}
           {screen === 'course-lesson' && <CourseLesson      setScreen={setScreen} courseDay={courseDay} setCourseDay={setCourseDay} />}
           {screen === 'demo-session'  && <DemoSession       setScreen={setScreen} />}

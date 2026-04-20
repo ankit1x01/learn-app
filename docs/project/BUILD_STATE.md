@@ -126,6 +126,16 @@
 - SessionComplete multi-phase analysis
 - Any async operation across the app
 
+## Topics Screen Hierarchy ✅ COMPLETE
+
+**3-level drill-down: Exam → Subject → Topics**
+- ✅ Level 1: Exam picker — 6 exam cards, DSA FAANG + IT Placement tappable, others "Coming Soon"
+- ✅ Level 2: Subject picker — reads from SYLLABUS_REGISTRY
+- ✅ Level 3: Topic bank — groups → topics → problems + resources, search, tier filter, read/unread
+- ✅ Adapter pattern: `src/data/topic-banks/` — add new exams by creating an adapter
+- ✅ M3 Expressive slide transitions, Material Symbols Rounded icons, M3 color tokens
+- ✅ TopicsBank.tsx kept (no longer routed — can be removed in future cleanup)
+
 ---
 
 ## Active Syllabus
