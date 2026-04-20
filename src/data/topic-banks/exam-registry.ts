@@ -11,10 +11,10 @@ export interface ExamCard {
 export const EXAM_CARDS: ExamCard[] = [
   {
     id: 'senior_fs',
-    name: 'Full Stack Masterclass',
+    name: 'SDE II / Senior FS',
     icon: 'terminal',
     color: '#2DD4BF',
-    description: 'Zero to Hero · React, Angular, Node & Systems',
+    description: 'System Design · Microservices · K8s',
   },
   {
     id: 'ai_engineer',
@@ -66,5 +66,6 @@ export const EXAM_CARDS: ExamCard[] = [
     description: 'State PCS · MP-specific syllabus',
   },
 ];
+
 
 

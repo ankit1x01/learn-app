@@ -3,30 +3,30 @@ import { SENIOR_FS_CONCEPTS } from './concepts';
 
 export const seniorFsConfig: SyllabusConfig = {
   id: 'senior_fs',
-  name: 'Full Stack Masterclass',
-  studentName: 'Student',
+  name: 'Full Stack SDE II / Senior',
+  studentName: 'Experienced Dev',
   examDate: '2026-12-01',
   daysRemaining: 180,
-  targetScoreLabel: 'Full Stack Expert',
+  targetScoreLabel: 'Interview Ready (5 YoE)',
   examScoreTarget: 95,
 
   subjects: [
-    { name: 'Phase 1: Web & JS/TS Foundations', weight: 0.15, totalConcepts: 20, examQuestions: 15, color: 'text-[#F7DF1E]', bgColor: 'bg-[#F7DF1E]/10', barColor: 'bg-[#F7DF1E]', emoji: '🟨', encodingTip: 'Master the primitives first: DOM, Event Loop, Closures.' },
-    { name: 'Phase 2: Frontend Mastery (React & Angular)', weight: 0.25, totalConcepts: 25, examQuestions: 25, color: 'text-[#61DAFB]', bgColor: 'bg-[#61DAFB]/10', barColor: 'bg-[#61DAFB]', emoji: '⚛️', encodingTip: 'Understand component lifecycles, hooks, and state management.' },
-    { name: 'Phase 3: Backend & APIs (Node.js)', weight: 0.20, totalConcepts: 20, examQuestions: 20, color: 'text-[#68A063]', bgColor: 'bg-[#68A063]/10', barColor: 'bg-[#68A063]', emoji: '🟩', encodingTip: 'Express, REST, GraphQL, Authentication.' },
-    { name: 'Phase 4: Databases & Caching', weight: 0.20, totalConcepts: 20, examQuestions: 20, color: 'text-[#336791]', bgColor: 'bg-[#336791]/10', barColor: 'bg-[#336791]', emoji: '💾', encodingTip: 'SQL vs NoSQL, Indexing, and Redis.' },
-    { name: 'Phase 5: Architect & System Design', weight: 0.20, totalConcepts: 15, examQuestions: 20, color: 'text-[#8B5CF6]', bgColor: 'bg-[#8B5CF6]/10', barColor: 'bg-[#8B5CF6]', emoji: '🏗️', encodingTip: 'Docker, AWS, Microservices, CAP Theorem.' }
+    { name: 'Advanced Frontend Architecture', weight: 0.20, totalConcepts: 5, examQuestions: 20, color: 'text-[#61DAFB]', bgColor: 'bg-[#61DAFB]/10', barColor: 'bg-[#61DAFB]', emoji: '💻', encodingTip: 'React Fiber, Angular Ivy, Core Vitals, Micro-frontends.' },
+    { name: 'Backend Performance & Node.js', weight: 0.20, totalConcepts: 5, examQuestions: 20, color: 'text-[#68A063]', bgColor: 'bg-[#68A063]/10', barColor: 'bg-[#68A063]', emoji: '⚙️', encodingTip: 'Event loop concurrency, streams, gRPC, WebSockets.' },
+    { name: 'Databases & Distributed Data', weight: 0.20, totalConcepts: 5, examQuestions: 20, color: 'text-[#336791]', bgColor: 'bg-[#336791]/10', barColor: 'bg-[#336791]', emoji: '🗄️', encodingTip: 'Transaction isolation, sharding, Redis eviction.' },
+    { name: 'Cloud Native & DevOps', weight: 0.20, totalConcepts: 5, examQuestions: 20, color: 'text-[#F59E0B]', bgColor: 'bg-[#F59E0B]/10', barColor: 'bg-[#F59E0B]', emoji: '☁️', encodingTip: 'Docker, Kubernetes, AWS architecture, CI/CD.' },
+    { name: 'System Design & Scalability', weight: 0.20, totalConcepts: 5, examQuestions: 20, color: 'text-[#8B5CF6]', bgColor: 'bg-[#8B5CF6]/10', barColor: 'bg-[#8B5CF6]', emoji: '🏗️', encodingTip: 'Microservices, message queues, rate limiting, CAP.' }
   ],
 
   concepts: SENIOR_FS_CONCEPTS,
 
   sessionComposition: { review: 0.35, new: 0.30, strengthen: 0.25, challenge: 0.10 },
   globalStats: {
-    'Phase 1: Web & JS/TS Foundations': { auto: 0, conscious: 0, fragile: 0, unseen: 20 },
-    'Phase 2: Frontend Mastery (React & Angular)': { auto: 0, conscious: 0, fragile: 0, unseen: 25 },
-    'Phase 3: Backend & APIs (Node.js)': { auto: 0, conscious: 0, fragile: 0, unseen: 20 },
-    'Phase 4: Databases & Caching': { auto: 0, conscious: 0, fragile: 0, unseen: 20 },
-    'Phase 5: Architect & System Design': { auto: 0, conscious: 0, fragile: 0, unseen: 15 }
+    'Advanced Frontend Architecture': { auto: 0, conscious: 0, fragile: 0, unseen: 5 },
+    'Backend Performance & Node.js': { auto: 0, conscious: 0, fragile: 0, unseen: 5 },
+    'Databases & Distributed Data': { auto: 0, conscious: 0, fragile: 0, unseen: 5 },
+    'Cloud Native & DevOps': { auto: 0, conscious: 0, fragile: 0, unseen: 5 },
+    'System Design & Scalability': { auto: 0, conscious: 0, fragile: 0, unseen: 5 }
   },
   scoring: { correct: 4, wrong: -1, skip: 0 }
 };
