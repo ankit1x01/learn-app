@@ -6,9 +6,11 @@ export type { ExamCard } from './exam-registry';
 
 import type { ExamTopicBank } from './types';
 import { dsaAdapter } from './dsa-adapter';
+import { aiAdapter } from './ai-adapter';
 
 export const TOPIC_BANKS: Record<string, ExamTopicBank> = {
   dsa_faang: dsaAdapter,
+  ai_engineer: aiAdapter,
   // it_placement_india: itAdapter,  — add when IT topic data is structured
   // neet_2026: neetAdapter,         — add when NEET data is ready
 };

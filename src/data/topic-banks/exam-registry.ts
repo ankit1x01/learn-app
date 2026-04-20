@@ -10,6 +10,13 @@ export interface ExamCard {
 
 export const EXAM_CARDS: ExamCard[] = [
   {
+    id: 'ai_engineer',
+    name: 'AI Engineer',
+    icon: 'smart_toy',
+    color: '#8B5CF6',
+    description: 'ML · DL · Generative AI',
+  },
+  {
     id: 'dsa_faang',
     name: 'DSA FAANG',
     icon: 'code',

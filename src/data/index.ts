@@ -10,11 +10,13 @@
 import type { SyllabusConfig } from '../core/types';
 import { dsaConfig } from './dsa/config';
 import { itPlacementConfig } from './itplacement/config';
+import { aiEngineerConfig } from './ai_engineer/config';
 
 // Registry of all available syllabi
 export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
   dsa_faang:          dsaConfig,
   it_placement_india: itPlacementConfig,
+  ai_engineer:        aiEngineerConfig,
 };
 
 // ─── Active Syllabus ──────────────────────────────────────────────────────────
