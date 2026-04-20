@@ -269,15 +269,66 @@ Font:      14px (Body Medium), line-height 1.6
 
 ## 9. Icons
 
-**Library: Lucide React only** — `lucide-react` package.
+**Primary library: Material Symbols Rounded** — Google's official M3 icon font.
+Already loaded in `index.html` via Google Fonts CDN.
 
 ```tsx
-import { Home, BookOpen, Map, BarChart2, Zap } from 'lucide-react';
-// Size: 20-24px. Stroke-width: 1.5 (default). Color: CSS variable.
+// Usage in JSX — render as <span> with class
+<span
+  className="material-symbols-rounded"
+  style={{
+    fontSize: 24,  // 20 | 24 | 40 | 48
+    color: 'var(--color-primary)',
+    fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24"
+  }}
+>
+  calculate
+</span>
 ```
 
+### Variable Font Axes
+| Axis | Range | Recommended | Effect |
+|------|-------|-------------|--------|
+| `FILL` | 0–1 | 1 = filled (active), 0 = outline (inactive) | Filled vs outlined |
+| `wght` | 100–700 | 400 | Stroke weight |
+| `GRAD` | -50–200 | 0 | Grade/contrast |
+| `opsz` | 20–48 | match font-size | Optical size |
+
+### Subject Icon Map (CHITTA)
+| Subject | Icon name |
+|---------|-----------|
+| Quantitative Aptitude | `calculate` |
+| DSA & Coding | `terminal` |
+| Foundations | `layers` |
+| Arrays & Search | `data_array` |
+| Strings & Data Structures | `link` |
+| Trees & Graphs | `account_tree` |
+| DP & Greedy | `bolt` |
+
+### Common UI Icons
+```
+Home         → home
+Session      → play_circle
+Topics       → menu_book
+Map          → map
+Pro          → star
+Search       → search
+Back         → arrow_back
+Settings     → settings
+Streak/Fire  → local_fire_department
+Timer        → timer
+Trophy       → emoji_events
+Brain/Learn  → neurology
+Check        → check_circle
+Close        → close
+```
+
+**Rule:** FILL=1 for active/selected states, FILL=0 for inactive/default states.
 **No emojis** in nav bars, buttons, badges, headers, cards, or any interactive element.
-Emojis are only acceptable inside static data config files as content.
+Emojis are only acceptable inside static data config files (`encodingTip`, etc.) as content text.
+
+> **Note:** Lucide React (`lucide-react`) is still present in some legacy screens.
+> Migrate to Material Symbols Rounded on any screen you touch.
 
 ---
 

@@ -1,0 +1,10 @@
+export { TimerBar } from './TimerBar'
+export { ScoreDisplay } from './ScoreDisplay'
+// Future primitives — uncomment as built:
+// export { SortableList } from './SortableList'
+// export { DropZone } from './DropZone'
+// export { DraggableItem } from './DraggableItem'
+// export { SwipeCard } from './SwipeCard'
+// export { TapGrid } from './TapGrid'
+// export { TileAssembly } from './TileAssembly'
+// export { FallingItem } from './FallingItem'

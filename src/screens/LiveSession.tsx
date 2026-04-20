@@ -13,7 +13,7 @@ import {
   updateDifficulty, getNextReviewDays,
   getPredictionErrorMultiplier,
 } from '../core/fsrs';
-import { updateMetacogAccuracy, detectOverconfidence } from '../core/metacognition';
+import { updateMetacogAccuracy, detectOverconfidence, detectCognitiveFatigue, getAdaptiveSessionLength } from '../core/metacognition';
 import {
   CheckCircle2,
   XCircle,
@@ -127,8 +127,17 @@ export const LiveSession = ({
       Haptics.notification({ type: 'WARNING' as any }).catch(() => {});
     }
 
+    // BUG-004: Record response time and detect cognitive fatigue
+    session[qIndex].responseTimeMs = responseTimeMs ?? 0;
+    const answeredItems = session.slice(0, qIndex + 1);
+    const fatigue = detectCognitiveFatigue(answeredItems);
+    const adaptiveLength = getAdaptiveSessionLength(fatigue, session.length);
+
     const next = qIndex + 1;
-    if (next >= session.length) {
+    if (next >= adaptiveLength || next >= session.length) {
+      if (fatigue === 'fatigued') {
+         Toast.show({ text: 'High fatigue detected. Session completed early for rest.' }).catch(() => {});
+      }
       setQIndex(0); setScreen('complete');
     } else if (session[qIndex].queue === 'new') {
       setQIndex(next); setScreen('encoding');

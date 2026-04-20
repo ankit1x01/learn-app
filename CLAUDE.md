@@ -7,11 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Session Start Ritual (read every new session)
 
 Before doing anything else, read these files in order:
-1. `APP_BLUEPRINT.md` — what's built, how every screen works, all functions
-2. `BUILD_STATE.md` — current state, what's wired, what's broken
-3. `BUGS.md` — open bugs (fix before building new features)
-4. `DESIGN_SYSTEM.md` — **all visual decisions must follow this, every session**
-5. Relevant `docs/` file if the session involves a new feature
+1. `docs/project/APP_BLUEPRINT.md` — what's built, how every screen works, all functions
+2. `docs/project/BUILD_STATE.md` — current state, what's wired, what's broken
+3. `docs/project/BUGS.md` — open bugs (fix before building new features)
+4. `DESIGN_SYSTEM.md` — **single source of truth for ALL visual decisions**
+5. `docs/project/M3_EXPRESSIVE_GUIDELINES.md` — M3 Expressive motion + shape rules
+6. Relevant `docs/` file if the session involves a new feature
+
+> **Design rule:** ANY change to UI, layout, color, spacing, motion, or icons MUST reference
+> `DESIGN_SYSTEM.md` first. Never use ad-hoc colors or arbitrary spacing.
 
 Then confirm: "I've read BUILD_STATE. The current state is X. Starting from Y."
 
@@ -21,8 +25,8 @@ Then confirm: "I've read BUILD_STATE. The current state is X. Starting from Y."
 
 Before ending every session:
 1. Run `npm run build` — must succeed, zero errors
-2. Update `BUILD_STATE.md` — mark completed items, note next session start point
-3. Add any new bugs discovered to `BUGS.md`
+2. Update `docs/project/BUILD_STATE.md` — mark completed items, note next session start point
+3. Add any new bugs discovered to `docs/project/BUGS.md`
 
 ---
 
@@ -67,17 +71,22 @@ All screens in `App.tsx` Screen type. Bottom nav: Home / Session / Topics / Map 
 See `APP_BLUEPRINT.md` for full screen descriptions and navigation map.
 
 ### Styling
-- Light theme (`#F7F6F3` warm off-white background), clean white cards, `#E8E5DF` borders
-- Theme variables and `.card`, `.prose`, `.question-text` utilities defined in `src/index.css`
+- **Theme:** M3 Expressive Light — Background `#FFFBFE`, Primary `#6750A4`, Roboto font
+- **Source of truth:** `DESIGN_SYSTEM.md` (colors, typography, shape, elevation, motion, components)
+- **Supplementary:** `docs/project/M3_EXPRESSIVE_GUIDELINES.md` (M3 Expressive spring physics + shape tension)
+- Theme CSS variables and `.card`, `.btn-primary`, `.question-text` utilities in `src/index.css`
 - Layout is mobile-first (max-width: md), optimized for phone use
-- Full design spec in `DESIGN_SYSTEM.md` — **must read before any visual changes**
+- **NEVER** use: Tailwind blue `#2563EB`, neon colors, `backdrop-filter blur`, arbitrary `rgba()` stacking
+- **Icon library:** Material Symbols Rounded (M3 official) — see Icon System section below
 
-### Icon Rules (IMPORTANT)
-- **Use Lucide React icons only** — never use emojis as UI elements
-- Lucide provides professional outline icons (e.g. `BookOpen`, `Home`, `Map`, `BarChart2`)
-- Emojis are only acceptable inside static data config files (e.g. `encodingTip`, subject `emoji` field in config) where they appear as content, not UI chrome
-- No emoji in: nav bars, buttons, badges, headers, cards, status indicators, or any interactive element
-- Reference: Super Kalam app uses clean outline icons throughout — match that aesthetic
+### Icon System (IMPORTANT)
+- **Primary: Material Symbols Rounded** — loaded in `index.html`, used via `<span className="material-symbols-rounded">icon_name</span>`
+- Set `fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24"` for filled/active state
+- Set `FILL=0` for inactive/default state
+- Full icon map in `DESIGN_SYSTEM.md` Section 9
+- **Lucide React is legacy** — still present in some screens; migrate to Material Symbols on any screen you touch
+- **No emojis** in any UI element (nav, buttons, badges, cards, headers)
+- Emojis only in static data config files (`encodingTip` field, etc.) as text content
 
 ### Path Alias
 `@/*` maps to the project root (`./`) — configured in both `vite.config.ts` and `tsconfig.json`.
@@ -89,15 +98,20 @@ See `APP_BLUEPRINT.md` for full screen descriptions and navigation map.
 
 ### Documentation
 ```
-APP_BLUEPRINT.md              ← Centralized app blueprint (screens, functions, data model)
-BUILD_STATE.md                ← Current implementation state — update every session
-BUGS.md                       ← Open bugs — fix before new features
-docs/
-  NEUROSCIENCE_IMPLEMENTATION_PLAN.md  ← 9 layers, all implemented
-  VEDIC_LEARNING_SYSTEM.md             ← 10 Vedic techniques spec
-  VEDIC_2WEEK_PLAN.md                  ← Active 2-week implementation plan
-  AI_EXAM_APP_BLUEPRINT.md             ← Original product spec
-  UNCONSCIOUS_MASTERY_ALGORITHM.md     ← FSRS details
+DESIGN_SYSTEM.md                          ← ★ Visual single source of truth (read every session)
+docs/project/
+  APP_BLUEPRINT.md                         ← Screens, functions, data model
+  BUILD_STATE.md                           ← Current state — update every session
+  BUGS.md                                  ← Open bugs — fix before new features
+  M3_EXPRESSIVE_GUIDELINES.md             ← M3 Expressive motion + shape rules
+  ARCHITECTURE.md                          ← Full system architecture
+  RND_PLANNING.md                          ← R&D and future planning
+docs/research/
+  NEUROSCIENCE_IMPLEMENTATION_PLAN.md     ← 9 neuroscience layers
+  UNCONSCIOUS_MASTERY_ALGORITHM.md        ← FSRS algorithm details
+  VEDIC_LEARNING_SYSTEM.md               ← 10 Vedic techniques
+docs/mppsc/                               ← MPPSC question paper PDFs + pipeline
+  mppsc_project_summary.md               ← MPPSC data pipeline overview
 ```
 
 ### Research → Code Pipeline

@@ -86,6 +86,21 @@
 - ✅ Daily Games button: interactive hover effects
 - ✅ All implementations use M3 spring presets for smooth animations
 
+**Premium visual polish (Session 2 - Super Kalam Design Standard):**
+- ✅ **Stat pills**: Ripple effect on hover, icon badges (🏆📚⏰), enhanced shadows/glows
+- ✅ **Card elevation**: Inset shadows (top highlight) + drop shadows for depth
+- ✅ **Gradient overlays**: Success/primary colors at low opacity on all major cards
+- ✅ **Start Session button**: Shine effect on hover, smoother shadow transitions
+- ✅ **Mastery Ring SVG**: Animated stroke dasharray with stagger delays, motion number reveal
+- ✅ **Time-of-Day Nudge**: 
+  - Gradient background (success/primary color based on time)
+  - Rotating clock icon (360° animation, 20s duration)
+  - Enhanced messaging: "💡 Pro tip:" + contextual learning advice
+  - Better visual prominence: 1.5px border, stronger shadow
+- ✅ **Exam Readiness**: Icon animations on hover, gradient background, improved shadows
+- ✅ **All button interactions**: Smooth -translate-y-1 on hover for lifting effect
+- ✅ **Spring preset consistency**: All entrance animations use m3SpatialDefault with stagger
+
 **Global loading state management:**
 - ✅ `LoadingIndicator` component (sm/md/lg, fullscreen mode, M3 spring animations)
 - ✅ `ProgressBar` component (linear/indeterminate modes, sm/md sizes)

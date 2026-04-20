@@ -1,0 +1,193 @@
+import type { Concept, SyllabusConfig } from '../../core/types';
+
+const INITIAL_CONCEPTS: Concept[] = [
+  // --- AI / GenAI ---
+  {
+    id: 'ai-transformer',
+    name: 'Transformer Architecture',
+    subject: 'AI / GenAI',
+    chapter: 'Foundations',
+    unit: 1,
+    pyqTier: 1,
+    stage: 'Unseen',
+    stability: 0,
+    difficulty: 0.5,
+    lastTested: -1,
+    nextReview: 0,
+  },
+  {
+    id: 'ai-rag',
+    name: 'Retrieval-Augmented Generation (RAG)',
+    subject: 'AI / GenAI',
+    chapter: 'Engineering',
+    unit: 1,
+    pyqTier: 1,
+    stage: 'Unseen',
+    stability: 0,
+    difficulty: 0.5,
+    lastTested: -1,
+    nextReview: 0,
+  },
+  {
+    id: 'ai-prompt-engineering',
+    name: 'Few-Shot & Chain of Thought',
+    subject: 'AI / GenAI',
+    chapter: 'Prompting',
+    unit: 1,
+    pyqTier: 2,
+    stage: 'Unseen',
+    stability: 0,
+    difficulty: 0.5,
+    lastTested: -1,
+    nextReview: 0,
+  },
+
+  // --- React ---
+  {
+    id: 'react-reconciliation',
+    name: 'Virtual DOM & Reconciliation',
+    subject: 'React Fundamentals',
+    chapter: 'Core',
+    unit: 2,
+    pyqTier: 1,
+    stage: 'Fragile', // Simulating some prior knowledge for revision
+    stability: 2,
+    difficulty: 0.4,
+    lastTested: 0,
+    nextReview: 1,
+  },
+  {
+    id: 'react-usememo',
+    name: 'useMemo & useCallback',
+    subject: 'React Fundamentals',
+    chapter: 'Hooks',
+    unit: 2,
+    pyqTier: 1,
+    stage: 'Fragile',
+    stability: 2,
+    difficulty: 0.6,
+    lastTested: 0,
+    nextReview: 1,
+  },
+  {
+    id: 'react-concurrency',
+    name: 'Concurrent Mode & useTransition',
+    subject: 'React Fundamentals',
+    chapter: 'Advanced',
+    unit: 2,
+    pyqTier: 2,
+    stage: 'Unseen',
+    stability: 0,
+    difficulty: 0.5,
+    lastTested: -1,
+    nextReview: 0,
+  },
+
+  // --- Node.js ---
+  {
+    id: 'node-event-loop',
+    name: 'Event Loop Phases',
+    subject: 'Node.js Architecture',
+    chapter: 'Internals',
+    unit: 3,
+    pyqTier: 1,
+    stage: 'Fragile',
+    stability: 2,
+    difficulty: 0.6,
+    lastTested: 0,
+    nextReview: 1,
+  },
+  {
+    id: 'node-streams',
+    name: 'Streams & Buffers',
+    subject: 'Node.js Architecture',
+    chapter: 'I/O',
+    unit: 3,
+    pyqTier: 2,
+    stage: 'Unseen',
+    stability: 0,
+    difficulty: 0.5,
+    lastTested: -1,
+    nextReview: 0,
+  },
+  {
+    id: 'node-cluster',
+    name: 'Cluster Module & Worker Threads',
+    subject: 'Node.js Architecture',
+    chapter: 'Scaling',
+    unit: 3,
+    pyqTier: 2,
+    stage: 'Unseen',
+    stability: 0,
+    difficulty: 0.5,
+    lastTested: -1,
+    nextReview: 0,
+  },
+];
+
+export const ankitStackConfig: SyllabusConfig = {
+  id: 'ankit_stack',
+  name: 'Ankit Tech Stack',
+  studentName: 'Ankit',
+  examDate: '2026-12-31',
+  daysRemaining: 256,
+  targetScoreLabel: 'Senior Engineer',
+  examScoreTarget: 100,
+
+  subjects: [
+    {
+      name: 'AI / GenAI',
+      weight: 0.5, // 50% focus on learning new AI concepts
+      totalConcepts: 3,
+      examQuestions: 10,
+      color: 'text-[#8B5CF6]', // Purple
+      bgColor: 'bg-[#8B5CF6]/10',
+      barColor: 'bg-[#8B5CF6]',
+      emoji: '🧠',
+      encodingTip: 'Build a small prototype. Use AI to write the AI wrapper. Understand embeddings mathematically vs intuitively.',
+    },
+    {
+      name: 'React Fundamentals',
+      weight: 0.25, // 25% focus on React revision
+      totalConcepts: 3,
+      examQuestions: 10,
+      color: 'text-[#06B6D4]', // Cyan (React blue)
+      bgColor: 'bg-[#06B6D4]/10',
+      barColor: 'bg-[#06B6D4]',
+      emoji: '⚛️',
+      encodingTip: 'Check the React docs for React 19 additions. Try building the component without useEffect first.',
+    },
+    {
+      name: 'Node.js Architecture',
+      weight: 0.25, // 25% focus on Node revision
+      totalConcepts: 3,
+      examQuestions: 10,
+      color: 'text-[#10B981]', // Green (Node green)
+      bgColor: 'bg-[#10B981]/10',
+      barColor: 'bg-[#10B981]',
+      emoji: '🟢',
+      encodingTip: 'Write a raw HTTP server without Express to review streams. Trace the exact event loop phase where your callback runs.',
+    },
+  ],
+
+  concepts: INITIAL_CONCEPTS,
+
+  sessionComposition: {
+    review: 0.40, // More review for React/Node
+    new: 0.40, // High new content for AI
+    strengthen: 0.10,
+    challenge: 0.10,
+  },
+
+  globalStats: {
+    'AI / GenAI': { auto: 0, conscious: 0, fragile: 0, unseen: 3 },
+    'React Fundamentals': { auto: 0, conscious: 0, fragile: 2, unseen: 1 },
+    'Node.js Architecture': { auto: 0, conscious: 0, fragile: 1, unseen: 2 },
+  },
+
+  scoring: {
+    correct: 1,
+    wrong: 0,
+    skip: 0,
+  },
+};

@@ -23,6 +23,7 @@ export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
 
 const ACTIVE_SYLLABUS_ID = 'it_placement_india';
 
+
 export const getActiveSyllabus = (): SyllabusConfig => {
   const config = SYLLABUS_REGISTRY[ACTIVE_SYLLABUS_ID];
   if (!config) throw new Error(`Syllabus '${ACTIVE_SYLLABUS_ID}' not found in registry`);

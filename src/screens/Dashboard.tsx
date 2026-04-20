@@ -6,7 +6,7 @@ import { ShapePlaced } from '../components/M3Shapes';
 import type { Screen } from '../types';
 import type { SessionItem, SubjectStats } from '../core/types';
 import { getTimeOfDayNudge } from '../core/scheduler';
-import { loadCourseProgress } from '../db/store';
+import { loadCourseProgress, getAppStreak } from '../db/store';
 import { COURSE_LESSONS } from '../data/course/lessons';
 import {
   Flame,
@@ -34,6 +34,18 @@ const SUBJECT_ICONS: Record<string, React.ElementType> = {
   'DP & Greedy':               Zap,
 };
 
+/** Material Symbols Rounded icon names — M3 Expressive icon system */
+const SUBJECT_MS_ICONS: Record<string, string> = {
+  // IT Placement
+  'Quantitative Aptitude': 'calculate',
+  'DSA & Coding':          'terminal',
+  // DSA FAANG subjects
+  'Foundations':               'layers',
+  'Arrays & Search':           'data_array',
+  'Strings & Data Structures': 'link',
+  'Trees & Graphs':            'account_tree',
+  'DP & Greedy':               'bolt',
+};
 
 export const Dashboard = ({
   setScreen,
@@ -51,9 +63,11 @@ export const Dashboard = ({
   const stats = globalStats;
   const [courseCompleted, setCourseCompleted] = useState(0);
   const [selectedPill, setSelectedPill] = useState<string | null>(null);
+  const [liveStreak, setLiveStreak] = useState<number>(0);
 
   useEffect(() => {
     loadCourseProgress().then(map => setCourseCompleted(map.size));
+    getAppStreak().then(setLiveStreak).catch(console.error);
   }, []);
   const totalAutomatic = Object.values(stats).reduce((sum, s) => sum + s.auto, 0);
   const totalConscious = Object.values(stats).reduce((sum, s) => sum + s.conscious, 0);
@@ -80,6 +94,10 @@ export const Dashboard = ({
   const nudge = getTimeOfDayNudge(hour);
   const isMorning = hour >= 6 && hour < 12;
 
+  const computedDaysRemaining = CONFIG.examDate 
+    ? Math.max(0, Math.ceil((new Date(CONFIG.examDate).getTime() - Date.now()) / 86400000))
+    : CONFIG.daysRemaining ?? '—';
+
   return (
     <div className="pt-14 pb-28 px-4 max-w-md mx-auto">
 
@@ -96,7 +114,7 @@ export const Dashboard = ({
         <div className="flex items-center gap-2">
           <div className="streak-badge">
             <Flame size={12} />
-            <span>7 day</span>
+            <span>{liveStreak} day</span>
           </div>
           <div
             className="rounded-full px-3 py-1.5 flex items-center gap-1.5"
@@ -104,7 +122,7 @@ export const Dashboard = ({
           >
             <Clock size={11} style={{ color: 'var(--color-primary)' }} />
             <span className="text-[12px] font-bold font-ui" style={{ color: 'var(--color-primary)' }}>
-              {CONFIG.daysRemaining ?? '—'}d
+              {computedDaysRemaining}d
             </span>
           </div>
         </div>
@@ -280,7 +298,7 @@ export const Dashboard = ({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={m3SpatialDefault}
-        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:-translate-y-1"
+        className="rounded-m3-xl p-5 mb-4 mx-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:-translate-y-1"
         style={{ 
           background: 'var(--color-surface-lowest)', 
           borderColor: 'var(--color-border)',
@@ -370,7 +388,7 @@ export const Dashboard = ({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.1 }}
-        className="rounded-m3-xl p-5 mb-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:-translate-y-1"
+        className="rounded-m3-xl p-5 mb-4 mx-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:-translate-y-1"
         style={{ 
           background: 'var(--color-surface-lowest)', 
           borderColor: 'var(--color-border)',
@@ -443,7 +461,14 @@ export const Dashboard = ({
               className="flex-1 text-center py-2.5 rounded-m3-lg border border-solid"
               style={{ borderColor: 'var(--color-border)', background: 'var(--color-surface-container)' }}
             >
-              <div className="text-[20px] mb-1">{s.emoji}</div>
+              <div className="mb-1 flex items-center justify-center">
+                <span
+                  className="material-symbols-rounded"
+                  style={{ fontSize: 22, color: 'var(--color-primary)', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
+                >
+                  {SUBJECT_MS_ICONS[s.name] ?? 'book'}
+                </span>
+              </div>
               <div className="text-[16px] font-bold tabular-nums font-ui" style={{ color: 'var(--color-on-surface)' }}>{s.ready}</div>
               <div className="text-[11px] font-body" style={{ color: 'var(--color-on-surface-muted)' }}>/{s.examQuestions}</div>
             </div>
@@ -456,7 +481,7 @@ export const Dashboard = ({
         initial={{ opacity: 0, scale: 0.95, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.15 }}
-        className="flex items-center gap-3 px-4 py-3.5 rounded-m3-lg mb-4 relative overflow-hidden border border-solid transition-all hover:shadow-md hover:-translate-y-1"
+        className="flex items-center gap-3 px-4 py-3.5 rounded-m3-lg mb-4 mx-4 relative overflow-hidden border border-solid transition-all hover:shadow-md hover:-translate-y-1"
         style={{
           background: isMorning 
             ? 'linear-gradient(135deg, var(--color-success-container) 0%, rgba(21, 128, 61, 0.5) 100%)' 
@@ -490,7 +515,7 @@ export const Dashboard = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.25 }}
         onClick={() => setScreen('demo-session')}
-        className="w-full rounded-m3-xl p-4 mb-4 flex items-center gap-4 text-left border border-solid transition-all hover:shadow-md hover:-translate-y-1"
+        className="w-full rounded-m3-xl p-4 mb-4 mx-4 max-w-[calc(100%-32px)] flex items-center gap-4 text-left border border-solid transition-all hover:shadow-md hover:-translate-y-1"
         style={{ background: 'var(--color-primary-container)', borderColor: 'var(--color-primary-border)' }}
       >
         <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary)' }}>
@@ -513,7 +538,7 @@ export const Dashboard = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.3 }}
         onClick={() => setScreen('games')}
-        className="w-full flex items-center justify-between px-4 py-3.5 rounded-m3-lg mb-4 border border-solid transition-all hover:shadow-md hover:-translate-y-1"
+        className="w-full flex items-center justify-between px-4 py-3.5 rounded-m3-lg mb-4 mx-4 max-w-[calc(100%-32px)] border border-solid transition-all hover:shadow-md hover:-translate-y-1"
         style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
       >
         <div className="flex items-center gap-3">
@@ -529,7 +554,7 @@ export const Dashboard = ({
       </motion.button>
 
       {/* ── Courses ── */}
-      <div className="mb-6">
+      <div className="mb-6 px-4">
         <div className="flex items-center justify-between mb-3 px-1">
           <p className="text-[13px] font-semibold font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
             My Courses
@@ -648,8 +673,13 @@ export const Dashboard = ({
               >
                 <ShapePlaced position="bottom-right" shape={shapes[shapeIndex]} color="#6750A4" opacity={0.08} size={40} />
                 {/* Icon */}
-                <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center text-xl shrink-0" style={{ background: 'var(--color-background)', border: '1px solid var(--color-border)' }}>
-                  {sub.emoji}
+                <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-background)', border: '1px solid var(--color-border)' }}>
+                  <span
+                    className="material-symbols-rounded"
+                    style={{ fontSize: 22, color: 'var(--color-primary)', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
+                  >
+                    {SUBJECT_MS_ICONS[sub.name] ?? 'book'}
+                  </span>
                 </div>
 
                 {/* Content */}

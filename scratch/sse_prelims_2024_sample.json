@@ -1,0 +1,134 @@
+[
+  {
+    "question_id": 1,
+    "question": "In human beings, disorder caused due to trisomy of 21st chromosome is :",
+    "options": [
+      "Turner Syndrome",
+      "Down Syndrome",
+      "Super Female Syndrome",
+      "Klinefelter Syndrome"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 2,
+    "question": "National Health Policy 2017 identified co-ordinated action on seven priority areas for improving the health. Which option is not included under the seven priority areas ?",
+    "options": [
+      "Swachh Bharat Abhiyan",
+      "Yatri Suraksha",
+      "Nirbhaya Nari",
+      "Annapurna Scheme"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 3,
+    "question": "Which pulse causes lathyrism when consumed on a regular basis ?",
+    "options": [
+      "Khesari dal",
+      "Ghana dal",
+      "Moong dal",
+      "None of the above"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 4,
+    "question": "In 2017, which Satellite Launch Vehicle of ISRO successfully launched 104 satellites in a single flight ?",
+    "options": [
+      "INSAT-3DR",
+      "PSLV-C55",
+      "GSLV-F12",
+      "PSLV-C37"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 5,
+    "question": "Ozone layer thickness is measured in :",
+    "options": [
+      "Decibels",
+      "Dobson units",
+      "PPB",
+      "PPM"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 6,
+    "question": "The number of cervical vertebrae in a human body is :",
+    "options": [
+      "5",
+      "7",
+      "12",
+      "33"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 8,
+    "question": "When did the Government of India pass the Water (Prevention and Control of Pollution) Act ?",
+    "options": [
+      "1972",
+      "1986",
+      "1990",
+      "1974"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 9,
+    "question": "According to SDG India Index 2018, SDG1, SDG 2 and SDG 9 represent respectively:",
+    "options": [
+      "No poverty; Zero hunger; Industry, Innovation and Infrastructure",
+      "No poverty; Quality education; Life on land",
+      "Clean water and sanitation; Climate action; Sustainable cities and communities",
+      "Gender equality; Climate action; Zero hunger"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 10,
+    "question": "In the aquatic ecosystem of a pond, which of the following components is represented by fungi, bacteria and flagellates ?",
+    "options": [
+      "Autotrophic components",
+      "Consumers",
+      "Decomposers",
+      "Abiotic components"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 11,
+    "question": "In which of the following cases did the Supreme Court of India declare the prevalence of Fundamental Rights over Directive Principles of the State Policy in case of conflict between the two ?",
+    "options": [
+      "Golaknath v. State of Punjab (1967)",
+      "The State of Madras v. Champakam Dorairajan (1951)",
+      "Kesavananda Bharati v. the State of Kerala (1973)",
+      "Minerva Mills v. the Union of India (1980)"
+    ],
+    "question_type": "MCQ"
+  },
+  {
+    "question_id": 12,
+    "question": "Which one of the following statements is not correct ?",
+    "options": [
+      "In case of differences of opinion amongst the Chief Election Commissioner and other Election Commissioners, the matter is decided by the Law Commission.",
+      "The Election Commissioners cannot be removed from their office except on the recommendation of the Chief Election Commissioner.",
+      "The Chief Election Commissioner and other Election Commissioners enjoy equal powers.",
+      "The term of offlce of Election Commissioners is six years from the date they assume office or till the day they attain the age of 65 years, whichever is earlier."
+    ],
+    "question_type": "statement-based"
+  },
+  {
+    "question_id": 13,
+    "question": "An amendment of the Constitution shall require to be ratified by the legislatures of not less than one-half of the states :",
+    "options": [
+      "If such amendment seeks to make changes in Article 53.",
+      "If such amendment seeks to make changes in Article 239A.",
+      "If such amendment seeks to make changes in Article 243A.",
+      "If such amendment seeks to make changes in Article 279A."
+    ],
+    "question_type": "statement-based"
+  }
+]

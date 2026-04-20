@@ -1,0 +1,8 @@
+export { useModality } from './useModality'
+export type { ModalityOptions } from './useModality'
+export { AudioEngine } from './audio/AudioEngine'
+export { TTSEngine } from './audio/TTSEngine'
+export { RhythmEngine } from './audio/RhythmEngine'
+export { HapticPatterns } from './haptic/HapticPatterns'
+export { VoiceInput } from './voice/VoiceInput'
+export * from './visual/MotionPresets'

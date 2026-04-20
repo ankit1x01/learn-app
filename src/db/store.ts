@@ -60,6 +60,35 @@ export async function initDB(): Promise<void> {
   }
 }
 
+// ─── App Login Streak ────────────────────────────────────────────────────────
+
+const KEY_LAST_LOGIN = 'chitta:last_login';
+const KEY_STREAK     = 'chitta:current_streak';
+
+export async function getAppStreak(): Promise<number> {
+  const today = new Date().toDateString();
+  const lastLogin = await getJSON<string | null>(KEY_LAST_LOGIN, null);
+  let streak = await getJSON<number>(KEY_STREAK, 0);
+
+  if (lastLogin === today) {
+    return streak; // Already played today
+  }
+
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (lastLogin === yesterday) {
+    streak += 1;
+  } else {
+    // Broke streak (or first time)
+    streak = 1;
+  }
+
+  // Update for today
+  await setJSON(KEY_LAST_LOGIN, today);
+  await setJSON(KEY_STREAK, streak);
+
+  return streak;
+}
+
 // ─── Concept states ───────────────────────────────────────────────────────────
 
 /** Load all concept FSRS states as a Map<id, ConceptState> */

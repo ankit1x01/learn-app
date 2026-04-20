@@ -170,7 +170,7 @@ export function GamesScreen({ onBack }: Props) {
       </div>
 
       {/* 2×2 Game grid */}
-      <div className="flex-1 px-4 py-3 grid grid-cols-2 gap-3 content-start">
+      <div className="flex-1 px-4 py-3 mb-10 grid grid-cols-2 gap-3 content-start">
         {GAMES.map(game => {
           const Icon = game.icon
           return (

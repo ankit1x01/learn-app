@@ -11,7 +11,7 @@ import {
   Code2,       // code template
   Zap, Cpu, StopCircle,
 } from 'lucide-react';
-import { askLlm, stopLlm, initLlm } from '../lib/llm';
+import { askLlm, stopLlm, initLlm, getRateLimitStatus } from '../lib/llm';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -33,6 +33,190 @@ interface Props {
   onClose: () => void;
 }
 
+interface DsaTopicProfile {
+  topic: string;
+  useCases: string[];
+  coreSteps: string[];
+  mistakes: string[];
+  relatedPatterns: string[];
+  complexityFocus: string;
+}
+
+const detectDsaTopicProfile = (concept: string, chapter: string): DsaTopicProfile => {
+  const text = `${concept} ${chapter}`.toLowerCase();
+
+  if (/(graph|bfs|dfs|dijkstra|topo|union[- ]?find|mst)/.test(text)) {
+    return {
+      topic: 'Graph Algorithms',
+      useCases: ['Traversal in networks/grids', 'Shortest path or connectivity', 'Dependencies / ordering'],
+      coreSteps: ['Model graph', 'Choose traversal', 'Track visited/state', 'Return path/count/order'],
+      mistakes: ['Not resetting visited', 'Wrong queue vs stack choice', 'Ignoring disconnected components'],
+      relatedPatterns: ['Topological sort', 'Disjoint set union', 'Multi-source BFS'],
+      complexityFocus: 'V and E based complexity (O(V + E) or O(E log V)).',
+    };
+  }
+
+  if (/(dp|dynamic programming|knapsack|lis|lcs|memo)/.test(text)) {
+    return {
+      topic: 'Dynamic Programming',
+      useCases: ['Overlapping subproblems', 'Optimal substructure', 'Count/min/max optimization'],
+      coreSteps: ['Define state', 'Write transition', 'Set base cases', 'Choose memo or tabulation'],
+      mistakes: ['Wrong state definition', 'Missing base case', 'Incorrect transition order'],
+      relatedPatterns: ['1D/2D DP', 'Digit DP', 'State compression DP'],
+      complexityFocus: 'State count x transition work drives total complexity.',
+    };
+  }
+
+  if (/(tree|bst|binary tree|trie|segment tree|fenwick)/.test(text)) {
+    return {
+      topic: 'Tree Data Structures',
+      useCases: ['Hierarchical data', 'Range query/update', 'Prefix/search operations'],
+      coreSteps: ['Define node/invariant', 'Traverse recursively/iteratively', 'Aggregate child results', 'Handle null/leaf cases'],
+      mistakes: ['Null edge cases', 'Wrong recursion return value', 'Unbalanced tree assumptions'],
+      relatedPatterns: ['DFS preorder/inorder/postorder', 'Binary lifting', 'Tree DP'],
+      complexityFocus: 'Depth/height affects recursion and runtime.',
+    };
+  }
+
+  if (/(sliding window|two pointer|two pointers)/.test(text)) {
+    return {
+      topic: 'Sliding Window / Two Pointers',
+      useCases: ['Subarray/substring constraints', 'Pair sum/sorted array problems', 'Linear optimization over ranges'],
+      coreSteps: ['Initialize pointers', 'Expand window', 'Shrink by condition', 'Update answer'],
+      mistakes: ['Infinite pointer loop', 'Wrong shrink condition', 'Not updating answer at right time'],
+      relatedPatterns: ['Prefix sum', 'Monotonic queue', 'Hash map frequency windows'],
+      complexityFocus: 'Amortized pointer movement gives near O(N).',
+    };
+  }
+
+  if (/(binary search|lower bound|upper bound)/.test(text)) {
+    return {
+      topic: 'Binary Search',
+      useCases: ['Sorted lookup', 'Boundary finding', 'Binary search on answer'],
+      coreSteps: ['Pick low/high', 'Compute mid safely', 'Move boundary by predicate', 'Return boundary/index'],
+      mistakes: ['Off-by-one bounds', 'Overflow in mid', 'Wrong loop condition'],
+      relatedPatterns: ['Monotonic predicate search', 'Search in rotated array', 'Parametric search'],
+      complexityFocus: 'Halving search space yields O(log N).',
+    };
+  }
+
+  return {
+    topic: 'General DSA Pattern',
+    useCases: ['Pattern identification from constraints', 'Time-space tradeoff decisions', 'Interview style problem solving'],
+    coreSteps: ['Clarify input/output', 'Pick data structure', 'Design algorithm', 'Validate with edge cases'],
+    mistakes: ['Ignoring constraints', 'Unclear invariants', 'No edge-case check'],
+    relatedPatterns: ['Hashing', 'Greedy', 'Recursion and backtracking'],
+    complexityFocus: 'Explain best, average, and worst case with justification.',
+  };
+};
+
+const buildDynamicMindMapPrompt = (concept: string, subject: string, chapter: string): string => {
+  const profile = detectDsaTopicProfile(concept, chapter);
+
+  return `Create a high-resolution portrait educational infographic IMAGE for DSA topic "${concept}".
+
+TITLE AT TOP (exact):
+"${concept}: DSA Mind Map"
+
+STYLE (must follow exactly):
+- Hand-drawn explainer style, soft pastel palette
+- Cream background, rounded boxes, subtle shadows
+- Friendly rounded sans-serif typography
+- Doodle icons and arrows
+- Clean vertical storytelling layout (top to bottom)
+
+CANVAS:
+- Portrait 1024x1792 or higher
+
+LAYOUT (use exact section order and headings):
+
+1. Section 1 (Orange label):
+"1. When to Use"
+- ${profile.useCases[0]}
+- ${profile.useCases[1]}
+- ${profile.useCases[2]}
+
+2. Section 2 (Blue label):
+"2. Time Complexity"
+- Best case for ${profile.topic}
+- Average case for ${profile.topic}
+- Worst case for ${profile.topic}
+- Add one line: ${profile.complexityFocus}
+
+3. Section 3 (Green label):
+"3. Space Complexity"
+- Auxiliary space overview
+- Input/storage overhead
+
+4. Section 4 (Purple label):
+"4. Core Steps"
+Flow with arrows:
+${profile.coreSteps.join(' -> ')}
+
+5. Section 5 (Red label):
+"5. Common Mistakes"
+- ${profile.mistakes[0]}
+- ${profile.mistakes[1]}
+- ${profile.mistakes[2]}
+
+6. Section 6 (Teal label):
+"6. Related Patterns"
+- ${profile.relatedPatterns[0]}
+- ${profile.relatedPatterns[1]}
+- ${profile.relatedPatterns[2]}
+
+7. Section 7 (Bottom row):
+"7. Practice Problems"
+- Include exactly 3 relevant LeetCode problems for ${concept}
+- Show each as a small badge with problem number + short title
+
+IMPORTANT OUTPUT RULES:
+- Generate an IMAGE only (no markdown, no code block, no plain text explanation)
+- Keep labels exactly as written above
+- Keep spacing clean and readable
+- Add arrows between logical sections`;
+};
+
+const buildDynamicInfographicPrompt = (concept: string, subject: string, chapter: string): string => {
+  const profile = detectDsaTopicProfile(concept, chapter);
+
+  return `Create a high-resolution portrait educational infographic IMAGE for "${concept}" in DSA (${subject}).
+
+Use this exact structure and headings:
+
+Title at top:
+"${concept}: DSA Basics"
+
+1. When to Use
+2. Time Complexity
+3. Space Complexity
+4. Core Steps
+5. Common Mistakes
+6. Related Patterns
+7. Practice Problems
+
+Inject topic-specific content:
+- Topic family: ${profile.topic}
+- When to Use: ${profile.useCases.join('; ')}
+- Core Steps: ${profile.coreSteps.join(' -> ')}
+- Common Mistakes: ${profile.mistakes.join('; ')}
+- Related Patterns: ${profile.relatedPatterns.join('; ')}
+- Time/Space focus: ${profile.complexityFocus}
+- Practice Problems: add exactly 3 relevant LeetCode problems
+
+Design requirements:
+- Soft pastel colors, cream background
+- Rounded boxes, subtle shadows
+- Friendly rounded sans-serif
+- Hand-drawn doodle icon style
+- Vertical storytelling layout
+- Portrait 1024x1792 or higher
+
+Output rule:
+- Return IMAGE only.
+- No markdown, no code block, no plain text explanation.`;
+};
+
 // ─── Prompt Templates ─────────────────────────────────────────────────────────
 
 const TECHNIQUES: Technique[] = [
@@ -44,21 +228,7 @@ const TECHNIQUES: Technique[] = [
     color: 'text-primary',
     bg: 'bg-primary/10',
     description: 'Hierarchical branch map of the concept',
-    generatePrompt: (concept, subject, chapter) =>
-      `Create a detailed mind map for "${concept}" (DSA — ${subject}, ${chapter}).
-
-Structure it as a text-based hierarchical tree:
-
-Central Node: ${concept}
-├── When to Use (trigger conditions — 3 bullet points)
-├── Time Complexity (best / average / worst)
-├── Space Complexity
-├── Core Template / Algorithm Steps (numbered)
-├── Common Mistakes (3 traps to avoid)
-├── Related Patterns (2–3 similar patterns and how they differ)
-└── Practice Problems (3 LeetCode problems — number + title)
-
-Format each branch clearly with ├── and └── symbols. Be concise — each leaf should be one line.`,
+    generatePrompt: (concept, subject, chapter) => buildDynamicMindMapPrompt(concept, subject, chapter),
   },
   {
     id: 'flashcard',
@@ -122,46 +292,7 @@ Make the wrong answers plausible traps, not obviously incorrect.`,
     color: 'text-[#7C3AED]',
     bg: 'bg-[#F5F3FF]',
     description: 'Single-page visual cheat sheet',
-    generatePrompt: (concept, subject, chapter) =>
-      `Design a text-based infographic / cheat sheet for "${concept}" (DSA — ${subject}).
-
-Lay it out as a structured single-page reference:
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-  ${concept.toUpperCase()}
-  ${subject} · ${chapter}
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-WHAT IT IS:
-[One sentence definition]
-
-WHEN TO USE:
-• [Trigger 1]
-• [Trigger 2]
-• [Trigger 3]
-
-ALGORITHM:
-Step 1: ...
-Step 2: ...
-Step 3: ...
-
-COMPLEXITY:
-Time:  O(?)  | Why: ...
-Space: O(?)  | Why: ...
-
-CODE TEMPLATE (Python):
-\`\`\`python
-[5–10 line template with comments]
-\`\`\`
-
-COMMON MISTAKE:
-⚠ [The most common bug and how to avoid it]
-
-PRACTICE PROBLEMS:
-LC-XXX: [Title] (Easy/Medium/Hard)
-LC-XXX: [Title]
-LC-XXX: [Title]
-━━━━━━━━━━━━━━━━━━━━━━━━`,
+    generatePrompt: (concept, subject, chapter) => buildDynamicInfographicPrompt(concept, subject, chapter),
   },
   {
     id: 'mnemonic',
@@ -278,11 +409,22 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
   const [gemmaLoading, setGemmaLoading]   = useState(false);
   const [gemmaError, setGemmaError]       = useState('');
   const responseRef = useRef<HTMLDivElement>(null);
+  const isInFlight   = useRef(false);
+
+  // Countdown for circuit-breaker rate limit
+  const [rateLimitSecs, setRateLimitSecs] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { remainingMs } = getRateLimitStatus();
+      setRateLimitSecs(Math.ceil(remainingMs / 1000));
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
 
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
 
   const handleSelect = async (tech: Technique) => {
-    const p = tech.generatePrompt(conceptName, subject, chapter);
+    const p = tech.generatePrompt(conceptName, subject, chapter || '');
     setPrompt(p);
     setSelected(tech);
     setCopied(false);
@@ -292,27 +434,31 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
   };
 
   const handleAskGemma = async () => {
-    if (gemmaLoading) {
+    // If already streaming — stop it
+    if (gemmaLoading || isInFlight.current) {
       await stopLlm();
       setGemmaLoading(false);
+      isInFlight.current = false;
       return;
     }
     setGemmaResponse('');
     setGemmaError('');
     setGemmaLoading(true);
+    isInFlight.current = true;
     try {
       await initLlm();
       await askLlm(prompt, (partial) => {
-        setGemmaResponse(partial);
-        // auto-scroll to bottom
+        // APPEND each chunk — do NOT overwrite
+        setGemmaResponse(prev => prev + partial);
         setTimeout(() => {
           responseRef.current?.scrollTo({ top: responseRef.current.scrollHeight, behavior: 'smooth' });
         }, 10);
       });
     } catch (e: any) {
-      setGemmaError(e?.message ?? 'Gemma inference failed');
+      setGemmaError(e?.message ?? 'AI request failed. Please try again.');
     } finally {
       setGemmaLoading(false);
+      isInFlight.current = false;
     }
   };
 
@@ -486,14 +632,25 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                 </p>
                 <button
                   onClick={handleAskGemma}
+                  disabled={rateLimitSecs > 0}
                   className={`w-full py-4 rounded-2xl font-ui font-bold tracking-widest text-sm flex items-center justify-center gap-2 transition-all active:scale-[0.97] ${
-                    gemmaLoading
+                    rateLimitSecs > 0
+                      ? 'bg-[#F3F4F6] border border-[#E5E7EB] text-[#9CA3AF] cursor-not-allowed'
+                      : gemmaLoading
                       ? 'bg-[#bc8cff]/20 border border-[#bc8cff]/40 text-[#bc8cff]'
                       : 'bg-gradient-to-r from-[#7c3aed] to-[#4f46e5] text-white shadow-lg shadow-[#7c3aed]/20'
                   }`}
                 >
-                  {gemmaLoading ? <StopCircle size={16} /> : <Cpu size={16} />}
-                  {gemmaLoading ? 'STOP GEMMA' : 'ASK GEMMA 4 (LOCAL)'}
+                  {rateLimitSecs > 0 ? (
+                    <>
+                      <span className="material-symbols-rounded" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1" }}>timer</span>
+                      WAIT {rateLimitSecs}s — RATE LIMITED
+                    </>
+                  ) : gemmaLoading ? (
+                    <><StopCircle size={16} /> STOP GEMMA</>
+                  ) : (
+                    <><Cpu size={16} /> ASK GEMMA (LOCAL)</>
+                  )}
                 </button>
 
                 {/* Streaming response */}

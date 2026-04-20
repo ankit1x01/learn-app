@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import type { Screen } from '../types';
 import { DEMO_SESSION, type DemoConcept } from '../data/demo-session';
-import { askLlm } from '../lib/llm';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 import { m3SpatialDefault, m3SpatialFast, m3EffectsEase } from '../lib/m3-motion';
@@ -87,7 +86,7 @@ const STORAGE_KEY = 'smriti_demo_session';
 
 interface SessionState {
   conceptIndex: number;
-  phase: 'kosha' | 'predict' | 'content' | 'feynman' | 'mcq' | 'metacognition' | 'pause';
+  phase: 'kosha' | 'predict' | 'content' | 'mcq' | 'metacognition' | 'pause';
   mcqIndex: number;
   answers: Record<string, number[]>; // conceptId → chosen option indices
   correct: Record<string, boolean[]>;
@@ -292,107 +291,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   );
 };
 
-const FeynmanCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => void }) => {
-  const [text, setText] = useState('');
-  const [simulating, setSimulating] = useState(false);
-  const [score, setScore] = useState<number | null>(null);
-  const [feedback, setFeedback] = useState<string | null>(null);
-  const [streamText, setStreamText] = useState('');
-  const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
 
-  const handleSimulate = async () => {
-    setSimulating(true);
-    setStreamText(''); // Initialize the streaming display
-    
-    let fullText = '';
-    const prompt = `You are an expert tutor. Grade this student's 1-sentence explanation of ${concept.title}: "${text}". First line must be exactly "Score: X/100" (where X is 0-100). Second line must be a 1-sentence feedback explaining why. Ignore JSON format. Just raw text.`;
-    
-    try {
-      await askLlm(prompt, (partial) => {
-        fullText += partial;
-        setStreamText(prev => prev + partial); // Display the stream typed out live
-      });
-      // Parsing the non-JSON text stream
-      const scoreMatch = fullText.match(/Score:\s*(\d+)/i);
-      const parsedScore = scoreMatch ? parseInt(scoreMatch[1], 10) : 75;
-      setScore(parsedScore);
-      setFeedback(fullText.split('\n').pop() || "Great attempt. Let's move forward.");
-      
-      // Play a victory chime once grading completely arrives
-      if (parsedScore > 60) playSound('chime');
-      else playSound('buzzer');
-      Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
-      
-    } catch {
-      setScore(80);
-      setFeedback("Great explanation! That shows conscious understanding of the core loop.");
-      setStreamText("Score: 80/100\nGreat explanation! That shows conscious understanding of the core loop.");
-    }
-  };
-
-  return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
-      <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <Layers size={14} style={{ color: 'var(--color-subject-cs)' }} /> Active Processing
-      </div>
-      <h2 className="text-[28px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
-        The Feynman Technique
-      </h2>
-      <p className="text-[15px] mb-6 leading-relaxed" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-on-surface-variant)' }}>
-        Explain the exact trick or formula for <strong>{concept.title}</strong> back to the AI in one sentence.
-      </p>
-      
-      {!score && !simulating ? (
-        <>
-          <textarea
-            className="w-full p-4 rounded-2xl mb-5 min-h-[120px] text-[15px] resize-none outline-none focus:ring-2 focus:border-transparent transition-all"
-            style={{ fontFamily: 'var(--font-body)', '--tw-ring-color': color, border: '1px solid var(--color-border)' } as React.CSSProperties}
-            placeholder="So basically, you just have to..."
-            value={text}
-            onChange={e => setText(e.target.value)}
-            disabled={simulating}
-          />
-          <button
-            onClick={handleSimulate}
-            disabled={text.trim().length < 10 || simulating}
-            className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center transition-all disabled:opacity-50"
-            style={{ background: color, fontFamily: 'var(--font-ui)' }}
-          >
-            Submit to AI
-          </button>
-        </>
-      ) : (
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="mt-4">
-          <div className="p-5 rounded-2xl mb-6 bg-green-50 border border-green-200">
-            {simulating ? (
-               <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 text-green-700">
-                    <Activity size={14} className="animate-spin" /> <span className="text-xs uppercase tracking-widest font-bold">Grading Live...</span>
-                  </div>
-                  <p className="text-[14px] text-green-900 leading-relaxed font-mono whitespace-pre-wrap">{streamText}</p>
-               </div>
-            ) : (
-              <>
-                 <h3 className="text-xl font-bold text-green-800 mb-2">Score: {score}%</h3>
-                 <p className="text-[14px] font-medium text-green-900 leading-relaxed">{feedback}</p>
-              </>
-            )}
-          </div>
-          
-          {!simulating && (
-            <button
-              onClick={onNext}
-              className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center transition-all"
-              style={{ background: color, fontFamily: 'var(--font-ui)' }}
-            >
-              Continue <ChevronRight size={16} className="ml-1" />
-            </button>
-          )}
-        </motion.div>
-      )}
-    </motion.div>
-  );
-};
 
 const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => void }) => {
   const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
@@ -860,8 +759,7 @@ export const DemoSession: React.FC<{ setScreen: (s: Screen) => void }> = ({ setS
   const persist = (next: SessionState) => { setState(next); saveState(next); };
 
   const goFromPredict = () => persist({ ...state, phase: 'content' });
-  const goFromContent = () => persist({ ...state, phase: 'feynman' });
-  const goFromFeynman = () => persist({ ...state, phase: 'mcq', mcqIndex: 0 });
+  const goFromContent = () => persist({ ...state, phase: 'mcq', mcqIndex: 0 });
   const goFromMCQ     = () => persist({ ...state, phase: 'metacognition' });
   const goFromMeta    = () => {
     const completed = [...state.completed, concept.id];
@@ -973,9 +871,6 @@ export const DemoSession: React.FC<{ setScreen: (s: Screen) => void }> = ({ setS
 
         {phase === 'content' && (
           <ContentCard key={`content-${conceptIndex}`} concept={concept} onDone={goFromContent} />
-        )}
-        {phase === 'feynman' && (
-          <FeynmanCard key={`feynman-${conceptIndex}`} concept={concept} onNext={goFromFeynman} />
         )}
         {phase === 'mcq' && (
           <MCQCard
