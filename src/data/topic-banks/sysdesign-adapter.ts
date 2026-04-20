@@ -39,12 +39,21 @@ export const sysDesign50LAdapter: ExamTopicBank = {
         ];
       case 'Advanced Production Eng':
         return [
-          { group: 'Production', icon: 'rocket_launch', topics: mapConceptsToTopics('production_eng', ['FinOps', 'Observability']) },
-          { group: 'Reliability & AI', icon: 'verified_user', topics: mapConceptsToTopics('production_eng', ['Security', 'Reliability', 'AI', 'Chaos', 'LLMOps']) }
+          { group: 'Production', icon: 'rocket_launch', topics: mapConceptsToTopics('production_eng', ['FinOps', 'Observability', 'Failure Modes', 'Metastability']) },
+          { group: 'Reliability & AI', icon: 'verified_user', topics: mapConceptsToTopics('production_eng', ['Security', 'Reliability', 'AI', 'Chaos', 'LLMOps', 'Formal Verification', 'eBPF']) }
         ];
+      case 'Leadership & Career':
+        return [
+          { group: 'Career & Vision', icon: 'route', topics: mapConceptsToTopics('leadership', ['Mentorship', 'Roadmap', 'Culture']) },
+          { group: 'Mechanism Design', icon: 'psychology', topics: mapConceptsToTopics('leadership', ['Game Theory', 'System Design']) }
+        ];
+
       default:
         return [];
     }
   }
 };
+
+
+
 
