@@ -276,3 +276,4 @@ File: `src/App.tsx` (buildSession call)
 Collect responseTimeMs history, call detectCognitiveFatigue, pass fatigueLevel to buildSession
 
 **Then continue Vedic 2-week plan** — see `docs/VEDIC_2WEEK_PLAN.md`
+- Improved AI Engineer Course via Job Ad Deep Research (2026 Trends)

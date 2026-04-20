@@ -1,0 +1,8 @@
+{
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "text": "Always adhere to the M3 Expressive Design System outlined in DESIGN_SYSTEM.md and docs/project/M3_EXPRESSIVE_GUIDELINES.md. Use Material Symbols Rounded exclusively (no Lucide React). Do not use Tailwind default blues or neon colors.",
+      "file": ".github/copilot-instructions.md"
+    }
+  ]
+}

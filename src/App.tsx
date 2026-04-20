@@ -163,7 +163,7 @@ function AppContent() {
         </motion.div>
       </AnimatePresence>
 
-      <BottomNav current={screen} setScreen={setScreen} />
+      {screen !== 'games' && <BottomNav current={screen} setScreen={setScreen} />}
       </div>
     </>
   );
