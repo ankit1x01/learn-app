@@ -12,6 +12,8 @@ import { dsaConfig } from './dsa/config';
 import { itPlacementConfig } from './itplacement/config';
 import { aiEngineerConfig } from './ai_engineer/config';
 import { seniorFsConfig } from './senior_fs_engineer/config';
+import { backendEngineerConfig } from './backend_engineer/config';
+import { systemDesign50LConfig } from './system_design_50l/config';
 
 // Registry of all available syllabi
 export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
@@ -19,6 +21,8 @@ export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
   it_placement_india: itPlacementConfig,
   ai_engineer:        aiEngineerConfig,
   senior_fs:          seniorFsConfig,
+  backend_engineer:   backendEngineerConfig,
+  system_design_50l:  systemDesign50LConfig,
 };
 
 // ─── Active Syllabus ──────────────────────────────────────────────────────────
@@ -39,4 +43,6 @@ export const getSyllabus = (id: string): SyllabusConfig => {
   if (!config) throw new Error(`Syllabus '${id}' not found in registry`);
   return config;
 };
+
+
 

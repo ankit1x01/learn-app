@@ -14,7 +14,7 @@ export const EXAM_CARDS: ExamCard[] = [
     name: 'SDE II / Senior FS',
     icon: 'terminal',
     color: '#2DD4BF',
-    description: 'System Design · Microservices · K8s',
+    description: 'React · Node · Redis · AWS',
   },
   {
     id: 'ai_engineer',
@@ -24,6 +24,18 @@ export const EXAM_CARDS: ExamCard[] = [
     description: 'GenAI · PyTorch · MLOps · RAG',
   },
   {
+    id: 'backend_engineer',
+    name: 'Backend Lead / Architect',
+    icon: 'dns',
+    color: '#10B981',
+    description: 'System Design · Kafka · Terraform',
+  },  {
+    id: 'system_design_50l',
+    name: 'System Design (50L+)',
+    icon: 'architecture',
+    color: '#F43F5E',
+    description: 'HLD · LLD · Scalability',
+  },  {
     id: 'dsa_faang',
     name: 'DSA FAANG',
     icon: 'code',
@@ -66,6 +78,9 @@ export const EXAM_CARDS: ExamCard[] = [
     description: 'State PCS · MP-specific syllabus',
   },
 ];
+
+
+
 
 
 

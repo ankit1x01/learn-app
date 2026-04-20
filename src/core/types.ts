@@ -33,6 +33,7 @@ export interface Concept {
   subject: string;      // generic string — set by syllabus layer
   chapter: string;
   unit: number;
+    tags?: string[];
   pyqTier: 1 | 2 | 3 | 4;  // exam frequency: 1=highest
   stage: Stage;
   stability: number;    // S: days this memory lasts (FSRS)
@@ -137,3 +138,4 @@ export interface SyllabusConfig {
     skip: number;         // e.g. 0
   };
 }
+
