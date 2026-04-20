@@ -3,67 +3,30 @@ import { AI_CONCEPTS } from './concepts';
 
 export const aiEngineerConfig: SyllabusConfig = {
   id: 'ai_engineer',
-  name: 'AI Engineering',
-  studentName: 'Learner',
+  name: 'AI Engineer Pro',
+  studentName: 'Job Seeker',
   examDate: '2026-12-01',
-  daysRemaining: 220,
-  targetScoreLabel: 'Mastery across ML & AI',
-  examScoreTarget: 80,
+  daysRemaining: 180,
+  targetScoreLabel: 'Job Ready',
+  examScoreTarget: 95,
 
   subjects: [
-    {
-      name: 'Machine Learning',
-      weight: 0.40,
-      totalConcepts: 25,
-      examQuestions: 30,
-      color: 'text-[#10B981]',
-      bgColor: 'bg-[#10B981]/10',
-      barColor: 'bg-[#10B981]',
-      emoji: '🤖',
-      encodingTip: 'Focus on understanding loss functions, gradient descent, and bias-variance tradeoff.',
-    },
-    {
-      name: 'Deep Learning',
-      weight: 0.40,
-      totalConcepts: 30,
-      examQuestions: 30,
-      color: 'text-[#8B5CF6]',
-      bgColor: 'bg-[#8B5CF6]/10',
-      barColor: 'bg-[#8B5CF6]',
-      emoji: '🧠',
-      encodingTip: 'Code architectures from scratch. Visualize tensor shapes.',
-    },
-    {
-      name: 'Generative AI & LLMs',
-      weight: 0.20,
-      totalConcepts: 20,
-      examQuestions: 20,
-      color: 'text-[#EC4899]',
-      bgColor: 'bg-[#EC4899]/10',
-      barColor: 'bg-[#EC4899]',
-      emoji: '✨',
-      encodingTip: 'Build intuitions behind self-attention, transformers, and RLHF.',
-    },
+    { name: 'Core Foundations (Python, Math, SQL)', weight: 0.15, totalConcepts: 20, examQuestions: 15, color: 'text-[#3B82F6]', bgColor: 'bg-[#3B82F6]/10', barColor: 'bg-[#3B82F6]', emoji: '🐍', encodingTip: 'Data structures & pure coding mechanics.' },
+    { name: 'Machine Learning', weight: 0.20, totalConcepts: 25, examQuestions: 20, color: 'text-[#10B981]', bgColor: 'bg-[#10B981]/10', barColor: 'bg-[#10B981]', emoji: '🤖', encodingTip: 'Understand loss functions & bias-variance tradeoff.' },
+    { name: 'Deep Learning & PyTorch', weight: 0.20, totalConcepts: 20, examQuestions: 20, color: 'text-[#8B5CF6]', bgColor: 'bg-[#8B5CF6]/10', barColor: 'bg-[#8B5CF6]', emoji: '🧠', encodingTip: 'Code architectures from scratch. Map out tensor shapes.' },
+    { name: 'Generative AI & LLMs (RAG, Agents)', weight: 0.30, totalConcepts: 30, examQuestions: 30, color: 'text-[#EC4899]', bgColor: 'bg-[#EC4899]/10', barColor: 'bg-[#EC4899]', emoji: '✨', encodingTip: 'LangChain, Prompt Eng, Vector DBs.' },
+    { name: 'MLOps & Deployment', weight: 0.15, totalConcepts: 15, examQuestions: 15, color: 'text-[#F59E0B]', bgColor: 'bg-[#F59E0B]/10', barColor: 'bg-[#F59E0B]', emoji: '🚀', encodingTip: 'Docker, FastAPI, MLflow, CI/CD pipelines.' }
   ],
 
   concepts: AI_CONCEPTS,
 
-  sessionComposition: {
-    review:    0.35,
-    new:       0.30,
-    strengthen: 0.25,
-    challenge:  0.10,
-  },
-
+  sessionComposition: { review: 0.35, new: 0.30, strengthen: 0.25, challenge: 0.10 },
   globalStats: {
-    'Machine Learning':       { auto: 0, conscious: 0, fragile: 0, unseen: 25 },
-    'Deep Learning':          { auto: 0, conscious: 0, fragile: 0, unseen: 30 },
-    'Generative AI & LLMs':   { auto: 0, conscious: 0, fragile: 0, unseen: 20 },
+    'Core Foundations (Python, Math, SQL)': { auto: 0, conscious: 0, fragile: 0, unseen: 20 },
+    'Machine Learning': { auto: 0, conscious: 0, fragile: 0, unseen: 25 },
+    'Deep Learning & PyTorch': { auto: 0, conscious: 0, fragile: 0, unseen: 20 },
+    'Generative AI & LLMs (RAG, Agents)': { auto: 0, conscious: 0, fragile: 0, unseen: 30 },
+    'MLOps & Deployment': { auto: 0, conscious: 0, fragile: 0, unseen: 15 }
   },
-
-  scoring: {
-    correct: 4,
-    wrong:  -1,
-    skip:    0,
-  },
+  scoring: { correct: 4, wrong: -1, skip: 0 }
 };
