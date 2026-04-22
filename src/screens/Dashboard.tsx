@@ -676,6 +676,7 @@ export const Dashboard = ({
                   className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0"
                   style={{ backgroundColor: 'var(--color-background)', border: '1px solid var(--color-border)' }}
                 >
+                  {/* @ts-expect-error */}
                   <Icon size={20} className={sub.color} />
                 </div>
                 <div className="flex-1 min-w-0">

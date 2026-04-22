@@ -94,7 +94,9 @@
       "WebFetch(domain:dev.to)",
       "WebFetch(domain:pub.dev)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.get\\('exports',{}\\).keys\\(\\)\\)[:5]\\)\")",
-      "Bash(node -e \"try { const r = require\\('./node_modules/@gsap/react'\\); console.log\\(Object.keys\\(r\\)\\) } catch\\(e\\) { console.log\\('ESM:', e.code\\) }\")"
+      "Bash(node -e \"try { const r = require\\('./node_modules/@gsap/react'\\); console.log\\(Object.keys\\(r\\)\\) } catch\\(e\\) { console.log\\('ESM:', e.code\\) }\")",
+      "Bash(cat capacitor.config.ts)",
+      "Bash(cat capacitor.config.json)"
     ]
   }
 }

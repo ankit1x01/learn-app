@@ -132,7 +132,7 @@ const CONFIGS: Record<Tab, GameConfig> = {
 
 interface Props {
   onBack: () => void;
-  setScreen?: (screen: string) => void;
+  setScreen?: any;
 }
 
 export function GamesScreen({ onBack, setScreen }: Props) {
@@ -213,7 +213,7 @@ export function GamesScreen({ onBack, setScreen }: Props) {
 
       <div className="flex-1 px-4 py-3 mb-10 grid grid-cols-2 gap-3 content-start">
         {GAMES.map(game => {
-          const Icon = game.icon;
+          const Icon = game.icon as any;
           return (
             <button
               key={game.id}

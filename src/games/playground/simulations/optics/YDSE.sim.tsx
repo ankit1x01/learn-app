@@ -22,8 +22,8 @@ export function YDSESim(props: SimProps) {
     ctx.fillStyle = '#0d0d1a'
     ctx.fillRect(0, 0, W, H)
 
-    const slitX   = W * 0.25
-    const screenX = W * 0.85
+    const slitX   = Math.min(W, H) * (0.25 * 1.5)
+    const screenX = Math.min(W, H) * (0.85 * 1.5)
     const cy      = H / 2
 
     // --- Slit barrier ---
@@ -83,33 +83,48 @@ export function YDSESim(props: SimProps) {
     ctx.globalAlpha = 1
 
     // --- Labels ---
-    const fs = Math.max(10, Math.round(W * 0.034))
+    const fs = Math.max(10, Math.round(Math.min(W, H) * (0.034 * 1.5)))
     ctx.fillStyle = '#e0ddf6'
-    ctx.font = `bold ${fs}px Inter, system-ui`
+    ctx.font = `bold ${fs}px 'Inter', sans-serif`
     ctx.fillText(`λ = ${(lambda * 1e9).toFixed(0)} nm`, 8, fs + 4)
     ctx.fillText(`d = ${(d * 1e3).toFixed(1)} mm`, 8, fs * 2 + 8)
     ctx.fillText(`D = ${D.toFixed(1)} m`, 8, fs * 3 + 12)
     ctx.fillText(`β = ${(beta * 1e3).toFixed(2)} mm`, 8, fs * 4 + 16)
 
-    // fringe markers
-    const fringeFs = Math.max(9, Math.round(W * 0.028))
+    // fringe markers with order labels (n = -3 to +3)
+    const fringeFs = Math.max(9, Math.round(Math.min(W, H) * (0.028 * 1.5)))
     ctx.setLineDash([3, 3])
     ctx.strokeStyle = '#ffffff30'
     ctx.lineWidth = 1
-    for (let n = -5; n <= 5; n++) {
+    for (let n = -3; n <= 3; n++) {
       const py = cy + n * pixelsPerFringe
       if (py < 0 || py > H) continue
       ctx.beginPath()
       ctx.moveTo(screenX, py)
       ctx.lineTo(screenX + 10, py)
       ctx.stroke()
-      if (n !== 0) {
-        ctx.fillStyle = '#ffffff50'
-        ctx.font = `${fringeFs}px Inter, system-ui`
-        ctx.fillText(`n=${n}`, screenX + 14, py + 4)
-      }
+      // label ALL orders including n=0 (central bright)
+      ctx.fillStyle = n === 0 ? '#ffffffcc' : '#ffffff80'
+      ctx.font = `${fringeFs}px 'Inter', sans-serif`
+      ctx.fillText(`n=${n}`, screenX + 14, py + 4)
     }
     ctx.setLineDash([])
+
+    // --- Path difference info panel ---
+    // At n=1 bright fringe: Δ = λ (by definition)
+    const deltaAt1 = lambda  // Δ = d·y₁/D = d·(λD/d)/D = λ
+    const panelX = 8, panelY = H - 52, panelW = Math.max(180, W * 0.38), panelH = 44
+    ctx.fillStyle = 'rgba(21,10,50,0.72)'
+    ctx.beginPath()
+    ctx.roundRect(panelX, panelY, panelW, panelH, 6)
+    ctx.fill()
+    const infoFs = Math.max(9, Math.round(Math.min(W, H) * (0.026 * 1.5)))
+    ctx.fillStyle = '#e0ddf6'
+    ctx.font = `${infoFs}px 'Inter', sans-serif`
+    ctx.textAlign = 'left'
+    ctx.fillText(`Path diff  Δ = d·y / D`, panelX + 8, panelY + infoFs + 4)
+    ctx.fillStyle = '#a78bfa'
+    ctx.fillText(`At n=1:  Δ = λ = ${(deltaAt1 * 1e9).toFixed(0)} nm`, panelX + 8, panelY + infoFs * 2 + 8)
   }, [d, lambda, D, beta])
 
   return <CanvasEngine {...props} draw={draw} deps={[d, lambda, D]} />

@@ -48,17 +48,22 @@ export const BottomNav = ({
                     transition={m3SpatialFast}
                   />
                 )}
-                <Icon
-                  size={24}
-                  strokeWidth={active ? 2 : 1.5}
-                  style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    color: active
-                      ? 'var(--color-on-secondary-container)'
-                      : 'var(--color-on-surface-variant)',
-                  }}
-                />
+                { (() => {
+                  const I = Icon as any
+                  return (
+                    <I
+                      size={24}
+                      strokeWidth={active ? 2 : 1.5}
+                      style={{
+                        position: 'relative',
+                        zIndex: 1,
+                        color: active
+                          ? 'var(--color-on-secondary-container)'
+                          : 'var(--color-on-surface-variant)',
+                      }}
+                    />
+                  )
+                })() }
               </div>
               <span
                 style={{

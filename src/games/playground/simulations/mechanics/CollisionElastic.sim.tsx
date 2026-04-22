@@ -41,7 +41,7 @@ export function CollisionElasticSim(props: SimProps) {
     const r2 = Math.sqrt(m2) * M_SCALE
     const centerY = groundY - Math.max(r1, r2)
 
-    const ball1 = Matter.Bodies.circle(W * 0.25, centerY, r1, {
+    const ball1 = Matter.Bodies.circle(Math.min(W, H) * (0.25 * 1.5), centerY, r1, {
       mass: m1,
       restitution: cor,
       frictionAir: 0,
@@ -50,7 +50,7 @@ export function CollisionElasticSim(props: SimProps) {
       label: 'ball1',
     })
 
-    const ball2 = Matter.Bodies.circle(W * 0.65, centerY, r2, {
+    const ball2 = Matter.Bodies.circle(Math.min(W, H) * (0.65 * 1.5), centerY, r2, {
       mass: m2,
       restitution: cor,
       frictionAir: 0,

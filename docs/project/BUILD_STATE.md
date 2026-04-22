@@ -1,6 +1,6 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-16 — **M3 Expressive shapes + Dashboard UX improvements**
+> Last updated: 2026-04-22 — **Physics simulation review + SelfInductance syntax fix**
 
 ---
 

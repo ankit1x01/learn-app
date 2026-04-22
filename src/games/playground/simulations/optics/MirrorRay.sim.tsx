@@ -26,7 +26,7 @@ export function MirrorRaySim(props: SimProps) {
     ctx.fillRect(0, 0, W, H)
 
     const SCALE = W / 120          // pixels per cm (120 cm shown)
-    const poleX = W * 0.65          // mirror pole x-position
+    const poleX = Math.min(W, H) * (0.65 * 1.5)          // mirror pole x-position
     const axisY = H * 0.5           // principal axis y
 
     // ── Principal axis ──
@@ -47,7 +47,7 @@ export function MirrorRaySim(props: SimProps) {
 
     // Pole label
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${Math.max(10, Math.round(W * 0.034))}px Inter, system-ui`
+    ctx.font = `${Math.max(10, Math.round(Math.min(W, H) * (0.034 * 1.5)))}px 'Inter', sans-serif`
     ctx.fillText('P', poleX + 6, axisY + 18)
 
     // ── Object arrow ──
@@ -100,9 +100,9 @@ export function MirrorRaySim(props: SimProps) {
       `v = ${isFinite(v) ? v.toFixed(1) : '∞'} cm`,
       `m = ${isFinite(v) ? (v / u).toFixed(2) : '∞'}`,
     ]
-    const fs = Math.max(10, Math.round(W * 0.032))
+    const fs = Math.max(10, Math.round(Math.min(W, H) * (0.032 * 1.5)))
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${fs}px Inter, system-ui`
+    ctx.font = `${fs}px 'Inter', sans-serif`
     lines.forEach((l, i) => ctx.fillText(l, 10, 20 + i * (fs + 5)))
   }, [f, u, v, fAbs, uAbs, type])
 

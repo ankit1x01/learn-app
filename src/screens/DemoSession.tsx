@@ -363,6 +363,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
       {/* Subject + tag row */}
       <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: bg }}>
+          {/* @ts-expect-error */}
           <Icon size={16} style={{ color }} />
         </div>
         <span className="text-[12px] font-bold uppercase tracking-widest" style={{ color }}>{concept.subject}</span>

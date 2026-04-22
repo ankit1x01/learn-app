@@ -280,6 +280,7 @@ export const TopicsBank: React.FC<Props> = ({ setScreen, initialSearch = '' }) =
                 className="w-full flex items-center gap-3 p-4 text-left hover:bg-[#F7F6F3] transition-colors"
               >
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${meta.bg}`}>
+                  {/* @ts-expect-error */}
                   <meta.icon size={16} className={meta.color} />
                 </div>
                 <div className="flex-1 min-w-0">

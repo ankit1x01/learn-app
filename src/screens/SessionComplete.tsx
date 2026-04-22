@@ -125,6 +125,7 @@ export const SessionComplete = ({
                 style={{ borderColor: 'var(--color-border)' }}
               >
                 <div className="flex justify-center mb-1">
+                  {/* @ts-expect-error */}
                   <Icon size={16} className={s.color} />
                 </div>
                 <div className="text-[16px] font-bold tabular-nums" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>

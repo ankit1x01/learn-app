@@ -27,7 +27,7 @@ export function LensRaySim(props: SimProps) {
     ctx.fillRect(0, 0, W, H)
 
     const SCALE  = W / 130
-    const lensX  = W * 0.5
+    const lensX  = Math.min(W, H) * (0.5 * 1.5)
     const axisY  = H * 0.5
     const lensH  = Math.min(H * 0.42, 90)
 
@@ -66,7 +66,7 @@ export function LensRaySim(props: SimProps) {
     if (objX > 14) {
       drawArrow(ctx, objX, axisY, objX, axisY - objH, '#4ADE80', 2)
       ctx.fillStyle = '#4ADE80'
-      ctx.font = `${Math.round(W * 0.026)}px Inter, system-ui`
+      ctx.font = `${Math.round(Math.min(W, H) * (0.026 * 1.5))}px 'Inter', sans-serif`
       ctx.fillText('O', objX - 12, axisY - objH - 5)
     }
 
@@ -101,23 +101,23 @@ export function LensRaySim(props: SimProps) {
         const clr = isReal ? '#FACC15' : '#C084FC'
         drawArrow(ctx, imgX, axisY, imgX, axisY - imgH, clr, 2)
         ctx.fillStyle = clr
-        ctx.font = `${Math.round(W * 0.026)}px Inter, system-ui`
+        ctx.font = `${Math.round(Math.min(W, H) * (0.026 * 1.5))}px 'Inter', sans-serif`
         ctx.fillText(isReal ? 'I (real)' : 'I (virt)', imgX + 4, axisY - imgH - 5)
       }
 
       // Focal points
-      const fLabelFs = Math.max(10, Math.round(W * 0.032))
+      const fLabelFs = Math.max(10, Math.round(Math.min(W, H) * (0.032 * 1.5)))
       if (f2X > 14 && f2X < W - 14) {
         ctx.fillStyle = '#FB923C'
         ctx.beginPath(); ctx.arc(f2X, axisY, 4, 0, Math.PI * 2); ctx.fill()
-        ctx.font = `${fLabelFs}px Inter, system-ui`
+        ctx.font = `${fLabelFs}px 'Inter', sans-serif`
         ctx.fillText('F₂', f2X + 5, axisY + 16)
       }
       const f1X = lensX - f * SCALE
       if (f1X > 14 && f1X < W - 14) {
         ctx.fillStyle = '#FB923C'
         ctx.beginPath(); ctx.arc(f1X, axisY, 4, 0, Math.PI * 2); ctx.fill()
-        ctx.font = `${fLabelFs}px Inter, system-ui`
+        ctx.font = `${fLabelFs}px 'Inter', sans-serif`
         ctx.fillText('F₁', f1X + 5, axisY + 16)
       }
     }
@@ -130,9 +130,9 @@ export function LensRaySim(props: SimProps) {
       `v = ${isFinite(v) ? v.toFixed(1) : '∞'} cm`,
       `m = ${isFinite(v) ? m.toFixed(2) : '∞'}`,
     ]
-    const fs = Math.max(10, Math.round(W * 0.032))
+    const fs = Math.max(10, Math.round(Math.min(W, H) * (0.032 * 1.5)))
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${fs}px Inter, system-ui`
+    ctx.font = `${fs}px 'Inter', sans-serif`
     ctx.setLineDash([])
     lines.forEach((l, i) => ctx.fillText(l, 8, 20 + i * (fs + 5)))
   }, [f, u, v, m, fAbs, uAbs, type])

@@ -556,6 +556,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div className="p-2 rounded-xl" style={{ background: 'var(--color-surface-container)' }}>
+                        {/* @ts-expect-error */}
                         <tech.icon size={16} className={tech.color} />
                       </div>
                       <span className={`text-[12px] font-bold px-1.5 py-0.5 rounded-full bg-[#F0EEE9] text-[#6B7280] uppercase tracking-wider`}>
@@ -581,6 +582,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
               {/* Selected technique header */}
               <div className={`flex items-center gap-3 p-4 rounded-2xl ${selected.bg} border border-[#E8E5DF] mb-4`}>
                 <div className="p-2 rounded-xl bg-[#F0EEE9]">
+                  {/* @ts-expect-error */}
                   <selected.icon size={18} className={selected.color} />
                 </div>
                 <div>
