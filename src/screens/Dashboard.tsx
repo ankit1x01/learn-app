@@ -213,7 +213,7 @@ export const Dashboard = ({
         <div className="relative z-10 flex items-start justify-between mb-4">
           <div>
             <h3 className="text-title-emphasized" style={{ color: 'var(--color-on-surface)' }}>
-              Today's Session
+              Today's Challenge
             </h3>
             <p className="text-[13px] mt-0.5 font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
               {session.length === 0 

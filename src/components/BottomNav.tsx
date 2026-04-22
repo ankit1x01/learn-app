@@ -6,10 +6,10 @@ import { m3SpatialFast } from '../lib/m3-motion';
 
 const navItems: { id: Screen; Icon: React.ElementType; label: string }[] = [
   { id: 'dashboard', Icon: Home,      label: 'Home'    },
-  { id: 'session',   Icon: Timer,     label: 'Session' },
-  { id: 'topics',    Icon: BookOpen,  label: 'Topics'  },
-  { id: 'map',       Icon: GitBranch, label: 'Map'     },
-  { id: 'elite',     Icon: Zap,       label: 'Pro'     },
+  { id: 'session',   Icon: Timer,     label: 'Challenge' },
+  { id: 'topics',    Icon: BookOpen,  label: 'Learn'  },
+  { id: 'map',       Icon: GitBranch, label: 'Memory'     },
+  { id: 'elite',     Icon: Zap,       label: 'Tools'     },
 ];
 
 export const BottomNav = ({

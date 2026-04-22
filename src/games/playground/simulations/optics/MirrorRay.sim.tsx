@@ -22,8 +22,6 @@ export function MirrorRaySim(props: SimProps) {
 
   const draw = useCallback<CanvasEngineProps['draw']>((ctx, W, H, _dt) => {
     ctx.clearRect(0, 0, W, H)
-
-    // Background
     ctx.fillStyle = '#0d1117'
     ctx.fillRect(0, 0, W, H)
 
@@ -49,7 +47,7 @@ export function MirrorRaySim(props: SimProps) {
 
     // Pole label
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${Math.round(W * 0.028)}px Inter, system-ui`
+    ctx.font = `${Math.max(10, Math.round(W * 0.034))}px Inter, system-ui`
     ctx.fillText('P', poleX + 6, axisY + 18)
 
     // ── Object arrow ──
@@ -102,9 +100,10 @@ export function MirrorRaySim(props: SimProps) {
       `v = ${isFinite(v) ? v.toFixed(1) : '∞'} cm`,
       `m = ${isFinite(v) ? (v / u).toFixed(2) : '∞'}`,
     ]
+    const fs = Math.max(10, Math.round(W * 0.032))
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${Math.round(W * 0.026)}px Inter, system-ui`
-    lines.forEach((l, i) => ctx.fillText(l, 10, 24 + i * 18))
+    ctx.font = `${fs}px Inter, system-ui`
+    lines.forEach((l, i) => ctx.fillText(l, 10, 20 + i * (fs + 5)))
   }, [f, u, v, fAbs, uAbs, type])
 
   return <CanvasEngine {...props} draw={draw} deps={[f, u, v, type]} />

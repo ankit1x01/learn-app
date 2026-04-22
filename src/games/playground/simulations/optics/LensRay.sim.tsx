@@ -106,17 +106,18 @@ export function LensRaySim(props: SimProps) {
       }
 
       // Focal points
+      const fLabelFs = Math.max(10, Math.round(W * 0.032))
       if (f2X > 14 && f2X < W - 14) {
         ctx.fillStyle = '#FB923C'
         ctx.beginPath(); ctx.arc(f2X, axisY, 4, 0, Math.PI * 2); ctx.fill()
-        ctx.fillStyle = '#FB923C'
-        ctx.font = `${Math.round(W * 0.026)}px Inter, system-ui`
+        ctx.font = `${fLabelFs}px Inter, system-ui`
         ctx.fillText('F₂', f2X + 5, axisY + 16)
       }
       const f1X = lensX - f * SCALE
       if (f1X > 14 && f1X < W - 14) {
         ctx.fillStyle = '#FB923C'
         ctx.beginPath(); ctx.arc(f1X, axisY, 4, 0, Math.PI * 2); ctx.fill()
+        ctx.font = `${fLabelFs}px Inter, system-ui`
         ctx.fillText('F₁', f1X + 5, axisY + 16)
       }
     }
@@ -129,10 +130,11 @@ export function LensRaySim(props: SimProps) {
       `v = ${isFinite(v) ? v.toFixed(1) : '∞'} cm`,
       `m = ${isFinite(v) ? m.toFixed(2) : '∞'}`,
     ]
+    const fs = Math.max(10, Math.round(W * 0.032))
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${Math.round(W * 0.026)}px Inter, system-ui`
+    ctx.font = `${fs}px Inter, system-ui`
     ctx.setLineDash([])
-    lines.forEach((l, i) => ctx.fillText(l, 8, 22 + i * 18))
+    lines.forEach((l, i) => ctx.fillText(l, 8, 20 + i * (fs + 5)))
   }, [f, u, v, m, fAbs, uAbs, type])
 
   return <CanvasEngine {...props} draw={draw} deps={[f, u, v, type]} />

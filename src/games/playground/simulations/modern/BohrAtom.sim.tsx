@@ -37,6 +37,7 @@ export function BohrAtomSim(props: SimProps) {
     const r1 = maxR / (MAX_ORBITS * MAX_ORBITS)
 
     // ── Orbits ──
+    const orbitFs = Math.max(10, Math.round(W * 0.028))
     for (let n = 1; n <= MAX_ORBITS; n++) {
       const r = r1 * n * n
       ctx.strokeStyle = n === nElectron ? '#6750A480' : '#30363d'
@@ -50,9 +51,9 @@ export function BohrAtomSim(props: SimProps) {
       // Energy label
       const eV = (-13.6 / (n * n)).toFixed(2)
       ctx.fillStyle = '#8b949e'
-      ctx.font = `${Math.max(9, Math.round(W * 0.022))}px Inter, system-ui`
+      ctx.font = `${orbitFs}px Inter, system-ui`
       ctx.textAlign = 'left'
-      ctx.fillText(`n=${n}  ${eV}eV`, cx + r + 4, cy + 4)
+      ctx.fillText(`n=${n}  ${eV}eV`, cx + r + 6, cy + orbitFs * 0.4)
     }
 
     // ── Nucleus ──
@@ -122,19 +123,20 @@ export function BohrAtomSim(props: SimProps) {
         ctx.closePath(); ctx.fill()
 
         ctx.fillStyle = series.color
-        ctx.font = `${Math.max(9, Math.round(W * 0.022))}px Inter, system-ui`
+        ctx.font = `${Math.max(10, Math.round(W * 0.028))}px Inter, system-ui`
         ctx.textAlign = 'left'
-        ctx.fillText(`${lambdaNm.toFixed(0)} nm`, (x1 + x2) / 2 + 5, (y1 + y2) / 2 - 3)
+        ctx.fillText(`${lambdaNm.toFixed(0)} nm`, (x1 + x2) / 2 + 6, (y1 + y2) / 2 - 4)
       }
     }
 
     // ── Info ──
+    const infoFs = Math.max(10, Math.round(W * 0.032))
     ctx.fillStyle = '#8b949e'
-    ctx.font = `${Math.max(10, Math.round(W * 0.026))}px Inter, system-ui`
+    ctx.font = `${infoFs}px Inter, system-ui`
     ctx.textAlign = 'left'
-    ctx.fillText(`n = ${nElectron}`, 10, 22)
-    ctx.fillText(`E = ${(-13.6 / (nElectron * nElectron)).toFixed(2)} eV`, 10, 42)
-    ctx.fillText(`r = ${(nElectron * nElectron * 0.529).toFixed(2)} Å`, 10, 62)
+    ctx.fillText(`n = ${nElectron}`, 10, infoFs + 4)
+    ctx.fillText(`E = ${(-13.6 / (nElectron * nElectron)).toFixed(2)} eV`, 10, infoFs * 2 + 10)
+    ctx.fillText(`r = ${(nElectron * nElectron * 0.529).toFixed(2)} Å`, 10, infoFs * 3 + 16)
   }, [nElectron])
 
   return <CanvasEngine {...props} draw={draw} deps={[nElectron]} animated />

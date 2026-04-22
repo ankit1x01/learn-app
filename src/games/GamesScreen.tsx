@@ -6,9 +6,15 @@ import { GameConfig } from './types'
 import { EquationBalancer } from './EquationBalancer'
 import { ParabolaCannon } from './ParabolaCannon'
 import { MatrixMorph } from './MatrixMorph'
+import { SpacedRecallBlitz } from './SpacedRecallBlitz'
+import { TwinOrNot } from './jee/TwinOrNot'
+import { InterleavedSprint } from './jee/InterleavedSprint'
+import { ConceptRadar } from './jee/ConceptRadar'
+import { FormulaFactory } from './jee/FormulaFactory'
+import { PressureVault } from './jee/PressureVault'
 import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout, dsaBalloonTap, dsaRetention, dsaAudioLecture, dsaBubbleMatch } from './data/dsa-dummy'
 
-type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph'
+type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph' | 'recall-blitz' | 'twin-or-not' | 'interleaved-sprint' | 'concept-radar' | 'formula-factory' | 'pressure-vault'
 
 interface GameMeta {
   id: Tab
@@ -114,6 +120,14 @@ const CONFIGS: Record<Tab, GameConfig> = {
   'audio-lecture': dsaAudioLecture,
   'bubble-match':  dsaBubbleMatch,
   'equation-balancer': null as any,
+  'recall-blitz':       null as any,
+  'parabola-cannon':    null as any,
+  'matrix-morph':       null as any,
+  'twin-or-not':        null as any,
+  'interleaved-sprint': null as any,
+  'concept-radar':      null as any,
+  'formula-factory':    null as any,
+  'pressure-vault':     null as any,
 }
 
 interface Props {
@@ -123,6 +137,14 @@ interface Props {
 
 export function GamesScreen({ onBack, setScreen }: Props) {
   const [selectedGame, setSelectedGame] = useState<Tab | null>(null)
+
+  // Full-screen games that manage their own layout
+  if (selectedGame === 'recall-blitz')       return <SpacedRecallBlitz    onBack={() => setSelectedGame(null)} />
+  if (selectedGame === 'twin-or-not')        return <TwinOrNot            onBack={() => setSelectedGame(null)} />
+  if (selectedGame === 'interleaved-sprint') return <InterleavedSprint    onBack={() => setSelectedGame(null)} />
+  if (selectedGame === 'concept-radar')      return <ConceptRadar         onBack={() => setSelectedGame(null)} />
+  if (selectedGame === 'formula-factory')    return <FormulaFactory       onBack={() => setSelectedGame(null)} />
+  if (selectedGame === 'pressure-vault')     return <PressureVault        onBack={() => setSelectedGame(null)} />
 
   if (selectedGame !== null) {
     const game = GAMES.find(g => g.id === selectedGame)!
@@ -242,42 +264,117 @@ export function GamesScreen({ onBack, setScreen }: Props) {
         <button
           onClick={() => setScreen?.('physics-arcade')}
           className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
-          style={{
-            background: '#FFF1F2',
-            boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)',
-            aspectRatio: '1',
-          }}
+          style={{ background: '#FFF1F2', boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)', aspectRatio: '1' }}
         >
-          {/* Folded corner effect */}
-          <div
-            className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl"
-            style={{ background: 'rgba(244,63,94,0.13)' }}
-          />
-          {/* Icon */}
+          <div className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl" style={{ background: 'rgba(244,63,94,0.13)' }} />
           <div className="flex-1 flex items-center justify-center">
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ background: 'rgba(255,255,255,0.28)' }}
-            >
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.28)' }}>
               <span className="material-symbols-rounded" style={{ fontSize: 34, color: '#F43F5E', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>
                 sports_baseball
               </span>
             </div>
           </div>
-          {/* Label */}
           <div className="mt-2">
-            <p className="text-[17px] font-black leading-tight" style={{ color: '#F43F5E', fontFamily: 'Plus Jakarta Sans, system-ui' }}>
-              Physics Arcade
-            </p>
-            <p className="text-[12px] font-medium mt-0.5" style={{ color: '#F43F5E', opacity: 0.65, fontFamily: 'Inter, system-ui' }}>
-              Simulations
-            </p>
+            <p className="text-[17px] font-black leading-tight" style={{ color: '#F43F5E', fontFamily: 'Plus Jakarta Sans, system-ui' }}>Physics Arcade</p>
+            <p className="text-[12px] font-medium mt-0.5" style={{ color: '#F43F5E', opacity: 0.65, fontFamily: 'Inter, system-ui' }}>59 simulations</p>
+          </div>
+        </button>
+
+        {/* Math Arcade button */}
+        <button
+          onClick={() => setScreen?.('math-arcade')}
+          className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
+          style={{ background: '#F5F3FF', boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)', aspectRatio: '1' }}
+        >
+          <div className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl" style={{ background: 'rgba(124,58,237,0.13)' }} />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.28)' }}>
+              <span className="material-symbols-rounded" style={{ fontSize: 34, color: '#7C3AED', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>
+                functions
+              </span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <p className="text-[17px] font-black leading-tight" style={{ color: '#7C3AED', fontFamily: 'Plus Jakarta Sans, system-ui' }}>Math Playground</p>
+            <p className="text-[12px] font-medium mt-0.5" style={{ color: '#7C3AED', opacity: 0.65, fontFamily: 'Inter, system-ui' }}>20 simulations</p>
+          </div>
+        </button>
+
+        {/* Chemistry Arcade button */}
+        <button
+          onClick={() => setScreen?.('chemistry-arcade')}
+          className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
+          style={{ background: '#ECFDF5', boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)', aspectRatio: '1' }}
+        >
+          <div className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl" style={{ background: 'rgba(5,150,105,0.13)' }} />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.28)' }}>
+              <span className="material-symbols-rounded" style={{ fontSize: 34, color: '#059669', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>
+                science
+              </span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <p className="text-[17px] font-black leading-tight" style={{ color: '#059669', fontFamily: 'Plus Jakarta Sans, system-ui' }}>Chemistry Lab</p>
+            <p className="text-[12px] font-medium mt-0.5" style={{ color: '#059669', opacity: 0.65, fontFamily: 'Inter, system-ui' }}>18 simulations</p>
+          </div>
+        </button>
+
+        {/* Recall Blitz button */}
+        <button
+          onClick={() => setSelectedGame('recall-blitz')}
+          className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
+          style={{ background: '#FFF7ED', boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)', aspectRatio: '1' }}
+        >
+          <div className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl" style={{ background: 'rgba(217,119,6,0.13)' }} />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.28)' }}>
+              <span className="material-symbols-rounded" style={{ fontSize: 34, color: '#D97706', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>
+                bolt
+              </span>
+            </div>
+          </div>
+          <div className="mt-2">
+            <p className="text-[17px] font-black leading-tight" style={{ color: '#D97706', fontFamily: 'Plus Jakarta Sans, system-ui' }}>Recall Blitz</p>
+            <p className="text-[12px] font-medium mt-0.5" style={{ color: '#D97706', opacity: 0.65, fontFamily: 'Inter, system-ui' }}>60s FSRS sprint</p>
           </div>
         </button>
       </div>
 
+      {/* JEE Cognitive Games section */}
+      <div className="col-span-2 mt-2">
+        <p className="text-[11px] font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#9CA3AF', fontFamily: 'Inter, system-ui' }}>JEE Cognitive Training</p>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { id: 'twin-or-not'        as Tab, label: 'Twin or Not',        tagline: 'Same concept?',      bg: '#ECFEFF', color: '#0891B2', fold: 'rgba(8,145,178,0.13)',  icon: 'compare' },
+            { id: 'interleaved-sprint' as Tab, label: 'Interleaved Sprint', tagline: 'Mixed topics blitz', bg: '#ECFDF5', color: '#059669', fold: 'rgba(5,150,105,0.13)',  icon: 'shuffle' },
+            { id: 'concept-radar'      as Tab, label: 'Concept Radar',      tagline: 'Classify fast',      bg: '#FFFBEB', color: '#D97706', fold: 'rgba(217,119,6,0.13)', icon: 'radar' },
+            { id: 'formula-factory'    as Tab, label: 'Formula Factory',    tagline: 'Fill the blank',     bg: '#F5F3FF', color: '#7C3AED', fold: 'rgba(124,58,237,0.13)', icon: 'calculate' },
+            { id: 'pressure-vault'     as Tab, label: 'Pressure Vault',     tagline: 'Beat the ghost',     bg: '#FFF1F2', color: '#DC2626', fold: 'rgba(220,38,38,0.13)', icon: 'lock' },
+          ].map(g => (
+            <button
+              key={g.id}
+              onClick={() => setSelectedGame(g.id)}
+              className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
+              style={{ background: g.bg, boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)', aspectRatio: '1' }}
+            >
+              <div className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl" style={{ background: g.fold }} />
+              <div className="flex-1 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.28)' }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: 34, color: g.color, fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>{g.icon}</span>
+                </div>
+              </div>
+              <div className="mt-2">
+                <p className="text-[16px] font-black leading-tight" style={{ color: g.color, fontFamily: 'Plus Jakarta Sans, system-ui' }}>{g.label}</p>
+                <p className="text-[11px] font-medium mt-0.5" style={{ color: g.color, opacity: 0.65, fontFamily: 'Inter, system-ui' }}>{g.tagline}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <p
-        className="text-center text-[12px] pb-6"
+        className="col-span-2 text-center text-[12px] pb-6 mt-2"
         style={{ color: '#A8A29E', fontFamily: 'Inter, system-ui' }}
       >
         Tap any game to play · DSA edition

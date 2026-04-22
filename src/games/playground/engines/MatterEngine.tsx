@@ -39,8 +39,6 @@ export function MatterEngine({ setup, controls, puzzle, isPlaying, onReset }: Ma
     renderRef.current = render
     runnerRef.current = runner
 
-    cleanupRef.current = setup(engine, render, canvas)
-
     // Always render visually, but start runner paused
     Matter.Render.run(render)
     // Runner starts stopped — isPlaying effect below drives it
@@ -53,6 +51,17 @@ export function MatterEngine({ setup, controls, puzzle, isPlaying, onReset }: Ma
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // Re-run world setup whenever controls change (setup reference changes)
+  useEffect(() => {
+    const engine = engineRef.current
+    const render = renderRef.current
+    const canvas = canvasRef.current
+    if (!engine || !render || !canvas) return
+
+    cleanupRef.current?.()
+    cleanupRef.current = setup(engine, render, canvas)
+  }, [setup])
 
   // Play / Pause: drive the runner based on isPlaying prop
   useEffect(() => {

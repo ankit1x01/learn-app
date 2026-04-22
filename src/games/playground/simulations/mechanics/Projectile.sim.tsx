@@ -7,7 +7,7 @@ const G_SCALE = 0.001
 const M_SCALE = 4
 
 export function ProjectileSim(props: SimProps) {
-  const { controls, isPlaying } = props
+  const { controls } = props
   const angle = controls['angle'] ?? 45
   const speed = controls['speed'] ?? 20
   const height = controls['height'] ?? 0
@@ -66,14 +66,10 @@ export function ProjectileSim(props: SimProps) {
 
     Matter.World.add(engine.world, [ground, platformBody, ball, ...dots])
 
-    if (!isPlaying) {
-      Matter.Runner.stop(Matter.Runner.create())
-    }
-
     return () => {
       Matter.World.clear(engine.world, false)
     }
-  }, [angle, speed, height, isPlaying])
+  }, [angle, speed, height])
 
   return <MatterEngine {...props} setup={setup} />
 }

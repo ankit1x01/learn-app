@@ -19,8 +19,10 @@ export function CanvasEngine({ draw, deps = [], animated = false, isPlaying }: C
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-    const { width, height } = canvas
-    draw(ctx, width, height, dt)
+    const dpr = window.devicePixelRatio || 1
+    // Scale ctx so draw functions work in CSS pixels regardless of DPR
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    draw(ctx, canvas.clientWidth, canvas.clientHeight, dt)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draw, ...deps])
 
@@ -54,8 +56,9 @@ export function CanvasEngine({ draw, deps = [], animated = false, isPlaying }: C
     const canvas = canvasRef.current
     if (!canvas) return
     const observer = new ResizeObserver(() => {
-      canvas.width  = canvas.clientWidth  * window.devicePixelRatio
-      canvas.height = canvas.clientHeight * window.devicePixelRatio
+      const dpr = window.devicePixelRatio || 1
+      canvas.width  = canvas.clientWidth  * dpr
+      canvas.height = canvas.clientHeight * dpr
       if (!animated) render(0)
     })
     observer.observe(canvas)

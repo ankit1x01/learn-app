@@ -83,14 +83,16 @@ export function YDSESim(props: SimProps) {
     ctx.globalAlpha = 1
 
     // --- Labels ---
+    const fs = Math.max(10, Math.round(W * 0.034))
     ctx.fillStyle = '#e0ddf6'
-    ctx.font = `bold ${Math.round(W * 0.028)}px Inter, system-ui`
-    ctx.fillText(`λ = ${(lambda * 1e9).toFixed(0)} nm`, 8, 22)
-    ctx.fillText(`d = ${(d * 1e3).toFixed(1)} mm`, 8, 42)
-    ctx.fillText(`D = ${D.toFixed(1)} m`, 8, 62)
-    ctx.fillText(`β = ${(beta * 1e3).toFixed(2)} mm`, 8, 82)
+    ctx.font = `bold ${fs}px Inter, system-ui`
+    ctx.fillText(`λ = ${(lambda * 1e9).toFixed(0)} nm`, 8, fs + 4)
+    ctx.fillText(`d = ${(d * 1e3).toFixed(1)} mm`, 8, fs * 2 + 8)
+    ctx.fillText(`D = ${D.toFixed(1)} m`, 8, fs * 3 + 12)
+    ctx.fillText(`β = ${(beta * 1e3).toFixed(2)} mm`, 8, fs * 4 + 16)
 
     // fringe markers
+    const fringeFs = Math.max(9, Math.round(W * 0.028))
     ctx.setLineDash([3, 3])
     ctx.strokeStyle = '#ffffff30'
     ctx.lineWidth = 1
@@ -103,7 +105,7 @@ export function YDSESim(props: SimProps) {
       ctx.stroke()
       if (n !== 0) {
         ctx.fillStyle = '#ffffff50'
-        ctx.font = `${Math.round(W * 0.022)}px Inter, system-ui`
+        ctx.font = `${fringeFs}px Inter, system-ui`
         ctx.fillText(`n=${n}`, screenX + 14, py + 4)
       }
     }

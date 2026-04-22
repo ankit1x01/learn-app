@@ -26,6 +26,8 @@ import { GamesScreen }       from './games/GamesScreen';
 import { ShapeSlicerGame }   from './games/ShapeSlicerGame';
 import { PhysicsPlayground } from './games/playground/PhysicsPlayground';
 import { PhysicsArcade } from './games/playground/PhysicsArcade';
+import { MathArcade } from './games/math/MathArcade';
+import { ChemistryArcade } from './games/chemistry/ChemistryArcade';
 import { StatusBar }          from './components/StatusBar';
 import { BottomNav }          from './components/BottomNav';
 import { LoadingProvider, useLoading } from './lib/LoadingContext';
@@ -167,11 +169,13 @@ function AppContent() {
           {screen === 'physics-sandbox' && <PhysicsPlayground type="collision_elastic" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
           {screen === 'kinematics-cannon' && <PhysicsPlayground type="projectile" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
           {screen === 'coulombs-collider' && <PhysicsPlayground type="electric_field" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
-          {screen === 'physics-arcade' && <PhysicsArcade onBack={() => setScreen('dashboard')} />}
+          {(screen as string) === 'physics-arcade'    && <PhysicsArcade    onBack={() => setScreen('dashboard')} />}
+          {(screen as string) === 'math-arcade'       && <MathArcade       onBack={() => setScreen('dashboard')} />}
+          {(screen as string) === 'chemistry-arcade'  && <ChemistryArcade  onBack={() => setScreen('dashboard')} />}
         </motion.div>
       </AnimatePresence>
 
-      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade'].includes(screen) ? 'none' : 'block' }}>
+      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade', 'math-arcade', 'chemistry-arcade'].includes(screen) ? 'none' : 'block' }}>
         <BottomNav current={screen} setScreen={setScreen} />
       </div>
       </div>

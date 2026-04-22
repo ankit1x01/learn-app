@@ -14,28 +14,97 @@ const CATEGORIES: { label: string; icon: string; color: string; bg: string; type
     icon: 'sports_baseball',
     color: '#F43F5E',
     bg: '#FFF1F2',
-    types: ['projectile', 'collision_elastic', 'collision_inelastic', 'spring_mass', 'pendulum', 'atwood_machine', 'rolling', 'inclined_plane', 'circular_motion', 'orbit'],
+    types: [
+      'projectile', 'collision_elastic', 'collision_inelastic',
+      'spring_mass', 'pendulum', 'atwood_machine',
+      'rolling', 'inclined_plane', 'circular_motion', 'orbit',
+      'work_energy_power', 'friction_advanced', 'center_of_mass',
+      'rigid_body_rotation', 'constraint_motion',
+      'relative_motion', 'pseudo_force',
+    ],
   },
   {
-    label: 'Electromagnetism',
+    label: 'Properties of Matter',
+    icon: 'expand',
+    color: '#92400E',
+    bg: '#FEF3C7',
+    types: ['stress_strain'],
+  },
+  {
+    label: 'Fluid Mechanics',
+    icon: 'water',
+    color: '#0369A1',
+    bg: '#E0F2FE',
+    types: ['fluid_pressure', 'bernoulli', 'surface_tension', 'viscosity'],
+  },
+  {
+    label: 'Thermodynamics',
+    icon: 'local_fire_department',
+    color: '#DC2626',
+    bg: '#FEF2F2',
+    types: ['pv_diagram', 'carnot_cycle', 'kinetic_theory', 'calorimetry', 'heat_transfer'],
+  },
+  {
+    label: 'Electricity & Circuits',
     icon: 'electric_bolt',
+    color: '#D97706',
+    bg: '#FFFBEB',
+    types: [
+      'electric_field', 'capacitor', 'gauss_sphere',
+      'current_electricity', 'wheatstone_bridge', 'rc_circuit',
+    ],
+  },
+  {
+    label: 'Magnetism',
+    icon: 'north',
     color: '#6750A4',
     bg: '#F3EDFF',
-    types: ['electric_field', 'capacitor', 'gauss_sphere', 'magnetic_force', 'biot_savart', 'solenoid', 'lcr_circuit', 'em_wave'],
+    types: [
+      'magnetic_force', 'biot_savart', 'solenoid',
+      'charged_particle_magnetic', 'force_current_wire', 'magnetic_dipole',
+    ],
+  },
+  {
+    label: 'Electromagnetic Induction',
+    icon: 'loop',
+    color: '#7C3AED',
+    bg: '#F5F3FF',
+    types: ['faraday_induction', 'self_inductance', 'mutual_inductance'],
+  },
+  {
+    label: 'AC & EM Waves',
+    icon: 'air',
+    color: '#0891B2',
+    bg: '#ECFEFF',
+    types: ['lcr_circuit', 'em_wave'],
+  },
+  {
+    label: 'Waves & Sound',
+    icon: 'graphic_eq',
+    color: '#059669',
+    bg: '#ECFDF5',
+    types: ['standing_wave', 'superposition', 'beats', 'doppler'],
   },
   {
     label: 'Optics',
     icon: 'flare',
     color: '#0284C7',
-    bg: '#E0F2FE',
-    types: ['mirror_ray', 'lens_ray', 'prism', 'ydse', 'single_slit', 'standing_wave'],
+    bg: '#EFF6FF',
+    types: ['mirror_ray', 'lens_ray', 'prism', 'polarization', 'ydse', 'single_slit'],
   },
   {
     label: 'Modern Physics',
     icon: 'hub',
-    color: '#059669',
-    bg: '#ECFDF5',
-    types: ['bohr_atom', 'photoelectric'],
+    color: '#0F766E',
+    bg: '#F0FDFA',
+    types: ['bohr_atom', 'photoelectric', 'nuclear_decay', 'xray', 'de_broglie', 'radioactive_decay_graph'],
+  },
+  {
+    label: 'Mixed Concepts',
+    icon: 'account_tree',
+    color: '#B45309',
+    bg: '#FFFBEB',
+    types: ['block_pulley_friction', 'charged_em_field', 'spring_collision_energy'],
   },
 ]
 
@@ -77,7 +146,7 @@ export function PhysicsArcade({ onBack }: Props) {
             Physics Playground
           </h1>
           <p className="text-[12px]" style={{ color: 'var(--color-on-surface-variant)', fontFamily: 'Inter, system-ui' }}>
-            {Object.keys(SIMULATION_REGISTRY).length} simulations · JEE Advanced puzzles
+            {Object.keys(SIMULATION_REGISTRY).length} simulations · 12 live · JEE Advanced
           </p>
         </div>
       </div>
