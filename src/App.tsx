@@ -23,6 +23,9 @@ import { CourseDashboard }   from './screens/CourseDashboard';
 import { CourseLesson }      from './screens/CourseLesson';
 import { DemoSession }       from './screens/DemoSession';
 import { GamesScreen }       from './games/GamesScreen';
+import { ShapeSlicerGame }   from './games/ShapeSlicerGame';
+import { PhysicsPlayground } from './games/playground/PhysicsPlayground';
+import { PhysicsArcade } from './games/playground/PhysicsArcade';
 import { StatusBar }          from './components/StatusBar';
 import { BottomNav }          from './components/BottomNav';
 import { LoadingProvider, useLoading } from './lib/LoadingContext';
@@ -159,11 +162,18 @@ function AppContent() {
           {screen === 'course'        && <CourseDashboard   setScreen={setScreen} setCourseDay={setCourseDay} />}
           {screen === 'course-lesson' && <CourseLesson      setScreen={setScreen} courseDay={courseDay} setCourseDay={setCourseDay} />}
           {screen === 'demo-session'  && <DemoSession       setScreen={setScreen} />}
-          {screen === 'games'         && <GamesScreen        onBack={() => setScreen('dashboard')} />}
+          {screen === 'games'         && <GamesScreen        onBack={() => setScreen('dashboard')} setScreen={setScreen} />}
+          {screen === 'shape-slicer'  && <ShapeSlicerGame onBack={() => setScreen('dashboard')} />}
+          {screen === 'physics-sandbox' && <PhysicsPlayground type="collision_elastic" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
+          {screen === 'kinematics-cannon' && <PhysicsPlayground type="projectile" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
+          {screen === 'coulombs-collider' && <PhysicsPlayground type="electric_field" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
+          {screen === 'physics-arcade' && <PhysicsArcade onBack={() => setScreen('dashboard')} />}
         </motion.div>
       </AnimatePresence>
 
-      {screen !== 'games' && <BottomNav current={screen} setScreen={setScreen} />}
+      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade'].includes(screen) ? 'none' : 'block' }}>
+        <BottomNav current={screen} setScreen={setScreen} />
+      </div>
       </div>
     </>
   );

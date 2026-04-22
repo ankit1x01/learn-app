@@ -8,6 +8,7 @@ import { SYLLABUS_REGISTRY } from '../data/index';
 import type { Screen } from '../types/index';
 import { m3SpatialDefault } from '../lib/m3-motion';
 import { loadTopicsRead, markTopicRead, unmarkTopicRead } from '../db/store';
+import { MathsTopicBankView } from './topics/MathsTopicBankView';
 
 interface Props {
   setScreen: (s: Screen) => void;
@@ -27,7 +28,7 @@ export const TopicsScreen: React.FC<Props> = ({ setScreen }) => {
   };
 
   const handleExamSelect = (exam: ExamCard) => {
-    if (!TOPIC_BANKS[exam.id]) return; // coming soon — no action
+    if (!TOPIC_BANKS[exam.id] && exam.id !== 'school_maths' && exam.id !== 'iit_jee') return; // coming soon — no action
     setSelectedExam(exam);
     navigate('subjects', 1);
   };
@@ -121,7 +122,7 @@ export const TopicsScreen: React.FC<Props> = ({ setScreen }) => {
 const ExamPickerLevel: React.FC<{ onSelect: (exam: ExamCard) => void }> = ({ onSelect }) => (
   <div className="grid grid-cols-2 gap-3">
     {EXAM_CARDS.map(exam => {
-      const available = !!TOPIC_BANKS[exam.id];
+      const available = !!TOPIC_BANKS[exam.id] || exam.id === 'school_maths' || exam.id === 'iit_jee';
       return (
         <button
           key={exam.id}
@@ -197,6 +198,9 @@ const SubjectPickerLevel: React.FC<{ exam: ExamCard; onSelect: (subject: string)
 // ── Level 3: Topic Bank ───────────────────────────────────────────────────────
 
 const TopicBankLevel: React.FC<{ examId: string; subjectName: string }> = ({ examId, subjectName }) => {
+  if (examId === 'school_maths' || examId === 'iit_jee') {
+    return <MathsTopicBankView subjectName={subjectName} />;
+  }
   const bank = TOPIC_BANKS[examId];
   if (!bank) return null;
   const groups = bank.getGroups(subjectName);

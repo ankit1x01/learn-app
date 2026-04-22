@@ -533,25 +533,82 @@ export const Dashboard = ({
       </motion.button>
 
       {/* ── Daily Games ── */}
-      <motion.button
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...m3SpatialDefault, delay: 0.3 }}
-        onClick={() => setScreen('games')}
-        className="w-full flex items-center justify-between px-4 py-3.5 rounded-m3-lg mb-4 mx-4 max-w-[calc(100%-32px)] border border-solid transition-all hover:shadow-md hover:-translate-y-1"
-        style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
-            <Gamepad2 size={20} style={{ color: 'var(--color-primary)' }} />
-          </div>
-          <div className="text-left">
-            <p className="text-[15px] font-semibold font-ui" style={{ color: 'var(--color-on-surface)' }}>Daily Games</p>
-            <p className="text-[12px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>DSA · 4 games today</p>
+      <div className="flex flex-col gap-4 px-4 w-full mb-4 max-w-[calc(100%-32px)]">
+          <div className="grid grid-cols-2 gap-3 w-full">
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...m3SpatialDefault, delay: 0.3 }}
+              onClick={() => setScreen('games')}
+              className="col-span-2 flex items-center justify-start px-4 py-4 rounded-m3-lg border border-solid transition-all hover:shadow-md hover:-translate-y-1"
+              style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
+            >
+              <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mr-3" style={{ background: 'var(--color-primary-container)' }}>
+                <Gamepad2 size={20} style={{ color: 'var(--color-primary)' }} />
+              </div>
+              <div className="text-left">
+                <p className="text-[14px] font-semibold font-ui" style={{ color: 'var(--color-on-surface)' }}>Daily Minigames</p>
+                <p className="text-[11px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>DSA · 4 games</p>
+              </div>
+            </motion.button>
+  
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...m3SpatialDefault, delay: 0.35 }}
+              onClick={() => setScreen('shape-slicer')}
+              className="flex flex-col items-center justify-center px-2 py-4 rounded-m3-lg border border-solid transition-all hover:shadow-md hover:-translate-y-1 bg-[#EADDFF] border-[#D0BCFF]"
+            >
+              <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mb-2 bg-[#6750A4]">
+                <span className="material-symbols-rounded text-white block">view_in_ar</span>
+              </div>
+              <p className="text-[12px] font-semibold font-ui text-[#21005D] text-center">3D Geometry</p>
+              <p className="text-[10px] font-body text-[#4A4458] text-center">Sandbox</p>
+            </motion.button>
+
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...m3SpatialDefault, delay: 0.37 }}
+              onClick={() => setScreen('physics-sandbox')}
+              className="flex flex-col items-center justify-center px-2 py-4 rounded-m3-lg border border-solid transition-all hover:shadow-md hover:-translate-y-1 bg-[#ECE6F0] border-[#CAC4D0]"
+            >
+              <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mb-2 bg-[#49454F]">
+                <span className="material-symbols-rounded text-white block">explore</span>
+              </div>
+              <p className="text-[12px] font-semibold font-ui text-[#1D192B] text-center">Physics</p>
+              <p className="text-[10px] font-body text-[#49454F] text-center">Collisions</p>
+            </motion.button>
+  
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...m3SpatialDefault, delay: 0.4 }}
+              onClick={() => setScreen('kinematics-cannon')}
+              className="flex flex-col items-center justify-center px-2 py-4 rounded-m3-lg border border-solid transition-all hover:shadow-md hover:-translate-y-1 bg-[#D3E3FD] border-[#B4CGFA]"
+            >
+              <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mb-2 bg-[#004A77]">
+                 <span className="material-symbols-rounded text-white block">crisis_alert</span>
+              </div>
+              <p className="text-[12px] font-semibold font-ui text-[#001D35] text-center">Kinematics</p>
+              <p className="text-[10px] font-body text-[#4A4458] text-center">Cannon</p>
+            </motion.button>
+
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...m3SpatialDefault, delay: 0.43 }}
+              onClick={() => setScreen('coulombs-collider')}
+              className="flex flex-col items-center justify-center px-2 py-4 rounded-m3-lg border border-solid transition-all hover:shadow-md hover:-translate-y-1 bg-[#F9DEDC] border-[#F2B8B5]"
+            >
+              <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mb-2 bg-[#8C1D18]">
+                 <span className="material-symbols-rounded text-white block">bolt</span>
+              </div>
+              <p className="text-[12px] font-semibold font-ui text-[#410E0B] text-center">Coulomb's</p>
+              <p className="text-[10px] font-body text-[#410E0B] text-center">Collider</p>
+            </motion.button>
           </div>
         </div>
-        <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} />
-      </motion.button>
 
       {/* ── Courses ── */}
       <div className="mb-6 px-4">

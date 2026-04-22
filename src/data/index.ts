@@ -14,6 +14,7 @@ import { aiEngineerConfig } from './ai_engineer/config';
 import { seniorFsConfig } from './senior_fs_engineer/config';
 import { backendEngineerConfig } from './backend_engineer/config';
 import { systemDesign50LConfig } from './system_design_50l/config';
+import { schoolMathsConfig } from './school_maths/config';
 
 // Registry of all available syllabi
 export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
@@ -23,13 +24,15 @@ export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
   senior_fs:          seniorFsConfig,
   backend_engineer:   backendEngineerConfig,
   system_design_50l:  systemDesign50LConfig,
+  school_maths:       schoolMathsConfig,
+  iit_jee:            schoolMathsConfig, // Temporary map until full JEE config
 };
 
 // ─── Active Syllabus ──────────────────────────────────────────────────────────
 // Change this ID to switch the entire app to a different exam.
 // Switch back to 'dsa_faang' to restore the DSA syllabus.
 
-const ACTIVE_SYLLABUS_ID = 'it_placement_india';
+const ACTIVE_SYLLABUS_ID = 'iit_jee';
 
 
 export const getActiveSyllabus = (): SyllabusConfig => {

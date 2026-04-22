@@ -31,38 +31,37 @@ export function Chrono({ config }: Props) {
   const [events, setEvents] = useState<EventState[]>(
     () => shuffle(config.events).map(e => ({ ...e, status: 'idle' as const, locked: false }))
   )
+  const [placedCount, setPlacedCount] = useState(0)
   const [guesses, setGuesses] = useState(0)
   const [hintsUsed, setHintsUsed] = useState(0)
   const [activeFactoid, setActiveFactoid] = useState<string | null>(null)
   const [result, setResult] = useState<GameResult | null>(null)
 
-  function move(index: number, direction: 'up' | 'down') {
-    setEvents(prev => {
-      const next = [...prev]
-      const swap = direction === 'up' ? index - 1 : index + 1
-      if (swap < 0 || swap >= next.length) return prev
-      if (next[index].locked || next[swap].locked) return prev
-      ;[next[index], next[swap]] = [next[swap], next[index]]
-      return next
-    })
-  }
-
   function handleCheck() {
     const newGuesses = guesses + 1
     setGuesses(newGuesses)
 
-    const sorted = [...events].sort((a, b) => a.sortKey - b.sortKey)
-    const updated = events.map((e, i) => ({
-      ...e,
-      status: e.sortKey === sorted[i].sortKey ? 'correct' as const : 'wrong' as const,
-      locked: e.sortKey === sorted[i].sortKey,
-    }))
-    setEvents(updated)
+    // We only check the placed ones
+    const placed = events.slice(0, placedCount)
+    const sorted = [...placed].sort((a, b) => a.sortKey - b.sortKey)
+    
+    let allCorrectSoFar = true
+    const updatedPlaced = placed.map((e, i) => {
+      const isCorrect = e.sortKey === sorted[i].sortKey
+      if (!isCorrect) allCorrectSoFar = false
+      return {
+        ...e,
+        status: isCorrect ? 'correct' as const : 'wrong' as const,
+        locked: isCorrect,
+      }
+    })
 
-    const allCorrect = updated.every(e => e.status === 'correct')
+    setEvents([...updatedPlaced, ...events.slice(placedCount)])
+
+    const allFinished = allCorrectSoFar && placedCount === events.length
 
     setTimeout(() => {
-      if (allCorrect) {
+      if (allFinished) {
         const score = Math.max(0, 100 - (newGuesses - 1) * 20)
         const finalResult: GameResult = {
           gameType: 'chrono',
@@ -81,18 +80,17 @@ export function Chrono({ config }: Props) {
     }, 900)
   }
 
-  function handleHint() {
-    const sorted = [...events].sort((a, b) => a.sortKey - b.sortKey)
-    const correctIndex = events.findIndex((e, i) => !e.locked && sorted[i].id === e.id)
-    if (correctIndex === -1) return
-    setHintsUsed(h => h + 1)
-    setEvents(prev =>
-      prev.map((e, i) => i === correctIndex ? { ...e, locked: true, status: 'correct' as const } : e)
-    )
+  function handleDropToPlace() {
+    // When the top deck card is dragged and dropped, we assume they placed it
+    // into the timeline. Increment placedCount so it becomes a timeline card.
+    if (placedCount < events.length) {
+      setPlacedCount(prev => prev + 1)
+    }
   }
 
   function handleReset() {
     setEvents(shuffle(config.events).map(e => ({ ...e, status: 'idle' as const, locked: false })))
+    setPlacedCount(0)
     setGuesses(0)
     setHintsUsed(0)
     setActiveFactoid(null)
@@ -103,174 +101,171 @@ export function Chrono({ config }: Props) {
   if (result) return <GameWinScreen result={result} onPlayAgain={handleReset} />
 
   return (
-    <div className="flex flex-col h-full" style={{ background: '#F5F0E8' }}>
-      {/* Header */}
-      <div className="px-4 py-3 border-b border-[#E3DDD5] bg-white">
-        <p className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#9CA3AF', fontFamily: 'Plus Jakarta Sans, system-ui' }}>
-          {config.subject}
-        </p>
-        <h2 className="text-[20px] font-black text-[#1C1917] mt-0.5" style={{ fontFamily: 'Plus Jakarta Sans, system-ui', letterSpacing: '-0.02em' }}>
-          {config.theme}
-        </h2>
-        <div className="flex items-center justify-between mt-1.5">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#D97706', fontFamily: 'Plus Jakarta Sans, system-ui' }}>Earliest</span>
-            <div className="flex-1 flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-4 h-1 rounded-full" style={{ background: '#FDE68A' }} />
-              ))}
-            </div>
-            <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: '#D97706', fontFamily: 'Plus Jakarta Sans, system-ui' }}>Latest</span>
-          </div>
-          <span className="text-[11px]" style={{ color: '#A8A29E', fontFamily: 'Inter, system-ui' }}>
-            {guesses} attempt{guesses !== 1 ? 's' : ''}
-          </span>
+    <div className="flex flex-col h-full overflow-hidden" style={{ background: '#F8F7F3' }}>
+     
+
+      {/* Timeline Area */}
+      <div className="flex-1 relative flex flex-col pt-8 pb-0 overflow-y-auto">
+        {/* Left Vertical Line with Before / After */}
+        <div className="absolute top-0 bottom-0 flex flex-col items-center justify-between" style={{ left: '26px', zIndex: 0, paddingBottom: '160px' }}>
+          <span className="text-[12px] font-medium tracking-wide -rotate-90 origin-center text-[#111] mb-8 whitespace-nowrap mt-4" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>Before</span>
+          <div className="flex-1 w-[2px] bg-[#111]" />
+          <span className="text-[12px] font-medium tracking-wide -rotate-90 origin-center text-[#111] mt-8 whitespace-nowrap mb-4" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>After</span>
         </div>
-      </div>
 
-      {/* Timeline list */}
-      <div className="flex-1 overflow-y-auto px-4 py-3">
-        <div className="flex gap-3">
-          {/* Visual timeline line on the left */}
-          <div className="flex flex-col items-center" style={{ width: 24, flexShrink: 0, paddingTop: 16 }}>
-            {events.map((event, i) => (
-              <div key={event.id} className="flex flex-col items-center flex-1" style={{ minHeight: 72 }}>
-                {/* Dot */}
-                <div
-                  className="w-3 h-3 rounded-full border-2 flex-shrink-0"
+        {/* Placed Event Cards & Bottom Card (All inside Reorder.Group for drag & drop) */}
+        <Reorder.Group
+          values={events.slice(0, placedCount + 1)}
+          onReorder={(reorderedActive) => {
+            // Keep the hidden items appended to the end unharmed
+            setEvents([...reorderedActive, ...events.slice(placedCount + 1)])
+          }}
+          className="flex flex-col gap-6 relative z-10 w-full pl-[50px] pr-4 min-h-full pb-[60px]"
+          axis="y"
+        >
+          {events.slice(0, placedCount + 1).map((event, i) => {
+            const isDeckCard = i === placedCount;
+            
+            // Render the bottom "To Place" card
+            if (isDeckCard) {
+              return (
+                <Reorder.Item
+                  key={event.id}
+                  value={event}
+                  dragListener={true}
+                  onDragEnd={() => handleDropToPlace()}
+                  className="cursor-grab active:cursor-grabbing z-20 w-[calc(100%+2rem)] -ml-8 bg-white flex items-stretch shadow-xl mt-auto"
                   style={{
-                    background: event.status === 'correct' ? '#22C55E' : event.status === 'wrong' ? '#EF4444' : '#D4CFC8',
-                    borderColor: event.status === 'correct' ? '#16A34A' : event.status === 'wrong' ? '#DC2626' : '#A8A29E',
+                    border: '2px solid #111',
+                    borderRadius: '12px',
+                    minHeight: '120px',
+                    overflow: 'hidden',
+                    marginBottom: '10px'
                   }}
-                />
-                {/* Connector line (not after last) */}
-                {i < events.length - 1 && (
-                  <div
-                    className="flex-1 w-0.5 my-1"
-                    style={{ background: event.locked ? '#BBF7D0' : '#D4CFC8', minHeight: 20 }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+                >
+                  {/* Left Thumbnail (Detailed) */}
+                  <div 
+                    className="w-[100px] shrink-0 border-r-[2px] border-[#111] bg-[#111] flex items-center justify-center overflow-hidden"
+                  >
+                    <img 
+                      src={`https://picsum.photos/seed/${event.id}/200/200`} 
+                      alt="" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-          {/* Event cards */}
-                    <Reorder.Group
-            values={events}
-            onReorder={setEvents}
-            className="flex-1 flex flex-col gap-2 relative z-10"
-            axis="y"
-          >
-            {events.map((event, i) => (
+                  {/* Right Content (Detailed) */}
+                  <div className="flex-1 flex flex-col justify-center px-4 py-3 bg-white">
+                    <p
+                      className="text-[16px] font-bold leading-snug mb-1.5"
+                      style={{ color: '#111', fontFamily: 'Plus Jakarta Sans, system-ui' }}
+                    >
+                      {event.label}
+                    </p>
+                    <p 
+                      className="text-[13px] leading-snug" 
+                      style={{ color: '#333', fontFamily: 'Inter, system-ui' }}
+                    >
+                      {event.factoid || "Detailed description showing historical context and more info..."}
+                    </p>
+                  </div>
+                </Reorder.Item>
+              );
+            }
+
+            // Render standard placed cards
+            const cardBg = '#FF99C2'; // Pink background matching image
+
+            return (
               <Reorder.Item
                 key={event.id}
                 value={event}
-                dragListener={!event.locked}
-                dragControls={undefined}
-                whileDrag={{ scale: 1.03, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
-                className="cursor-grab active:cursor-grabbing z-10 relative"
+                dragListener={false} // Do not allow upper cards to be dragged/reordered
+                className="z-10 relative" // removed cursor-grab active:cursor-grabbing
               >
                 <div
-                  className="rounded-2xl overflow-hidden transition-colors duration-150"
+                  className="w-full flex items-stretch relative"
                   style={{
-                    background: event.status === 'correct' ? '#F0FDF4' : event.status === 'wrong' ? '#FEF2F2' : '#FFFFFF',
-                    border: event.status === 'correct'
-                      ? '2px solid #4ADE80'
-                      : event.status === 'wrong'
-                      ? '2px solid #F87171'
-                      : '2px solid #E3DDD5',
-                    boxShadow: event.status === 'correct'
-                      ? '0 4px 0 #22C55E'
-                      : event.status === 'wrong'
-                      ? '0 4px 0 #EF4444'
-                      : '0 4px 0 #E3DDD5',
+                    background: cardBg,
+                    border: '1.5px solid #111',
+                    borderRadius: '10px',
+                    minHeight: '74px',
                   }}
                 >
-                  <div className="flex items-center gap-2 px-3 py-3">
-                    {/* Drag Handle Indicator */}
-                    <div className="flex flex-col gap-0.5 opacity-40 px-1 py-1 rounded pointer-events-none">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#78716C' }} />
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#78716C' }} />
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#78716C' }} />
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0 pointer-events-none">
-                      {event.locked && (
-                        <span
-                          className="inline-block text-[10px] font-black px-2 py-0.5 rounded-full mb-1"
-                          style={{ background: '#FCD34D', color: '#78350F', fontFamily: 'Plus Jakarta Sans, system-ui' }}
-                        >
-                          {event.dateLabel}
-                        </span>
-                      )}
-                      <p
-                        className="text-[13px] font-semibold leading-snug"
-                        style={{
-                          color: event.status === 'correct' ? '#166534' : '#1C1917',
-                          fontFamily: 'Plus Jakarta Sans, system-ui',
-                        }}
-                      >
-                        {event.label}
-                      </p>
-                    </div>
-
-                    {/* Status icons */}
-                    <div className="flex items-center gap-1.5 flex-shrink-0">
-                      {event.status === 'correct' && <CheckCircle size={16} color="#16A34A" />}
-                      {event.factoid && (
-                        <button
-                          onPointerDown={(e) => e.stopPropagation()}
-                          onClick={() => setActiveFactoid(activeFactoid === event.id ? null : event.id)}
-                          className="w-6 h-6 flex items-center justify-center rounded-full text-[10px] font-black pointer-events-auto"
-                          style={{ background: '#F0EEE9', color: '#78716C', fontFamily: 'Inter, system-ui' }}
-                        >
-                          i
-                        </button>
-                      )}
-                    </div>
+                  {/* Left Thumbnail (Compact) */}
+                  <div 
+                    className="w-[74px] shrink-0 border-r-[1.5px] border-[#111] bg-white flex items-center justify-center overflow-hidden"
+                    style={{ borderTopLeftRadius: '8px', borderBottomLeftRadius: '8px' }}
+                  >
+                    <img 
+                      src={`https://picsum.photos/seed/${event.id}/150/150`} 
+                      alt="" 
+                      className="w-full h-full object-cover grayscale"
+                    />
                   </div>
 
-                  {/* Factoid */}
-                  {activeFactoid === event.id && event.factoid && (
-                    <div className="px-4 pb-3 pointer-events-none">
-                      <div className="rounded-xl px-3 py-2" style={{ background: '#FFFBEB', border: '1px solid #FDE68A' }}>
-                        <p className="text-[12px] leading-relaxed" style={{ color: '#92400E', fontFamily: 'Inter, system-ui' }}>
-                          {event.factoid}
-                        </p>
+                  {/* Right Content */}
+                  <div className="flex-1 flex flex-col justify-center px-3 py-2 pr-1 relative">
+                    <div className="flex justify-between items-start mb-1">
+                      {/* Pill Badge */}
+                      <div 
+                        className="rounded-[4px] px-2 text-[12px] font-bold inline-block"
+                        style={{
+                          background: '#FFFFFF',
+                          border: '1.5px solid #111',
+                          color: '#111',
+                          paddingTop: '2px', paddingBottom: '2px'
+                        }}
+                      >
+                        {event.dateLabel}
+                      </div>
+
+                      {/* Check Icon */}
+                      <div className="w-[18px] h-[18px] rounded-full border-[1.5px] border-[#111] bg-transparent flex items-center justify-center mt-0.5 mr-2">
+                        <CheckCircle size={12} color="#111" strokeWidth={3} />
                       </div>
                     </div>
-                  )}
+
+                    <p
+                      className="text-[14px] font-black leading-tight"
+                      style={{ color: '#111', fontFamily: 'Inter, Plus Jakarta Sans, system-ui' }}
+                    >
+                      {event.label}
+                    </p>
+                  </div>
                 </div>
               </Reorder.Item>
-            ))}
-          </Reorder.Group>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="px-4 py-4 flex gap-3" style={{ borderTop: '1px solid #E3DDD5' }}>
-        <button
-          onClick={handleHint}
-          className="flex items-center gap-1.5 px-4 py-3 rounded-2xl text-[14px] font-bold active:translate-y-1 transition-transform"
-          style={{ background: '#F0EEE9', color: '#78716C', fontFamily: 'Plus Jakarta Sans, system-ui', border: '2px solid #E3DDD5', boxShadow: '0 4px 0 #D4CFC8' }}
-        >
-          <HelpCircle size={18} />
-          Hint
-        </button>
-        <button
-          onClick={handleCheck}
-          className="flex-1 py-3 rounded-2xl text-[16px] font-black active:translate-y-1 transition-transform"
-          style={{
-            background: '#1C1917',
-            color: '#FFFFFF',
-            fontFamily: 'Plus Jakarta Sans, system-ui',
-            boxShadow: '0 4px 0 #44403C',
-          }}
-        >
-          Check Order
-        </button>
+            );
+          })}
+          
+          {/* Bottom Area (The "To Place" card) */}
+          {placedCount < events.length ? (
+            <div className="fixed bottom-0 left-0 right-0 z-10 pb-2 pt-12 pointer-events-none" style={{ background: 'linear-gradient(to top, #F8F7F3 80%, transparent)' }}>
+              <div className="max-w-md mx-auto pointer-events-auto relative px-4 flex justify-between items-end">
+                <div className="flex items-center gap-1.5 font-bold text-[14px]">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="#111"><path d="M4 8h16v12H4z" stroke="#111" strokeWidth="2" strokeLinejoin="round"/><path d="M8 2h16v12" stroke="#111" strokeWidth="2" strokeLinejoin="round" fill="none"/></svg>
+                  {events.length - placedCount}
+                </div>
+                <p className="font-medium text-[16px] text-[#111] translate-y-[-4px]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>
+                  Place on timeline
+                </p>
+                <div className="w-[22px]"></div> {/* Spacer */}
+              </div>
+            </div>
+          ) : (
+            <div className="fixed bottom-0 left-0 right-0 z-10 pb-4 pt-12 flex justify-center bg-gradient-to-t from-[#F8F7F3] via-[#F8F7F3] to-transparent">
+              <button
+                onClick={handleCheck}
+                className="btn-primary w-[90%] max-w-sm py-3 text-[18px] font-bold shadow-lg"
+                style={{ borderRadius: '12px' }}
+              >
+                Check Answers
+              </button>
+            </div>
+          )}
+        </Reorder.Group>
       </div>
     </div>
   )
+
 }

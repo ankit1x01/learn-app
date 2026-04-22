@@ -50,6 +50,17 @@ export const LiveSession = ({
   const [responseTimeMs, setResponseTimeMs] = useState<number | null>(null);
 
   const current = session[qIndex] ?? session[0];
+
+  useEffect(() => {
+    if (!current) {
+      setScreen('dashboard');
+    }
+  }, [current, setScreen]);
+
+  if (!current) {
+    return <div className="min-h-screen bg-[var(--color-background)]" />;
+  }
+
   const { concept, queue, retrievability } = current;
   const isPreTest = current.isPreTest ?? false;
   const qLabel = QUEUE_LABELS[queue];

@@ -57,6 +57,13 @@ export const EXAM_CARDS: ExamCard[] = [
     description: 'Physics · Chemistry · Biology',
   },
   {
+    id: 'school_maths',
+    name: 'Mathematics',
+    icon: 'calculate',
+    color: '#0284C7',
+    description: 'Classes 10, 11, 12, JEE',
+  },
+  {
     id: 'iit_jee',
     name: 'IIT JEE',
     icon: 'calculate',

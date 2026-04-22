@@ -3,9 +3,12 @@ import { useState } from 'react'
 import { Shuffle, Clock, Link2, Sword, ChevronLeft, Hand, Brain, Headphones, Target } from 'lucide-react'
 import { GameRunner } from './GameRunner'
 import { GameConfig } from './types'
+import { EquationBalancer } from './EquationBalancer'
+import { ParabolaCannon } from './ParabolaCannon'
+import { MatrixMorph } from './MatrixMorph'
 import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout, dsaBalloonTap, dsaRetention, dsaAudioLecture, dsaBubbleMatch } from './data/dsa-dummy'
 
-type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match'
+type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph'
 
 interface GameMeta {
   id: Tab
@@ -90,6 +93,15 @@ const GAMES: GameMeta[] = [
     textDark: '#431407',
     foldColor: 'rgba(0,0,0,0.13)',
   },
+  {
+    id: 'equation-balancer',
+    label: 'Equations',
+    tagline: 'Balance math',
+    icon: Brain,
+    bg: '#E8DEF8',
+    textDark: '#1D192B',
+    foldColor: 'rgba(0,0,0,0.13)',
+  },
 ]
 
 const CONFIGS: Record<Tab, GameConfig> = {
@@ -101,13 +113,15 @@ const CONFIGS: Record<Tab, GameConfig> = {
   retention:       dsaRetention,
   'audio-lecture': dsaAudioLecture,
   'bubble-match':  dsaBubbleMatch,
+  'equation-balancer': null as any,
 }
 
 interface Props {
-  onBack: () => void
+  onBack: () => void;
+  setScreen?: (screen: string) => void;
 }
 
-export function GamesScreen({ onBack }: Props) {
+export function GamesScreen({ onBack, setScreen }: Props) {
   const [selectedGame, setSelectedGame] = useState<Tab | null>(null)
 
   if (selectedGame !== null) {
@@ -134,7 +148,11 @@ export function GamesScreen({ onBack }: Props) {
         </div>
         <div className="flex-1 overflow-hidden">
           <div className="h-full overflow-y-auto" style={{ background: '#F5F0E8' }}>
-            <GameRunner key={selectedGame} config={CONFIGS[selectedGame]} />
+            {selectedGame === 'equation-balancer' ? (
+              <EquationBalancer />
+            ) : (
+              <GameRunner key={selectedGame} config={CONFIGS[selectedGame]} />
+            )}
           </div>
         </div>
       </div>
@@ -170,9 +188,10 @@ export function GamesScreen({ onBack }: Props) {
       </div>
 
       {/* 2×2 Game grid */}
+
       <div className="flex-1 px-4 py-3 mb-10 grid grid-cols-2 gap-3 content-start">
         {GAMES.map(game => {
-          const Icon = game.icon
+          const Icon = game.icon;
           return (
             <button
               key={game.id}
@@ -216,8 +235,45 @@ export function GamesScreen({ onBack }: Props) {
                 </p>
               </div>
             </button>
-          )
+          );
         })}
+
+        {/* Physics Arcade button */}
+        <button
+          onClick={() => setScreen?.('physics-arcade')}
+          className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
+          style={{
+            background: '#FFF1F2',
+            boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)',
+            aspectRatio: '1',
+          }}
+        >
+          {/* Folded corner effect */}
+          <div
+            className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl"
+            style={{ background: 'rgba(244,63,94,0.13)' }}
+          />
+          {/* Icon */}
+          <div className="flex-1 flex items-center justify-center">
+            <div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center"
+              style={{ background: 'rgba(255,255,255,0.28)' }}
+            >
+              <span className="material-symbols-rounded" style={{ fontSize: 34, color: '#F43F5E', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>
+                sports_baseball
+              </span>
+            </div>
+          </div>
+          {/* Label */}
+          <div className="mt-2">
+            <p className="text-[17px] font-black leading-tight" style={{ color: '#F43F5E', fontFamily: 'Plus Jakarta Sans, system-ui' }}>
+              Physics Arcade
+            </p>
+            <p className="text-[12px] font-medium mt-0.5" style={{ color: '#F43F5E', opacity: 0.65, fontFamily: 'Inter, system-ui' }}>
+              Simulations
+            </p>
+          </div>
+        </button>
       </div>
 
       <p
