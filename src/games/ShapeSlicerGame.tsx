@@ -145,11 +145,15 @@ export function ShapeSlicerGame({ onBack }: { onBack?: () => void }) {
   return (
     <div className="flex flex-col h-screen bg-[#FFFBFE] font-sans pb-16">
       {/* Header UI */}
-      <div className="p-6 text-center z-10 shadow-sm relative">
+      <div 
+        className="pb-6 px-6 text-center z-10 shadow-sm relative"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 24px)' }}
+      >
         {onBack && (
           <button 
             onClick={onBack}
-            className="absolute left-4 top-4 bg-[#EADDFF] text-[#21005D] p-2 rounded-full cursor-pointer hover:bg-[#D0BCFF] transition-colors"
+            className="absolute left-4 bg-[#EADDFF] text-[#21005D] p-2 rounded-full cursor-pointer hover:bg-[#D0BCFF] transition-colors"
+            style={{ top: 'calc(env(safe-area-inset-top) + 16px)' }}
             title="Back"
           >
             <span className="material-symbols-rounded block text-lg leading-none">arrow_back</span>
@@ -179,7 +183,11 @@ export function ShapeSlicerGame({ onBack }: { onBack?: () => void }) {
            </button>
         </div>
 
-        <Canvas camera={{ position: [4, 3, 5], fov: 45 }}>
+        <Canvas 
+          dpr={Math.min(window.devicePixelRatio || 1, 2)} 
+          gl={{ antialias: true }} 
+          camera={{ position: [4, 3, 5], fov: 45 }}
+        >
           <color attach="background" args={['#F4EFF4']} />
           <ambientLight intensity={0.6} />
           <directionalLight position={[5, 5, 5]} intensity={1.5} />

@@ -218,7 +218,12 @@ export function CoulombsCollider({ onBack }: { onBack?: () => void }) {
       </div>
 
       <div className="flex-1 relative cursor-grab active:cursor-grabbing">
-        <Canvas shadows camera={{ position: [0, 15, 0], fov: 50 }}>
+        <Canvas 
+          shadows 
+          dpr={Math.min(window.devicePixelRatio || 1, 2)} 
+          gl={{ antialias: true }} 
+          camera={{ position: [0, 15, 0], fov: 50 }}
+        >
           <color attach="background" args={['#F0F4F8']} />
           <Scene q1={q1} q2={q2} fireKey={fireKey} setHitStatus={setHitStatus} active={active} />
         </Canvas>

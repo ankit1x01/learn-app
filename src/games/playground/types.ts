@@ -68,6 +68,9 @@ export interface SimProps {
   puzzle: PuzzleConfig | null
   isPlaying: boolean
   onReset: () => void
+  onControlChange?: (id: string, value: number) => void
+  /** Camera pan offset in world pixels; applied via Matter.Render.lookAt */
+  viewOffset?: { x: number; y: number }
 }
 
 export interface PlaygroundResult {

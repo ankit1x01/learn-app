@@ -35,6 +35,8 @@ export interface SimulationPlugin {
   defaultControls: ControlDef[]
   label: string
   icon: string
+  /** Optional: return rows to render in the formula HTML overlay */
+  formulaRows?: (controls: Record<string, number>) => { label: string; value: string }[]
 }
 
 // Previous sims
@@ -124,6 +126,19 @@ export const SIMULATION_REGISTRY: Record<SimulationType, SimulationPlugin> = {
       { id: 'speed', label: 'Speed', min: 5, max: 50, step: 1, unit: 'm/s', default: 20 },
       { id: 'height', label: 'Height', min: 0, max: 40, step: 1, unit: 'm', default: 0 },
     ],
+    formulaRows: (c) => {
+      const G = 9.81
+      const rad = (c['angle'] ?? 45) * Math.PI / 180
+      const v0  = c['speed']  ?? 20
+      const R = (v0 * v0 * Math.sin(2 * rad)) / G
+      const H = (v0 * v0 * Math.sin(rad) * Math.sin(rad)) / (2 * G)
+      const T = (2 * v0 * Math.sin(rad)) / G
+      return [
+        { label: 'R = v₀²·sin2θ/g', value: `${R.toFixed(2)} m`  },
+        { label: 'H = v₀²·sin²θ/2g', value: `${H.toFixed(2)} m` },
+        { label: 'T = 2v₀·sinθ/g',   value: `${T.toFixed(2)} s` },
+      ]
+    },
   },
   collision_elastic: {
     component: CollisionElastic, engine: 'matter', conceptId: 'laws_of_motion_collision_elastic',

@@ -184,7 +184,10 @@ export function GamesScreen({ onBack, setScreen }: Props) {
   return (
     <div className="flex flex-col h-screen max-w-md mx-auto" style={{ background: '#F5F0E8' }}>
       {/* Header */}
-      <div className="flex items-center px-4 pt-5 pb-2">
+      <div 
+        className="flex items-center px-4 pb-2"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 20px)' }}
+      >
         <button
           onClick={onBack}
           className="w-9 h-9 flex items-center justify-center rounded-xl"

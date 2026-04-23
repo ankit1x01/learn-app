@@ -58,6 +58,32 @@ export function PhysicsPlayground({ type, config = {}, onBack }: Props) {
   const [resetKey, setResetKey] = useState(0)
   const startTimeRef = useRef(Date.now())
 
+  // ── Pan / camera state ───────────────────────────────────────────────────
+  const [viewOffset, setViewOffset]   = useState({ x: 0, y: 0 })
+  const [isPanMode, setIsPanMode]     = useState(false)
+  const [isActuallyPanning, setIsActuallyPanning] = useState(false)
+  const panStartRef = useRef<{ cx: number; cy: number; ox: number; oy: number } | null>(null)
+
+  const onPanPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPanMode) return
+    panStartRef.current = { cx: e.clientX, cy: e.clientY, ox: viewOffset.x, oy: viewOffset.y }
+    setIsActuallyPanning(true)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }, [isPanMode, viewOffset])
+
+  const onPanPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPanMode || !panStartRef.current) return
+    const { cx, cy, ox, oy } = panStartRef.current
+    setViewOffset({ x: ox - (e.clientX - cx), y: oy - (e.clientY - cy) })
+  }, [isPanMode])
+
+  const onPanPointerUp = useCallback(() => {
+    panStartRef.current = null
+    setIsActuallyPanning(false)
+  }, [])
+
+  const handleCenterView = useCallback(() => setViewOffset({ x: 0, y: 0 }), [])
+
   const handleSubmit = useCallback((answers: Record<string, number>) => {
     if (!puzzle) return
     const ok = validateAnswers(answers, puzzle)
@@ -97,7 +123,10 @@ export function PhysicsPlayground({ type, config = {}, onBack }: Props) {
   return (
     <div className="flex flex-col h-full bg-[var(--color-background)] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-4 pb-2">
+      <div 
+        className="flex items-center gap-3 px-4 pb-2 shrink-0"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 16px)' }}
+      >
         {onBack && (
           <button
             onClick={onBack}
@@ -143,7 +172,19 @@ export function PhysicsPlayground({ type, config = {}, onBack }: Props) {
       </div>
 
       {/* Simulation area */}
-      <div className="relative flex-1 min-h-0 mx-4 rounded-[var(--radius-m3-xl)] overflow-hidden bg-[var(--color-surface-container-low)]">
+      <div
+        className="relative flex-1 min-h-0 mx-4 rounded-[var(--radius-m3-xl)] overflow-hidden bg-[var(--color-surface-container-low)]"
+        style={{ cursor: isPanMode ? (isActuallyPanning ? 'grabbing' : 'grab') : 'default' }}
+        onPointerDown={onPanPointerDown}
+        onPointerMove={onPanPointerMove}
+        onPointerUp={onPanPointerUp}
+        onPointerCancel={onPanPointerUp}
+      >
+        {/* Pan-mode transparent overlay blocks sim interaction */}
+        {isPanMode && (
+          <div className="absolute inset-0 z-10" style={{ touchAction: 'none' }} />
+        )}
+
         <Suspense fallback={
           <div className="flex items-center justify-center h-full">
             <span className="material-symbols-rounded text-[var(--color-primary)]" style={{ fontSize: 32 }}>
@@ -160,14 +201,55 @@ export function PhysicsPlayground({ type, config = {}, onBack }: Props) {
               puzzle={puzzle}
               isPlaying={isPlaying}
               onReset={handleReset}
+              onControlChange={handleControl}
+              viewOffset={viewOffset}
             />
           )}
         </Suspense>
         <MeasurementOverlay measurements={[]} visible={showMeasurements} />
+
+        {/* Formula overlay */}
+        {plugin.formulaRows && (
+          <div
+            className="absolute top-2 right-2 rounded-xl px-2.5 py-2 flex flex-col gap-1 pointer-events-none z-20"
+            style={{ background: 'rgba(28,27,31,0.72)', backdropFilter: 'blur(6px)', minWidth: 170 }}
+          >
+            {plugin.formulaRows(controlValues).map((row: { label: string; value: string }, i: number) => (
+              <div key={i} className="flex items-center justify-between gap-2">
+                <span className="text-[11px]" style={{ color: '#D0BCFF', fontFamily: 'Roboto,sans-serif' }}>{row.label}</span>
+                <span className="text-[11px] font-bold" style={{ color: '#fff', fontFamily: 'Roboto,sans-serif', minWidth: 52, textAlign: 'right' }}>{row.value}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Pan controls: toggle + center */}
+        <div className="absolute bottom-2 left-2 flex gap-1 z-20">
+          <button
+            onClick={handleCenterView}
+            title="Reset view"
+            className="flex items-center justify-center w-8 h-8 rounded-full text-white shadow-md transition-opacity"
+            style={{ background: 'rgba(28,27,31,0.7)', backdropFilter: 'blur(4px)', opacity: (viewOffset.x !== 0 || viewOffset.y !== 0) ? 1 : 0.4 }}
+          >
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>center_focus_strong</span>
+          </button>
+          <button
+            onClick={() => setIsPanMode(p => !p)}
+            title={isPanMode ? 'Exit pan mode' : 'Pan / drag to explore'}
+            className="flex items-center justify-center w-8 h-8 rounded-full shadow-md transition-all"
+            style={{
+              background: isPanMode ? 'var(--color-primary)' : 'rgba(28,27,31,0.7)',
+              backdropFilter: 'blur(4px)',
+              color: 'white',
+            }}
+          >
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>pan_tool</span>
+          </button>
+        </div>
       </div>
 
       {/* Bottom panel */}
-      <div className="flex flex-col gap-3 px-4 py-3 overflow-y-auto max-h-[50vh]">
+      <div className="flex flex-col gap-3 px-4 py-3 overflow-y-auto max-h-[42vh]">
         {plugin.defaultControls.length > 0 && (
           <ControlPanel
             controls={plugin.defaultControls}

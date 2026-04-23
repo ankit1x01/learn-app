@@ -121,7 +121,11 @@ export const MatrixMorph: React.FC = () => {
         className="w-full max-w-3xl overflow-hidden rounded-[32px] border-4 border-[var(--color-surface-container-highest)] bg-[#F8F9FA] relative shadow-inner"
         style={{ height: 450 }}
       >
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+        <Canvas 
+          dpr={Math.min(window.devicePixelRatio || 1, 2)} 
+          gl={{ antialias: true }} 
+          camera={{ position: [0, 0, 5], fov: 60 }}
+        >
           <ambientLight intensity={0.8} />
           
           <Grid infiniteGrid fadeDistance={20} sectionColor="#ddd" cellColor="#eee" position={[0, -2, -1]} />

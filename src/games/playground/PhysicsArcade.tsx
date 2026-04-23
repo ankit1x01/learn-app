@@ -130,7 +130,10 @@ export function PhysicsArcade({ onBack }: Props) {
   return (
     <div className="flex flex-col h-screen max-w-md mx-auto bg-[var(--color-background)] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-5 pb-3 shrink-0">
+      <div 
+        className="flex items-center gap-3 px-4 pb-3 shrink-0"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 20px)' }}
+      >
         <button
           onClick={onBack}
           className="w-9 h-9 flex items-center justify-center rounded-xl"

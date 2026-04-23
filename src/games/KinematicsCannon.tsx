@@ -115,11 +115,15 @@ export function KinematicsCannon({ onBack }: { onBack?: () => void }) {
   return (
     <div className="flex flex-col h-screen bg-[#FFFBFE] font-sans pb-12">
       {/* Header UI */}
-      <div className="p-6 text-center z-10 shadow-sm relative bg-[#FFFBFE]">
+      <div 
+        className="pb-6 px-6 text-center z-10 shadow-sm relative bg-[#FFFBFE]"
+        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 24px)' }}
+      >
         {onBack && (
           <button 
             onClick={onBack}
-            className="absolute left-4 top-4 bg-[#EADDFF] text-[#21005D] p-2 rounded-full cursor-pointer hover:bg-[#D0BCFF] transition-colors"
+            className="absolute left-4 bg-[#EADDFF] text-[#21005D] p-2 rounded-full cursor-pointer hover:bg-[#D0BCFF] transition-colors"
+            style={{ top: 'calc(env(safe-area-inset-top) + 16px)' }}
             title="Back"
           >
             <span className="material-symbols-rounded block text-lg leading-none">arrow_back</span>
@@ -180,7 +184,12 @@ export function KinematicsCannon({ onBack }: { onBack?: () => void }) {
 
       {/* 3D Canvas Area */}
       <div className="flex-1 relative cursor-grab active:cursor-grabbing">
-        <Canvas shadows camera={{ position: [targetPos / 2, 5, targetPos * 0.8], fov: 50 }}>
+        <Canvas 
+          shadows 
+          dpr={Math.min(window.devicePixelRatio || 1, 2)} 
+          gl={{ antialias: true }} 
+          camera={{ position: [targetPos / 2, 5, targetPos * 0.8], fov: 50 }}
+        >
           <color attach="background" args={['#87CEEB']} />
           <Scene angle={angle} velocity={velocity} targetPos={targetPos} fireKey={fireKey} setHitStatus={setHitStatus} />
         </Canvas>

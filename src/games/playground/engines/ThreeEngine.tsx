@@ -15,9 +15,10 @@ export function ThreeEngine({
 }: ThreeEngineProps) {
   return (
     <Canvas
+      dpr={Math.min(window.devicePixelRatio || 1, 2)}
+      gl={{ antialias: true }}
       camera={{ position: cameraPosition, fov: 50 }}
       style={{ width: '100%', height: '100%', borderRadius: 'var(--radius-m3-lg)' }}
-      gl={{ antialias: true }}
     >
       <ambientLight intensity={0.6} />
       <directionalLight position={[5, 10, 5]} intensity={1.2} />
