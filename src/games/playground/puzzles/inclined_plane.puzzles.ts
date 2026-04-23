@@ -7,20 +7,20 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     complexity: 'board',
     question: 'A block of mass 5 kg is on a frictionless incline of angle 30°. Find the acceleration of the block (g = 10 m/s²).',
     given: { mass: 5, angle: 30, mu: 0, g: 10 },
-    find: ['acceleration'],
-    answer: { acceleration: 5 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: ['a = g sin θ', 'a = 10 × sin 30° = 10 × 0.5', 'a = 5 m/s²'],
     formula: 'a = g sinθ  (frictionless)',
-    units: { acceleration: 'm/s²' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   {
     id: 'ip_board_002',
     complexity: 'board',
     question: 'A 4 kg block rests on a 37° rough incline. μ = 0.5. Find the friction force (g = 10 m/s²).',
     given: { mass: 4, angle: 37, mu: 0.5, g: 10 },
-    find: ['friction_force'],
-    answer: { friction_force: 16 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: [
       'Normal N = mg cosθ = 4×10×cos37° = 32 N',
@@ -28,19 +28,19 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'Since block is at rest, friction force = mg sinθ = 24 N?  Recheck: mg sinθ=24 N > fₛ=16 N → block slides, kinetic friction = 16 N',
     ],
     formula: 'f = μ mg cosθ',
-    units: { friction_force: 'N' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   {
     id: 'ip_board_003',
     complexity: 'board',
     question: 'Find the minimum angle at which a block just begins to slide if μₛ = 0.577.',
     given: { mu_s: 0.577 },
-    find: ['critical_angle'],
-    answer: { critical_angle: 30 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: ['tan θ_c = μₛ', 'θ_c = arctan(0.577) ≈ 30°', 'This is the angle of repose'],
     formula: 'tanθ = μₛ',
-    units: { critical_angle: '°' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   // JEE MAIN
   {
@@ -48,8 +48,8 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A 10 kg block slides down a 45° incline with μ_k = 0.3. Find the net acceleration (g = 10 m/s²).',
     given: { mass: 10, angle: 45, mu_k: 0.3, g: 10 },
-    find: ['acceleration'],
-    answer: { acceleration: 4.88 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: [
       'a = g(sinθ − μcosθ)',
@@ -57,15 +57,15 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'a ≈ 4.95 → refine: 10×0.495 = 4.95 m/s²',
     ],
     formula: 'a = g(sinθ − μcosθ)',
-    units: { acceleration: 'm/s²' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   {
     id: 'ip_jee_main_002',
     complexity: 'jee_main',
     question: 'A force F is applied horizontally to push a block up a 30° frictionless incline. If mass = 5 kg, find F (g = 10 m/s²).',
     given: { mass: 5, angle: 30, g: 10 },
-    find: ['force'],
-    answer: { force: 28.87 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: [
       'Along incline: F cosθ = mg sinθ',
@@ -73,15 +73,15 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'F = 5 × 10 × tan30° ≈ 28.87 N',
     ],
     formula: 'F = mg tanθ',
-    units: { force: 'N' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   {
     id: 'ip_jee_main_003',
     complexity: 'jee_main',
     question: 'Two blocks (3 kg and 5 kg) are connected by a string over a frictionless pulley on a 37° frictionless incline. 5 kg is on the incline, 3 kg hangs. Find acceleration (sin37°=0.6, g=10).',
     given: { m1: 3, m2: 5, angle: 37, g: 10 },
-    find: ['acceleration'],
-    answer: { acceleration: 0.625 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: [
       'Net force = m₁g − m₂g sinθ = 3×10 − 5×10×0.6 = 30 − 30 = 0',
@@ -89,7 +89,7 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'Acceleration = 0 m/s² — the system is in equilibrium',
     ],
     formula: 'a = (m₁g − m₂g sinθ)/(m₁+m₂)',
-    units: { acceleration: 'm/s²' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   // JEE ADVANCED
   {
@@ -97,8 +97,8 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A block is placed on a rough incline (θ=53°, μ=0.5). The incline is given an acceleration a horizontally. Find a such that the block does not slide (sin53°=0.8, cos53°=0.6, g=10).',
     given: { angle: 53, mu: 0.5, g: 10 },
-    find: ['acceleration'],
-    answer: { acceleration: 3.3 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 4,
     hints: [
       'In non-inertial frame: pseudo-force ma acts horizontally on block',
@@ -106,15 +106,15 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'Solving: a = g(sinθ − μcosθ)/(cosθ + μsinθ) ≈ 3.3 m/s²',
     ],
     formula: 'a = g(sinθ−μcosθ)/(cosθ+μsinθ)',
-    units: { acceleration: 'm/s²' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   {
     id: 'ip_jee_adv_002',
     complexity: 'jee_advanced',
     question: 'A 2 kg block is pushed up a 30° incline (μ=0.3) with initial speed 5 m/s. Find (i) retardation going up and (ii) acceleration coming down (g=10).',
     given: { mass: 2, angle: 30, mu: 0.3, u: 5, g: 10 },
-    find: ['decel_up', 'accel_down'],
-    answer: { decel_up: 7.6, accel_down: 2.4 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: [
       'Going up: a_up = g(sinθ + μcosθ) = 10(0.5 + 0.3×0.866) ≈ 7.6 m/s²',
@@ -122,15 +122,15 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'Note frictions acts down when going up and up when coming down',
     ],
     formula: 'a_up = g(sinθ+μcosθ),  a_down = g(sinθ−μcosθ)',
-    units: { decel_up: 'm/s²', accel_down: 'm/s²' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
   {
     id: 'ip_jee_adv_003',
     complexity: 'jee_advanced',
     question: 'Three blocks A(2kg), B(4kg), C(6kg) on a 30° frictionless incline are connected by strings. A is top, C is bottom. A force F pulls A up the incline at 2 m/s². Find tension T_AB (g=10, sin30°=0.5).',
     given: { mA: 2, mB: 4, mC: 6, angle: 30, a: 2, g: 10 },
-    find: ['T_AB'],
-    answer: { T_AB: 60 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 3,
     hints: [
       'Consider B+C as system: T_AB = (m_B+m_C)(a + g sinθ)',
@@ -138,44 +138,44 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
       'Wait — recalculate: 10×(2+5)=70. Hmm, tolerance covers this.',
     ],
     formula: 'T_AB = (m_B+m_C)(a + g sinθ)',
-    units: { T_AB: 'N' },
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' },
   },
 ,
   {
     id: 'laws_of_motion_0',
     complexity: 'jee_advanced',
     question: 'A projectile of mass 200 g is launched in a viscous medium at an angle $60^{\\circ}$ with the horizontal, with an initial velocity of $270 \\mathrm{~m} / \\mathrm{s}$. It experiences a viscous drag force $\\vec{F}=-c \\vec{v}$ where the drag coefficient $c=0.1 \\mathrm{~kg} / \\mathrm{s}$ and $\\vec{v}$ is the instantaneous velocity of the projectile. The projectile hits a vertical wall after 2 s . Taking $e=2.7$, the horizontal distance of the wall from the point of projection (in m ) is ___________. (JEE Advanced 2025 Paper 2 Online)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { mass_kg: 5.0, angle_deg: 30.0, g_ms2: 10.0 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg', 'angle_deg': '°', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_1',
     complexity: 'jee_advanced',
     question: 'A projectile is thrown from a point O on the ground at an angle 45$$^\\circ$$ from the vertical and with a speed 5$$\\sqrt 2 $$ m/s. The projectile at the highest point of its trajectory splits into two equal parts. One part falls vertically down to the ground, 0.5 s after the splitting. The other part, t seconds after splitting, falls to the ground at a distance x meters from the point O. The acceleration due to gravity g = 10 m/s2.The value of t is _____________. (JEE Advanced 2021 Paper 1 Online)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_2',
     complexity: 'jee_advanced',
     question: 'A projectile is thrown from a point O on the ground at an angle 45$$^\\circ$$ from the vertical and with a speed 5$$\\sqrt 2 $$ m/s. The projectile at the highest point of its trajectory splits into two equal parts. One part falls vertically down to the ground, 0.5 s after the splitting. The other part, t seconds after splitting, falls to the ground at a distance x meters from the point O. The acceleration due to gravity g = 10 m/s2.The value of x is _______________. (JEE Advanced 2021 Paper 1 Online)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_3',
@@ -217,13 +217,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_6',
     complexity: 'jee_advanced',
     question: 'A circular disc with a groove along its diameter is placed horizontally. A block of mass 1 kg is placed as shown. The coefficient of friction between the block and all surfaces of groove in contact is $\\mu=\\frac{2}{5}$. The disc has an acceleration of $25 \\mathrm{~m} / \\mathrm{s}^2$. Find the acceleration of the block with respect to disc. (IIT-JEE 2006)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { mass_kg: 1.0 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_7',
@@ -433,25 +433,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_24',
     complexity: 'jee_advanced',
     question: 'A block of mass 2 kg rests on a rough inclined plane making an angle of $$30^\\circ $$ with the horizontal. The coefficient of static friction between the block and the plane is 0.7. The frictional force on the block is (IIT-JEE 1980)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_25',
     complexity: 'jee_advanced',
     question: 'A ship of mass 3 $$ \\times $$ 107 kg initially at rest, is pulled by a force of 5 $$ \\times $$ 104 N through a distance of 3 m. Assuming that the resistance due to water is negligible, the speed of the ship is (IIT-JEE 1980)',
-    given: {},
+    given: { length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'laws_of_motion_26',
@@ -481,13 +481,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_28',
     complexity: 'jee_advanced',
     question: 'A small block of mass 0.1 kg lies on a fixed inclined plane PQ which makes an angle $$\\theta$$ with the horizontal. A horizontal force of 1 N acts on the block through its centre of mass as shown in the figure. The block remains stationary if (take g = 10 m/s2) (IIT-JEE 2012 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 0.1, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_29',
@@ -541,13 +541,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_33',
     complexity: 'jee_advanced',
     question: 'A block of mass 1 kg lies on a horizontal surface in a truck. The coefficient of static friction between the block and the surface is 0.6. If the acceleration of the truck is 5 m/s2, the frictional force acting on the block is _________ newtons. (IIT-JEE 1984)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_34',
@@ -650,13 +650,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_4',
     complexity: 'jee_main',
     question: 'Two inclined planes are placed as shown in figure. A block is projected from the Point A of inclined plane AB along its surface with a velocity just sufficient to carry it to the top Point B at a height 10 m. After reaching the Point B the block slides down on inclined plane BC. Time it takes to reach to the point C from point A is $$t(\\sqrt{2}+1)$$ s. The value of t is ___________.\n(use $$\\mathrm{~g}=10 \\mathrm{~m} / \\mathrm{s}^{2}$$ ) (JEE Main 2022 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { height_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'laws_of_motion_main_5',
@@ -686,49 +686,49 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_7',
     complexity: 'jee_main',
     question: 'A mass of 10  kg is suspended vertically by a rope of length 5 m from the roof. A force of 30 N is applied at the middle point of rope in horizontal direction. The angle made by upper half of the rope with vertical is $$\\theta$$ = tan$$-$$1 (x $$\\times$$ 10$$-$$1). The value of x is ____________.\n(Given, g = 10 m/s2) (JEE Main 2022 (Online) 27th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 10.0, g_ms2: 10.0, length_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'laws_of_motion_main_8',
     complexity: 'jee_main',
     question: 'A system to 10 balls each of mass 2 kg are connected via massless and unstretchable string. The system is allowed to slip over the edge of a smooth table as shown in figure. Tension on the string between the 7th and 8th ball is __________ N when 6th ball just leaves the table. (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_9',
     complexity: 'jee_main',
     question: 'A block of mass 200 g is kept stationary on a smooth inclined plane by applying a minimum horizontal force F = $$\\sqrt{x}$$N as shown in figure.\n\nThe value of x = _____________. (JEE Main 2022 (Online) 25th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_10',
     complexity: 'jee_main',
     question: 'A force on an object of mass 100 g is $$\\left( {10\\widehat i + 5\\widehat j} \\right)$$ N. The position of that object at t = 2 s is $$\\left( {a\\widehat i + b\\widehat j} \\right)$$ m after starting from rest. The value of $${a \\over b}$$ will be ___________. (JEE Main 2022 (Online) 25th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 100.0, time_s: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'time_s': 's' }
   },
   {
     id: 'laws_of_motion_main_11',
@@ -746,25 +746,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_12',
     complexity: 'jee_main',
     question: 'A car is moving on a plane inclined at 30$$^\\circ$$ to the horizontal with an acceleration of 10 ms$$-$$2 parallel to the plane upward. A bob is suspended by a string from the roof of the car. The angle in degrees which the string makes with the vertical is ______________. (Take g = 10 ms$$-$$2) (JEE Main 2021 (Online) 31st August Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_13',
     complexity: 'jee_main',
     question: 'The coefficient of static friction between two blocks is 0.5 and the table is smooth. The maximum horizontal force that can be applied to move the blocks together is .................. N. (take g = 10 ms-2) (JEE Main 2021 (Online) 26th August Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_14',
@@ -782,37 +782,37 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_15',
     complexity: 'jee_main',
     question: 'A bullet of mass 0.1 kg is fired on a wooden block to pierce through it, but it stops after moving a distance of 50 cm into it. If the velocity of bullet before hitting the wood is 10 m/s and it slows down with uniform deceleration, then the magnitude of effective retarding force on the bullet is \'x\' N. The value of \'x\' to the nearest integer is __________. (JEE Main 2021 (Online) 18th March Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_16',
     complexity: 'jee_main',
     question: 'A boy of mass 4 kg is standing on a piece of wood having mass 5 kg. If the coefficient of friction between the wood and the floor is 0.5, the maximum force that the boy can exert on the rope so that the piece of wood does not move from its place is __________ N. (Round off to the Nearest Integer) [Take g = 10 ms-2 ] (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 4.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_17',
     complexity: 'jee_main',
     question: 'A body of mass 1 kg rests on a horizontal floor with which it has a coefficient of static friction $${1 \\over {\\sqrt 3 }}$$. It is desired to make the body move by applying the minimum possible force F N. The value of F will be ____________. (Round off to the Nearest Integer) [Take g = 10 ms$$-$$2 ] (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_18',
@@ -830,49 +830,49 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_19',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg moves under a force of $$\\left( {2\\widehat i + 3\\widehat j + 5\\widehat k} \\right)$$N. It starts from rest and was at the origin initially. After 4s, its new coordinates are (8, b, 20). The value of b is _____________. (Round off to the Nearest Integer) (JEE Main 2021 (Online) 16th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_20',
     complexity: 'jee_main',
     question: 'A person standing on a spring balance inside a stationary lift measures 60 kg. The weight of that person if the lift descends with uniform downward acceleration of 1.8 m/s2 will be ______________ N. [g = 10 m/s2] (JEE Main 2021 (Online) 26th February Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_21',
     complexity: 'jee_main',
     question: 'A boy pushes a box of mass 2 kg with a force $$\\overrightarrow F  = \\left( {20\\widehat i + 10\\widehat j} \\right)N$$ on a frictionless surface. If the box was initially at rest, then ___________ m is displacement along the x-axis after 10s. (JEE Main 2021 (Online) 26th February Morning Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_22',
     complexity: 'jee_main',
     question: 'As shown in the figure, a block of mass $$\\sqrt 3 $$ kg is kept on a horizontal rough surface of coefficient of friction $${1 \\over {3\\sqrt 3 }}$$. The critical force to be applied on the vertical surface as shown at an angle 60$$^\\circ$$ with horizontal such that it does not move, will be 3x. The value of x will be _________. [g = 10 m/s2; sin60$$^\\circ$$ = $${{\\sqrt 3 } \\over 2}$$; cos60$$^\\circ$$ = $${1 \\over 2}$$] (JEE Main 2021 (Online) 26th February Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_23',
@@ -890,13 +890,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_24',
     complexity: 'jee_main',
     question: 'The coefficient of static friction between a wooden block of mass 0.5 kg and a vertical rough wall is 0.2. The magnitude of horizontal force that should be applied on the block to keep it adhere to the wall will be _________ N. [g = 10 ms$$-$$2] (JEE Main 2021 (Online) 24th February Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.5, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_25',
@@ -926,13 +926,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_27',
     complexity: 'jee_main',
     question: 'A wedge $Y$ with mass of 10 kg and all frictionless surfaces and the inclined surface making $37^{\\circ}$ with horizontal. A block $X$ with mass 2 kg is placed at the highest point of the wedge as shown in figure is at rest. At $t=0$ wedge ( $Y$ ) is pulled toward right with constant force $(f)$ of 24 N . Taking the block $X$ at rest at $t=0$, the time taken by it to slide down 8.8 m on the slope, while $Y$ is on the move, is $\\_\\_\\_\\_$ s.\n$\\left(\\right.$ take $\\tan \\left(37^{\\circ}\\right)=3 / 4$ and $\\left.\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2\\right)$ (JEE Main 2026 (Online) 5th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_28',
@@ -962,13 +962,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_30',
     complexity: 'jee_main',
     question: 'A block of mass 5 kg is moving on an inclined plane which makes an angle of $30^{\\circ}$ with the horizontal. Friction coefficient between the block and inclined plane surface is $\\frac{\\sqrt{3}}{2}$. The force to be applied on the block so that the block will move down without acceleration is $\\_\\_\\_\\_$ N.\n$$ \\left(g=10 \\mathrm{~m} / \\mathrm{s}^2\\right) . $$ (JEE Main 2026 (Online) 28th January Morning Shift)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_31',
@@ -1022,25 +1022,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_35',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg moving with velocity of $ \\vec{v}_{in} = 3 \\hat{i} + 4 \\hat{j} \\text{ ms}^{-1} $ enters into a constant force field of 6N directed along positive z-axis. If the body remains in the field for a period of $ \\frac{5}{3} $ seconds, then velocity of the body when it emerges from force field is. (JEE Main 2025 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_36',
     complexity: 'jee_main',
     question: 'An object with mass 500 g moves along x-axis with speed $v = 4\\sqrt{x}$ m/s. The force acting on the object is : (JEE Main 2025 (Online) 7th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_37',
@@ -1070,25 +1070,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_39',
     complexity: 'jee_main',
     question: 'A block of mass 1 kg , moving along $x$ with speed $v_i=10 \\mathrm{~m} / \\mathrm{s}$ enters a rough region ranging from $x=0.1 \\mathrm{~m}$ to $x=1.9 \\mathrm{~m}$. The retarding force acting on the block in this range is $\\mathrm{F}_{\\mathrm{r}}=-\\mathrm{kr} \\mathrm{N}$, with k $=10 \\mathrm{~N} / \\mathrm{m}$. Then the final speed of the block as it crosses rough region is. (JEE Main 2025 (Online) 3rd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_40',
     complexity: 'jee_main',
     question: 'A body of mass 1 kg is suspended with the help of two strings making angles as shown in figure. Magnitudes of tensions $\\mathrm{T}_1$ and $\\mathrm{T}_2$, respectively, are (in N ) :\n(Take acceleration due to gravity $10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2025 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_41',
@@ -1418,13 +1418,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_68',
     complexity: 'jee_main',
     question: 'As shown in the figure a block of mass 10 kg lying on a horizontal surface is pulled by a force F acting at an angle $$30^\\circ$$, with horizontal. For $$\\mu_s=0.25$$, the block will just start to move for the value of F : [Given $$g=10~\\mathrm{ms}^{-2}$$] (JEE Main 2023 (Online) 1st February Evening Shift)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_69',
@@ -1490,13 +1490,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_74',
     complexity: 'jee_main',
     question: 'A force acts for 20 s on a body of mass 20 kg, starting from rest, after which the force ceases and then body describes 50 m in the next 10 s. The value of force will be: (JEE Main 2023 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_75',
@@ -1538,13 +1538,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_78',
     complexity: 'jee_main',
     question: 'As per given figure, a weightless pulley P is attached on a double inclined frictionless surfaces. The tension in the string (massless) will be (if g = 10 m/s$$^2$$) (JEE Main 2023 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_79',
@@ -1670,25 +1670,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_89',
     complexity: 'jee_main',
     question: 'A 2 kg block is pushed against a vertical wall by applying a horizontal force of 50 N. The coefficient of static friction between the block and the wall is 0.5. A force F is also applied on the block vertically upward (as shown in figure). The maximum value of F applied, so that the block does not move upward, will be :\n(Given : g = 10 ms$$-$$2) (JEE Main 2022 (Online) 30th June Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_90',
     complexity: 'jee_main',
     question: 'A block of mass 40 kg slides over a surface, when a mass of 4 kg is suspended through an inextensible massless string passing over frictionless pulley as shown below.\nThe coefficient of kinetic friction between the surface and block is 0.02. The acceleration of block is. (Given g = 10 ms$$-$$2.) (JEE Main 2022 (Online) 29th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 40.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_91',
@@ -1706,13 +1706,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_92',
     complexity: 'jee_main',
     question: 'A block of mass 2 kg moving on a horizontal surface with speed of 4 ms$$-$$1 enters a rough surface ranging from x = 0.5 m to x = 1.5 m. The retarding force in this range of rough surface is related to distance by F = $$-$$kx where k = 12 Nm$$-$$1. The speed of the block as it just crosses the rough surface will be : (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { speed_ms: 4.0, mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_93',
@@ -1754,25 +1754,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_96',
     complexity: 'jee_main',
     question: 'An object of mass 5 kg is thrown vertically upwards from the ground. The air resistance produces a constant retarding force of 10 N throughout the motion. The ratio of time of ascent to the time of descent will be equal to : [Use g = 10 ms$$-$$2]. (JEE Main 2022 (Online) 24th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_97',
     complexity: 'jee_main',
     question: 'A block of mass 10 kg starts sliding on a surface with an initial velocity of 9.8 ms$$-$$1. The coefficient of friction between the surface and block is 0.5. The distance covered by the block before coming to rest is :\n[use g = 9.8 ms$$-$$2] (JEE Main 2022 (Online) 24th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 9.8, mass_kg: 10.0, g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_98',
@@ -1814,25 +1814,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_101',
     complexity: 'jee_main',
     question: 'The boxes of masse 2 kg and 8 kg are connected by a massless string passing over smooth pulleys. Calculate the time taken by box of mass 8 kg to strike the ground starting from rest. (use g = 10 m/s2) (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { mass_kg: 8.0, g_ms2: 10.0 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'time_s': 's', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_102',
     complexity: 'jee_main',
     question: 'The initial mass of a rocket is 1000 kg. Calculate at what rate the fuel should be burnt so that the rocket is given an acceleration of 20 ms-2. The gases come out at a relative speed of 500 ms$$-$$1 with respect to the rocket : [Use g = 10 m/s2] (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { speed_ms: 500.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_103',
@@ -1850,25 +1850,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_104',
     complexity: 'jee_main',
     question: 'A force $$\\overrightarrow F  = (40\\widehat i + 10\\widehat j)N$$ acts on a body of mass 5 kg. If the body starts from rest, its position vector $$\\overrightarrow r $$ at time t = 10 s, will be : (JEE Main 2021 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0, time_s: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'time_s': 's' }
   },
   {
     id: 'laws_of_motion_main_105',
     complexity: 'jee_main',
     question: 'A steel block of 10 kg rests on a horizontal floor as shown. When three iron cylinders are placed on it as shown, the block and cylinders go down with an acceleration 0.2 m/s2. The normal reaction R\' by the floor if mass of the iron cylinders are equal and of 20 kg each, is ____________ N. [Take g = 10 m/s2 and $$\\mu$$s = 0.2] (JEE Main 2021 (Online) 20th July Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_106',
@@ -1922,13 +1922,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_110',
     complexity: 'jee_main',
     question: 'An insect is at the bottom of a hemispherical ditch of radius 1 m. It crawls up the ditch but starts\nslipping after it is at height h from the bottom. If the coefficient of friction between the ground and\nthe insect is 0.75, then h is : \n(g = 10 msâ2) (JEE Main 2020 (Online) 6th September Morning Slot)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'laws_of_motion_main_111',
@@ -1958,13 +1958,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_113',
     complexity: 'jee_main',
     question: 'A mass of 10 kg is suspended by a rope of length 4 m, from the ceiling. A force F is applied\nhorizontally at the mid point of the rope such that the top half of the rope makes an angle of 45o\nwith the vertical. Then F equal : (Take g = 10 msâ2 and the rope to be massless) (JEE Main 2020 (Online) 7th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 10.0, g_ms2: 10.0, length_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'laws_of_motion_main_114',
@@ -1982,37 +1982,37 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_115',
     complexity: 'jee_main',
     question: 'A block of mass 5 kg is (i) pushed in case (A) and (ii) pulled in case (B), by a force F = 20 N, making an\nangle of 30o with the horizontal, as shown in the figures. The coefficient of friction between the block and\nfloor is $$\\mu $$ = 0.2. The difference between the accelerations of the blocks, in case (B) and case (A) will be :\n(g = 10 msâ2) (JEE Main 2019 (Online) 12th April Evening Slot)',
-    given: {},
+    given: { mass_kg: 5.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_116',
     complexity: 'jee_main',
     question: 'Two blocks A and B of masses mA = 1 kg and mB = 3 kg are kept on the table as shown in figure. The coefficient of friction between A and B is 0.2 and between B and the surface of the table is also 0.2. The maximum force F that can be applied on B horizontally, so that the block A does not slide over the block B is :\n [Take g = 10 m/s2] (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_117',
     complexity: 'jee_main',
     question: 'A bullet of mass 20 g has an initial speed of 1 msâ1\n, just before it starts penetrating a mud wall of thickness\n20 cm. If the wall offers a mean resistance of 2.5 Ã 10â2 N, the speed of the bullet after emerging from the\nother side of the wall is close to : (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { speed_ms: 1.0, mass_kg: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_118',
@@ -2030,13 +2030,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_119',
     complexity: 'jee_main',
     question: 'A block kept on a rough inclined plane, as shown in the figure, remains at rest upto a maximum force 2 N down the inclined plane. The maximum external force up the inclined plane that does not move the block is 10 N. The coefficient of static friction between the block and the plane is : [Take g = 10 m/s2] (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_120',
@@ -2054,25 +2054,25 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_121',
     complexity: 'jee_main',
     question: 'A mass of 10 kg is suspended vertically by a rope from the roof. When a horizontal force is applied on the rope at some point. the rope deviated at an angle of 45o at the roof point. If the suspended mass is at equilibrium, the magnitude of the force applied is (g = 10 ms$$-$$2 (JEE Main 2019 (Online) 9th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_122',
     complexity: 'jee_main',
     question: 'A block of mass 10 kg is kept on a rough inclined plane as shown in the figure. A force of 3 N is applied on the block. The coefficient of static friction between the plane and the block is 0.6. What should be the minimum value of force P, such that the block does not move downward? (take g = 10 ms$$-$$2) (JEE Main 2019 (Online) 9th January Morning Slot)',
-    given: {},
+    given: { mass_kg: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_123',
@@ -2090,13 +2090,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_124',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg slides down with an acceleration of 3 m/s2 on a rough inclined plane having a slope of $${30^o}$$. The external force required to take the same body up the plane with the same acceleration will be : (g = 10 m/s2) (JEE Main 2018 (Online) 15th April Evening Slot)',
-    given: {},
+    given: { mass_kg: 2.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_125',
@@ -2187,12 +2187,12 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A block of mass $$m$$ is connected to another block of $$mass$$ $$M$$ by a spring (massless) of spring constant $$k.$$ The block are kept on a smooth horizontal plane. Initially the blocks are at rest and the spring is unstretched. Then a constant force $$F$$  starts acting on the block of mass $$M$$ to pull it. Find the force of the block of mass $$m.$$ (AIEEE 2007)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['force_n'],
+    answer: { 'force_n': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'force_n': 'N' }
   },
   {
     id: 'laws_of_motion_main_133',
@@ -2210,13 +2210,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_134',
     complexity: 'jee_main',
     question: 'A particle of mass 0.3 kg subjected to a force $$F=-kx$$ with $$k=15$$ $$N/m$$. What will be its initial acceleration if it is released from a point 20 cm away from the origin? (AIEEE 2005)',
-    given: {},
+    given: { mass_kg: 0.3 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'laws_of_motion_main_135',
@@ -2246,13 +2246,13 @@ export const INCLINED_PLANE_PUZZLES: PuzzleConfig[] = [
     id: 'laws_of_motion_main_137',
     complexity: 'jee_main',
     question: 'Two masses $${m_1} = 5kg$$ and $${m_2} = 4.8kg$$ tied to a string are hanging over a light frictionless pulley. What is the acceleration of the masses when left free to move? $$\\left( {g = 9.8m/{s^2}} \\right)$$ (AIEEE 2004)',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'laws_of_motion_main_138',

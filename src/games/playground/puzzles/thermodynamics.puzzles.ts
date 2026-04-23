@@ -5,13 +5,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_0',
     complexity: 'jee_advanced',
     question: 'The efficiency of a Carnot engine operating with a hot reservoir kept at a temperature of 1000 K is 0.4 . It extracts 150 J of heat per cycle from the hot reservoir. The work extracted from this engine is being fully used to run a heat pump which has a coefficient of performance 10 . The hot reservoir of the heat pump is at a temperature of 300 K . Which of the following statements is/are correct : (JEE Advanced 2025 Paper 2 Online)',
-    given: {},
+    given: { temp_k: 1000.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_1',
@@ -29,13 +29,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_2',
     complexity: 'jee_advanced',
     question: 'The filament of a light bulb has surface area 64 mm2\n. The filament can be considered as a black\nbody at temperature 2500 K emitting radiation like a point source when viewed from far. At night\nthe light bulb is observed from a distance of 100 m. Assume the pupil of the eyes of the observer to\nbe circular with radius 3 mm. Then\n(Take Stefan-Boltzmann constant = 5.67 $$ \\times $$ 10â8 Wmâ2Kâ4\n, Wienâs displacement constant =\n2.90 $$ \\times $$ 10â3 m-K, Planckâs constant = 6.63 $$ \\times $$ 10â34 Js, speed of light in vacuum = 3.00 $$ \\times $$\n108 msâ1) (JEE Advanced 2020 Paper 1 Offline)',
-    given: {},
+    given: { radius_m: 3.0, temp_k: 2500.0, length_m: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm', 'temp_k': 'K', 'length_m': 'm' }
   },
   {
     id: 'heat_and_thermodynamics_3',
@@ -281,25 +281,25 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_23',
     complexity: 'jee_advanced',
     question: 'A soft plastic bottle, filled with water of density 1 gm/cc, carries an inverted glass test-tube with some air (ideal gas) trapped as shown in the figure. The test-tube has a mass of 5 gm, and it is made of a thick glass of density 2.5 gm/cc. Initially the bottle is sealed at atmosphere pressure p0 = 105 Pa so that the volume of the trapped air is v0 = 3.3 cc. When the bottle is squeezed from outside at constant temperature, the pressure inside rises and the volume of the trapped air reduces. It is found that the test tube begins to sink at pressure p0 + $$\\Delta$$p without changing its orientation. At this pressure, the volume of the trapped air is v0 $$-$$ $$\\Delta$$v. Let $$\\Delta$$v = X cc and $$\\Delta$$p = Y $$\\times$$ 103 Pa.The value of X is _______________. (JEE Advanced 2021 Paper 2 Online)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_24',
     complexity: 'jee_advanced',
     question: 'A soft plastic bottle, filled with water of density 1 gm/cc, carries an inverted glass test-tube with some air (ideal gas) trapped as shown in the figure. The test-tube has a mass of 5 gm, and it is made of a thick glass of density 2.5 gm/cc. Initially the bottle is sealed at atmosphere pressure p0 = 105 Pa so that the volume of the trapped air is v0 = 3.3 cc. When the bottle is squeezed from outside at constant temperature, the pressure inside rises and the volume of the trapped air reduces. It is found that the test tube begins to sink at pressure p0 + $$\\Delta$$p without changing its orientation. At this pressure, the volume of the trapped air is v0 $$-$$ $$\\Delta$$v. Let $$\\Delta$$v = X cc and $$\\Delta$$p = Y $$\\times$$ 103 Pa.The value of Y is _______________. (JEE Advanced 2021 Paper 2 Online)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_25',
@@ -317,13 +317,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_26',
     complexity: 'jee_advanced',
     question: 'A thermally isolated cylindrical closed vessel of height 8 m is kept vertically. It is divided into two\nequal parts by a diathermic (perfect thermal conductor) frictionless partition of mass 8.3 kg. Thus the\npartition is held initially at a distance of 4 m from the top, as shown in the schematic figure below.\nEach of the two parts of the vessel contains 0.1 mole of an ideal gas at temperature 300 K. The\npartition is now released and moves without any gas leaking from one part of the vessel to the other.\nWhen equilibrium is reached, the distance of the partition from the top (in m) will be _______.\n(take\nthe acceleration due to gravity = 10 msâ2\nand the universal gas constant = 8.3 J molâ1Kâ1). (JEE Advanced 2020 Paper 2 Offline)',
-    given: {},
+    given: { mass_kg: 8.3, height_m: 8.0, temp_k: 300.0, length_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'temp_k': 'K', 'length_m': 'm' }
   },
   {
     id: 'heat_and_thermodynamics_27',
@@ -425,13 +425,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_35',
     complexity: 'jee_advanced',
     question: 'Two spherical bodies A (radius 6 cm ) and B (radius 18 cm ) are at temperature T1 and T2, respectively.\nThe maximum intensity in the emission spectrum of A is at 500 nm and in that of B is at 1500 nm.\nConsidering them to be black bodies, what will be the ratio of the rate of total energy radiated by A to that\nof B? (IIT-JEE 2010 Paper 1 Offline)',
-    given: {},
+    given: { radius_m: 6.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'heat_and_thermodynamics_36',
@@ -653,13 +653,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_54',
     complexity: 'jee_advanced',
     question: 'The ends Q and R of two thin wires, PQ and RS, are soldered (joined) together. Initially each of the wires\nhas a length of 1 m at 10oC. Now the end P is maintained at 10oC, while the end S is heated and\nmaintained at 400oC. The system is thermally insulated from its surroundings. If the thermal conductivity\nof wire PQ is twice that of the wire RS and the coefficient of linear thermal expansion of PQ is 1.2 $$ \\times $$ 10-5 K-1 , the change in length of the wire PQ is (JEE Advanced 2016 Paper 2 Offline)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'heat_and_thermodynamics_55',
@@ -677,13 +677,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_56',
     complexity: 'jee_advanced',
     question: 'Parallel rays of light of intensity $$I$$ = 912 Wmâ2 are incident on a spherical black body kept in surroundings\nof temperature 300 K. Take Stefan-Boltzmann constant $$\\sigma $$ = 5.7 $$ \\times $$ 10â8 Wmâ2Kâ4 and assume that the energy\nexchange with the surroundings is only through radiation. The final steady state temperature of the black\nbody is close to (JEE Advanced 2014 Paper 2 Offline)',
-    given: {},
+    given: { temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_57',
@@ -966,13 +966,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_4',
     complexity: 'jee_main',
     question: 'Two closed vessels of same volume are joined through a narrow tube and both vessels are filled with air of pressure 90 kPa and temperature 400 K . Keeping the temperature of one vessel constant at 400 K the second vessel temperature is raised to 500 K . The final pressure in the vessels is $\\_\\_\\_\\_$ kPa . (JEE Main 2026 (Online) 6th April Morning Shift)',
-    given: {},
+    given: { temp_k: 400.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_5',
@@ -1062,13 +1062,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_12',
     complexity: 'jee_main',
     question: 'A mixture of carbon dioxide and oxygen has volume 8310 cm3, temperature 300 K, pressure 100 kPa and mass 13.2 g. The number of moles of carbon dioxide and oxygen gases in the mixture respectively are ______.(Assume both carbon dioxide and oxygen gases behave like ideal gases) [R = 8.31 J/mol K] (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 13.2, temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_13',
@@ -1266,13 +1266,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_29',
     complexity: 'jee_main',
     question: 'Water falls from a height of 200 m into a pool. Calculate the rise in temperature of the water assuming no heat dissipation from the water in the pool.(Take g = 10 m/s2, specific heat of water = 4200 J/(kg K)) (JEE Main 2025 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { height_m: 200.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'heat_and_thermodynamics_main_30',
@@ -1363,12 +1363,12 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'The mean free path and the average speed of oxygen molecules at 300 K and 1 atm are $3 \\times 10^{-7} \\mathrm{~m}$ and $600 \\mathrm{~m} / \\mathrm{s}$, respectively. Find the frequency of its collisions. (JEE Main 2025 (Online) 4th April Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['frequency_hz'],
+    answer: { 'frequency_hz': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'frequency_hz': 'Hz' }
   },
   {
     id: 'heat_and_thermodynamics_main_38',
@@ -1686,13 +1686,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_64',
     complexity: 'jee_main',
     question: 'A gun fires a lead bullet of temperature 300 K into a wooden block. The bullet having melting temperature of 600 K penetrates into the block and melts down. If the total heat required for the process is 625 J , then the mass of the bullet is _______ grams.\n(Latent heat of fusion of lead $=2.5 \\times 10^4 \\mathrm{JKg}^{-1}$ and specific heat capacity of lead $=125 \\mathrm{JKg}^{-1}$ $\\left.\\mathrm{K}^{-1}\\right)$ (JEE Main 2025 (Online) 23rd January Morning Shift)',
-    given: {},
+    given: { temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_65',
@@ -2706,13 +2706,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_149',
     complexity: 'jee_main',
     question: 'Heat energy of 184 kJ is given to ice of mass 600 g at $$-12^\\circ \\mathrm{C}$$. Specific heat of ice is $$\\mathrm{2222.3~J~kg^{-1^\\circ}~C^{-1}}$$ and latent heat of ice in 336 $$\\mathrm{kJ/kg^{-1}}$$\nA. Final temperature of system will be 0$$^\\circ$$C.\nB. Final temperature of the system will be greater than 0$$^\\circ$$C.\nC. The final system will have a mixture of ice and water in the ratio of 5 : 1.\nD. The final system will have a mixture of ice and water in the ratio of 1 : 5.\nE. The final system will have water only.\nChoose the correct answer from the options given below : (JEE Main 2023 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_150',
@@ -3222,13 +3222,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_192',
     complexity: 'jee_main',
     question: 'A mixture of hydrogen and oxygen has volume 2000 cm3, temperature 300 K, pressure 100 kPa and mass 0.76 g. The ratio of number of moles of hydrogen to number of moles of oxygen in the mixture will be:\n[Take gas constant R = 8.3 JK$$-$$1mol$$-$$1] (JEE Main 2022 (Online) 27th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.76, temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_193',
@@ -3282,13 +3282,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_197',
     complexity: 'jee_main',
     question: 'A copper block of mass 5.0 kg is heated to a temperature of 500$$^\\circ$$C and is placed on a large ice block. What is the maximum amount of ice that can melt? [Specific heat of copper : 0.39 J g$$-$$1 $$^\\circ$$C$$-$$1 and latent heat of fusion of water : 335 J g$$-$$1] (JEE Main 2022 (Online) 25th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_198',
@@ -3306,13 +3306,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_199',
     complexity: 'jee_main',
     question: 'The relation between root mean square speed (vrms) and most probable sped (vp) for the molar mass M of oxygen gas molecule at the temperature of 300 K will be : (JEE Main 2022 (Online) 25th June Morning Shift)',
-    given: {},
+    given: { temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_200',
@@ -3330,13 +3330,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_201',
     complexity: 'jee_main',
     question: 'A 100 g of iron nail is hit by a 1.5 kg hammer striking at a velocity of 60 ms$$-$$1. What will be the rise in the temperature of the nail if one fourth of energy of the hammer goes into heating the nail?\n[Specific heat capacity of iron = 0.42 Jg$$-$$1 $$^\\circ$$C$$-$$1] (JEE Main 2022 (Online) 24th June Evening Shift)',
-    given: {},
+    given: { speed_ms: 60.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'heat_and_thermodynamics_main_202',
@@ -3378,13 +3378,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_205',
     complexity: 'jee_main',
     question: 'A mixture of hydrogen and oxygen has volume 500 cm3, temperature 300 K, pressure 400 kPa and mass 0.76 g. The ratio of masses of oxygen to hydrogen will be :- (JEE Main 2021 (Online) 31st August Evening Shift)',
-    given: {},
+    given: { mass_kg: 0.76, temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_206',
@@ -4086,13 +4086,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_264',
     complexity: 'jee_main',
     question: 'A bullet of mass 5 g, travelling with a speed of\n210 m/s, strikes a fixed wooden target. One half\nof its kinetic energy is converted into heat in\nthe bullet while the other half is converted into\nheat in the wood. The rise of temperature of\nthe bullet if the specific heat of its material is\n0.030 cal/(g â oC) (1 cal = 4.2 Ã 107 ergs) close\nto : (JEE Main 2020 (Online) 5th September Morning Slot)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_265',
@@ -4398,13 +4398,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_290',
     complexity: 'jee_main',
     question: 'At 40o C, a brass wire of 1 mm radius is hung from the ceiling. A small mass, M is hung from the free end of\nthe wire. When the wire is cooled down from 40oC to 20oC it regains its original length of 0.2 m. The value\nof M is close to :\n(Coefficient of linear expansion and Youngâs modulus of brass are 10â5\n/oC and 1011 N/m\n2\n, respectively; g=\n10 msâ2\n) (JEE Main 2019 (Online) 12th April Morning Slot)',
-    given: {},
+    given: { length_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'heat_and_thermodynamics_main_291',
@@ -4626,13 +4626,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_309',
     complexity: 'jee_main',
     question: 'An ideal gas is enclosed in a cylinder at pressure of 2 atm and temperature 300 K. The mean time between two successive collisions is 6 $$ \\times $$ 10â8 s. If the pressure is doubled and temperature is increased to 500 K, the mean time between two successive collisions will be close to (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { temp_k: 300.0, pressure_pa: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K', 'pressure_pa': 'Pa' }
   },
   {
     id: 'heat_and_thermodynamics_main_310',
@@ -4722,13 +4722,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_317',
     complexity: 'jee_main',
     question: 'A metal ball of mass 0.1 kg is heated upto 500oC and dropped into a vessel of heat capacity 800 JKâ1 and containing 0.5 kg water. The initial temperature of water and vessel is 30oC. What is the approximate percentage increment in the temperature of the water? [Specific Heat Capacities of water and metal are, respectively, 4200 Jkgâ1 and 400 Jkgâ1 Kâ1 (JEE Main 2019 (Online) 11th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_318',
@@ -4782,25 +4782,25 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_322',
     complexity: 'jee_main',
     question: 'An unknown metal of mass 192 g heated to a temperature of 100oC was immersed into a brass calorimeter of mass 128 g containing 240 g of water at a temperature of 8.4oC. Calculate the specific heat of the unknown metal if water temperature stabilizes at 21.5oC. (Specific heat of brass is 394 J kgâ1 Kâ1) (JEE Main 2019 (Online) 10th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 192.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_323',
     complexity: 'jee_main',
     question: 'Half mole of an ideal monoatomic gas is heated at constant pressure of 1 atm from 20oC to 90oC. Work done\nby gas is close to â (Gas constant R = 8.31 J/mol.K) (JEE Main 2019 (Online) 10th January Evening Slot)',
-    given: {},
+    given: { pressure_pa: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'pressure_pa': 'Pa' }
   },
   {
     id: 'heat_and_thermodynamics_main_324',
@@ -5010,13 +5010,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_341',
     complexity: 'jee_main',
     question: 'A steel rail of length 5 m and area of cross section 40cm2\n is prevented from expanding along its length while the temperature rises\nby 10oC. If coefficient of linear expansion and Youngâs modulus of steel are 1.2Ã10â5  Kâ1  and 2Ã1011 Nmâ2 respectively, the force developed in the rail is approximately : (JEE Main 2017 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { length_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'heat_and_thermodynamics_main_342',
@@ -5034,13 +5034,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_343',
     complexity: 'jee_main',
     question: 'In an experiment, a sphere of aluminium of mass 0.20 kg is heated upto 150oC. Immediately, it is put into water of volume 150 cc at 27oC kept in a calorimeter of water equivalent to 0.025 kg. Final temperature of the system is 40oC. The specific heat of aluminium is : (take 4.2 Joule = 1 calorie) (JEE Main 2017 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { mass_kg: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_344',
@@ -5106,13 +5106,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_349',
     complexity: 'jee_main',
     question: 'A copper ball of mass 100 gm is at a temperature T. It is dropped in a copper calorimeter of mass 100 gm,\nfilled with 170 gm of water at room temperature. Subsequently, the temperature of the system is found to\nbe 75oC. T is given by: (Given : room temperature = 30oC, specific heat of copper = 0.1 cal/gmoC) (JEE Main 2017 (Offline))',
-    given: {},
+    given: { mass_kg: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_350',
@@ -6198,13 +6198,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_440',
     complexity: 'jee_main',
     question: 'A block of ice of mass 120 g at temperature 0$$^\\circ$$C is put in 300 g of water at 25$$^\\circ$$C. The x g of ice melts as the temperature of the water reaches 0$$^\\circ$$C. The value of x is _____________.\n[Use specific heat capacity of water = 4200 Jkg$$-$$1K$$-$$1, Latent heat of ice = 3.5 $$\\times$$ 105 Jkg$$-$$1] (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 120.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'heat_and_thermodynamics_main_441',
@@ -6306,13 +6306,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_449',
     complexity: 'jee_main',
     question: 'A heat engine operates with the cold reservoir at temperature 324 K. The minimum temperature of the hot reservoir, if the heat engine takes 300 J  heat from the hot reservoir and delivers 180 J heat to the cold reservoir per cycle, is ____________ K. (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { temp_k: 324.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_450',
@@ -6510,13 +6510,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_466',
     complexity: 'jee_main',
     question: 'A container is divided into two chambers by a partition. The volume of first chamber is 4.5 litre and second chamber is 5.5 litre. The first chamber contain 3.0 moles of gas at pressure 2.0 atm and second chamber contain 4.0 moles of gas at pressure 3.0 atm. After the partition is removed and the mixture attains equilibrium, then, the common equilibrium pressure existing in the mixture is x $$\\times$$ 10$$-$$1 atm. Value of x is ________. (JEE Main 2021 (Online) 26th February Morning Shift)',
-    given: {},
+    given: { pressure_pa: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'pressure_pa': 'Pa' }
   },
   {
     id: 'heat_and_thermodynamics_main_467',
@@ -6534,13 +6534,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_468',
     complexity: 'jee_main',
     question: 'A monoatomic gas of mass 4.0 u is kept in an insulated container. Container is moving with velocity 30 m/s. If container is suddenly stopped then change in temperature of the gas (R = gas constant) is $${x \\over {3R}}$$. Value of x is ___________. (JEE Main 2021 (Online) 25th February Morning Shift)',
-    given: {},
+    given: { speed_ms: 30.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'heat_and_thermodynamics_main_469',
@@ -6582,13 +6582,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_472',
     complexity: 'jee_main',
     question: 'Initially a gas of diatomic molecules is contained in a cylinder of volume V1\n at a pressure P1\n and\ntemperature 250 K. Assuming that 25% of the molecules get dissociated causing a change in\nnumber of moles. The pressure of the resulting gas at temperature 2000 K, when contained in a\nvolume 2V1\n is given by P2\n. The ratio $${{{P_2}} \\over {{P_1}}}$$\n is ________. (JEE Main 2020 (Online) 6th September Morning Slot)',
-    given: {},
+    given: { temp_k: 250.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_473',
@@ -6666,13 +6666,13 @@ export const THERMODYNAMICS_PUZZLES: PuzzleConfig[] = [
     id: 'heat_and_thermodynamics_main_479',
     complexity: 'jee_main',
     question: 'Starting at temperature 300 K, one mole of an\nideal diatomic gas ($$\\gamma $$ = 1.4) is first compressed\nadiabatically from volume V1 to V2 = $${{{V_1}} \\over {16}}$$. It is\nthen allowed to expand isobarically to volume\n2V2. If all the processes are the quasi-static then\nthe final temperature of the gas (in oK) is (to\nthe nearest integer) _____. (JEE Main 2020 (Online) 9th January Evening Slot)',
-    given: {},
+    given: { temp_k: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'heat_and_thermodynamics_main_480',

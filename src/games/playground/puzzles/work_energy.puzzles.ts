@@ -6,62 +6,62 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     complexity: 'board',
     question: 'A 5 kg block falls from a height of 10 m. Find its kinetic energy just before hitting the ground (g=10 m/s²).',
     given: { m: 5, h: 10, g: 10 },
-    find: ['KE'],
-    answer: { KE: 500 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: ['KE = mgh = 5×10×10 = 500 J (energy conservation)'],
     formula: 'KE = mgh',
-    units: { KE: 'J' },
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'we_board_002',
     complexity: 'board',
     question: 'A 10 N force is applied over a displacement of 4 m at 60° to the displacement. Find the work done.',
     given: { F: 10, d: 4, theta: 60 },
-    find: ['work'],
-    answer: { work: 20 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: ['W = Fd cosθ = 10×4×cos60° = 10×4×0.5 = 20 J'],
     formula: 'W = Fd cosθ',
-    units: { work: 'J' },
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'we_jee_main_001',
     complexity: 'jee_main',
     question: 'A variable force F = 3x² (N) acts on a body. Find the work done as the body moves from x=1m to x=3m.',
     given: { a: 1, b: 3 },
-    find: ['work'],
-    answer: { work: 26 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: [
       'W = ∫F dx = ∫₁³ 3x² dx',
       '= [x³]₁³ = 27 − 1 = 26 J',
     ],
     formula: 'W = ∫F dx',
-    units: { work: 'J' },
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'we_jee_main_002',
     complexity: 'jee_main',
     question: 'A spring of k=200 N/m is compressed by 0.1 m. A 0.5 kg mass is placed against it. Find the speed of the mass when the spring returns to natural length (ignore gravity along spring).',
     given: { k: 200, x: 0.1, m: 0.5 },
-    find: ['speed'],
-    answer: { speed: 2.0 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: [
       '½kx² = ½mv²',
       'v = x√(k/m) = 0.1×√(200/0.5) = 0.1×20 = 2 m/s',
     ],
     formula: 'v = x√(k/m)',
-    units: { speed: 'm/s' },
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'we_jee_adv_001',
     complexity: 'jee_advanced',
     question: 'A body of mass 2 kg starts from rest and is acted on by F=(4+0.1x) N along its motion. Find the KE after moving 10 m.',
     given: { m: 2, F0: 4, k: 0.1, d: 10 },
-    find: ['KE'],
-    answer: { KE: 45 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: [
       'W = ∫₀¹⁰(4+0.1x)dx = [4x + 0.05x²]₀¹⁰',
@@ -69,15 +69,15 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
       'KE = W = 45 J (starts from rest)',
     ],
     formula: 'W = ∫F dx  →  KE',
-    units: { KE: 'J' },
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'we_jee_adv_002',
     complexity: 'jee_advanced',
     question: 'Power delivered by a constant force F=15 N to a 3 kg body initially at rest after t=4 s (all along direction of motion). Find instantaneous power at t=4s.',
     given: { F: 15, m: 3, t: 4 },
-    find: ['power'],
-    answer: { power: 300 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: [
       'a = F/m = 5 m/s²',
@@ -85,20 +85,20 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
       'P = Fv = 15×20 = 300 W',
     ],
     formula: 'P = Fv = F(at) = F²t/m',
-    units: { power: 'W' },
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
 ,
   {
     id: 'work_power_and_energy_0',
     complexity: 'jee_advanced',
     question: 'A student skates up a ramp that makes an angle 30$$^\\circ$$ with the horizontal. He/she starts (as shown in the figure) at the bottom of the ramp with speed v0 and wants to turn around over a semicircular path xyz of radius R during which he/she reaches a maximum height h (at point y) from the ground as shown in the figure. Assume that the energy loss is negligible and the force required for this turn at the highest point is provided by his/her weight only. Then (g is the acceleration due to gravity) (JEE Advanced 2020 Paper 2 Offline)',
-    given: {},
+    given: { height_m: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_1',
@@ -140,13 +140,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_4',
     complexity: 'jee_advanced',
     question: 'A thin ring of mass 2 kg and radius 0.5 m is rolling without on a horizontal plane with velocity 1 m/s. A small ball of mass 0.1 kg, moving with velocity 20 m/s in the opposite direction hits the ring at a height of 0.75 m and goes vertically up with velocity 10 m/s. Immediately after the collision, (IIT-JEE 2011 Paper 2 Offline)',
-    given: {},
+    given: { speed_ms: 1.0, mass_kg: 2.0, height_m: 0.75, radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'height_m': 'm', 'radius_m': 'm' }
   },
   {
     id: 'work_power_and_energy_5',
@@ -248,13 +248,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_13',
     complexity: 'jee_advanced',
     question: 'Consider an elliptically shaped rail PQ in the vertical plane with\nOP = 3 m and OQ = 4 m. A block of mass 1 kg is pulled along the\nrail from P to Q with a force of 18 N, which is always parallel to\nline PQ (see the figure given). Assuming no frictional losses, the\nkinetic energy of the block when it reaches Q is (n Ã 10) Joules. The\nvalue of n is (take acceleration due to gravity = 10 msâ2) (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_14',
@@ -272,49 +272,49 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_15',
     complexity: 'jee_advanced',
     question: 'A particle of mass 0.2 kg is moving in one dimension under a force that delivers a constant power 0.5 W to\nthe particle. If the initial speed (in m/s) of the particle is zero, the speed (in m/s) after 5 s is (JEE Advanced 2013 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_16',
     complexity: 'jee_advanced',
     question: 'A block of mass 0.18 kg is attached to a spring of force-constant 2 N/m. The\ncoefficient of friction between the block and the floor is 0.1. Initially the\nblock is at rest and the spring is un-stretched. An impulse is given to the\nblock as shown in the figure. The block slides a distance of 0.06 m and\ncomes to rest for the first time. The initial velocity of the block in m/s is\nV = N/10. Then N is (IIT-JEE 2011 Paper 2 Offline)',
-    given: {},
+    given: { mass_kg: 0.18, length_m: 0.06 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_17',
     complexity: 'jee_advanced',
     question: 'A light inextensible string that goes over a smooth fixed pulley as shown in the figure connects two blocks of masses 0.36 kg and 0.72 kg. Taking g = 10 m/s2, find the work done (in joules) by the string on the block of mass 0.36 kg during the first second after the system is released from rest. (IIT-JEE 2009 Paper 2 Offline)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { mass_kg: 0.36, g_ms2: 10.0 },
+    find: ['energy_j'],
+    answer: { 'energy_j': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'energy_j': 'J', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_18',
     complexity: 'jee_advanced',
     question: 'Three objects A, B and C are kept in a straight line on a frictionless horizontal surface. These have masses m, 2m and m, respectively. The object A moves towards B with a speed 9 m/s and makes an elastic collision with it. Thereafter, B makes completely inelastic collision with C. All motions occur on the same straight line. Find the final speed (in m/s) of the object C. (IIT-JEE 2009 Paper 2 Offline)',
-    given: {},
+    given: { speed_ms: 9.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_19',
@@ -404,13 +404,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_26',
     complexity: 'jee_advanced',
     question: 'A block of mass 2 kg is free to move along the x-axis. It is at rest and from t = 0 onwards, it is subjected to a time-dependent force F(t) in the x-direction. The force F(t) varies with t as shown in the figure. The kinetic energy of the block after 4.5 s is (IIT-JEE 2010 Paper 2 Offline)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_27',
@@ -549,61 +549,61 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_0',
     complexity: 'jee_main',
     question: 'A body of mass 1 kg moves along a straight line with a velocity $v=2 x^2$. The work done by the body during displacement from $x=0$ to 5 m is $\\_\\_\\_\\_$ J. (JEE Main 2026 (Online) 6th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_1',
     complexity: 'jee_main',
     question: 'The velocity at which 6 kg mass (shown in figure) strikes the ground when it is released from a height of 6 m above the ground is $\\_\\_\\_\\_$ $\\mathrm{m} / \\mathrm{s}$. Assume pulley is massless and string is light and inextensible. (Take $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 6th April Evening Shift)',
-    given: {},
+    given: { height_m: 6.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_2',
     complexity: 'jee_main',
     question: 'The rain drop of mass 1 g , starts with zero velocity from a height of 1 km . It hits the ground with a speed of $5 \\mathrm{~m} / \\mathrm{s}$. The work done by the unknown resistive force is $\\_\\_\\_\\_$ J.\n(take $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 6th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_3',
     complexity: 'jee_main',
     question: 'A mass of 1 kg is kept on a inclined plane with $30^{\\circ}$ inclination with respect to horizontal plane and it is at rest initially. Then the whole assembly is moved up with constant velocity of $4 \\mathrm{~m} / \\mathrm{s}$. The work done by the frictional force in time 2 s is $\\_\\_\\_\\_$ J. (Take $g=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 5th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_4',
     complexity: 'jee_main',
     question: 'A spherical ball of mass 2 kg falls from a height of 10 m and is brought to rest after penetrating 10 cm into sand. The average force exerted by sand on the ball is _________ N.(Take $g = 10 \\ \\mathrm{m/s^2}$) (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 2.0, height_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_5',
@@ -657,13 +657,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_9',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg is moving along x-direction such that its displacement as function of time is given by $x(t) = \\alpha t^2 + \\beta t + \\gamma$ m, where $\\alpha = 1 \\; m/s^2$, $\\beta = 1 \\; m/s$ and $\\gamma = 1 \\; m$. The work done on the body during the time interval $t = 2 \\; s$ to $t = 3 \\; s$, is ________ J. (JEE Main 2026 (Online) 21st January Evening Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_10',
@@ -693,25 +693,25 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_12',
     complexity: 'jee_main',
     question: 'An object of mass 1000 g experiences a time dependent force $\\vec{F}=\\left(2 t \\hat{i}+3 t^2 \\hat{j}\\right) N$. The power generated by the force at time $t$ is: (JEE Main 2025 (Online) 7th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 1000.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_13',
     complexity: 'jee_main',
     question: 'A block of mass 25 kg is pulled along a horizontal surface by a force at an angle $45^{\\circ}$ with the horizontal. The friction coefficient between the block and the surface is 0.25 . The block travels at a uniform velocity. The work done by the applied force during a displacement of 5 m of the block is : (JEE Main 2025 (Online) 4th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 25.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_14',
@@ -741,13 +741,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_16',
     complexity: 'jee_main',
     question: 'A body of mass 4 kg is placed on a plane at a point $P$ having coordinate $(3,4) \\mathrm{m}$. Under the action of force $\\overrightarrow{\\mathrm{F}}=(2 \\hat{i}+3 \\hat{j}) \\mathrm{N}$, it moves to a new point Q having coordinates $(6,10) \\mathrm{m}$ in 4 sec . The average power and instanteous power at the end of 4 sec are in the ratio of : (JEE Main 2025 (Online) 28th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_17',
@@ -1149,13 +1149,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_50',
     complexity: 'jee_main',
     question: 'A bag of sand of mass 9.8 kg is suspended by a rope. A bullet of 200 g travelling with speed 10 ms$$-$$1 gets embedded in it, then loss of kinetic energy will be : (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { speed_ms: 10.0, mass_kg: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_51',
@@ -1185,13 +1185,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_53',
     complexity: 'jee_main',
     question: 'A particle of mass 500 gm is moving in a straight line with velocity v = b x5/2. The work done by the net force during its displacement from x = 0 to x = 4 m is : (Take b = 0.25 m$$-$$3/2 s$$-$$1). (JEE Main 2022 (Online) 29th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_54',
@@ -1233,13 +1233,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_57',
     complexity: 'jee_main',
     question: 'A block moving horizontally on a smooth surface with a speed of 40 m/s splits into two parts with masses in the ratio of 1 : 2. If the smaller part moves at 60 m/s in the same direction, then the fractional change in kinetic energy is :- (JEE Main 2021 (Online) 31st August Evening Shift)',
-    given: {},
+    given: { speed_ms: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_main_58',
@@ -1269,13 +1269,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_60',
     complexity: 'jee_main',
     question: 'A porter lifts a heavy suitcase of mass 80 kg and at the destination lowers it down by a distance of 80 cm with a constant velocity. Calculate the work done by the porter in lowering the suitcase.(take g = 9.8 ms$$-$$2) (JEE Main 2021 (Online) 22th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 80.0, g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_61',
@@ -1305,13 +1305,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_63',
     complexity: 'jee_main',
     question: 'A boy is rolling a 0.5 kg ball on the frictionless floor with the speed of 20 ms-1. The ball gets deflected by an obstacle on the way. After deflection it moves with 5% of its initial kinetic energy. What is the speed of the ball now? (JEE Main 2021 (Online) 17th March Morning Shift)',
-    given: {},
+    given: { speed_ms: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_main_64',
@@ -1329,13 +1329,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_65',
     complexity: 'jee_main',
     question: 'A person pushes a box on a rough horizontal plateform surface. He applies a force of 200 N over a\ndistance of 15 m. Thereafter, he gets progressively tired and his applied force reduces linearly with\ndistance to 100 N. The total distance through which the box has been moved is 30 m. What is the\nwork done by the person during the total movement of the box? (JEE Main 2020 (Online) 4th September Evening Slot)',
-    given: {},
+    given: { length_m: 15.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_66',
@@ -1365,25 +1365,25 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_68',
     complexity: 'jee_main',
     question: 'An elevator in a building can carry a maximum of 10 persons, with the average mass of each\nperson being 68 kg, The mass of the elevator itself is 920 kg and it moves with a constant speed\nof 3 m/s. The frictional force opposing the motion is 6000 N. If the elevator is moving up with its\nfull capacity, the power delivered by the motor to the elevator (g = 10 m/s2) must be at least : (JEE Main 2020 (Online) 7th January Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_69',
     complexity: 'jee_main',
     question: 'A 60 HP electric motor lifts an elevator having a maximum total load capacity of 2000 kg. If the frictional force on the elevator is 4000 N, the speed of the elevator at full load is close to : (1 HP = 746 W, g = 10 ms-2) (JEE Main 2020 (Online) 7th January Morning Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_70',
@@ -1509,37 +1509,37 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_80',
     complexity: 'jee_main',
     question: 'A time dependent force F = 6t acts on a particle of mass 1 kg. If the particle starts from rest, the work done\nby the force during the first 1 sec. will be: (JEE Main 2017 (Offline))',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_81',
     complexity: 'jee_main',
     question: 'A body of mass m = 10â2 kg is moving in a medium and experiences a frictional force F = âkv2. Its initial speed is v0 = 10 msâ1. If, after 10 s, its energy is $${1 \\over 8}mv_0^2$$, the value of k will be: (JEE Main 2017 (Offline))',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_main_82',
     complexity: 'jee_main',
     question: 'Velocity-time graph for a body of mass 10 kg is shown in figure. Work-done on\nthe body in first two seconds of the motion is : (JEE Main 2016 (Online) 10th April Morning Slot)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_83',
@@ -1557,13 +1557,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_84',
     complexity: 'jee_main',
     question: 'A car of weight W is on an inclined road that rises by 100 m over a distance of 1 km\nand applies a constant frictional force $${W \\over 20}$$ on the car. While moving uphill on the road at a speed of 10 msâ1, the car needs power P. If it needs power $${p \\over 2}$$ while moving downhill at speed v then value of $$\\upsilon $$ is : (JEE Main 2016 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_main_85',
@@ -1678,12 +1678,12 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A ball of mass $$0.2$$ $$kg$$ is thrown vertically upwards by applying a force by hand. If the hand moves $$0.2$$ $$m$$ while applying the force and the ball goes upto $$2$$ $$m$$ height further, find the magnitude of the force. (consider $$g = 10\\,m/{s^2}$$). (AIEEE 2006)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_95',
@@ -1893,25 +1893,25 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_112',
     complexity: 'jee_main',
     question: 'A 1 kg block subjected to two simultaneous forces $(2 \\hat{\\mathrm{i}}+3 \\hat{\\mathrm{j}}+4 \\hat{\\mathrm{k}}) \\mathrm{N}$ and $(3 \\hat{\\mathrm{i}}-\\hat{\\mathrm{j}}-2 \\hat{\\mathrm{k}}) \\mathrm{N}$ is moved a distance of 25 m along $(3 \\hat{\\mathrm{i}}-4 \\hat{\\mathrm{j}})$ direction. The work done in this process is $\\_\\_\\_\\_$ J. (JEE Main 2026 (Online) 4th April Morning Shift)',
-    given: {},
+    given: { length_m: 25.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_113',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg begins to move under the influence of time dependent force $\\overrightarrow{\\mathrm{F}}=\\left(2 \\mathrm{t} \\hat{\\mathrm{i}}+6 \\mathrm{t}^2 \\hat{\\mathrm{j}}\\right) \\mathrm{N}$, where $\\hat{\\mathrm{i}}$ and $\\hat{\\mathrm{j}}$ are unit vectors along $x$ and y -axis respectively. The power produced by the force at $t=2 \\mathrm{~s}$ is $\\_\\_\\_\\_$ W. (JEE Main 2026 (Online) 4th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_114',
@@ -1977,13 +1977,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_119',
     complexity: 'jee_main',
     question: 'To maintain a speed of 80 km/h by a bus of mass 500 kg on a plane rough road for 4 km distance, the work done by the engine of the bus will be ____________ KJ. [The coefficient of friction between tyre of bus and road is 0.04.] (JEE Main 2023 (Online) 12th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_120',
@@ -2025,13 +2025,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_123',
     complexity: 'jee_main',
     question: 'A closed circular tube of average radius 15 cm, whose inner walls are rough, is kept in vertical plane. A block of mass 1 kg just fit inside the tube. The speed of block is 22 m/s, when it is introduced at the top of tube. After completing five oscillations, the block stops at the bottom region of tube. The work done by the tube on the block is __________ J. (Given g = 10 m/s$$^2$$). (JEE Main 2023 (Online) 10th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 1.0, g_ms2: 10.0, radius_m: 15.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_124',
@@ -2133,13 +2133,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_132',
     complexity: 'jee_main',
     question: 'A 0.4 kg mass takes 8s to reach ground when dropped from a certain height \'P\' above surface of earth. The loss of potential energy in the last second of fall is __________ J.\n(Take g = 10 m/s$$^2$$) (JEE Main 2023 (Online) 29th January Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_133',
@@ -2157,25 +2157,25 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_134',
     complexity: 'jee_main',
     question: 'A body of mass 1kg begins to move under the action of a time dependent force $$\\overrightarrow F  = \\left( {t\\widehat i + 3{t^2}\\,\\widehat j} \\right)$$ N, where $$\\widehat i$$ and $$\\widehat j$$ are the unit vectors along $$x$$ and $$y$$ axis. The power developed by above force, at the time t = 2s, will be ____________ W. (JEE Main 2023 (Online) 24th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0, time_s: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'time_s': 's' }
   },
   {
     id: 'work_power_and_energy_main_135',
     complexity: 'jee_main',
     question: 'A spherical body of mass 2 kg starting from rest acquires a kinetic energy of 10000 J at the end of $$\\mathrm{5^{th}}$$ second. The force acted on the body is ________ N. (JEE Main 2023 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_136',
@@ -2205,49 +2205,49 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_138',
     complexity: 'jee_main',
     question: 'A 0.5 kg block moving at a speed of 12 ms$$-$$1 compresses a spring through a distance 30 cm when its speed is halved. The spring constant of the spring will be _______________ Nm$$-$$1. (JEE Main 2022 (Online) 25th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 12.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_main_139',
     complexity: 'jee_main',
     question: 'A ball of mass 100 g is dropped from a height h = 10 cm on a platform fixed at the top of a vertical spring (as shown in figure). The ball stays on the platform and the platform is depressed by a distance $${h \\over 2}$$. The spring constant is _____________ Nm$$-$$1.\n(Use g = 10 ms$$-$$2) (JEE Main 2022 (Online) 24th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 100.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_140',
     complexity: 'jee_main',
     question: 'An engine is attached to a wagon through a shock absorber of length 1.5 m. The system with a total mass of 40,000 kg is moving with a speed of 72 kmh$$-$$1 when the brakes are applied to bring it to rest. In the process of the system being brought to rest, the spring of the shock absorber gets compressed by 1.0 m. If 90% of energy of the wagon is lost due to friction, the spring constant is ____________ $$\\times$$ 105 N/m. (JEE Main 2021 (Online) 1st September Evening Shift)',
-    given: {},
+    given: { length_m: 1.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_141',
     complexity: 'jee_main',
     question: 'A block moving horizontally on a smooth surface with a speed of 40 ms$$-$$1 splits into two equal parts. If one of the parts moves at 60 ms$$-$$1 in the same direction, then the fractional change in the kinetic energy will be x : 4 where x = ___________. (JEE Main 2021 (Online) 31st August Morning Shift)',
-    given: {},
+    given: { speed_ms: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'work_power_and_energy_main_142',
@@ -2265,25 +2265,25 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_143',
     complexity: 'jee_main',
     question: 'A uniform chain of length 3 meter and mass 3 kg overhangs a smooth table with 2 meter lying on the table. If k is the kinetic energy of the chain in joule as it completely slips off the table, then the value of k is ................. . (Take g = 10 m/s2) (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { mass_kg: 3.0, g_ms2: 10.0, length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_144',
     complexity: 'jee_main',
     question: 'A small block slides down from the top of hemisphere of radius R = 3 m as shown in the figure. The height \'h\' at which the block will lose contact with the surface of the sphere is __________ m.(Assume there is no friction between the block and the hemisphere) (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { radius_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_145',
@@ -2301,37 +2301,37 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_146',
     complexity: 'jee_main',
     question: 'In a spring gun having spring constant 100 N/m a small ball \'B\' of mass 100 g is put in its barrel (as shown in figure) by compressing the spring through 0.05 m. There should be a box placed at a distance \'d\' on the ground so that the ball falls in it. If the ball leaves the gun horizontally at a height of 2 m above the ground. The value of d is _________ m. (g = 10 m/s2). (JEE Main 2021 (Online) 20th July Morning Shift)',
-    given: {},
+    given: { mass_kg: 100.0, height_m: 2.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_147',
     complexity: 'jee_main',
     question: 'A ball of mass 4 kg, moving with a velocity of 10 ms$$-$$1, collides with a spring of length 8 m and force constant 100 Nm$$-$$1. The length of the compressed spring is x m. The value of x, to the nearest integer, is ____________. (JEE Main 2021 (Online) 18th March Evening Shift)',
-    given: {},
+    given: { speed_ms: 10.0, mass_kg: 4.0, length_m: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_148',
     complexity: 'jee_main',
     question: 'As shown in the figure, a particle of mass 10 kg is placed at a point A. When the particle is slightly displaced to its right, it starts moving and reaches the point B. The speed of the particle at B is x m/s. (Take g = 10 m/s2)The value of \'x\' to the nearest integer is __________. (JEE Main 2021 (Online) 18th March Morning Shift)',
-    given: {},
+    given: { mass_kg: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'work_power_and_energy_main_149',
@@ -2349,13 +2349,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_150',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg is driven by an engine\ndelivering a constant power of 1 J/s. The body\nstarts from rest and moves in a straight line.\nAfter 9 seconds, the body has moved a\ndistance (in m) _______. (JEE Main 2020 (Online) 5th September Evening Slot)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'work_power_and_energy_main_151',
@@ -2373,13 +2373,13 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_152',
     complexity: 'jee_main',
     question: 'A cricket ball of mass 0.15 kg is thrown\nvertically up by a bowling machine so that it\nrises to a maximum height of 20 m after leaving\nthe machine. If the part pushing the ball applies\na constant force F on the ball and moves\nhorizontally a distance of 0.2 m while launching\nthe ball, the value of F (in N) is (g = 10 msâ2)\n____. (JEE Main 2020 (Online) 3rd September Morning Slot)',
-    given: {},
+    given: { mass_kg: 0.15, height_m: 20.0, g_ms2: 10.0, length_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'work_power_and_energy_main_153',
@@ -2397,12 +2397,12 @@ export const WORK_ENERGY_PUZZLES: PuzzleConfig[] = [
     id: 'work_power_and_energy_main_154',
     complexity: 'jee_main',
     question: 'A particle (m = 1 kg) slides down a frictionless track (AOC) starting from rest at a point A (height 2 m). After reaching C, the particle continues to move freely in air as a projectile. When it reaching its highest point P (height 1 m), the kinetic energy of the particle (in )) is : \n(Figure drawn is schematic and not to scale; take g = 10 ms-2) (JEE Main 2020 (Online) 7th January Morning Slot)',
-    given: {},
+    given: { height_m: 2.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   }
 ]

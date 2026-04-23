@@ -318,13 +318,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_3',
     complexity: 'jee_main',
     question: 'If a body of mass 1 kg falls on the earth from infinity, it attains velocity (v) and kinetic energy (k) on reaching the surface of earth. The values of v and k respectively are __________.\n(Take radius of earth to be 6400 km and g = 9.8 m/s2) (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0, g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'gravitation_main_4',
@@ -1170,13 +1170,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_74',
     complexity: 'jee_main',
     question: 'Assume that the earth is a solid sphere of uniform density and a tunnel is dug along its diameter throughout the earth. It is found that when a particle is released in this tunnel, it executes a simple harmonic motion. The mass of the particle is 100 g. The time period of the motion of the particle will be (approximately)\n(Take g = 10 m s$$^{-2}$$ , radius of earth = 6400 km) (JEE Main 2023 (Online) 25th January Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'gravitation_main_75',
@@ -1374,13 +1374,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_91',
     complexity: 'jee_main',
     question: 'Water falls from a 40 m high dam at the rate of 9 $$\\times$$ 104 kg per hour. Fifty percentage of gravitational potential energy can be converted into electrical energy. Using this hydroelectric energy number of 100 W lamps, that can be lit, is :\n(Take g = 10 ms$$-$$2) (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'gravitation_main_92',
@@ -1531,24 +1531,24 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'The masses and radii of the earth and moon are (M1, R1) and (M2, R2) respectively. Their centres are at a distance \'r\' apart. Find the minimum escape velocity for a particle of mass \'m\' to be projected from the middle of these two masses : (JEE Main 2021 (Online) 31st August Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'gravitation_main_105',
     complexity: 'jee_main',
     question: 'A mass of 50 kg is placed at the centre of a uniform spherical shell of mass 100 kg and radius 50 m. If the gravitational potential at a point, 25 m from the centre is V kg/m. The value of V is : (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { mass_kg: 50.0, radius_m: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'gravitation_main_106',
@@ -1566,25 +1566,25 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_107',
     complexity: 'jee_main',
     question: 'Two identical particles of mass 1 kg each go round a circle of radius R, under the action of their mutual gravitational attraction. The angular speed of each particle is : (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'gravitation_main_108',
     complexity: 'jee_main',
     question: 'The planet Mars has two moons, if one of them has a period 7 hours, 30 minutes and an orbital radius of 9.0 $$\\times$$ 103 km. Find the mass of Mars.$$\\left\\{ {Given\\,{{4{\\pi ^2}} \\over G} = 6 \\times {{10}^{11}}{N^{ - 1}}{m^{ - 2}}k{g^2}} \\right\\}$$ (JEE Main 2021 (Online) 27th July Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'gravitation_main_109',
@@ -1650,25 +1650,25 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_114',
     complexity: 'jee_main',
     question: 'A person whose mass is 100 kg travels from Earth to Mars in a spaceship. Neglect all  other objects in sky and take acceleration due to gravity on the surface of the Earth and Mars as 10 m/s2 and 4 m/s2 respectively. Identify from the below figures, the curve that fits best for the weight of the passenger as a function of time. (JEE Main 2021 (Online) 20th July Morning Shift)',
-    given: {},
+    given: { mass_kg: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'gravitation_main_115',
     complexity: 'jee_main',
     question: 'If the angular velocity of earth\'s spin is increased such that the bodies at the equator start floating, the duration of the day would be approximately : [Take g = 10 ms$$-$$2, the radius of earth, R = 6400 $$\\times$$ 103 m, Take $$\\pi$$ = 3.14] (JEE Main 2021 (Online) 18th March Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'gravitation_main_116',
@@ -1794,13 +1794,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_126',
     complexity: 'jee_main',
     question: 'Four identical particles of equal masses 1 kg made to move along the circumference of a circle of radius 1 m under the action of their own mutual gravitational attraction. The speed of each particle will be : (JEE Main 2021 (Online) 24th February Morning Shift)',
-    given: {},
+    given: { radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'gravitation_main_127',
@@ -1986,13 +1986,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_142',
     complexity: 'jee_main',
     question: 'A box weight 196 N on a spring balance at the north pole. Its weight recorded on the same\nbalance if it is shifted to the equator is close to (Take g = 10 msâ2 at the north pole and the radius\nof the earth = 6400 km) : (JEE Main 2020 (Online) 7th January Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'gravitation_main_143',
@@ -2238,13 +2238,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_163',
     complexity: 'jee_main',
     question: 'If the Earth has no rotational motion, the weight of a person on the equator is W. Determine the speed with which the earth would have to rotate about its axis so that the person at the equator will weigh $${3 \\over 4}$$  W. Radius of the Earth is 6400 km and g=10 m/s2. (JEE Main 2017 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'gravitation_main_164',
@@ -2419,12 +2419,12 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A particle of mass $$10$$ $$g$$ is kept on the surface of a uniform sphere of mass $$100$$ $$kg$$ and radius $$10$$ $$cm.$$ Find the work to be done against the gravitational force between them to take the particle far away from the sphere (you may take $$G$$ $$ = 6.67 \\times {10^{ - 11}}\\,\\,N{m^2}/k{g^2}$$) (AIEEE 2005)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['energy_j'],
+    answer: { 'energy_j': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'energy_j': 'J' }
   },
   {
     id: 'gravitation_main_179',
@@ -2574,13 +2574,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_191',
     complexity: 'jee_main',
     question: 'A satellite of mass 1000 kg is launched to revolve around the earth in an orbit at a height of 270 km from the earth\'s surface. Kinetic energy of the satellite in this orbit is____________ $\\times 10^{10} \\mathrm{~J}$.\n(Mass of earth $=6 \\times 10^{24} \\mathrm{~kg}$, Radius of earth $=6.4 \\times 10^6 \\mathrm{~m}$, Gravitational constant $=6.67 \\times 10^{-11} \\mathrm{Nm}^2 \\mathrm{~kg}^{-2}$ ) (JEE Main 2025 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 1000.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'gravitation_main_192',
@@ -2778,13 +2778,13 @@ export const GRAVITATION_PUZZLES: PuzzleConfig[] = [
     id: 'gravitation_main_208',
     complexity: 'jee_main',
     question: 'A ball is dropped from the top of a 100 m high\ntower on a planet. In the last $${1 \\over 2}s$$ before hitting\nthe ground, it covers a distance of 19 m.\nAcceleration due to gravity (in msâ2) near the\nsurface on that planet is _____. (JEE Main 2020 (Online) 8th January Evening Slot)',
-    given: {},
+    given: { length_m: 19.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'gravitation_main_209',

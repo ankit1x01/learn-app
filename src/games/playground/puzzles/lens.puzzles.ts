@@ -365,13 +365,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_19',
     complexity: 'jee_advanced',
     question: 'A student performed the experiment of determination of focal length of a concave mirror by $$u$$-$$v$$ method using an optical bench of length 1.5 m. The focal length of the mirror used is 24 cm. The maximum error in the location of the image can be 0.2 cm. The 5 sets of ($$u,v$$) values recorded by the student (in cm) are : (42, 56), (48, 48), (60, 40), (66, 33), (78, 39). The data set(s) that cannot come from experiment and is (are) incorrectly recorded, is (are) (IIT-JEE 2009 Paper 1 Offline)',
-    given: {},
+    given: { length_m: 1.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_20',
@@ -641,13 +641,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_42',
     complexity: 'jee_advanced',
     question: 'A point source S is placed at the bottom of a transparent block of height 10 mm and refractive index 2.72. It is immersed in a lower refractive index liquid as shown in the below figure. It is found that the light emerging from the block to the liquid forms a circular bright spot of diameter 11.54 mm on the top of the block. The refractive index of the liquid is (JEE Advanced 2014 Paper 2 Offline)',
-    given: {},
+    given: { height_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'geometrical_optics_43',
@@ -677,13 +677,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_45',
     complexity: 'jee_advanced',
     question: 'The image of an object, formed by a plano-convex lens at a distance of 8 m behind the lens, is real and is\none-third the size of the object. The wavelength of light inside the lens is $${2 \\over 3}$$ times the wavelength in free space. The radius of the curved surface of the lens is (JEE Advanced 2013 Paper 1 Offline)',
-    given: {},
+    given: { length_m: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_46',
@@ -761,13 +761,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_52',
     complexity: 'jee_advanced',
     question: 'A ball is dropped from a height of 20 m above the surface of water in a lake. The refractive index of water is 4/3. A fish inside the lake, in the line of fall of the ball, is looking at the ball. At an instant, when the ball is 12.8 m above the water surface, the fish sees the speed of ball as (Take g = 10 m/s$$^2$$) (IIT-JEE 2009 Paper 1 Offline)',
-    given: {},
+    given: { height_m: 20.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'geometrical_optics_53',
@@ -1578,13 +1578,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_53',
     complexity: 'jee_main',
     question: 'A thin plano convex lens made of glass of refractive index 1.5 is immersed in a liquid of refractive index 1.2. When the plane side of the lens is silver coated for complete reflection, the lens immersed in the liquid behaves like a concave mirror of focal length 0.2 m . The radius of curvature of the curved surface of the lens is (JEE Main 2025 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { length_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_54',
@@ -2130,13 +2130,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_99',
     complexity: 'jee_main',
     question: 'For an object placed at a distance 2.4 m from a lens, a sharp focused image is observed on a screen placed at a distance 12 cm from the lens. A glass plate of refractive index 1.5 and thickness 1 cm is introduced between lens and screen such that the glass plate plane faces parallel to the screen. By what distance should the object be shifted so that a sharp focused image is observed again on the screen? (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { length_m: 2.4 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_100',
@@ -2322,13 +2322,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_115',
     complexity: 'jee_main',
     question: 'Car B overtakes another car A at a relative speed of 40 ms$$-$$1. How fast will the image of car B appear to move in the mirror of focal length 10 cm fitted in car A, when the car B is 1.9 m away from the car A? (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { speed_ms: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'geometrical_optics_main_116',
@@ -2370,13 +2370,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_119',
     complexity: 'jee_main',
     question: 'A ray of laser of a wavelength 630 nm is incident at an angle of 30$$^\\circ$$ at the diamond-air interface. It is going from diamond to air. The refractive index of diamond is 2.42 and that of air is 1. Choose the correct option. (JEE Main 2021 (Online) 25th July Morning Shift)',
-    given: {},
+    given: { wavelength: 630.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'geometrical_optics_main_120',
@@ -2394,13 +2394,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_121',
     complexity: 'jee_main',
     question: 'Region I and II are separated by a spherical surface of radius 25 cm. An object is kept in region I at a distance of 40 cm from the surface. The distance of the image from the surface is : (JEE Main 2021 (Online) 20th July Morning Shift)',
-    given: {},
+    given: { radius_m: 25.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_122',
@@ -2538,13 +2538,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_133',
     complexity: 'jee_main',
     question: 'A point like object is placed at a distance of 1 m in front of a convex lens of focal length 0.5 m. A\nplane mirror is placed at a distance of 2 m behind the lens. The position and nature of the final\nimage formed by the system is : (JEE Main 2020 (Online) 6th September Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_134',
@@ -2658,13 +2658,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_143',
     complexity: 'jee_main',
     question: 'If we need a magnification of 375 from a compound microscope of tube length 150 mm and an objective of focal length 5 mm, the focal length of the eye-piece, should be close to : (JEE Main 2020 (Online) 7th January Morning Slot)',
-    given: {},
+    given: { length_m: 150.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_144',
@@ -2754,13 +2754,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_151',
     complexity: 'jee_main',
     question: 'A concave mirror for face viewing has focal\nlength of 0.4 m. The distance at which you hold\nthe mirror from your face in order to see your\nimage upright with a magnification of 5 is : (JEE Main 2019 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { length_m: 0.4 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_152',
@@ -2862,13 +2862,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_160',
     complexity: 'jee_main',
     question: 'An object is at a distance of 20 m from a convex lens of focal length 0.3 m. The lens forms an image of the object. If the object moves away from the lens at a speed of 5 m/s, the speed and direction of the image will be : (JEE Main 2019 (Online) 11th January Morning Slot)',
-    given: {},
+    given: { speed_ms: 5.0, length_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_161',
@@ -2887,12 +2887,12 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'The eye can be regarded as a single refracting surface. The radius of curvature of this surface is equal to that of cornea (7.8 mm). This surface separateds two media of refractive indices 1 and 1.34. Calculate the distance from the refracting surface at which a parallel beam of light will come to focus - (JEE Main 2019 (Online) 10th January Evening Slot)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['range_m'],
+    answer: { 'range_m': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'range_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_163',
@@ -3030,13 +3030,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_174',
     complexity: 'jee_main',
     question: 'A hemispherical glass body of radius 10 cm and refractive index 1.5 is silvered on its curved surface. A small air bubble is 6 cm below the flat surface inside it along the axis. The position of the image of the air bubble made by the mirror is seen : (JEE Main 2016 (Online) 10th April Morning Slot)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_175',
@@ -3462,13 +3462,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_210',
     complexity: 'jee_main',
     question: 'A collimated beam of light of diameter 2 mm is propagating along $x$-axis. The beam is required to be expanded in a collimated beam of diameter 14 mm using a system of two convex lenses. If first lens has focal length 40 mm , then the focal length of second lens is $\\_\\_\\_\\_$ mm. (JEE Main 2026 (Online) 21st January Morning Shift)',
-    given: {},
+    given: { length_m: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_211',
@@ -3534,13 +3534,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_216',
     complexity: 'jee_main',
     question: 'The driver sitting inside a parked car is watching vehicles approaching from behind with the help of his side view mirror, which is a convex mirror with radius of curvature $\\mathrm{R}=2 \\mathrm{~m}$. Another car approaches him from behind with a uniform speed of $90 \\mathrm{~km} / \\mathrm{hr}$. When the car is at a distance of 24 m from him, the magnitude of the acceleration of the image of the car in the side view mirror is \' $a$ \'. The value of $100 a$ is __________ $\\mathrm{m} / \\mathrm{s}^2$. (JEE Main 2025 (Online) 22nd January Morning Shift)',
-    given: {},
+    given: { length_m: 24.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_217',
@@ -4038,25 +4038,25 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_258',
     complexity: 'jee_main',
     question: 'An object viewed from a near point distance of 25 cm, using a microscopic lens with magnification \'6\', gives an unresolved image. A resolved image is observed at infinite distance with a total magnification double the earlier using an eyepiece along with the given lens and a tube of length 0.6 m, if the focal length of the eyepiece is equal to __________ cm. (JEE Main 2021 (Online) 20th July Morning Shift)',
-    given: {},
+    given: { length_m: 0.6 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_259',
     complexity: 'jee_main',
     question: 'The image of an object placed in air formed by a convex refracting surface is at a distance of 10 m behind the surface. The image is real and is at $${{{2^{rd}}} \\over 3}$$ of the distance of the object from the surface. The wavelength of light inside the surface is $${2 \\over 3}$$ times the wavelength in air. The radius of the curved surface is $${x \\over {13}}$$ m. The value of \'x\' is ___________. (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_260',
@@ -4074,13 +4074,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_261',
     complexity: 'jee_main',
     question: 'A point source of light S, placed at a distance 60cm in front  of the centre of a plane mirror of width 50 cm, hangs vertically on a wall. A man walks in front of the mirror along a line parallel to the mirror at a distance 1.2 m from it (see in the figure). The distance between the extreme points where he can see the image of the light source in the mirror is __________ cm. (JEE Main 2021 (Online) 26th February Evening Shift)',
-    given: {},
+    given: { length_m: 1.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_262',
@@ -4158,13 +4158,13 @@ export const LENS_PUZZLES: PuzzleConfig[] = [
     id: 'geometrical_optics_main_268',
     complexity: 'jee_main',
     question: 'An observer can see through a small hole on the side of a jar (radius 15 cm) at a point at height of\n15 cm from the bottom (see figure). The hole is at a height of 45 cm. When the jar is filled with a\nliquid up to a height of 30 cm the same observer can see the edge at the bottom of the jar. If the\nrefractive index of the liquid is N/100, where N is an integer, the value of N is _____. (JEE Main 2020 (Online) 3rd September Morning Slot)',
-    given: {},
+    given: { radius_m: 15.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'geometrical_optics_main_269',

@@ -125,13 +125,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_10',
     complexity: 'jee_advanced',
     question: 'A silver sphere of radius 1 cm and work function 4.7 eV is suspended from an insulating thread in free-space. It is under continuous illumination of 200 nm wavelength light. As photoelectrons are emitted, the sphere gets charged and acquires a potential. The maximum number of photoelectrons emitted from the spheres is A $$\\times$$ 10Z (where 1 < A < 10). The value of Z is _____________. (IIT-JEE 2011 Paper 2 Offline)',
-    given: {},
+    given: { radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'dual_nature_of_radiation_11',
@@ -402,13 +402,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_4',
     complexity: 'jee_main',
     question: 'Light source having wavelength 331 nm is used to generate photo-electrons whose stopping potential is 0.2 V . The work function of the used metal in the experiment is $\\alpha \\times 10^{-19} \\mathrm{~J}$. The value of $\\alpha$ is $\\_\\_\\_\\_$ .\n$$ \\left(\\mathrm{h}=6.62 \\times 10^{-34} \\mathrm{~J} \\mathrm{~s}, \\mathrm{e}=1.6 \\times 10^{-19} \\mathrm{C} \\text { and } \\mathrm{c}=3 \\times 10^8 \\mathrm{~m} / \\mathrm{s}\\right) $$ (JEE Main 2026 (Online) 5th April Morning Shift)',
-    given: {},
+    given: { wavelength: 331.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_5',
@@ -714,13 +714,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_30',
     complexity: 'jee_main',
     question: 'The work functions of cesium (Cs) and lithium (Li) metals are 1.9 eV and 2.5 eV , respectively. If we incident a light of wavelength 550 nm on these two metal surfaces, then photo-electric effect is possible for the case of (JEE Main 2025 (Online) 22nd January Morning Shift)',
-    given: {},
+    given: { wavelength: 550.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_31',
@@ -1410,13 +1410,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_88',
     complexity: 'jee_main',
     question: 'A source of monochromatic light liberates 9 $$\\times$$ 1020 photon per second with wavelength 600 nm when operated at 400 W. The number of photons emitted per second with wavelength of 800 nm by the source of monochromatic light operating at same power will be : (JEE Main 2022 (Online) 30th June Morning Shift)',
-    given: {},
+    given: { wavelength: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_89',
@@ -1482,13 +1482,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_94',
     complexity: 'jee_main',
     question: 'A metal surface is illuminated by a radiation of wavelength 4500 $$\\mathop A\\limits^o $$. The ejected photo-electron enters a constant magnetic field of 2 mT making an angle of 90$$^\\circ$$ with the magnetic field. If it starts revolving in a circular path of radius 2 mm, the work function of the metal is approximately : (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'dual_nature_of_radiation_main_95',
@@ -1555,12 +1555,12 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A free electron of 2.6 eV energy collides with a H+ ion. This results in the formation of a hydrogen atom in the first excited state and a photon is released. Find the frequency of the emitted photon. (h = 6.6 $$\\times$$ 10$$-$$34 Js) (JEE Main 2021 (Online) 31st August Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['frequency_hz'],
+    answer: { 'frequency_hz': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'frequency_hz': 'Hz' }
   },
   {
     id: 'dual_nature_of_radiation_main_101',
@@ -1590,13 +1590,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_103',
     complexity: 'jee_main',
     question: 'A monochromatic neon lamp with wavelength of 670.5 nm illuminates a photo-sensitive material which has a stopping voltage of 0.48 V. What will be the stopping voltage if the source light is changed with another source of wavelength of 474.6 nm? (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { wavelength: 670.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_104',
@@ -1626,13 +1626,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_106',
     complexity: 'jee_main',
     question: 'In a photoelectric experiment ultraviolet light of wavelength 280 nm is used with lithium cathode having work function $$\\phi$$ = 2.5 eV. If the wavelength of incident light is switched to 400 nm, find out the change in the stopping potential. (h = 6.63 $$\\times$$ 10$$-$$34 Js, c = 3 $$\\times$$ 108 ms$$-$$1) (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { wavelength: 280.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_107',
@@ -1842,13 +1842,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_124',
     complexity: 'jee_main',
     question: 'The stopping potential for electrons emitted from a photosensitive surface illuminated by light of wavelength 491 nm is 0.710 V. When the incident wavelength is changed to a new value, the stopping potential is 1.43 V. The new wavelength is : (JEE Main 2021 (Online) 25th February Evening Shift)',
-    given: {},
+    given: { wavelength: 491.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_125',
@@ -1962,13 +1962,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_134',
     complexity: 'jee_main',
     question: 'Two sources of light emit X-rays of wavelength 1 nm and visible light of wavelength 500 nm, respectively. Both the sources emit light of the same power 200 W. The ratio of the number density of\nphotons of X-rays to the number density of photons of the visible light of the given wavelengths is : (JEE Main 2020 (Online) 3rd September Evening Slot)',
-    given: {},
+    given: { wavelength: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_135',
@@ -2082,13 +2082,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_144',
     complexity: 'jee_main',
     question: 'A 2 mW laser operates at wavelength of 500 nm. The number of photons that will be emitted per second is :\n[Given Planck\'s constant h = 6.6 Ã 10â34 Js, speed of light c = 3.0 Ã 108\n m/s] (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { wavelength: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_145',
@@ -2310,13 +2310,13 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_163',
     complexity: 'jee_main',
     question: 'A Laser light of wavelength 660 nm is used to weld Retina detachment. If a Laser pulse of width 60 ms and power 0.5 kW is used the approximate number of photons in the pulse are :\n[Take Planck\'s constant h $$=$$ 6.62 $$ \\times $$ 10$$-$$34 Js] (JEE Main 2017 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { wavelength: 660.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'dual_nature_of_radiation_main_164',
@@ -2766,25 +2766,25 @@ export const PHOTOELECTRIC_PUZZLES: PuzzleConfig[] = [
     id: 'dual_nature_of_radiation_main_201',
     complexity: 'jee_main',
     question: 'A particle of mass 9.1 $$\\times$$ 10$$-$$31 kg travels in a medium with a speed of 106 m/s and a photon of a radiation of linear momentum 10$$-$$27 kg m/s travels in vacuum. The wavelength of photon is __________ times the wavelength of the particle. (JEE Main 2021 (Online) 27th July Morning Shift)',
-    given: {},
+    given: { speed_ms: 106.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'dual_nature_of_radiation_main_202',
     complexity: 'jee_main',
     question: 'A light beam of wavelength 500 nm is incident on a metal having work function of 1.25 eV, placed in a magnetic field of intensity B. The electrons emitted perpendicular to the magnetic field B, with maximum kinetic energy are bent into circular are of radius 30 cm. The value of B is ___________ $$\\times$$ 10$$-$$7 T. Given hc = 20 $$\\times$$ 10$$-$$26 J-m, mass of electron = 9 $$\\times$$ 10$$-$$31 kg (JEE Main 2021 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { wavelength: 500.0, radius_m: 30.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm', 'radius_m': 'm' }
   },
   {
     id: 'dual_nature_of_radiation_main_203',

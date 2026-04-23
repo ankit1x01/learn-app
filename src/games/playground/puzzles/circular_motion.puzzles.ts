@@ -5,13 +5,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_0',
     complexity: 'jee_main',
     question: 'A car moving with a speed of $54 \\mathrm{~km} / \\mathrm{h}$ takes a turn of radius 20 m . A simple pendulum is suspended from the ceiling of the car. Determine the angle made by the string of the pendulum with the vertical during the turning. (Take $g=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { radius_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_1',
@@ -29,13 +29,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_2',
     complexity: 'jee_main',
     question: 'A 0.5 kg mass is in contact against the inner wall of a cylindrical drum of radius 4 m rotating about its vertical axis. The minimum rotational speed of the drum to enable the mass to remain stuck to the wall (without falling) is 5 rad/s. The coefficient of friction between the drumâs inner wall surface and mass is _________. (Take $g = 10\\ \\mathrm{m/s^2}$) (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { radius_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_3',
@@ -77,13 +77,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_6',
     complexity: 'jee_main',
     question: 'Two cars A and B each of mass $10^3$ kg are moving on parallel tracks separated by a distance of 10 m, in same direction with speeds 72 km/h and 36 km/h. The magnitude of angular momentum of car A with respect to car B is ________ JÂ·s. (JEE Main 2026 (Online) 21st January Evening Shift)',
-    given: {},
+    given: { length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'circular_motion_main_7',
@@ -137,13 +137,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_11',
     complexity: 'jee_main',
     question: 'A body of mass 100 g is moving in circular path of radius 2 m on vertical plane as shown in figure. The velocity of the body at point $A$ is $10 \\mathrm{~m} / \\mathrm{s}$. The ratio of its kinetic energies at point B and C is :\n\n(Take acceleration due to gravity as $10 \\mathrm{~m} / \\mathrm{s}^2$) (JEE Main 2025 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { mass_kg: 100.0, radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_12',
@@ -389,37 +389,37 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_32',
     complexity: 'jee_main',
     question: 'A car is moving on a horizontal curved road with radius 50 m. The approximate maximum speed of car will be, if friction between tyres and road is 0.34. [take g = 10 ms$$^{-2}$$] (JEE Main 2023 (Online) 29th January Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_33',
     complexity: 'jee_main',
     question: 'A car is moving with a constant speed of 20 m/s in a circular horizontal track of radius 40 m. A bob is suspended from the roof of the car by a massless string. The angle made by the string with the vertical will be : (Take g = 10 m/s$$^2$$) (JEE Main 2023 (Online) 25th January Morning Shift)',
-    given: {},
+    given: { speed_ms: 20.0, g_ms2: 10.0, radius_m: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_34',
     complexity: 'jee_main',
     question: 'A body of mass 200g is tied to a spring of spring constant 12.5 N/m, while the other end of spring is fixed at point O. If the body moves about O in a circular path on a smooth horizontal surface with constant angular speed 5 rad/s. Then the ratio of extension in the spring to its natural length will be : (JEE Main 2023 (Online) 24th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'circular_motion_main_35',
@@ -533,13 +533,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_44',
     complexity: 'jee_main',
     question: 'A boy ties a stone of mass 100 g to the end of a 2 m long string and whirls it around in a horizontal plane. The string can withstand the maximum tension of 80 N. If the maximum speed with which the stone can revolve is $${K \\over \\pi }$$ rev./min. The value of K is :\n(Assume the string is massless and unstretchable) (JEE Main 2022 (Online) 24th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'circular_motion_main_45',
@@ -605,25 +605,25 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_50',
     complexity: 'jee_main',
     question: 'Statement I : A cyclist is moving on an unbanked road with a speed of 7 kmh$$-$$1 and takes a sharp circular turn along a path of radius of 2m without reducing the speed. The static friction coefficient is 0.2. The cyclist will not slip and pass the curve. (g = 9.8 m/s2)Statement II : If the road is banked at an angle of 45$$^\\circ$$, cyclist can cross the curve of 2m radius with the speed of 18.5 kmh$$-$$1 without slipping.In the light of the above statements, choose the correct answer from the options given below. (JEE Main 2021 (Online) 16th March Evening Shift)',
-    given: {},
+    given: { g_ms2: 9.8, radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_51',
     complexity: 'jee_main',
     question: 'A block of 200 g mass moves with a uniform speed in a horizontal circular groove, with vertical side walls of radius 20 cm. If the block takes 40 s to complete one round, the normal force by the side walls of the groove is : (JEE Main 2021 (Online) 16th March Morning Shift)',
-    given: {},
+    given: { radius_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_52',
@@ -689,49 +689,49 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_57',
     complexity: 'jee_main',
     question: 'A body is projected at t = 0 with a velocity 10 msâ1\n at an angle of 60o with the horizontal. The radius of curvature of its trajectory at t = 1s is R. neglecting air resistance and taking acceleration due to gravity g = 10 msâ2, the value of R is : (JEE Main 2019 (Online) 11th January Morning Slot)',
-    given: {},
+    given: { speed_ms: 10.0, g_ms2: 10.0, time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²', 'time_s': 's' }
   },
   {
     id: 'circular_motion_main_58',
     complexity: 'jee_main',
     question: 'A particle is moving along a circular path with a constant speed of 10 msâ1. What is the magnitude of the change in velocity of the particle, when it moves through an angle of 60o around the centre of the circle? (JEE Main 2019 (Online) 11th January Morning Slot)',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'circular_motion_main_59',
     complexity: 'jee_main',
     question: 'A disc rotates about its axis of symmetry in a horizontal plane at a steady rate of $$3.5$$ revolutions per second. A coin placed at a distnce of 1.25 cm from the axis of rotation remains at rest on the disc. The coefficient of friction between the coin and the disc is : (g = 10 m/s2) (JEE Main 2018 (Online) 15th April Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'circular_motion_main_60',
     complexity: 'jee_main',
     question: 'A conical pendulum of length 1 m makes an angle $$\\theta $$ = 45o w.r.t. Z-axis and moves in a circle in the XY plane. The radius of the circle is 0.4 m and its center is vertically below O. The speed of the pendulum, in its circular path, will be: (Take g = 10 msâ2 ) (JEE Main 2017 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { g_ms2: 10.0, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'circular_motion_main_61',
@@ -785,13 +785,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_65',
     complexity: 'jee_main',
     question: 'The minimum velocity (in $$m{s^{ - 1}}$$) with which a car driver must traverse a flat curve of radius 150 m and coefficient of friction $$0.6$$ to avoid skidding is (AIEEE 2002)',
-    given: {},
+    given: { radius_m: 150.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_66',
@@ -821,13 +821,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_68',
     complexity: 'jee_main',
     question: 'A tube of length 1 m is filled completely with an ideal liquid of mass 2 M , and closed at both ends. The tube is rotated uniformly in horizontal plane about one of its ends. If the force exerted by the liquid at the other end is F then angular velocity of the tube is $\\sqrt{\\frac{\\mathrm{F}}{\\alpha \\mathrm{M}}}$ in SI unit. The value of $\\alpha$ is _________. (JEE Main 2025 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'circular_motion_main_69',
@@ -857,13 +857,13 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_71',
     complexity: 'jee_main',
     question: 'A car is moving on a circular path of radius 600 m such that the magnitudes of the tangential acceleration and centripetal acceleration are equal. The time taken by the car to complete first quarter of revolution, if it is moving with an initial speed of 54 km/hr is $$t(1-e^{-\\pi/2})s$$. The value of t is ____________. (JEE Main 2023 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { radius_m: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_72',
@@ -881,36 +881,36 @@ export const CIRCULAR_MOTION_PUZZLES: PuzzleConfig[] = [
     id: 'circular_motion_main_73',
     complexity: 'jee_main',
     question: 'A pendulum of length 2 m consists of a wooden bob of mass 50 g. A bullet of mass 75 g is fired towards the stationary bob with a speed v. The bullet emerges out of the bob with a speed $${v \\over 3}$$ and the bob just completes the vertical circle. The value of v is ___________ ms$$-$$1. (if g = 10 m/s2). (JEE Main 2022 (Online) 27th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 50.0, g_ms2: 10.0, length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'circular_motion_main_74',
     complexity: 'jee_main',
     question: 'A curved in a level road has a radius 75 m. The maximum speed of a car turning this curved road can be 30 m/s without skidding. If radius of curved road is changed to 48 m and the coefficient of friction between the tyres and the road remains same, then maximum allowed speed would be ___________ m/s. (JEE Main 2022 (Online) 25th June Evening Shift)',
-    given: {},
+    given: { radius_m: 75.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'circular_motion_main_75',
     complexity: 'jee_main',
     question: 'A small bob tied at one end of a thin string of length 1 m is describing a vertical circle so that the maximum and minimum tension in the string are in the ratio 5 : 1. The velocity of the bob at the highest position is ________ m/s. (Take g = 10 m/s2) (JEE Main 2021 (Online) 25th February Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'length_m': 'm' }
   }
 ]

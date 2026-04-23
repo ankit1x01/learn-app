@@ -22,8 +22,8 @@ export const PSEUDO_FORCE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A train moves with constant acceleration "a". A boy standing in the train throws a ball forward at 10 m/s at 60° to horizontal. He has to move forward by 1.15 m inside the train to catch it back at the same height. Find acceleration "a" (g=10 m/s², √3=1.732).',
     given: { v0: 10, angle: 60, dist_train: 1.15, g: 10 },
-    find: ['accel'],
-    answer: { accel: 5 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 2,
     hints: [
       'Time of flight T = 2v₀sinθ / g = 2 * 10 * sin60° / 10 = √3 seconds.',
@@ -33,6 +33,6 @@ export const PSEUDO_FORCE_PUZZLES: PuzzleConfig[] = [
       '5 * 1.732 = 1.5a + 1.15 → 8.66 = 1.5a + 1.15 → 7.51 = 1.5a → a ≈ 5 m/s².'
     ],
     formula: 'x_ball = x_boy',
-    units: { accel: 'm/s²' }
+    units: { 'acceleration_ms2': 'm/s²', 'g_ms2': 'm/s²' }
   }
 ]

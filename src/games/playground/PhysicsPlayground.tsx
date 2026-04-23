@@ -1,4 +1,4 @@
-import { Suspense, useState, useRef, useCallback } from 'react'
+import { Suspense, useState, useRef, useCallback, useEffect } from 'react'
 import { SIMULATION_REGISTRY } from './registry'
 import { SimulationType, PhysicsPlaygroundConfig, PuzzleConfig, PlaygroundResult, Complexity } from './types'
 import { PuzzlePanel } from './ui/PuzzlePanel'
@@ -6,6 +6,7 @@ import { ControlPanel } from './ui/ControlPanel'
 import { ResultModal } from './ui/ResultModal'
 import { MeasurementOverlay } from './ui/MeasurementOverlay'
 import { StubEngine } from './engines/StubEngine'
+import { getScenarioPreset } from './ScenarioMapper'
 
 interface Props {
   type: SimulationType
@@ -49,6 +50,29 @@ export function PhysicsPlayground({ type, config = {}, onBack }: Props) {
   const handleControl = useCallback((id: string, value: number) => {
     setControlValues(prev => ({ ...prev, [id]: value }))
   }, [])
+
+  // ── Auto-apply scenario preset when puzzle changes ────────────────────────
+  const [scenarioPreset, setScenarioPreset] = useState<{ label: string; icon: string } | null>(null)
+  useEffect(() => {
+    if (!puzzle) return
+    const preset = getScenarioPreset(type, puzzle)
+    if (Object.keys(preset.controls).length > 0) {
+      setControlValues(prev => {
+        const merged = { ...prev }
+        for (const [k, v] of Object.entries(preset.controls)) {
+          const def = plugin.defaultControls.find(c => c.id === k)
+          if (def) {
+            merged[k] = Math.max(def.min, Math.min(def.max, v))
+          } else {
+            merged[k] = v
+          }
+        }
+        return merged
+      })
+      setScenarioPreset({ label: preset.scenarioLabel, icon: preset.scenarioIcon })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [puzzle?.id])
 
   const [hintsUsed, setHintsUsed] = useState(0)
   const [submitted, setSubmitted] = useState(false)
@@ -151,14 +175,33 @@ export function PhysicsPlayground({ type, config = {}, onBack }: Props) {
               <span className="material-symbols-rounded" style={{ fontSize: 12 }}>settings</span> Free
             </span>
           )}
+          {scenarioPreset && !config.freePlay && (
+            <span className="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] flex items-center gap-1">
+              <span className="material-symbols-rounded" style={{ fontSize: 12, fontVariationSettings: "'FILL' 1" }}>{scenarioPreset.icon}</span>
+              {scenarioPreset.label}
+            </span>
+          )}
         </h2>
         <button
           onClick={handleReset}
-          className="p-1.5 rounded-full text-[var(--color-on-surface-variant)]"
+          className="p-1.5 rounded-full text-[var(--color-on-surface-variant)] hover:bg-[rgba(0,0,0,0.05)] transition-colors"
           aria-label="Reset"
+          title="Reset Simulation"
         >
           <span className="material-symbols-rounded" style={{ fontSize: 20 }}>refresh</span>
         </button>
+        
+        {!config.freePlay && puzzleBank.length > 1 && (
+          <button
+            onClick={handleNext}
+            className="p-1.5 rounded-full text-[var(--color-on-surface-variant)] hover:bg-[rgba(0,0,0,0.05)] transition-colors"
+            aria-label="Skip Question"
+            title="Skip Question"
+          >
+            <span className="material-symbols-rounded" style={{ fontSize: 20 }}>skip_next</span>
+          </button>
+        )}
+
         <button
           onClick={() => setIsPlaying(p => !p)}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-white"

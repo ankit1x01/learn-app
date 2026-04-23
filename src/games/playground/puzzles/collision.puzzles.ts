@@ -39,8 +39,8 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     complexity: 'board',
     question: 'A 1 kg ball at 10 m/s collides elastically with a stationary 4 kg ball. Find the velocity of the 4 kg ball after collision.',
     given: { m1: 1, m2: 4, u1: 10, u2: 0 },
-    find: ['v2'],
-    answer: { v2: 4 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 3,
     hints: [
       'v₂ = 2m₁u₁/(m₁+m₂)',
@@ -48,7 +48,7 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
       'v₂ = 20/5 = 4 m/s'
     ],
     formula: 'v₂ = 2m₁u₁/(m₁+m₂)',
-    units: { v2: 'm/s' }
+    units: { 'velocity_ms': 'm/s' }
   },
   // JEE MAIN
   {
@@ -88,8 +88,8 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A ball hits a wall elastically at 10 m/s perpendicular to it. The wall has mass 1000× the ball. Find the speed of the ball after collision.',
     given: { m1: 1, m2: 1000, u1: 10, u2: 0 },
-    find: ['v1_final'],
-    answer: { v1_final: -9.98 },
+    find: ['speed_ms'],
+    answer: { 'speed_ms': 0 },
     tolerance: 2,
     hints: [
       'v₁ = (m₁−m₂)u₁/(m₁+m₂)',
@@ -97,7 +97,7 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
       'Ball bounces back at nearly same speed'
     ],
     formula: 'v₁ ≈ −u₁ when m₂ >> m₁',
-    units: { v1_final: 'm/s' }
+    units: { 'speed_ms': 'm/s' }
   },
   // JEE ADVANCED
   {
@@ -121,8 +121,8 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A bullet of 10g moving at 500 m/s embeds in a 490g block on a frictionless surface. The block compresses a spring (k=200 N/m). Find maximum compression of the spring.',
     given: { m_bullet: 0.01, m_block: 0.49, u_bullet: 500, k: 200 },
-    find: ['max_compression'],
-    answer: { max_compression: 0.5 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 2,
     hints: [
       'First: perfectly inelastic collision → v = m_b×u/(m_b+m_block) = 0.01×500/0.5 = 10 m/s',
@@ -130,15 +130,15 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
       'At max compression: KE → PE_spring → ½kx² = 25 → x = √(50/200) = 0.5 m'
     ],
     formula: 'v_combined = m_b·u/(m_b+M);  ½(m_b+M)v² = ½kx²',
-    units: { max_compression: 'm' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'col_jee_adv_003',
     complexity: 'jee_advanced',
     question: 'A 1 kg ball collides with a 3 kg ball at rest. After collision the 1 kg ball deflects at 90° to original direction. Both have equal speeds after collision. Find the initial speed of the 1 kg ball if its final speed is 3 m/s.',
     given: { m1: 1, m2: 3, final_speed: 3, deflection_angle_1: 90 },
-    find: ['initial_speed'],
-    answer: { initial_speed: 6 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 2,
     hints: [
       'Momentum conservation: x: m₁u = m₂v₂cosθ₂, y: 0 = m₁v₁ − m₂v₂sinθ₂',
@@ -146,7 +146,7 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
       'From y: sinθ₂ = m₁v₁/(m₂v₂) = 1/3;  from x: u = m₂v₂cosθ₂/m₁ → u = 3×3×(2√2/3) = 6'
     ],
     formula: 'Vector momentum conservation in 2D',
-    units: { initial_speed: 'm/s' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   }
 ,
   {
@@ -189,13 +189,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'impulse_and_momentum_3',
     complexity: 'jee_advanced',
     question: 'A ball of mass 0.2 kg rests on a vertical post of height 5 m. A bullet\nof mass 0.01 kg, traveling with a velocity V m/s in a horizontal\ndirection, hits the center of the ball. After the collision, the ball and\nbullet travel independently. The ball hits the ground at a distance of\n20 m and the bullet at a distance of 100 m from the foot of the post.\nThe velocity V of the bullet is (IIT-JEE 2011 Paper 2 Offline)',
-    given: {},
+    given: { mass_kg: 0.2, height_m: 5.0, length_m: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'impulse_and_momentum_4',
@@ -297,13 +297,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'impulse_and_momentum_12',
     complexity: 'jee_advanced',
     question: 'A point mass of 1 kg collides elastically with a stationary point mass of 5 kg. After their collision, the 1 kg\nmass reverses its direction and moves with a speed of 2 msâ1. Which of the following statement(s) is (are) correct for the system of these two masses? (IIT-JEE 2010 Paper 1 Offline)',
-    given: {},
+    given: { speed_ms: 2.0, mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'impulse_and_momentum_13',
@@ -394,13 +394,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_3',
     complexity: 'jee_main',
     question: 'A body of mass 14 kg initially at rest explodes and breaks into three fragments of masses in the ratio $2: 2: 3$. The two pieces of equal masses fly off perpendicular to each other with a speed of $18 \\mathrm{~m} / \\mathrm{s}$ each. The velocity of the heavier fragment is\n$\\_\\_\\_\\_$ $\\mathrm{m} / \\mathrm{s}$. (JEE Main 2026 (Online) 23rd January Evening Shift)',
-    given: {},
+    given: { mass_kg: 14.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_4',
@@ -418,13 +418,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_5',
     complexity: 'jee_main',
     question: 'A small bob $A$ of mass $m$ is attached to a massless rigid rod of length 1 m pivoted at point $P$ and kept at an angle of $60^{\\circ}$ with vertical as shown in figure. At distance of 1 m below point $P$, an identical bob $B$ is kept at rest on a smooth horizontal surface that extends to a circular track of radius $R$ as shown in figure. If bob $B$ just manages to complete the circular path of radius $R$ upto a point $Q$ after being hit elastically by $\\operatorname{bob} A$, then radius $R$ is $\\_\\_\\_\\_$ m. (JEE Main 2026 (Online) 23rd January Morning Shift)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'center_of_mass_and_collision_main_6',
@@ -514,13 +514,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_13',
     complexity: 'jee_main',
     question: 'Consider a circular disc of radius 20 cm with centre located at the origin. A circular hole of radius 5 cm is cut from this disc in such a way that the edge of the hole touches the edge of the disc. The distance of centre of mass of residual or remaining disc from the origin will be (JEE Main 2025 (Online) 23rd January Morning Shift)',
-    given: {},
+    given: { radius_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'center_of_mass_and_collision_main_14',
@@ -646,13 +646,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_24',
     complexity: 'jee_main',
     question: 'As per the given figure, a small ball P slides down the quadrant of a circle and hits the other ball Q of equal mass which is initially at rest. Neglecting the effect of friction and assume the collision to be elastic, the velocity of ball Q after collision will be :\n(g = 10 m/s2) (JEE Main 2023 (Online) 30th January Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_25',
@@ -731,12 +731,12 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A ball of mass $$0.15 \\mathrm{~kg}$$ hits the wall with its initial speed of $$12 \\mathrm{~ms}^{-1}$$ and bounces back without changing its initial speed. If the force applied by the wall on the ball during the contact is $$100 \\mathrm{~N}$$, calculate the time duration of the contact of ball with the wall. (JEE Main 2022 (Online) 26th July Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'time_s': 's' }
   },
   {
     id: 'center_of_mass_and_collision_main_32',
@@ -754,13 +754,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_33',
     complexity: 'jee_main',
     question: 'Two billiard balls of mass 0.05 kg each moving in opposite directions with 10 ms$$-$$1 collide and rebound with the same speed. If the time duration of contact is t = 0.005 s, then what is the force exerted on the ball due to each other? (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 0.05, time_s: 0.005 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'time_s': 's' }
   },
   {
     id: 'center_of_mass_and_collision_main_34',
@@ -838,37 +838,37 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_40',
     complexity: 'jee_main',
     question: 'Three objects A, B and C are kept in a straight line on a frictionless horizontal surface. The masses of A, B and C are m, 2m and 2m respectively. A moves towards B with a speed of 9 m/s and makes an elastic collision with it. Thereafter B makes a completely inelastic collision with C. All motions occur along same straight line. The final speed of C is : (JEE Main 2021 (Online) 27th July Morning Shift)',
-    given: {},
+    given: { speed_ms: 9.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'center_of_mass_and_collision_main_41',
     complexity: 'jee_main',
     question: 'Two billiard balls of equal mass 30g strike a rigid wall with same speed of 108 kmph (as shown) but at different angles. If the balls get reflected with the same speed then the ratio of the magnitude of impulses imparted to ball \'a\' and ball \'b\' by the wall along \'X\' direction is : (JEE Main 2021 (Online) 25th July Morning Shift)',
-    given: {},
+    given: { mass_kg: 30.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_42',
     complexity: 'jee_main',
     question: 'A bullet of \'4 g\' mass is fired from a gun of mass 4 kg. If the bullet moves with the muzzle speed of 50 ms$$-$$1, the impulse imparted to the gun and velocity of recoil of gun are : (JEE Main 2021 (Online) 22th July Evening Shift)',
-    given: {},
+    given: { speed_ms: 50.0, mass_kg: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_43',
@@ -910,13 +910,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_46',
     complexity: 'jee_main',
     question: 'A large block of wood of mass M = 5.99 kg is hanging from two long massless cords. A bullet of mass m = 10 g is fired into the block and gets embedded in it. The (block + bullet) then swing upwards, their centre of mass rising a vertical distance h = 9.8 cm before the (block + bullet) pendulum comes momentarily to rest at the end of its arc. The speed of the bullet just before collision is : (take g = 9.8 ms-2) (JEE Main 2021 (Online) 16th March Evening Shift)',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_47',
@@ -982,25 +982,25 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_52',
     complexity: 'jee_main',
     question: 'A block of mass 1.9 kg is at rest at the edge of a table, of height 1 m. A bullet of mass 0.1 kg\ncollides with the block and sticks to it. If the velocity of the bullet is 20 m/s in the horizontal\ndirection just before the collision then the kinetic energy just before the combined system strikes\nthe floor, is [Take g = 10 m/s2\n . Assume there is no rotational motion and loss of energy after the\ncollision is negligable.] (JEE Main 2020 (Online) 3rd September Evening Slot)',
-    given: {},
+    given: { mass_kg: 1.9, height_m: 1.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_53',
     complexity: 'jee_main',
     question: 'A block of mass m = 1 kg slides with velocity v = 6 m/s on a frictionless horizontal surface and\ncollides with a uniform vertical rod and sticks to it as shown. The rod is pivoted about O and swings\nas a result of the collision making angle $$\\theta $$ before momentarily coming to rest. If the rod has mass\nM = 2 kg, and length $$l$$ = 1 m, the value of $$\\theta $$ is approximately :\n(take g = 10 m/s2) (JEE Main 2020 (Online) 3rd September Morning Slot)',
-    given: {},
+    given: { speed_ms: 6.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_54',
@@ -1078,13 +1078,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_60',
     complexity: 'jee_main',
     question: 'The coordinates of centre of mass of a uniform\nflag shaped lamina (thin flat plate) of mass 4kg.\n(The coordinates of the same are shown in\nfigure) are : (JEE Main 2020 (Online) 8th January Morning Slot)',
-    given: {},
+    given: { mass_kg: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_61',
@@ -1114,13 +1114,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_63',
     complexity: 'jee_main',
     question: 'A man (mass = 50 kg) and his son (mass = 20 kg) are standing on a frictionless surface facing each other. The\nman pushes his son so that he starts moving at a speed of 0.70 msâ1 with respect to the man. The speed of the\nman with respect to the surface is : (JEE Main 2019 (Online) 12th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 0.7, mass_kg: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_64',
@@ -1174,13 +1174,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_68',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg makes an eleastic collision\nwith a second body at rest and continues to move\nin the original direction but with one fourth of its\noriginal speed. What is the mass of the second\nbody ? (JEE Main 2019 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_69',
@@ -1222,13 +1222,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_72',
     complexity: 'jee_main',
     question: 'If 1022 gas molecules each of mass 10â26 kg\ncollide with a surface (perpendicular to it)\nelastically per second over an area 1 m2 with\na speed 104 m/s, the pressure exerted by the gas\nmolecules will be of the order of : (JEE Main 2019 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 104.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'center_of_mass_and_collision_main_73',
@@ -1282,25 +1282,25 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_77',
     complexity: 'jee_main',
     question: 'A body of mass 1 kg falls freely from a height of 100 m, on a platform mass 3 kg which is mounted on a spring having spring constant k = 1.25 $$ \\times $$ 106  N/m. The body sticks to the platform and the spring\'s maximum compression is found to be x. Given that g = 10 msâ2\n, the value of x will be close to : (JEE Main 2019 (Online) 11th January Morning Slot)',
-    given: {},
+    given: { mass_kg: 1.0, height_m: 100.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_78',
     complexity: 'jee_main',
     question: 'A piece of wood of mass 0.03 kg is dropped from the top of a 100 m height building. At the same time, a bullet of mass 0.02 kg is fired vertically upward, with a velocity 100 msâ1, from the ground. The bullet gets embedded in the wood. Then the maximum height to which the combined system reaches above the top of the building before falling below is - (g = 10 msâ2) (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { speed_ms: 100.0, mass_kg: 0.03, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_79',
@@ -1330,13 +1330,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_81',
     complexity: 'jee_main',
     question: 'The mass of a hydrogen molecule is 3.32 $$\\times$$ 10-27 kg. If 1023 hydrogen molecules strike, per second, a fixed wall of area 2 cm2 at an angle of 45o to the normal, and rebound elastically with a speed of 103 m/s, then the pressure on the wall is nearly: (JEE Main 2018 (Offline))',
-    given: {},
+    given: { speed_ms: 103.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'center_of_mass_and_collision_main_82',
@@ -1571,12 +1571,12 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A mass $$\'m\'$$ moves with a velocity $$\'v\'$$ and collides inelastically with another identical mass. After collision the $${1^{st}}$$ mass moves with velocity $${v \\over {\\sqrt 3 }}$$ in a direction perpendicular to the initial direction of motion. Find the speed of the $${2^{nd}}$$ mass after collision. (AIEEE 2005)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['speed_ms'],
+    answer: { 'speed_ms': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'speed_ms': 'm/s' }
   },
   {
     id: 'center_of_mass_and_collision_main_102',
@@ -1702,13 +1702,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_112',
     complexity: 'jee_main',
     question: 'A body of mass 1 kg collides head on elastically with a stationary body of mass 3 kg. After collision, the smaller body reverses its direction of motion and moves with a speed of 2 m/s. The initial speed of the smaller body before collision is ___________ ms$$^{-1}$$. (JEE Main 2023 (Online) 25th January Evening Shift)',
-    given: {},
+    given: { speed_ms: 2.0, mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_113',
@@ -1738,49 +1738,49 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_115',
     complexity: 'jee_main',
     question: 'A man of 60 kg is running on the road and suddenly jumps into a stationary trolly car of mass 120 kg. Then, the trolly car starts moving with velocity 2 ms$$-$$1. The velocity of the running man was ___________ ms$$-$$1, when he jumps into the car. (JEE Main 2022 (Online) 28th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 2.0, mass_kg: 120.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_116',
     complexity: 'jee_main',
     question: 'A batsman hits back a ball of mass 0.4 kg straight in the direction of the bowler without changing its initial speed of 15 ms$$-$$1. The impulse imparted to the ball is ___________ Ns. (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { speed_ms: 15.0, mass_kg: 0.4 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_117',
     complexity: 'jee_main',
     question: 'A bullet of 10 g, moving with velocity v, collides head-on with the stationary bob of a pendulum and recoils with velocity 100 m/s. The length of the pendulum is 0.5 m and mass of the bob is 1 kg. The minimum value of v = ____________ m/s so that the pendulum describes a circle. (Assume the string to be inextensible and g = 10 m/s2) (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { speed_ms: 100.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'center_of_mass_and_collision_main_118',
     complexity: 'jee_main',
     question: 'A body of mass 2 kg moving with a speed of 4 m/s. makes an elastic collision with another body at rest and continues to move in the original direction but with one fourth of its initial peed. The speed of the two body centre of mass is $${x \\over {10}}$$ m/s. Then the value of x is ___________. (JEE Main 2021 (Online) 25th July Morning Shift)',
-    given: {},
+    given: { speed_ms: 4.0, mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_119',
@@ -1810,25 +1810,25 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_121',
     complexity: 'jee_main',
     question: 'The projectile motion of a particle of mass 5 g is shown in the figure.The initial velocity of the particle is $$5\\sqrt 2 $$ ms-1 and the air resistance is assumed to be negligible. The magnitude of the change in momentum between the points A and B is x $$\\times$$ 10-2 kgms-1. The value of x, to the nearest integer, is __________. (JEE Main 2021 (Online) 18th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_122',
     complexity: 'jee_main',
     question: 'A ball of mass 10 kg moving with a velocity 10$$\\sqrt 3 $$ m/s along the x-axis, hits another ball of mass 20 kg which is at rest. After the collision, first ball comes to rest while the second ball disintegrates into two equal pieces. One piece starts moving along y-axis with a speed of 10 m/s. The second piece starts moving at an angle of 30$$^\\circ$$ with respect to the x-axis. The velocity of the ball moving at 30$$^\\circ$$ with x-axis is x m/s. The configuration of pieces after collision is shown in the figure below. The value of x to the nearest integer is ____________. (JEE Main 2021 (Online) 18th March Morning Shift)',
-    given: {},
+    given: { speed_ms: 10.0, mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_123',
@@ -1846,13 +1846,13 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_124',
     complexity: 'jee_main',
     question: 'A ball of mass 10 kg moving with a velocity $$10\\sqrt 3 $$ m s$$-$$1 along X-axis, hits another ball of mass 20 kg which is at rest. After collision, the first ball comes to rest and the second one disintegrates into two equal pieces. One of the pieces starts moving along Y-axis at a speed of 10 m/s. The second piece starts moving at a speed of 20 m/s at an angle $$\\theta$$ (degree) with respect to the X-axis.The configuration of pieces after collision is shown in the figure.The value of $$\\theta$$ to the nearest integer is ____________. (JEE Main 2021 (Online) 16th March Morning Shift)',
-    given: {},
+    given: { speed_ms: 10.0, mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_125',
@@ -1870,37 +1870,37 @@ export const COLLISION_PUZZLES: PuzzleConfig[] = [
     id: 'center_of_mass_and_collision_main_126',
     complexity: 'jee_main',
     question: 'Two solids A and B of mass 1 kg and 2 kg respectively are moving with equal linear momentum. The ratio of their kinetic energies (K.E.)A : (K.E.)B will be $${{A \\over 1}}$$, so the value of A will be ________. (JEE Main 2021 (Online) 24th February Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'center_of_mass_and_collision_main_127',
     complexity: 'jee_main',
     question: 'A ball with a speed of 9 m/s collides with another identical ball at rest. After the collision, the direction of each ball makes an angle of 30$$^\\circ$$ with the original direction. The ratio of velocities of the balls after collision is x : y, where x is __________. (JEE Main 2021 (Online) 24th February Morning Shift)',
-    given: {},
+    given: { speed_ms: 9.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'center_of_mass_and_collision_main_128',
     complexity: 'jee_main',
     question: 'The centre of mass of solid hemisphere of radius 8 cm is x from the centre of the flat surface. Then\nvalue of x is __________. (JEE Main 2020 (Online) 6th September Evening Slot)',
-    given: {},
+    given: { radius_m: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'center_of_mass_and_collision_main_129',

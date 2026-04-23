@@ -5,13 +5,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_0',
     complexity: 'jee_advanced',
     question: 'An audio transmitter $(T)$ and a receiver $(R)$ are hung vertically from two identical massless strings of length 8 m with their pivots well separated along the $X$ axis. They are pulled from the equilibrium position in opposite directions along the $X$ axis by a small angular amplitude $\\theta_0=\\cos ^{-1}(0.9)$ and released simultaneously. If the natural frequency of the transmitter is 660 Hz and the speed of sound in air is $330 \\mathrm{~m} / \\mathrm{s}$, the maximum variation in the frequency (in Hz ) as measured by the receiver (Take the acceleration due to gravity $g=10 \\mathrm{~m} / \\mathrm{s}^2$ ) is _____________. (JEE Advanced 2025 Paper 2 Online)',
-    given: {},
+    given: { length_m: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'waves_1',
@@ -65,13 +65,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_5',
     complexity: 'jee_advanced',
     question: 'A stationary tuning fork is in resonance with an air column in a pipe. If the tuning fork is moved with\na speed of 2 msâ1\nin front of the open end of the pipe and parallel to it, the length of the pipe should\nbe changed for the resonance to occur with the moving tuning fork. If the speed of sound in air is\n320 msâ1, the smallest value of the percentage change required in the length of the pipe is\n____________. (JEE Advanced 2020 Paper 1 Offline)',
-    given: {},
+    given: { speed_ms: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_6',
@@ -149,13 +149,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_12',
     complexity: 'jee_advanced',
     question: 'A 20 cm long string, having a mass of 1.0 g, is fixed at both the ends. The tension in the string is 0.5 N. The string is set into vibrations using an external vibrator of frequency 100 Hz. find the separation (in cm) between the successive nodes on the string. (IIT-JEE 2009 Paper 2 Offline)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'waves_13',
@@ -221,13 +221,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_18',
     complexity: 'jee_advanced',
     question: 'One end of a taut string of length 3 m along the x-axis is fixed at x = 0. The speed of the waves in the string is 100 ms$$-$$1. The other end of the string is vibrating in the y-direction so that stationary waves are set up in the string. The possible waveform(s) of these stationary wave is (are) (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'waves_19',
@@ -341,13 +341,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_28',
     complexity: 'jee_advanced',
     question: 'A hollow pipe of length 0.8 m is closed at one end. At its open end a 0.5 m long uniform string is vibrating\nin its second harmonic and it resonates with the fundamental frequency of the pipe. If the tension in the\nwire is 50 N and the speed of sound is 320 msâ1, the mass of the string is (IIT-JEE 2010 Paper 2 Offline)',
-    given: {},
+    given: { length_m: 0.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'waves_29',
@@ -486,24 +486,24 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A whistling train approaches a junction. An \nobserver standing at the junction observes \nthe frequency to be 2.2 kHz and 1.8 kHz \nof the approaching and the receding train. \nFind the speed of the train (speed of sound \n= 300 m/s). (IIT-JEE 2005 Mains)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['speed_ms'],
+    answer: { 'speed_ms': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_41',
     complexity: 'jee_advanced',
     question: 'A transverse harmonic disturbance is \nproduced in a string. The maximum \ntransverse velocity is 3 m/s and the maximum \ntransverse acceleration is 90 m/s$$^2$$\n. If the wave velocity is 20 m/s, then find the waveform. (IIT-JEE 2005 Mains)',
-    given: {},
+    given: { speed_ms: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   }
 ,
   {
@@ -762,13 +762,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_21',
     complexity: 'jee_main',
     question: 'A train blowing a whistle of frequency 320 Hz approaches an observer standing on the platform at a speed of 66 m/s. The frequency observed by the observer will be (given speed of sound = 330 ms$$^{-1}$$) __________ Hz. (JEE Main 2023 (Online) 25th January Evening Shift)',
-    given: {},
+    given: { speed_ms: 66.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_22',
@@ -966,13 +966,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_38',
     complexity: 'jee_main',
     question: 'A source and a detector move away from each other in absence of wind with a speed of 20 m/s with respect to the ground. If the detector detects a frequency of 1800 Hz of the sound coming from the source, then the original frequency of source considering speed of sound in air 340 m/s will be ............... Hz. (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { speed_ms: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_39',
@@ -1002,13 +1002,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_41',
     complexity: 'jee_main',
     question: 'The amplitude of wave disturbance propagating in the positive x-direction is given by $$y = {1 \\over {{{(1 + x)}^2}}}$$ at time t = 0 and $$y = {1 \\over {1 + {{(x - 2)}^2}}}$$ at t = 1 s, where x and y are in metres. The shape of wave does not change during the propagation. The velocity of the wave will be ___________ m/s. (JEE Main 2021 (Online) 20th July Morning Shift)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'waves_main_42',
@@ -1171,12 +1171,12 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Two harmonic waves moving in the same direction superimpose to form a wave $x=\\mathrm{a} \\cos (1.5 \\mathrm{t}) \\cos (50.5 \\mathrm{t})$ where t is in seconds. Find the period with which they beat. (close to nearest integer) (JEE Main 2025 (Online) 7th April Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['period_s'],
+    answer: { 'period_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'period_s': 's' }
   },
   {
     id: 'waves_main_56',
@@ -1470,13 +1470,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_80',
     complexity: 'jee_main',
     question: 'A sound wave of frequency 245 Hz travels with the speed of 300 ms$$-$$1 along the positive x-axis. Each point of the wave moves to and from through a total distance of 6 cm. What will be the mathematical expression of this travelling wave? (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { speed_ms: 300.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_81',
@@ -1567,12 +1567,12 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'The driver of a bus approaching a big wall notices that the frequency of his bus\'s horn changes\nfrom 420 Hz to 490 Hz when he hears it after it gets reflected from the wall. Find the speed of the\nbus if speed of the sound is 330 msâ1. (JEE Main 2020 (Online) 4th September Evening Slot)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['speed_ms'],
+    answer: { 'speed_ms': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_89',
@@ -1590,13 +1590,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_90',
     complexity: 'jee_main',
     question: 'A uniform thin rope of length 12 m and mass 6 kg hangs vertically from a rigid support and a block\nof mass 2 kg is attached to its free end. A transverse short wavetrain of wavelength 6 cm is\nproduced at the lower end of the rope. What is the wavelength of the wavetrain (in cm) when it\nreaches the top of the rope ? (JEE Main 2020 (Online) 3rd September Morning Slot)',
-    given: {},
+    given: { mass_kg: 6.0, length_m: 12.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'waves_main_91',
@@ -1662,13 +1662,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_96',
     complexity: 'jee_main',
     question: 'Speed of a transverse wave on a straight wire (mass 6.0 g, length 60 cm and area of cross-section 1.0 mm2) is 90 ms-1. If the Young\'s modulus of wire is 16 $$ \\times $$ 1011 Nm-2, the extension of wire over its natural length is : (JEE Main 2020 (Online) 7th January Morning Slot)',
-    given: {},
+    given: { mass_kg: 6.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'waves_main_97',
@@ -1734,13 +1734,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_102',
     complexity: 'jee_main',
     question: 'A source of sound S is moving with a velocity of 50 m/s towards a stationary observer. The observer\nmeasures the frequency of the source as 1000 Hz. What will be the apparent frequency of the source when it\nis moving away from the observer after crossing him? (Take velocity of sound in air is 350 m/s) (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { speed_ms: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_103',
@@ -1782,13 +1782,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_106',
     complexity: 'jee_main',
     question: 'Two cars A and B are moving away from each\nother in opposite directions. Both the cars are\nmoving with a speed of 20 msâ1 with respect\nto the ground. If an observer in car A detects\na frequency 2000 Hz of the sound coming from\ncar B, what is the natural frequency of the sound\nsource in car B ?\n(speed of sound in air = 340 msâ1) :- (JEE Main 2019 (Online) 9th April Evening Slot)',
-    given: {},
+    given: { speed_ms: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_107',
@@ -1866,37 +1866,37 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_113',
     complexity: 'jee_main',
     question: 'A string of length 1 m and mass 5 g is fixed at both ends. The tension in the string is 8.0 N. The string is set into vibration using an external vibrator of frequency 100 Hz. The separation between successive nodes on the string is close to - (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { mass_kg: 5.0, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'waves_main_114',
     complexity: 'jee_main',
     question: 'A train moves towards a stationary observer with speed 34 m/s. The train sounds a whistle and its frequency registered by the observer is Æ1. If the speed of the train is reduced to 17 m/s, the frequency registered is Æ2. If speed of sound is 340 m/s, then the ratio Æ1/Æ2 is - (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { speed_ms: 34.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_115',
     complexity: 'jee_main',
     question: 'A musician using an open flute of length 50 cm producess second harmonic sound waves. A person runs towards the musician from another end of hall at  a speed of 10 km/h. If the wave speed is 330 m/s, the frequency heard by the running person shall be close to : (JEE Main 2019 (Online) 9th January Evening Slot)',
-    given: {},
+    given: { speed_ms: 330.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_116',
@@ -1986,13 +1986,13 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_123',
     complexity: 'jee_main',
     question: 'In an experiment to determine the period of a simple pendulum of length 1 m, it is attached to different spherical bobs of radii r1\n and r2 . The two spherical bobs have uniform mass distribution. If the relative difference in the periods, is found to be\n5Ã10â4  s, the difference in radii, $$\\left| {} \\right.$$r1 $$-$$ r2 $$\\left| {} \\right.$$ is best given by : (JEE Main 2017 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'waves_main_124',
@@ -2022,37 +2022,37 @@ export const WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'waves_main_126',
     complexity: 'jee_main',
     question: 'A toy-car, blowing its horn, is moving with a steady speed of 5 m/s, away from a wall. An observer, towards whom the toy car is moving, is able to hear 5 beats per second. If the velocity of sound in air is 340 m/s, the frequency of the horn of the toy car is close to : (JEE Main 2016 (Online) 10th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_127',
     complexity: 'jee_main',
     question: 'Two engines pass each other moving in opposite directions with uniform speed of 30 m/s. One of them is blowing a whistle of frequency 540 Hz. Calculate the\nfrequency heard by driver of second engine before they pass each other. Speed of sound is 330 m/sec : (JEE Main 2016 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 30.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'waves_main_128',
     complexity: 'jee_main',
     question: 'A uniform string of length $$20$$ $$m$$ is suspended from a rigid support. A short wave pulse is introduced at its lowest end. It starts moving up the string. The time taken to reach the supports is : \n(take $${\\,\\,g = 10m{s^{ - 2}}}$$ ) (JEE Main 2016 (Offline))',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'waves_main_129',

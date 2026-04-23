@@ -90,13 +90,13 @@ export const EM_WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_waves_main_1',
     complexity: 'jee_main',
     question: 'A lamp emits monochromatic green light uniformly in all directions. The lamp is 3% efficient in converting electrical power to electromagnetic waves and consumes 100 W of power. The amplitude of the electric field associated with the electromagnetic radiation at a distance of 5 m from the lamp will be nearly : (JEE Main 2014 (Online) 12th April Morning Slot)',
-    given: {},
+    given: { length_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_waves_main_2',
@@ -966,13 +966,13 @@ export const EM_WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_waves_main_74',
     complexity: 'jee_main',
     question: 'An EM wave propagating in x-direction has a wavelength of 8 mm. The electric field vibrating y-direction has maximum magnitude of 60 Vm$$-$$1. Choose the correct equations for electric and magnetic fields if the EM wave is propagating in vacuum : (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { wavelength: 8.0, length_m: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_waves_main_75',
@@ -1110,13 +1110,13 @@ export const EM_WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_waves_main_86',
     complexity: 'jee_main',
     question: 'The magnetic field vector of an electromagnetic wave is given by $$B = {B_0}{{\\widehat i + \\widehat j} \\over {\\sqrt 2 }}\\cos (kz - \\omega t)$$; where $$\\widehat i,\\widehat j$$ represents unit vector along x and y-axis respectively. At t = 0s, two electric charges q1 of 4$$\\pi$$ coulomb and q2 of 2$$\\pi$$ coulomb located at $$\\left( {0,0,{\\pi  \\over k}} \\right)$$ and $$\\left( {0,0,{{3\\pi } \\over k}} \\right)$$, respectively, have the same velocity of 0.5 c $$\\widehat i$$, (where c is the velocity of light). The ratio of the force acting on charge q1 to q2 is :- (JEE Main 2021 (Online) 31st August Evening Shift)',
-    given: {},
+    given: { time_s: 0.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'electromagnetic_waves_main_87',
@@ -1986,13 +1986,13 @@ export const EM_WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_waves_main_159',
     complexity: 'jee_main',
     question: 'The electric field intensity produced by the radiation coming from a 100 W bulb at a distance of 3 m is E. The electric field intensity produced by the radiation coming from 60W at the same distance is $$\\sqrt {{x \\over 5}} $$E. Where the value of x = ____________. (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_waves_main_160',
@@ -2022,25 +2022,25 @@ export const EM_WAVES_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_waves_main_162',
     complexity: 'jee_main',
     question: 'A radiation is emitted by 1000W bulb and it generates an electric field and magnetic field at P, placed at a distance of 2m. The efficiency of the bulb is 1.25%. The value of peak electric field at P is x $$\\times$$ 10$$-$$1 V/m. Value of x is ___________. (Rounded off to the nearest integer) [Take $${\\varepsilon _0} = 8.85 \\times {10^{ - 12}}$$ C2N$$-$$1 m$$-$$2, c = $$3 \\times {10^8}$$ ms$$-$$1] (JEE Main 2021 (Online) 26th February Morning Shift)',
-    given: {},
+    given: { length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_waves_main_163',
     complexity: 'jee_main',
     question: 'The peak electric field produced by the radiation coming from the 8W bulb at a distance of 10 m is $${x \\over {10}}\\sqrt {{{{\\mu _0}c} \\over \\pi }} {V \\over m}$$. The efficiency of the bulb is 10% and it is a point source. The value of x is ___________. (JEE Main 2021 (Online) 25th February Evening Shift)',
-    given: {},
+    given: { length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_waves_main_164',

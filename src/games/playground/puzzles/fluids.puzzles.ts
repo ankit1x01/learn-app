@@ -222,13 +222,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_5',
     complexity: 'jee_advanced',
     question: 'A cylindrical capillary tube of 0.2 mm radius is made by joining two capillaries T1 and T2 of different materials having water contact angles of 0$$^\\circ $$ and 60$$^\\circ $$, respectively. The capillary tube is dipped vertically in water in two different configurations, case I and II as shown in figure. Which of the following option(s) is (are) correct? [Surface tension of water = 0.075 N/m, density of water = 1000 kg/m3, take g = 10 m/s2] (JEE Advanced 2019 Paper 1 Offline)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_6',
@@ -306,13 +306,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_12',
     complexity: 'jee_advanced',
     question: 'Heater of an electric kettle is made of a wire of length L and diameter d. It takes 4 minutes to raise the temperature of 0.5 kg water by 40 K. This heater is replaced by a new heater having two wires of the same material, each of length L and diameter 2d. The way these wires are connected is given in the options. How much time in minutes will it take to raise the temperature of the same amount of water by 40 K? (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { temp_k: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'properties_of_matter_13',
@@ -402,13 +402,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_20',
     complexity: 'jee_advanced',
     question: 'A hot air balloon is carrying some passengers, and a few sandbags of mass 1 kg each so that its total\nmass is 480 kg. Its effective volume giving the balloon its buoyancy is V. The balloon is floating at\nan equilibrium height of 100 m. When N number of sandbags are thrown out, the balloon rises to a\nnew equilibrium height close to 150 m with its volume V remaining unchanged. If the variation of\nthe density of air with height h from the ground is\n$$\\rho \\left( h \\right) = {\\rho _0}{e^{ - {h \\over {{h_0}}}}}$$, where $$\\rho $$0 = 1.25 kg mâ3\nand\nh0 = 6000 m, the value of N is _________. (JEE Advanced 2020 Paper 2 Offline)',
-    given: {},
+    given: { mass_kg: 1.0, height_m: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm' }
   },
   {
     id: 'properties_of_matter_21',
@@ -426,13 +426,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_22',
     complexity: 'jee_advanced',
     question: 'A cubical solid aluminium (bulk modulus = $$ - V{{dP} \\over {dV}} = 70GPa$$) block has an edge length of 1 m on the surface of the earth. It is kept on the floor of a 5 km deep ocean. Taking the average density of water and the acceleration due to gravity to be 103 kg m-3 and 10 ms-2, respectively, the change in the edge length of the block in mm is _______. (JEE Advanced 2020 Paper 2 Offline)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_23',
@@ -510,25 +510,25 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_29',
     complexity: 'jee_advanced',
     question: 'A cylindrical vessel of height 500 mm has an orifice (small hole) at its bottom. The orifice is initially closed and water is filled in it up to height H. Now the top is completely sealed with a cap and the orifice at the bottom is opened. Some water comes out from the orifice and the water level in the vessel becomes steady with height of water column being 200 mm. Find the fall in height (in mm) of water level due to opening of the orifice. (Take atmospheric pressure = 1.0 $$\\times$$ 10$$^5$$ N/m$$^2$$, density of water = 1000 kg/m$$^3$$ and g = 10 m/s$$^2$$. Neglect any effect of surface tension.) (IIT-JEE 2009 Paper 2 Offline)',
-    given: {},
+    given: { height_m: 500.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_30',
     complexity: 'jee_advanced',
     question: 'An open-ended U-tube of uniform cross-sectional area contains water (density 103 kg mâ3\n). Initially the\nwater level stands at 0.29 m from the bottom in each arm. Kerosene oil (a water-immiscible liquid) of\ndensity 800 kg mâ3\nis added to the left arm until its length is 0.1 m, as shown in the schematic figure\nbelow. The ratio $$\\left( {{{{h_1}} \\over {{h_2}}}} \\right)$$ of the heights of the liquid in the two arms is : (JEE Advanced 2020 Paper 1 Offline)',
-    given: {},
+    given: { length_m: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_31',
@@ -642,13 +642,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_40',
     complexity: 'jee_advanced',
     question: 'When liquid medicine of density $$\\rho $$ is to be put in the eye, it is done with the help of a dropper. As the bulb on the\ntop of the dropper is pressed, a drop forms at the opening of the dropper. We wish to estimate the size of the drop.\nWe first assume that the drop formed at the opening is spherical because that requires a minimum increase in its\nsurface energy. To determine the size, we calculate the net vertical force due to the surface tension T when the\nradius of the drop is R. When the force becomes smaller than the weight of the drop, the drop gets detached from the\ndropper.\nIf r = 5 $$ \\times $$ 10â4 m, $$\\rho $$ = 103 kg mâ3 , g = 10 m/s2 , T = 0.11 Nmâ1 , the radius of the drop when it detaches from\nthe dropper is approximately (IIT-JEE 2010 Paper 2 Offline)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_41',
@@ -811,13 +811,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_2',
     complexity: 'jee_main',
     question: 'Figure represents the extension $(\\Delta l)$ of a wire of length 1 meter, suspended from the ceiling of the room at one end with a load $W$ connected to the other end. If the cross-sectional area of the wire is $10^{-5} \\mathrm{~m}^2$ then the Young\'s modulus of the wire is $\\_\\_\\_\\_$ $\\mathrm{N} / \\mathrm{m}^2$. (JEE Main 2026 (Online) 6th April Evening Shift)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_3',
@@ -835,13 +835,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_4',
     complexity: 'jee_main',
     question: 'A lift of mass 1600 kg is supported by thick iron wire. If the maximum stress which the wire can withstand is $4 \\times 10^8 \\mathrm{~N} / \\mathrm{m}^2$ and its radius is 4 mm , then maximum acceleration the lift can take is $\\_\\_\\_\\_$ $\\mathrm{m} / \\mathrm{s}^2$.\n(take $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ and $\\pi=3.14$ ) (JEE Main 2026 (Online) 6th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 1600.0, radius_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_5',
@@ -931,13 +931,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_12',
     complexity: 'jee_main',
     question: 'A string $A$ of length 0.314 m and Young\'s modulus $2 \\times 10^{10} \\mathrm{~N} / \\mathrm{m}^2$ is connected to another string $B$ of length and Young\'s modulus both twice of those of $A$. This series combination of strings is then suspended from a rigid support and its free end is fixed to a load of mass 0.8 kg . The net change in length of the combination is $\\_\\_\\_\\_$ mm.\n(radius of both the strings is 0.2 mm and acceleration due to gravity $=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (Mass of both strings is to be neglected as compared to the mass of load) (JEE Main 2026 (Online) 4th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.8, length_m: 0.314 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_13',
@@ -955,13 +955,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_14',
     complexity: 'jee_main',
     question: 'If an air bubble of diameter 2 mm rises steadily through a liquid of density 2000 kg/m3 at a rate of 0.5 cm/s, then the coefficient of viscosity of liquid is ______ Poise. (Take g = 10 m/s2) (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_15',
@@ -1003,13 +1003,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_18',
     complexity: 'jee_main',
     question: 'A brass wire of length 2 m and radius 1 mm at $27^{\\circ} \\mathrm{C}$ is held taut between two rigid supports. Initially it was cooled to a temperature of $-43^{\\circ} \\mathrm{C}$ creating a tension $T$ in the wire. The temperature to which the wire has to be cooled in order to increase the tension in it to $1.4 T$, is $\\_\\_\\_\\_$ ${ }^{\\circ} \\mathrm{C}$. (JEE Main 2026 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { radius_m: 1.0, length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_19',
@@ -1099,25 +1099,25 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_26',
     complexity: 'jee_main',
     question: 'A 3 m long wire of radius 3 mm shows an extension of 0.1 mm when loaded vertically by a mass of 50 kg in an experiment to determine Young\'s modulus. The value of Young\'s modulus of the wire as per this experiment is $P \\times 10^{11} \\, \\text{Nm}^{-2}$, where the value of $P$ is: (Take $g = 3\\pi \\, \\text{m/s}^2$) (JEE Main 2025 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 50.0, radius_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_27',
     complexity: 'jee_main',
     question: 'A capillary tube of radius 0.1 mm is partly dipped in water (surface tension 70 dyn/cm and glass water contact angle ≈ 0°) with 30° inclined with the vertical. The length of water risen in the capillary is _______ cm. (Take $g = 9.8 \\text{ m/s}^2$) (JEE Main 2025 (Online) 7th April Evening Shift)',
-    given: {},
+    given: { radius_m: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_28',
@@ -1135,13 +1135,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_29',
     complexity: 'jee_main',
     question: 'A cylindrical rod of length 1 m and radius 4 cm is mounted vertically. It is subjected to a shear force of $10^5 \\mathrm{~N}$ at the top. Considering infinitesimally small displacement in the upper edge, the angular displacement $\\theta$ of the rod axis from its original position would be : (shear moduli, $G=10^{10} \\mathrm{~N} / \\mathrm{m}^2$ ) (JEE Main 2025 (Online) 4th April Evening Shift)',
-    given: {},
+    given: { radius_m: 4.0, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_30',
@@ -1183,13 +1183,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_33',
     complexity: 'jee_main',
     question: 'Consider a completely full cylindrical water tank of height 1.6 m and of cross-sectional area $0.5 \\mathrm{~m}^2$. It has a small hole in its side at a height 90 cm from the bottom. Assume, the crosssectional area of the hole to be negligibly small as compared to that of the water tank. If a load 50 kg is applied at the top surface of the water in the tank then the velocity of the water coming out at the instant when the hole is opened is:\n$$ \\left(\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2\\right) $$ (JEE Main 2025 (Online) 3rd April Morning Shift)',
-    given: {},
+    given: { height_m: 1.6 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_34',
@@ -1255,13 +1255,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_39',
     complexity: 'jee_main',
     question: 'An air bubble of radius 0.1 cm lies at a depth of 20 cm below the free surface of a liquid of density $1000 \\mathrm{~kg} / \\mathrm{m}^3$. If the pressure inside the bubble is $2100 \\mathrm{~N} / \\mathrm{m}^2$ greater than the atmospheric pressure, then the surface tension of the liquid in SI unit is (use $g=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2025 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { radius_m: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_40',
@@ -2071,13 +2071,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_107',
     complexity: 'jee_main',
     question: 'A drop of liquid of density $$\\rho$$ is floating half immersed in a liquid of density $${\\sigma}$$ and surface tension $$7.5 \\times 10^{-4}$$ Ncm$$-$$1. The radius of drop in $$\\mathrm{cm}$$ will be :\n(g = 10 ms$$-$$2) (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_108',
@@ -2107,13 +2107,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_110',
     complexity: 'jee_main',
     question: 'A block of metal weighing 2 kg is resting on a frictionless plane (as shown in figure). It is struck by a jet releasing water at a rate of 1 kgs$$-$$1 and at a speed of 10 ms$$-$$1. Then, the initial acceleration of the block, in ms$$-$$2, will be : (JEE Main 2022 (Online) 29th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'properties_of_matter_main_111',
@@ -2155,13 +2155,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_114',
     complexity: 'jee_main',
     question: 'When a ball is dropped into a lake from a height 4.9 m above the water level, it hits the water with a velocity v and then sinks to the bottom with the constant velocity v. It reaches the bottom of the lake 4.0 s after it is dropped. The approximate depth of the lake is : (JEE Main 2022 (Online) 27th June Evening Shift)',
-    given: {},
+    given: { height_m: 4.9 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_115',
@@ -2227,13 +2227,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_120',
     complexity: 'jee_main',
     question: 'Four identical hollow cylindrical columns of mild steel support a big structure of mass 50 $$\\times$$ 103 kg. The inner and outer radii of each column are 50 cm and 100 cm respectively. Assuming uniform local distribution, calculate the compression strain of each column. [Use Y = 2.0 $$\\times$$ 1011 Pa, g = 9.8 m/s2] (JEE Main 2021 (Online) 31st August Evening Shift)',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_121',
@@ -2263,37 +2263,37 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_123',
     complexity: 'jee_main',
     question: 'Two blocks of masses 3 kg and 5 kg are connected by a metal wire going over a smooth pulley. The breaking stress of the metal is $${{24} \\over \\pi } \\times {10^2}$$ Nm-2. What is the minimum radius of the wire ? (Take g = 10 ms-2) (JEE Main 2021 (Online) 26th August Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_124',
     complexity: 'jee_main',
     question: 'Two narrow bores of diameter 5.0 mm and 8.0 mm are joined together to form a U-shaped tube open at both ends. If this U-tube contains water, what is the difference in the level of two limbs of the tube. [Take surface tension of water T = 7.3 $$\\times$$ 10$$-$$2 Nm$$-$$1, angle of contact = 0, g = 10 ms2 and density of water = 1.0 $$\\times$$ 103 kg m$$-$$3] (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_125',
     complexity: 'jee_main',
     question: 'A raindrop with radius R = 0.2 mm falls from a cloud at a height h = 2000 m above the ground. Assume that the drop is spherical throughout its fall and the force of buoyance may be neglected, then the terminal speed attained by the raindrop is :[Density of water fw = 1000 kg m$$-$$3 and Density of air fa = 1.2 kg m$$-$$3, g = 10 m/s2, Coefficient of viscosity of air = 1.8 $$\\times$$ 10$$-$$5 Nsm$$-$$2] (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_126',
@@ -2383,13 +2383,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_133',
     complexity: 'jee_main',
     question: 'An object is located at 2 km beneath the surface of the water. If the fractional compression $${{\\Delta V} \\over V}$$ is 1.36%, the ratio of hydraulic stress to the corresponding hydraulic strain will be ____________. [Given : density of water is 1000 kgm$$-$$3 and g = 9.8 ms$$-$$2] (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_134',
@@ -2419,13 +2419,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_136',
     complexity: 'jee_main',
     question: 'The pressure acting on a submarine is 3 $$\\times$$ 105 Pa at a certain depth. If the depth is doubled, the percentage increase in the pressure acting on the submarine would be : (Assume that atmospheric pressure is 1 $$\\times$$ 105 Pa density of water is 103 kg m$$-$$3, g = 10 ms$$-$$2) (JEE Main 2021 (Online) 16th March Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_137',
@@ -2551,13 +2551,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_147',
     complexity: 'jee_main',
     question: 'A air bubble of radius 1 cm in water has an upward acceleration 9.8 cm sâ2. The density of water is\n1 gm cmâ3 and water offers negligible drag force on the bubble. The mass of the bubble is (g = 980\ncm/s2). (JEE Main 2020 (Online) 4th September Morning Slot)',
-    given: {},
+    given: { radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_148',
@@ -2587,13 +2587,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_150',
     complexity: 'jee_main',
     question: 'A capillary tube made of glass of radius 0.15\nmm is dipped vertically in a beaker filled with\nmethylene iodide (surface tension = 0.05 Nmâ1,\ndensity = 667 kg mâ3) which rises to height h in\nthe tube. It is observed that the two tangents\ndrawn from liquid-glass interfaces (from opp.\nsides of the capillary) make an angle of 60o\nwith one another. Then h is close to (g = 10 msâ2) (JEE Main 2020 (Online) 2nd September Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_151',
@@ -2659,13 +2659,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_156',
     complexity: 'jee_main',
     question: 'A leak proof cylinder of length 1m, made of\na metal which has very low coefficient of\nexpansion is floating vertically in water at 0Â°C\nsuch that its height above the water surface is\n20 cm. When the temperature of water is\nincreased to 4Â°C, the height of the cylinder\nabove the water surface becomes 21 cm. The\ndensity of water at T = 4Â°C, relative to the\ndensity at T = 0Â°C is close to : (JEE Main 2020 (Online) 8th January Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_157',
@@ -2743,13 +2743,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_163',
     complexity: 'jee_main',
     question: 'Water from a tap emerges vertically downwards with an initial speed of 1.0 msâ1\n. The cross-sectional area of\nthe tap is 10â4 m2. Assume that the pressure is constant throughout the stream of water and that the flow is streamlined. The cross-sectional area of the stream, 0.15 m below the tap would be : (Take g = 10 msâ2) (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { speed_ms: 1.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_164',
@@ -2779,13 +2779,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_166',
     complexity: 'jee_main',
     question: 'In an experiment, brass and steel wires of length 1 m each with areas of cross section 1mm2\n are used. The\nwires are connected in series and one end of the combined wire is connected to a rigid support and other end\nis subjected to elongation. The stress required to produce a net elongation of 0.2 mm is,\n[Given, the Young\'s Modulus for steel and brass are, respectively, 120 Ã 109\n N/m2\n and 60 Ã 109\n N/m2] (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_167',
@@ -2839,13 +2839,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_171',
     complexity: 'jee_main',
     question: 'Young\'s moduli of two wires A and B are in the\nratio 7 : 4. Wire A is 2 m long and has radius R.\nWire B is 1.5 m long and has radius 2 mm. If\nthe two wires stretch by the same length for a\ngiven load, then the value of R is close to :- (JEE Main 2019 (Online) 8th April Evening Slot)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_172',
@@ -2863,25 +2863,25 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_173',
     complexity: 'jee_main',
     question: 'A steel wire having a radius of 2.0 mm,\ncarrying a load of 4 kg, is hanging from a\nceiling. Given that g = 3.1 p msâ2, what will be\nthe tensile stress that would be developed in the\nwire ? (JEE Main 2019 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_174',
     complexity: 'jee_main',
     question: 'A boy\'s catapult is made of rubber cord which\nis 42 cm long, with 6 mm diameter of\ncross-section and of negligible mass. The boy\nkeeps a stone weighing 0.02kg on it and\nstretches the cord by 20 cm by applying a\nconstant force. When released, the stone flies\noff with a velocity of 20 msâ1. Neglect the\nchange in the area of cross-section of the cord\nwhile stretched. The Young\'s modulus of\nrubber is closest to: (JEE Main 2019 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'properties_of_matter_main_175',
@@ -2899,13 +2899,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_176',
     complexity: 'jee_main',
     question: 'A load of mass M kg is suspended from a steel wire of length 2m and radius 1.0 mm in Searle\'s apparatus\nexperiment. The increase in length produced in the wire is 4.0 mm. Now the load is fully immersed in a liquid of relative density 2. The relative density of the material of load is 8. \nThe new value of increase in length of the steel wire is: (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { radius_m: 1.0, length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_177',
@@ -2959,13 +2959,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_181',
     complexity: 'jee_main',
     question: 'A small soap bubble of radius 4 cm is trapped inside another bubble of radius 6 cm without any contact. Let P2 be the pressure inside the inner bubble and P0, the pressure outside the outer bubble. Radius of another bubble with pressure difference P2 $$-$$ P0 between its inside and outside would be : (JEE Main 2018 (Online) 16th April Morning Slot)',
-    given: {},
+    given: { radius_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_182',
@@ -3067,13 +3067,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_190',
     complexity: 'jee_main',
     question: 'A thin 1 m long rod has a radius of 5 mm. A force of 50 $$\\pi $$kN is applied at one end to determine its Youngâs modulus. Assume that the force is exactly known. If the least count in the measurement of all lengths is 0.01 mm, which of the following statements is false ? (JEE Main 2016 (Online) 10th April Morning Slot)',
-    given: {},
+    given: { radius_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_191',
@@ -3415,13 +3415,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_219',
     complexity: 'jee_main',
     question: 'A copper wire of length 3 m is stretched by 3 mm by applying an external force. The volume of the wire is $600 \\times 10^{-6} \\mathrm{~m}^3$. The elastic potential energy stored in the wire in stretched condition would be\n$\\_\\_\\_\\_$ J.\n(Given Young modulus of copper $=1.1 \\times 10^{11} \\mathrm{~N} / \\mathrm{m}^2$ ) (JEE Main 2026 (Online) 5th April Evening Shift)',
-    given: {},
+    given: { length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_220',
@@ -3487,13 +3487,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_225',
     complexity: 'jee_main',
     question: 'Sixty four rain drops of radius 1 mm each falling down with a terminal velocity of $10 \\mathrm{~cm} / \\mathrm{s}$ coalesce to form a bigger drop. The terminal velocity of bigger drop is\n$\\_\\_\\_\\_$ $\\mathrm{cm} / \\mathrm{s}$. (JEE Main 2026 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_226',
@@ -3511,13 +3511,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_227',
     complexity: 'jee_main',
     question: 'The terminal velocity of a metallic ball of radius 6 mm in a viscous fluid is $20 \\mathrm{~cm} / \\mathrm{s}$. The terminal velocity of another ball of same material and having radius 3 mm in the same fluid will be\n$\\_\\_\\_\\_$ $\\mathrm{cm} / \\mathrm{s}$. (JEE Main 2026 (Online) 21st January Evening Shift)',
-    given: {},
+    given: { radius_m: 6.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_228',
@@ -3583,25 +3583,25 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_233',
     complexity: 'jee_main',
     question: 'A steel wire of length 2 m and Young\'s modulus $2.0 \\times 10^{11} \\mathrm{~N} \\mathrm{~m}^{-2}$ is stretched by a force. If Poisson ratio and transverse strain for the wire are 0.2 and $10^{-3}$ respectively, then the elastic potential energy density of the wire is __________ $\\times 10^5$ (in SI units). (JEE Main 2025 (Online) 2nd April Morning Shift)',
-    given: {},
+    given: { length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_234',
     complexity: 'jee_main',
     question: 'A vessel with square cross-section and height of 6 m is vertically partitioned. A small window of $100 \\mathrm{~cm}^2$ with hinged door is fitted at a depth of 3 m in the partition wall. One part of the vessel is filled completely with water and the other side is filled with the liquid having density $1.5 \\times 10^3 \\mathrm{~kg} / \\mathrm{m}^3$. What force one needs to apply on the hinged door so that it does not get opened ?\n$$\\text { (Acceleration due to gravity }=10 \\mathrm{~m} / \\mathrm{s}^2 \\text { ) }$$ (JEE Main 2025 (Online) 2nd April Morning Shift)',
-    given: {},
+    given: { height_m: 6.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_235',
@@ -3620,12 +3620,12 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'In a measurement, it is asked to find modulus of elasticity per unit torque applied on the system. The measured quantity has dimension of $\\left[M^a L^b T^c\\right]$. If $b=3$, the value of $c$ is _________. (JEE Main 2025 (Online) 28th January Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg', 'answer'],
+    answer: { 'mass_kg': 0, 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg', 'answer': '' }
   },
   {
     id: 'properties_of_matter_main_237',
@@ -3643,25 +3643,25 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_238',
     complexity: 'jee_main',
     question: 'An air bubble of radius 1.0 mm is observed at a depth 20 cm below the free surface of a liquid having surface tension $0.095 \\mathrm{~J} / \\mathrm{m}^2$ and density $10^3 \\mathrm{~kg} / \\mathrm{m}^3$. The difference between pressure inside the bubble and atmospheric pressure is __________ $\\mathrm{N} / \\mathrm{m}^2$. (Take $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2025 (Online) 23rd January Evening Shift)',
-    given: {},
+    given: { radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_239',
     complexity: 'jee_main',
     question: 'Two soap bubbles of radius 2 cm and 4 cm , respectively, are in contact with each other. The radius of curvature of the common surface, in cm , is _________. (JEE Main 2025 (Online) 22nd January Morning Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_240',
@@ -3991,13 +3991,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_267',
     complexity: 'jee_main',
     question: 'Two wires each of radius 0.2 cm and negligible mass, one made of steel and the other made of brass are loaded as shown in the figure. The elongation of the steel wire is __________ $$\\times$$ 10$$^{-6}$$ m. [Young\'s modulus for steel = 2 $$\\times$$ 10$$^{11}$$ Nm$$^{-2}$$ and g = 10 ms$$^{-2}$$ ] (JEE Main 2023 (Online) 10th April Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_268',
@@ -4123,13 +4123,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_278',
     complexity: 'jee_main',
     question: 'A Spherical ball of radius 1mm and density 10.5 g/cc is dropped in glycerine of coefficient of viscosity 9.8 poise and density 1.5 g/cc. Viscous force on the ball when it attains constant velocity is $$3696\\times10^{-x}$$ N. The value of $$x$$ is ________.\n\n(Given, g = 9.8 m/s$$^2$$ and $$\\pi=\\frac{22}{7}$$) (JEE Main 2023 (Online) 24th January Evening Shift)',
-    given: {},
+    given: { g_ms2: 9.8, radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_279',
@@ -4219,13 +4219,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_286',
     complexity: 'jee_main',
     question: 'A spherical soap bubble of radius 3 cm is formed inside another spherical soap bubble of radius 6 cm. If the internal pressure of the smaller bubble of radius 3 cm in the above system is equal to the internal pressure of the another single soap bubble of radius r cm. The value of r is ___________. (JEE Main 2022 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { radius_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_287',
@@ -4243,13 +4243,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_288',
     complexity: 'jee_main',
     question: 'A uniform heavy rod of mass $$20 \\mathrm{~kg}$$, cross sectional area $$0.4 \\mathrm{~m}^{2}$$ and length $$20 \\mathrm{~m}$$ is hanging from a fixed support. Neglecting the lateral contraction, the elongation in the rod due to its own weight is $$x \\times 10^{-9} \\mathrm{~m}$$. The value of $$x$$ is _______________.\n(Given, young modulus Y = 2 $$\\times$$ 1011 Nm$$-$$2 and g = 10 ms$$-$$2) (JEE Main 2022 (Online) 26th July Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_289',
@@ -4291,13 +4291,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_292',
     complexity: 'jee_main',
     question: 'A small spherical ball of radius 0.1 mm and density 104 kg m$$-$$3 falls freely under gravity through a distance h before entering a tank of water. If, after entering the water the velocity of ball does not change and it continue to fall with same constant velocity inside water, then the value of h will be ___________ m.\n(Given g = 10 ms$$-$$2, viscosity of water = 1.0 $$\\times$$ 10$$-$$5 N-sm$$-$$2). (JEE Main 2022 (Online) 29th June Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_293',
@@ -4315,13 +4315,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_294',
     complexity: 'jee_main',
     question: 'The area of cross-section of a large tank is 0.5 m2. It has a narrow opening near the bottom having area of cross-section 1 cm2. A load of 25 kg is applied on the water at the top  in the tank. Neglecting the speed of water in the tank, the velocity of the water, coming out of the opening at the time when the height of water level in the tank is 40 cm above the bottom, will be ___________ cms$$-$$1. [Take g = 10 ms$$-$$2] (JEE Main 2022 (Online) 27th June Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_295',
@@ -4351,13 +4351,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_297',
     complexity: 'jee_main',
     question: 'An ideal fluid of density 800 kgm$$-$$3, flows smoothly through a bent pipe (as shown in figure) that tapers in cross-sectional area from a to $${a \\over 2}$$. The pressure difference between the wide and narrow sections of pipe is 4100 Pa. At wider section, the velocity of fluid is $${{\\sqrt x } \\over 6}$$ ms$$-$$1 for x = ___________. (Given g = 10 ms$$-$$2) (JEE Main 2022 (Online) 26th June Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_298',
@@ -4387,73 +4387,73 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_300',
     complexity: 'jee_main',
     question: 'A steel rod with y = 2.0 $$\\times$$ 1011 Nm$$-$$2 and $$\\alpha$$ = 10$$-$$5 $$^\\circ$$C$$-$$1 of length 4 m and area of cross-section 10 cm2 is heated from 0$$^\\circ$$C to 400$$^\\circ$$C without being allowed to extend. The tension produced in the rod is x $$\\times$$ 105 N where the value of x is ____________. (JEE Main 2021 (Online) 1st September Evening Shift)',
-    given: {},
+    given: { length_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_301',
     complexity: 'jee_main',
     question: 'When a rubber ball is taken to a depth of __________m in deep sea, its volume decreases by 0.5%. (The bulk modulus of rubber = 9.8 $$\\times$$ 108 Nm$$-$$2, Density of sea water = 103 kgm$$-$$3, g = 9.8 m/s2) (JEE Main 2021 (Online) 31st August Morning Shift)',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_302',
     complexity: 'jee_main',
     question: 'Wires W1 and W2 are made of same material having the breaking stress of 1.25 $$\\times$$ 109 N/m2. W1 and W2 have cross-sectional area of 8 $$\\times$$ 10$$-$$7 m2 and 4 $$\\times$$ 10$$-$$7 m2, respectively. Masses of 20 kg and 10 kg hang from them as shown in the figure. The maximum mass that can be placed in the pan without breaking the wires is ____________ kg. (Use g = 10 m/s2) (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_303',
     complexity: 'jee_main',
     question: 'A soap bubble of radius 3 cm is formed inside the another soap bubble of radius 6 cm. The radius of an equivalent soap bubble which has the same excess pressure as inside the smaller bubble with respect to the atmospheric pressure is ................ cm. (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { radius_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_304',
     complexity: 'jee_main',
     question: 'The water is filled upto height of 12 m in a tank having vertical sidewalls. A hole is made in one of the walls at a depth \'h\' below the water level. The value of \'h\' for which the emerging steam of water strikes the ground at the maximum range is ________ m. (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { height_m: 12.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_305',
     complexity: 'jee_main',
     question: 'A stone of mass 20 g is projected from a rubber catapult of length 0.1 m and area of cross section 10$$-$$6 m2 stretched by an amount 0.04 m. The velocity of the projected stone is ______________ m/s.(Young\'s modulus of rubber = 0.5 $$\\times$$ 109 N/m2) (JEE Main 2021 (Online) 27th July Morning Shift)',
-    given: {},
+    given: { mass_kg: 20.0, length_m: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'properties_of_matter_main_306',
@@ -4531,13 +4531,13 @@ export const VISCOSITY_PUZZLES: PuzzleConfig[] = [
     id: 'properties_of_matter_main_312',
     complexity: 'jee_main',
     question: 'When a long glass capillary tube of radius\n0.015 cm is dipped in a liquid, the liquid rises\nto a height of 15 cm within it. If the contact angle\nbetween the liquid and glass to close to 0o, the\nsurface tension of the liquid, in milliNewton mâ1,\nis [$$\\rho $$(liquid) = 900 kgmâ3, g = 10 msâ2] (Give answer\nin closest integer) _____. (JEE Main 2020 (Online) 3rd September Morning Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'properties_of_matter_main_313',

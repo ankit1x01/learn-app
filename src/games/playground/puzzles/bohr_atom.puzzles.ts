@@ -760,13 +760,13 @@ export const BOHR_PUZZLES: PuzzleConfig[] = [
     id: 'atoms_and_nuclei_52',
     complexity: 'jee_advanced',
     question: 'Consider a hydrogen atom with its electron in the nth orbital. An electromagnetic radiation of wavelength 90 nm is used to ionize the atom. If the kinetic energy of the ejected electron is 10.4 eV, then the value of n is (hc = 1242 eV nm) (JEE Advanced 2015 Paper 1 Offline)',
-    given: {},
+    given: { wavelength: 90.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'atoms_and_nuclei_53',
@@ -1841,13 +1841,13 @@ export const BOHR_PUZZLES: PuzzleConfig[] = [
     id: 'atoms_and_nuclei_main_85',
     complexity: 'jee_main',
     question: 'Substance A has atomic mass number 16 and half life of 1 day. Another substance B has atomic mass number 32 and half life of $$\\frac{1}{2}$$ day. If both A and B simultaneously start undergo radio activity at the same time with initial mass 320 g each, how many total atoms of A and B combined would be left after 2 days. (JEE Main 2023 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 320.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'atoms_and_nuclei_main_86',
@@ -1865,13 +1865,13 @@ export const BOHR_PUZZLES: PuzzleConfig[] = [
     id: 'atoms_and_nuclei_main_87',
     complexity: 'jee_main',
     question: 'The energy levels of an atom is shown in figure.\n\nWhich one of these transitions will result in the emission of a photon of wavelength 124.1 nm?\nGiven (h = 6.62 $$\\times$$ 10$$^{-34}$$ Js) (JEE Main 2023 (Online) 25th January Evening Shift)',
-    given: {},
+    given: { wavelength: 124.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'atoms_and_nuclei_main_88',
@@ -2454,12 +2454,12 @@ export const BOHR_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Calculate the time interval between 33% decay and 67% decay if half-life of a substance is 20 minutes. (JEE Main 2021 (Online) 16th March Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'time_s': 's' }
   },
   {
     id: 'atoms_and_nuclei_main_137',
@@ -2909,13 +2909,13 @@ export const BOHR_PUZZLES: PuzzleConfig[] = [
     id: 'atoms_and_nuclei_main_174',
     complexity: 'jee_main',
     question: 'Using a nuclear counter the count rate of emitted particles from a radioactive source is measured. At t = 0 it was 1600 counts per second and t = 8 seconds it was 100 counts per second. The count rate observed, as counts per second, at t = 6 seconds is close to - (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { time_s: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'atoms_and_nuclei_main_175',
@@ -4289,13 +4289,13 @@ export const BOHR_PUZZLES: PuzzleConfig[] = [
     id: 'atoms_and_nuclei_main_289',
     complexity: 'jee_main',
     question: 'The K$$\\alpha$$ X-ray of molybdenum has wavelength 0.071 nm. If the energy of a molybdenum atoms with a K electron knocked out is 27.5 keV, the energy of this atom when an L electron is knocked out will be __________ keV. (Round off to the nearest integer)[h = 4.14 $$\\times$$ 10$$-$$15 eVs, c = 3 $$\\times$$ 108 ms$$-$$1] (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { wavelength: 0.071 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'atoms_and_nuclei_main_290',

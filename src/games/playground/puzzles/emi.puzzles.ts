@@ -354,37 +354,37 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_7',
     complexity: 'jee_main',
     question: 'A circular loop of radius 7 cm is placed in uniform magnetic field of 0.2 T directed perpendicular to plane of loop. The loop is converted into a square loop in 0.5 s . The EMF induced in the loop is $\\_\\_\\_\\_$ mV. (JEE Main 2026 (Online) 23rd January Evening Shift)',
-    given: {},
+    given: { radius_m: 7.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_8',
     complexity: 'jee_main',
     question: 'Suppose a long solenoid of 100 cm length, radius 2 cm having 500 turns per unit length, carries a current $I=10 \\sin (\\omega \\mathrm{t}) \\mathrm{A}$, where $\\omega=1000 \\mathrm{rad} . / \\mathrm{s}$. A circular conducting loop $(B)$ of radius 1 cm coaxially slided through the solenoid at a speed $v=1 \\mathrm{~cm} / \\mathrm{s}$. The r.m.s. current through the loop when the coil $B$ is inserted 10 cm inside the solenoid is $${\\alpha  \\over {\\sqrt 2 }}\\mu A$$. The value of $\\alpha$ is $\\_\\_\\_\\_$ .\n[Resistance of the loop $=10 \\Omega$ ] (JEE Main 2026 (Online) 23rd January Evening Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_9',
     complexity: 'jee_main',
     question: 'A 20 m long uniform copper wire held horizontally is allowed to fall under the gravity $\\left(g=10 \\mathrm{~m} / \\mathrm{s}^2\\right)$ through a uniform horizontal magnetic field of 0.5 Gauss perpendicular to the length of the wire. The induced EMF across the wire when it travells a vertical distance of 200 m is $\\_\\_\\_\\_$ mV . (JEE Main 2026 (Online) 23rd January Morning Shift)',
-    given: {},
+    given: { length_m: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_10',
@@ -715,24 +715,24 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Find the mutual inductance in the arrangement, when a small circular loop of wire of radius \'$$R$$\' is placed inside a large square loop of wire of side $$L$$ $$(L \\gg R)$$. The loops are coplanar and their centres coincide : (JEE Main 2023 (Online) 29th January Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'electromagnetic_induction_main_38',
     complexity: 'jee_main',
     question: 'A wire of length 1m moving with velocity 8 m/s at right angles to a magnetic field of 2T. The magnitude of induced emf, between the ends of wire will be __________. (JEE Main 2023 (Online) 25th January Evening Shift)',
-    given: {},
+    given: { speed_ms: 8.0, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_39',
@@ -810,25 +810,25 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_45',
     complexity: 'jee_main',
     question: 'A metallic conductor of length 1 m rotates in a vertical plane parallel to east-west direction about one of its end with angular velocity 5 rad s$$-$$1. If the horizontal component of earth\'s magnetic field is 0.2 $$\\times$$ 10$$-$$4 T, then emf induced between the two ends of the conductor is : (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_46',
     complexity: 'jee_main',
     question: 'The magnetic flux through a coil perpendicular to its plane is varying according to the relation $$\\phi  = (5{t^3} + 4{t^2} + 2t - 5)$$ Weber. If the resistance of the coil is 5 ohm, then the induced current through the coil at t = 2 s will be, (JEE Main 2022 (Online) 26th June Morning Shift)',
-    given: {},
+    given: { time_s: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'electromagnetic_induction_main_47',
@@ -870,13 +870,13 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_50',
     complexity: 'jee_main',
     question: 'A constant magnetic field of 1T is applied in the x > 0 region. A metallic circular ring of radius 1m is moving with a constant velocity of 1 m/s along the x-axis. At t = 0s, the centre of O of the ring is at x = $$-$$1m. What will be the value of the induced emf in the ring at t = 1s? (Assume the velocity of the ring does not change.) (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { speed_ms: 1.0, time_s: 0.0, radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'time_s': 's', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_51',
@@ -895,12 +895,12 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'An inductor coil stores 64 J of magnetic field energy and dissipates energy at the rate of 640 W when a current of 8A is passed through it. If this coil is joined across an ideal battery, find the time constant of the circuit in seconds : (JEE Main 2021 (Online) 26th August Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'time_s': 's' }
   },
   {
     id: 'electromagnetic_induction_main_53',
@@ -1146,13 +1146,13 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_73',
     complexity: 'jee_main',
     question: 'A 10 m long horizontal wire extends from North East to South West. It is falling with a speed of 5.0 msâ1, at right angles to the horizontal component of the earth\'s magnetic field of 0.3 $$ \\times $$ 10â4  Wb/m2. The value of the induced emf in wire is : (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { speed_ms: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'electromagnetic_induction_main_74',
@@ -1194,25 +1194,25 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_77',
     complexity: 'jee_main',
     question: 'A solid metal cube of edge length 2 cm is moving in a positive y-direction at a constant speed of 6 m/s. There is a uniform magnetic field of 0.1 T in the positive z-direction. The potential difference between the two faces of the cube perpendicular to the x-axis, is - (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { speed_ms: 6.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'electromagnetic_induction_main_78',
     complexity: 'jee_main',
     question: 'A conducting circular loop made of a thin wire, has area 3.5 $$ \\times $$ 10$$-$$3 m2 and resistance 10 $$\\Omega $$. It is placed perpendicular to a time dependent magnetic field B(t) = (0.4T)sin(50$$\\pi $$t). The field is uniform in space. Then the net charge flowing through the loop during t = 0 s and t = 10 ms is close to : (JEE Main 2019 (Online) 9th January Morning Slot)',
-    given: {},
+    given: { time_s: 0.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'electromagnetic_induction_main_79',
@@ -1434,13 +1434,13 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_97',
     complexity: 'jee_main',
     question: 'The flux linked with a coil at any instant $$\'t\'$$ is given by \n$$\\phi  = 10{t^2} - 50t + 250$$ \nThe induced $$emf$$ at $$t=3s$$ is (AIEEE 2006)',
-    given: {},
+    given: { time_s: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'electromagnetic_induction_main_98',
@@ -1554,13 +1554,13 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_107',
     complexity: 'jee_main',
     question: 'A circular loop of radius 20 cm and resistance $2 \\Omega$ is placed in a time varying magnetic field $\\vec{B}=\\left(2 t^2+2 t+3\\right) T$. At $t=0$, for the plane of the loop being perpendicular to the magnetic field and, the induced current in the loop at $t=3 \\mathrm{~s}$ is $\\frac{\\alpha}{50} \\mathrm{~A}$. The value of $\\alpha$ is $\\_\\_\\_\\_$ . (Take $\\pi=22 / 7$ ) (JEE Main 2026 (Online) 5th April Evening Shift)',
-    given: {},
+    given: { radius_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_108',
@@ -1578,13 +1578,13 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_109',
     complexity: 'jee_main',
     question: 'A simple pendulum made of mass 10 g and a metallic wire of length 10 cm is suspended vertically in a uniform magnetic field of 2 T . The magnetic field direction is perpendicular to the plane of oscillations of the pendulum. If the pendulum is released from an angle of $60^{\\circ}$ with vertical, then maximum induced EMF between the point of suspension and point of oscillation is\n$\\_\\_\\_\\_$ mV . (Take $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 23rd January Morning Shift)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'electromagnetic_induction_main_110',
@@ -1830,13 +1830,13 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_130',
     complexity: 'jee_main',
     question: 'A 1 m long metal rod XY completes the circuit as shown in figure. The plane of the circuit is perpendicular to the magnetic field of flux density 0.15 T. If the resistance of the circuit is 5$$\\Omega$$, the force needed to move the rod in direction, as indicated, with a constant speed of 4 m/s will be ____________ 10$$^{-3}$$ N. (JEE Main 2023 (Online) 10th April Morning Shift)',
-    given: {},
+    given: { speed_ms: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'electromagnetic_induction_main_131',
@@ -1926,25 +1926,25 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_138',
     complexity: 'jee_main',
     question: 'Magnetic flux (in weber) in a closed circuit of resistance 20 $$\\Omega$$ varies with time t(s) at $$\\phi$$ = 8t2 $$-$$ 9t + 5. The magnitude of the induced current at t = 0.25 s will be ____________ mA. (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { time_s: 0.25 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'electromagnetic_induction_main_139',
     complexity: 'jee_main',
     question: 'A metallic rod of length 20 cm is placed in North-South direction and is moved at a constant speed of 20 m/s towards East. The horizontal component of the Earth\'s magnetic field at that place is 4 $$\\times$$ 10$$-$$3 T and the angle of dip is 45$$^\\circ$$. The emf induced in the rod is ___________ mV. (JEE Main 2022 (Online) 27th June Evening Shift)',
-    given: {},
+    given: { speed_ms: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'electromagnetic_induction_main_140',
@@ -1998,37 +1998,37 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_144',
     complexity: 'jee_main',
     question: 'A circular coil of radius 8.0 cm and 20 turns is rotated about its vertical diameter with an angular speed of 50 rad s$$-$$1 in a uniform horizontal magnetic field of 3.0 $$\\times$$ 10$$-$$2 T. The maximum emf induced the coil will be ................. $$\\times$$ 10$$-$$2 volt (rounded off to the nearest integer) (JEE Main 2021 (Online) 26th August Evening Shift)',
-    given: {},
+    given: { radius_m: 8.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_145',
     complexity: 'jee_main',
     question: 'In the given figure the magnetic flux through the loop increases according to the relation $$\\phi$$B(t) = 10t2 + 20t, where $$\\phi$$B is in milliwebers and t is in seconds. The magnitude of current through R  = 2$$\\Omega$$ resistor at t = 5 s is ___________ mA. (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { time_s: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'electromagnetic_induction_main_146',
     complexity: 'jee_main',
     question: 'A circular conducting coil of radius 1 m is being heated by the change of magnetic field $$\\overrightarrow B $$ passing perpendicular to the plane in which the coil is laid. The resistance of the coil is 2 $$\\mu$$$$\\Omega$$. The magnetic field is slowly switched off such that its magnitude changes in time as $$B = {4 \\over \\pi } \\times {10^{ - 3}}T\\left( {1 - {t \\over {100}}} \\right)$$The energy dissipated by the coil before the magnetic field is switched off completely is E = ___________ mJ. (JEE Main 2021 (Online) 25th July Morning Shift)',
-    given: {},
+    given: { radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_147',
@@ -2058,25 +2058,25 @@ export const EMI_PUZZLES: PuzzleConfig[] = [
     id: 'electromagnetic_induction_main_149',
     complexity: 'jee_main',
     question: 'Two concentric circular coils, C1 and C2 are\nplaced in the XY plane. C1 has 500 turns, and\na radius of 1 cm. C2 has 200 turns and radius\nof 20 cm. C2 carries a time dependent current\nI(t) = (5t2 â 2t + 3) A where t is in s. The emf\ninduced in C1 (in mV), at the instant t = 1 s is\n$${4 \\over x}$$. The value of x is ___ . (JEE Main 2020 (Online) 5th September Morning Slot)',
-    given: {},
+    given: { time_s: 1.0, radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_150',
     complexity: 'jee_main',
     question: 'A circular coil of radius 10 cm is placed in a\nuniform magnetic field of 3.0 $$ \\times $$ 10â5 T with its\nplane perpendicular to the field initially. It is\nrotated at constant angular speed about an\naxis along the diameter of coil and\nperpendicular to magnetic field so that it\nundergoes half of rotation in 0.2 s. The\nmaximum value of EMF induced (in $$\\mu $$V) in the\ncoil will be close to the integer _______. (JEE Main 2020 (Online) 2nd September Morning Slot)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electromagnetic_induction_main_151',

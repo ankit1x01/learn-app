@@ -27,8 +27,8 @@ export const RELATIVE_MOTION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A rocket moves with constant acceleration 2 m/s² in gravity-free space. A ball is thrown from left end (length 4m) at 0.3 m/s relative to rocket. Another ball is thrown from right end at 0.2 m/s relative to rocket. Find time when they hit each other.',
     given: { accel: 2, length: 4, v1: 0.3, v2: 0.2 },
-    find: ['time'],
-    answer: { time: 8 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 1,
     hints: [
       'Inside the rocket, there is a pseudo-acceleration of 2 m/s² backwards.',
@@ -38,7 +38,7 @@ export const RELATIVE_MOTION_PUZZLES: PuzzleConfig[] = [
       'Time = Distance / Relative Velocity = 4 / 0.5 = 8s.'
     ],
     formula: 't = L / (v1 + v2)',
-    units: { time: 's' }
+    units: { 'time_s': 's', 'length_m': 'm' }
   },
   {
     id: 'rel_jee_main_001',
@@ -78,8 +78,8 @@ export const RELATIVE_MOTION_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A person of height 2 m is walking away from a lamp post of height 6 m at 5 km/hr. Find the speed of the tip of the person\'s shadow with respect to the person in km/hr.',
     given: { h_person: 2, h_lamp: 6, v_person: 5 },
-    find: ['v_shadow_rel'],
-    answer: { v_shadow_rel: 2.5 },
+    find: ['speed_ms'],
+    answer: { 'speed_ms': 0 },
     tolerance: 1,
     hints: [
       'By similar triangles, let x be the distance of person from post and s be the length of shadow.',
@@ -89,6 +89,6 @@ export const RELATIVE_MOTION_PUZZLES: PuzzleConfig[] = [
       'v_shadow_rel = 0.5 * 5 = 2.5 km/hr.'
     ],
     formula: 'v_tip_rel = v_tip - v_person',
-    units: { v_shadow_rel: 'km/hr' }
+    units: { 'speed_ms': 'm/s', 'height_m': 'm' }
   }
 ]

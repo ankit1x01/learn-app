@@ -462,13 +462,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_5',
     complexity: 'jee_main',
     question: 'A cylindrical conductor of length 2 m and area of cross-section $0.2 \\mathrm{~mm}^2$ carries an electric current of 1.6 A when its ends are connected to a 2 V battery. Mobility of electrons in the conductor is $\\alpha \\times 10^{-3} \\mathrm{~m}^2 / \\mathrm{V} . \\mathrm{s}$. The value of $\\alpha$ is :\n(electron concentration $=5 \\times 10^{28} / \\mathrm{m}^3$ and electron charge $=1.6 \\times 10^{-19} \\mathrm{C}$ ) (JEE Main 2026 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_6',
@@ -907,12 +907,12 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'In an experiment to find emf of a cell using potentiometer, the length of null point for a cell of emf $$1.5 \\mathrm{~V}$$ is found to be $$60 \\mathrm{~cm}$$. If this cell is replaced by another cell of emf E, the length-of null point increases by $$40 \\mathrm{~cm}$$. The value of $$E$$ is $$\\frac{x}{10} V$$. The value of $$x$$ is ____________. (JEE Main 2023 (Online) 1st February Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['emf_v', 'answer'],
+    answer: { 'emf_v': 0, 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'emf_v': 'V', 'answer': '' }
   },
   {
     id: 'current_electricity_main_43',
@@ -1026,13 +1026,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_52',
     complexity: 'jee_main',
     question: 'A hollow cylindrical conductor has length of 3.14 m, while its inner and outer diameters are 4 mm and 8 mm respectively. The resistance of the conductor is $$n\\times10^{-3}\\Omega$$. If the resistivity of the material is $$\\mathrm{2.4\\times10^{-8}\\Omega m}$$. The value of $$n$$ is ___________. (JEE Main 2023 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { length_m: 3.14 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_53',
@@ -1254,13 +1254,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_71',
     complexity: 'jee_main',
     question: 'The current density in a cylindrical wire of radius r = 4.0 mm is 1.0 $$\\times$$ 106 A/m2. The current through the outer portion of the wire between radial distances $${r \\over 2}$$ and r is x$$\\pi$$ A; where x is __________. (JEE Main 2022 (Online) 27th June Evening Shift)',
-    given: {},
+    given: { radius_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'current_electricity_main_72',
@@ -1278,25 +1278,25 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_73',
     complexity: 'jee_main',
     question: 'A cell, shunted by a 8 $$\\Omega$$ resistance, is balanced across a potentiometer wire of length 3 m. The balancing length is 2 m when the cell is shunted by 4 $$\\Omega$$ resistance. The value of internal resistance of the cell will be ____________ $$\\Omega$$. (JEE Main 2022 (Online) 27th June Morning Shift)',
-    given: {},
+    given: { length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_74',
     complexity: 'jee_main',
     question: 'The current density in a cylindrical wire of radius 4 mm is 4 $$\\times$$ 106 Am$$-$$2. The current through the outer portion of the wire between radial distances $${R \\over 2}$$ and R is ____________ $$\\pi$$ A. (JEE Main 2022 (Online) 27th June Morning Shift)',
-    given: {},
+    given: { radius_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'current_electricity_main_75',
@@ -1338,13 +1338,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_78',
     complexity: 'jee_main',
     question: 'A potentiometer wire of length 10 m and resistance 20 $$\\Omega$$ is connected in series with a 25 V battery and an external resistance 30 $$\\Omega$$. A cell of emf E in secondary circuit is balanced by 250 cm long potentiometer wire. The value of E (in volt) is $${x \\over {10}}$$. The value of x is __________. (JEE Main 2022 (Online) 24th June Evening Shift)',
-    given: {},
+    given: { length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_79',
@@ -1434,13 +1434,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_86',
     complexity: 'jee_main',
     question: 'For the circuit shown, the value of current at time t = 3.2 s will be _________ A.[Voltage distribution V(t) is shown by Fig. (1) and the circuit is shown in Fig. (2)] (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { time_s: 3.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'current_electricity_main_87',
@@ -1602,13 +1602,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_100',
     complexity: 'jee_main',
     question: 'A cylindrical wire of radius 0.5 mm and conductivity 5 $$\\times$$ 107 S/m is subjected to an electric field of 10 mV/m. The expected value of current in the wire will be x3$$\\pi$$ mA. The value of x is _________. (JEE Main 2021 (Online) 24th February Evening Shift)',
-    given: {},
+    given: { radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'current_electricity_main_101',
@@ -1986,13 +1986,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_132',
     complexity: 'jee_main',
     question: 'A wire of length 25 m and cross-sectional area $5 \\mathrm{~mm}^2$ having resistivity of $2 \\times 10^{-6} \\Omega \\mathrm{~m}$ is bent into a complete circle. The resistance between diametrically opposite points will be (JEE Main 2025 (Online) 3rd April Morning Shift)',
-    given: {},
+    given: { length_m: 25.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_133',
@@ -2922,13 +2922,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_210',
     complexity: 'jee_main',
     question: 'An electric cable of copper has just one wire of radius 9 mm. Its resistance is 14 $$\\Omega$$. If this single copper wire of the cable is replaced by seven identical well insulated copper wires each of radius 3 mm connected in parallel, then the new resistance of the combination will be : (JEE Main 2022 (Online) 30th June Morning Shift)',
-    given: {},
+    given: { radius_m: 9.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'current_electricity_main_211',
@@ -3247,12 +3247,12 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A Copper (Cu) rod of length 25 cm and cross-sectional area 3 mm2 is joined with a similar Aluminium (Al) rod as shown in figure. Find the resistance of the combination between the ends A and B.(Take Resistivity of Copper = 1.7 $$\\times$$ 10$$-$$8 $$\\Omega$$m and Resistivity of Aluminium = 2.6 $$\\times$$ 10$$-$$8 $$\\Omega$$m) (JEE Main 2021 (Online) 22th July Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['resistance_ohm'],
+    answer: { 'resistance_ohm': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'resistance_ohm': 'Ω' }
   },
   {
     id: 'current_electricity_main_238',
@@ -3354,13 +3354,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_246',
     complexity: 'jee_main',
     question: 'A wire of 1$$\\Omega$$ has a length of 1 m. It is stretched till its length increases by 25%. The percentage change in resistance to the nearest integer is : (JEE Main 2021 (Online) 26th February Evening Shift)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_247',
@@ -3379,12 +3379,12 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A current through a wire depends on time as i = $$\\alpha$$0t + $$\\beta$$t2where $$\\alpha$$0 = 20 A/s and $$\\beta$$ = 8 As$$-$$2. Find the charge crossed through a section of the wire in 15 s. (JEE Main 2021 (Online) 24th February Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['charge_uc'],
+    answer: { 'charge_uc': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'charge_uc': 'μC' }
   },
   {
     id: 'current_electricity_main_249',
@@ -3679,12 +3679,12 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A current of 5 A passes through a copper\nconductor (resistivity = 1.7 Ã 10â8 $$\\Omega $$m) of radius\nof cross-section 5 mm. Find the mobility of the\ncharges if their drift velocity is 1.1 Ã 10â3 m/s. (JEE Main 2019 (Online) 10th April Morning Slot)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'current_electricity_main_274',
@@ -3846,13 +3846,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_287',
     complexity: 'jee_main',
     question: 'A galvanometer, whose resistance is 50 ohm, has 25 divisions in it. When a current of 4 $$ \\times $$ 10â4 A passes through it, its needle ( pointer) deflects by one division. To use this galvanometer as a voltmeter of range 2.5 V, it should be connected to a resistance of : (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { resistance_ohm: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'resistance_ohm': 'Ω' }
   },
   {
     id: 'current_electricity_main_288',
@@ -3882,13 +3882,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_290',
     complexity: 'jee_main',
     question: 'In a meter bridge, the wire of length 1 m has a non-uniform cross-section such that, the variation $${{dR} \\over {d\\ell }}$$ of its resistance R with length $$\\ell $$  is $${{dR} \\over {d\\ell }}$$ $$ \\propto $$ $${1 \\over {\\sqrt \\ell  }}$$. Two equal resistances are connected as shown in the figure. The\ngalvanometer has zero deflection when the jockey is at point P. What is the length AP ? (JEE Main 2019 (Online) 12th January Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_291',
@@ -3906,13 +3906,13 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     id: 'current_electricity_main_292',
     complexity: 'jee_main',
     question: 'An ideal battery of 4 V and resistance R are connected in series in the primary circuit of a potentiometer of length 1 m and  esistance 5 $$\\Omega $$. The value of R, to give a potential difference of 5 mV across 10 cm of potentiometer wire, is : (JEE Main 2019 (Online) 12th January Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'current_electricity_main_293',
@@ -4507,12 +4507,12 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Consider a block of conducting material of resistivity $$\'\\rho \'$$ shown in the figure. Current $$\'I\'$$ enters at $$\'A\'$$ and leaves from $$\'D\'$$. We apply superposition principle to find voltage $$\'\\Delta V\'$$ developed between $$\'B\'$$ and $$\'C\'$$. The calculation is done in the following steps: \n(i) Take current $$\'I\'$$ entering from $$\'A\'$$ and assume it to spread over a hemispherical surface in the block.\n(ii) Calculate field $$E(r)$$ at distance $$\'r\'$$ from A by using Ohm\'s law $$E = \\rho j,$$ where $$j$$ is the current per unit area at $$\'r\'$$. \n(iii) From the $$\'r\'$$ dependence of $$E(r)$$, obtain the potential $$V(r)$$ at $$r$$. \n(iv) Repeat (i), (ii) and (iii) for current $$\'I\'$$ leaving $$\'D\'$$ and superpose results for $$\'A\'$$ and $$\'D\'.$$ \n\nFor current entering at $$A,$$ the electric field at a distance $$\'r\'$$ from $$A$$ is (AIEEE 2008)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['voltage_v'],
+    answer: { 'voltage_v': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'voltage_v': 'V' }
   },
   {
     id: 'current_electricity_main_343',
@@ -4531,12 +4531,12 @@ export const CURRENT_ELECTRICITY_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Consider a block of conducting material of resistivity $$\'\\rho \'$$ shown in the figure. Current $$\'I\'$$ enters at $$\'A\'$$ and leaves from $$\'D\'$$. We apply superposition principle to find voltage $$\'\\Delta V\'$$ developed between $$\'B\'$$ and $$\'C\'$$. The calculation is done in the following steps: \n(i) Take current $$\'I\'$$ entering from $$\'A\'$$ and assume it to spread over a hemispherical surface in the block.\n(ii) Calculate field $$E(r)$$ at distance $$\'r\'$$ from A by using Ohm\'s law $$E = \\rho j,$$ where $$j$$ is the current per unit area at $$\'r\'$$. \n(iii) From the $$\'r\'$$ dependence of $$E(r)$$, obtain the potential $$V(r)$$ at $$r$$. \n(iv) Repeat (i), (ii) and (iii) for current $$\'I\'$$ leaving $$\'D\'$$ and superpose results for $$\'A\'$$ and $$\'D\'.$$ \n\n$$\\Delta V$$ measured between $$B$$ and $$C$$ is (AIEEE 2008)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['voltage_v'],
+    answer: { 'voltage_v': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'voltage_v': 'V' }
   },
   {
     id: 'current_electricity_main_345',

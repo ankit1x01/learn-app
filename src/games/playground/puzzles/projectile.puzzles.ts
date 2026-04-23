@@ -7,8 +7,8 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     complexity: 'board',
     question: 'A ball is thrown horizontally at 10 m/s from a height of 20 m. Find (a) time of flight and (b) horizontal range. (g = 10 m/s²)',
     given: { speed: 10, height: 20, angle: 0, g: 10 },
-    find: ['time', 'range'],
-    answer: { time: 2, range: 20 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: [
       'Horizontal and vertical motions are independent',
@@ -16,15 +16,15 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'Horizontal: range = speed × t'
     ],
     formula: 't = √(2h/g),  R = v₀·t',
-    units: { time: 's', range: 'm' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'proj_board_002',
     complexity: 'board',
     question: 'A projectile is fired at 45° with speed 20 m/s. Find the maximum height. (g = 10 m/s²)',
     given: { speed: 20, angle: 45, g: 10 },
-    find: ['max_height'],
-    answer: { max_height: 10 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 3,
     hints: [
       'Vertical component: vᵧ = v sin 45° = 20/√2',
@@ -32,15 +32,15 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'H = vᵧ²/(2g)'
     ],
     formula: 'H = v²sin²θ / 2g',
-    units: { max_height: 'm' }
+    units: { 'mass_kg': 'kg', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'proj_board_003',
     complexity: 'board',
     question: 'A ball is kicked at 30° with speed 30 m/s. Find the total time of flight. (g = 10 m/s²)',
     given: { speed: 30, angle: 30, g: 10 },
-    find: ['time_of_flight'],
-    answer: { time_of_flight: 3 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 3,
     hints: [
       'vᵧ = v sinθ = 30 × 0.5 = 15 m/s',
@@ -48,7 +48,7 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'T = 2 × 15 / 10'
     ],
     formula: 'T = 2v sinθ / g',
-    units: { time_of_flight: 's' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   // JEE MAIN
   {
@@ -56,8 +56,8 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A projectile is fired at 30° to horizontal with speed 40 m/s. Find (a) maximum height and (b) time to reach it. (g = 10 m/s²)',
     given: { speed: 40, angle: 30, g: 10 },
-    find: ['max_height', 'time_to_peak'],
-    answer: { max_height: 20, time_to_peak: 2 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 2,
     hints: [
       'vᵧ = 40 sin30° = 20 m/s',
@@ -65,7 +65,7 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'H = vᵧ²/(2g) = 400/20'
     ],
     formula: 'H = v²sin²θ/2g,  t = v sinθ/g',
-    units: { max_height: 'm', time_to_peak: 's' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'proj_jee_main_002',
@@ -88,8 +88,8 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A particle is projected with speed 10 m/s at 60°. Find the speed of the particle when it makes 30° with horizontal. (g = 10 m/s²)',
     given: { speed: 10, launch_angle: 60, query_angle: 30, g: 10 },
-    find: ['speed_at_angle'],
-    answer: { speed_at_angle: 5.77 },
+    find: ['speed_ms'],
+    answer: { 'speed_ms': 0 },
     tolerance: 2,
     hints: [
       'Horizontal component vₓ = v cos60° = 5 m/s (constant)',
@@ -97,7 +97,7 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'v = 5/(√3/2) = 10/√3 ≈ 5.77 m/s'
     ],
     formula: 'vₓ = v cosα = constant;  v = vₓ/cosθ',
-    units: { speed_at_angle: 'm/s' }
+    units: { 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   // JEE ADVANCED
   {
@@ -105,8 +105,8 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A particle is projected from the top of a cliff 40 m high at 20 m/s, 30° above horizontal. Find (a) horizontal range from the base of the cliff and (b) the second launch angle at the same speed that hits the same point. (g = 10 m/s²)',
     given: { height: 40, speed: 20, angle: 30, g: 10 },
-    find: ['range', 'second_angle'],
-    answer: { range: 60.74, second_angle: 71.3 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 2,
     hints: [
       'Vertical: −40 = 10t − 5t²  (take downward as negative displacement)',
@@ -114,15 +114,15 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'For second angle: same range equation R = v²sin2θ/g has two solutions θ and (90°−θ) only on flat ground — here use numerical/graphical approach'
     ],
     formula: 'y = vᵧt − ½gt²,  x = vₓt',
-    units: { range: 'm', second_angle: '°' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'proj_jee_adv_002',
     complexity: 'jee_advanced',
     question: 'A ball is thrown from point A on a slope of angle 30° with speed 20 m/s at angle 60° above the slope. Find the range along the slope. (g = 10 m/s²)',
     given: { slope_angle: 30, speed: 20, throw_angle_from_slope: 60, g: 10 },
-    find: ['range_along_slope'],
-    answer: { range_along_slope: 40 },
+    find: ['range_m', 'slope_range_m'],
+    answer: { 'range_m': 0, 'slope_range_m': 0 },
     tolerance: 3,
     hints: [
       'Resolve g along and perpendicular to slope: g_along = g sinα, g_perp = g cosα',
@@ -130,15 +130,15 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'R = 2v²sin(θ)cos(θ+α) / (g cos²α)'
     ],
     formula: 'R = 2v²sinθ cos(θ+α) / (g cos²α)',
-    units: { range_along_slope: 'm' }
+    units: { 'range_m': 'm', 'slope_range_m': 'm', 'speed_ms': 'm/s', 'angle_deg': '°', 'g_ms2': 'm/s²' }
   },
   {
     id: 'proj_jee_adv_003',
     complexity: 'jee_advanced',
     question: 'A particle A is projected vertically upward from ground with speed 20 m/s. Simultaneously particle B is dropped from height H. They meet at t = 2s. Find H and the height at which they meet. (g = 10 m/s²)',
     given: { speed_A: 20, t_meet: 2, g: 10 },
-    find: ['H', 'meeting_height'],
-    answer: { H: 40, meeting_height: 20 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 2,
     hints: [
       'A height at t=2: h_A = 20×2 − ½×10×4 = 40−20 = 20 m',
@@ -146,7 +146,7 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'They meet: h_A = h_B  →  20 = H−20  →  H = 40'
     ],
     formula: 'h_A = v₀t − ½gt²,  h_B = H − ½gt²',
-    units: { H: 'm', meeting_height: 'm' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²', 'time_s': 's' }
   },
   {
     id: 'proj_jee_adv_004',
@@ -172,8 +172,8 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A ball is projected from the ground at an angle of 45° with the horizontal surface. It reaches a maximum height of 120 m and returns to the ground. Upon hitting the ground for the first time, it loses half of its kinetic energy. Immediately after the bounce, the velocity of the ball makes an angle of 30° with the horizontal surface. The maximum height it reaches after the bounce, in metres, is ______________.',
     given: { angle1: 45, max_h1: 120, ke_loss: 0.5, angle2: 30 },
-    find: ['max_h2'],
-    answer: { max_h2: 30 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 1,
     hints: [
       'Initial KE = K. After bounce KE\' = K/2. So v\'² = v²/2.',
@@ -182,7 +182,7 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
       'H\' = (v²/g) / 16 = 480 / 16 = 30m'
     ],
     formula: 'H = vᵧ²/(2g)',
-    units: { max_h2: 'm' }
+    units: { 'answer': '', 'height_m': 'm', 'angle_deg': '°' }
   }
 ,
   {
@@ -249,49 +249,49 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_5',
     complexity: 'jee_advanced',
     question: 'Airplanes A and B are flying with constant velocity in the same vertical plane at angles $$30^\\circ $$ and $$60^\\circ $$ with\nrespect to the horizontal respectively as shown in the figure. The speed of A is $$100\\sqrt 3 $$ m/s. At time t = 0 s, an observer in A finds B at a distance of 500 m. This observer sees B moving with a constant velocity\nperpendicular to the line of motion of A. If at t = t0, A just escapes being hit by B, t0 in seconds is (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { time_s: 0.0, length_m: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's', 'length_m': 'm' }
   },
   {
     id: 'motion_6',
     complexity: 'jee_advanced',
     question: 'A rocket is moving in a gravity free space with a constant\nacceleration of 2 msâ2 along + x direction (see figure). The\nlength of a chamber inside the rocket is 4 m. A ball is\nthrown from the left end of the chamber in + x direction\nwith a speed of 0.3 msâ1 relative to the rocket. At the same\ntime, another ball is thrown in - x direction with a speed of\n0.2 msâ1 from its right end relative to the rocket. The time in\nseconds when the two balls hit each other is (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { speed_ms: 0.3 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_7',
     complexity: 'jee_advanced',
     question: 'A train is moving along a straight line with a constant acceleration \'a\'. A boy standing in the train throws a\nball forward with a speed of 10 m/s, at an angle of $$60^\\circ $$ to the horizontal. The boy has to move forward by\n1.15 m inside the train to catch the ball back at the initial height. The acceleration of the train, in m/s2, is (IIT-JEE 2011 Paper 2 Offline)',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_8',
     complexity: 'jee_advanced',
     question: 'Starting at time t = 0 from the origin with speed 1 ms-1, a particle follows a two-dimensional trajectory in the x-y plane so that its coordinates are related by the equation $$y = {{{x^2}} \\over 2}$$. The x and y components of its acceleration are denoted by ax and ay, respectively. Then (JEE Advanced 2020 Paper 2 Offline)',
-    given: {},
+    given: { speed_ms: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_9',
@@ -321,13 +321,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_11',
     complexity: 'jee_advanced',
     question: 'A particle is moving eastwards with a velocity of 5 m/s. In 10s the velocity changes to 5 m/s northwards. The average acceleration in this time is (IIT-JEE 1982)',
-    given: {},
+    given: { speed_ms: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_12',
@@ -429,13 +429,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_20',
     complexity: 'jee_advanced',
     question: 'Two guns, situated on the top of a hill of height 10 m, fire one shot each with the same speed $$5\\sqrt 3 $$ m s-1 at some interval of time. One gun fires horizontally and other fires upwards at an angle of $$60^\\circ $$ with the horizontal. The shots collide in air at a point P. Find \n(i) the time interval between the firings, and\n(ii) the coordinates of the point P.\nTake origin of the coordinate system at the foot of the hill right below the muzzle and trajectories in x-y plane. (IIT-JEE 1996)',
-    given: {},
+    given: { height_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'motion_21',
@@ -538,13 +538,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_0',
     complexity: 'jee_main',
     question: 'A gas balloon is going up with a constant velocity of $10 \\mathrm{~m} / \\mathrm{s}$. When this balloon reached a height of 75 m , a stone is dropped from it and balloon keeps moving up with the same velocity. The height of the balloon when the stone hits the ground is $\\_\\_\\_\\_$ m. (Take $g=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { height_m: 75.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_1',
@@ -658,13 +658,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_10',
     complexity: 'jee_main',
     question: 'The velocity-time graph of an object moving along a straight line is shown in the figure. What is the distance covered by the object between $t = 0$ to $t = 4s$? (JEE Main 2025 (Online) 28th January Evening Shift)',
-    given: {},
+    given: { time_s: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_11',
@@ -790,13 +790,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_21',
     complexity: 'jee_main',
     question: 'The position of a particle related to time is given by $x=\\left(5 t^{2}-4 t+5\\right) \\mathrm{m}$. The magnitude of velocity of the particle at $t=2 s$ will be : (JEE Main 2023 (Online) 15th April Morning Shift)',
-    given: {},
+    given: { time_s: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_22',
@@ -946,13 +946,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_34',
     complexity: 'jee_main',
     question: 'The distance travelled by a particle is related to time t as $$x=4\\mathrm{t}^2$$. The velocity of the particle at t=5s is :- (JEE Main 2023 (Online) 25th January Evening Shift)',
-    given: {},
+    given: { time_s: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_35',
@@ -1054,37 +1054,37 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_43',
     complexity: 'jee_main',
     question: 'A bullet is shot vertically downwards with an initial velocity of $$100 \\mathrm{~m} / \\mathrm{s}$$ from a certain height. Within 10 s, the bullet reaches the ground and instantaneously comes to rest due to the perfectly inelastic collision. The velocity-time curve for total time $$\\mathrm{t}=20 \\mathrm{~s}$$ will be:\n(Take g = 10 m/s2). (JEE Main 2022 (Online) 27th July Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_straight_line_main_44',
     complexity: 'jee_main',
     question: 'A small toy starts moving from the position of rest under a constant acceleration. If it travels a distance of 10m in t s, the distance travelled by the toy in the next t s will be : (JEE Main 2022 (Online) 29th June Evening Shift)',
-    given: {},
+    given: { length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_45',
     complexity: 'jee_main',
     question: 'Two balls A and B are placed at the top of 180 m tall tower. Ball A is released from the top at t = 0 s. Ball B is thrown vertically down with an initial velocity \'u\' at t = 2 s. After a certain time, both balls meet 100 m above the ground. Find the value of \'u\' in ms$$-$$1. [use g = 10 ms$$-$$2] : (JEE Main 2022 (Online) 29th June Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0, time_s: 0.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_46',
@@ -1102,13 +1102,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_47',
     complexity: 'jee_main',
     question: 'Water drops are falling from a nozzle of a shower onto the floor, from a height of 9.8 m. The drops fall at a regular interval of time. When the first drop strikes the floor, at that instant, the third drop begins to fall. Locate the position of second drop from the floor when the first drop strikes the floor. (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { height_m: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_48',
@@ -1138,13 +1138,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_50',
     complexity: 'jee_main',
     question: 'A balloon was moving upwards with a uniform velocity of 10 m/s. An object of finite mass is dropped from the balloon when it was at a height of 75 m from the ground level. The height of the balloon from the ground when object strikes the ground was around :(takes the value of g as 10 m/s2) (JEE Main 2021 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { speed_ms: 10.0, height_m: 75.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'height_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_51',
@@ -1162,13 +1162,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_52',
     complexity: 'jee_main',
     question: 'Water droplets are coming from an open tap at a particular rate. The spacing between a droplet observed at 4th second after its fall to the next droplet is 34.3 m. At what rate the droplets are coming from the tap ? (Take g = 9.8 m/s2) (JEE Main 2021 (Online) 25th July Morning Shift)',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_straight_line_main_53',
@@ -1222,13 +1222,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_57',
     complexity: 'jee_main',
     question: 'A rubber ball is released from a height of 5 m above the floor. It bounces back repeatedly, always rising to $${{81} \\over {100}}$$ of the height through which it falls. Find the average speed of the ball. (Take g = 10 ms$$-$$2) (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { height_m: 5.0, g_ms2: 10.0 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_straight_line_main_58',
@@ -1402,13 +1402,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_72',
     complexity: 'jee_main',
     question: 'A passenger train of length 60 m travels at a speed of 80 km/hr. Another freight train of length 120 m travels at a speed of 30 km/hr. The ratio of times taken by the passenger train to completely cross the freight train when : (i) they are moving in the same direction , and (ii) in the opposite direction is : (JEE Main 2019 (Online) 12th January Morning Slot)',
-    given: {},
+    given: { length_m: 60.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_73',
@@ -1426,13 +1426,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_74',
     complexity: 'jee_main',
     question: 'A particle starts from the origin at time t = 0 and moves along the positive x-axis. The graph of velocity with respect to time is shown in figure. What is the position of the particle at time t = 5s ? (JEE Main 2019 (Online) 10th January Evening Slot)',
-    given: {},
+    given: { time_s: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_75',
@@ -1522,13 +1522,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_82',
     complexity: 'jee_main',
     question: 'Two stones are thrown up simultaneously from the edge of a cliff $$240$$ $$m$$ high with initial speed of $$10$$ $$m/s$$ and $$40$$ $$m/s$$ respectively. Which of the following graph best represents the time variation of relative position of the second stone with respect to the first ?\n(Assume stones do not rebound after hitting the ground and neglect air resistance, take $$g = 10m/{s^2}$$)\n(The figures are schematic and not drawn to scale) (JEE Main 2015 (Offline))',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_straight_line_main_83',
@@ -1546,13 +1546,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_84',
     complexity: 'jee_main',
     question: 'An object, moving with a speed of 6.25 m/s, is decelerated at a rate given by :\n$${{dv} \\over {dt}} =  - 2.5\\sqrt v $$ where v is the instantaneous speed. The time taken by the object, to come to rest, would be : (AIEEE 2011)',
-    given: {},
+    given: { speed_ms: 6.25 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_straight_line_main_85',
@@ -1654,13 +1654,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_93',
     complexity: 'jee_main',
     question: 'An automobile travelling with speed of 60 km/h, can brake to stop within a distance of 20 m.\nIf the car is going twice as fast, i.e 120 km/h, the stopping distance will be (AIEEE 2004)',
-    given: {},
+    given: { length_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_94',
@@ -1870,13 +1870,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_111',
     complexity: 'jee_main',
     question: 'A tennis ball is dropped on to the floor from a height of 9.8 m. It rebounds to a height 5.0 m. Ball comes in contact with the floor for 0.2s. The average acceleration during contact is ___________ ms$$^{-2}$$.\n(Given g = 10 ms$$^{-2}$$) (JEE Main 2023 (Online) 29th January Morning Shift)',
-    given: {},
+    given: { height_m: 9.8, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_straight_line_main_112',
@@ -1894,13 +1894,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_113',
     complexity: 'jee_main',
     question: 'A particle is moving in a straight line such that its velocity is increasing at 5 ms$$-$$1 per meter. The acceleration of the particle is _____________ ms$$-$$2 at a point where its velocity is 20 ms$$-$$1. (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { speed_ms: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_straight_line_main_114',
@@ -1918,37 +1918,37 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_115',
     complexity: 'jee_main',
     question: 'A car covers AB distance with first one-third at velocity v1 ms$$-$$1, second one-third at v2 ms$$-$$1 and last one-third at v3 ms$$-$$1. If v3 = 3v1, v2 = 2v1 and v1 = 11 ms$$-$$1 then the average velocity of the car is _____________ ms$$-$$1. (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { speed_ms: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_straight_line_main_116',
     complexity: 'jee_main',
     question: 'A ball is projected vertically upward with an initial velocity of 50 ms$$-$$1 at t = 0s. At t = 2s, another ball is projected vertically upward with same velocity. At t = __________ s, second ball will meet the first ball (g = 10 ms$$-$$2). (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { speed_ms: 50.0, g_ms2: 10.0, time_s: 0.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_117',
     complexity: 'jee_main',
     question: 'A ball of mass 0.5 kg is dropped from the height of 10 m. The height, at which the magnitude of velocity becomes equal to the magnitude of acceleration due to gravity, is ________ m. [Use g = 10 m/s2] (JEE Main 2022 (Online) 26th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.5, height_m: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_straight_line_main_118',
@@ -1990,25 +1990,25 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_straight_line_main_121',
     complexity: 'jee_main',
     question: 'Two spherical balls having equal masses with radius of 5 cm each are thrown upwards along the same vertical direction at an interval of 3s with the same initial velocity of 35 m/s, then these balls collide at a height of ............... m. (Take g = 10 m/s2) (JEE Main 2021 (Online) 26th August Morning Shift)',
-    given: {},
+    given: { speed_ms: 35.0, g_ms2: 10.0, radius_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'motion_in_a_straight_line_main_122',
     complexity: 'jee_main',
     question: 'The speed verses time graph for a particle is shown in the figure. The distance travelled (in m) by\nthe particle during the time interval t = 0 to t = 5 s will be________. (JEE Main 2020 (Online) 4th September Evening Slot)',
-    given: {},
+    given: { time_s: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_straight_line_main_123',
@@ -2039,13 +2039,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_1',
     complexity: 'jee_main',
     question: 'At $t=0$, a body of mass 100 g starts moving under the influence of a force $(5 \\hat{\\mathrm{i}}+10 \\hat{\\mathrm{j}}) \\mathrm{N} \\cdot$ After 2 s its position is $(2 x \\hat{\\mathrm{i}}+5 y \\hat{\\mathrm{j}}) \\mathrm{m}$. The ratio $x: y$ is $\\_\\_\\_\\_$ . (JEE Main 2026 (Online) 4th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'motion_in_a_plane_main_2',
@@ -2135,13 +2135,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_9',
     complexity: 'jee_main',
     question: 'A helicopter flying horizontally with a speed of 360 km/h at an altitude of 2 km, drops an object at an instant. The object hits the ground at a point O, 20 s after it is dropped. Displacement of \'O\' from the position of helicopter where the object was released is : (use acceleration due to gravity g = 10 m/s2 and neglect air resistance) (JEE Main 2025 (Online) 7th April Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_10',
@@ -2207,13 +2207,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_15',
     complexity: 'jee_main',
     question: 'The position vector of a moving body at any instant of time is given as $\\overrightarrow{\\mathrm{r}}=\\left(5 \\mathrm{t}^2 \\hat{i}-5 \\mathrm{t} \\hat{j}\\right) \\mathrm{m}$. The magnitude and direction of velocity at $t=2 s$ is, (JEE Main 2025 (Online) 24th January Evening Shift)',
-    given: {},
+    given: { time_s: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_plane_main_16',
@@ -2231,13 +2231,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_17',
     complexity: 'jee_main',
     question: 'A ball of mass 100 g is projected with velocity $20 \\mathrm{~m} / \\mathrm{s}$ at $60^{\\circ}$ with horizontal. The decrease in kinetic energy of the ball during the motion from point of projection to highest point is (JEE Main 2025 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { mass_kg: 100.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'motion_in_a_plane_main_18',
@@ -2411,13 +2411,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_32',
     complexity: 'jee_main',
     question: 'At time $$t=0$$ a particle starts travelling from a height $$7 \\hat{z} \\mathrm{~cm}$$ in a plane keeping z coordinate constant. At any instant of time it\'s position along the $$\\hat{x}$$ and $$\\hat{y}$$ directions are defined as $$3 \\mathrm{t}$$ and $$5 \\mathrm{t}^{3}$$ respectively. At t = 1s acceleration of the particle will be (JEE Main 2022 (Online) 28th July Evening Shift)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_plane_main_33',
@@ -2447,25 +2447,25 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_35',
     complexity: 'jee_main',
     question: 'A ball is projected from the ground with a speed 15 ms$$-$$1 at an angle $$\\theta$$ with horizontal so that its range and maximum height are equal, then \'tan $$\\theta$$\' will be equal to : (JEE Main 2022 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { speed_ms: 15.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_plane_main_36',
     complexity: 'jee_main',
     question: 'At t = 0, truck, starting from rest, moves in the positive x-direction at uniform acceleration of 5 ms$$-$$2. At t = 20 s, a ball is released from the top of the truck. The ball strikes the ground in 1 s after the release. The velocity of the ball, when it strikes the ground, will be :\n(Given g = 10 ms$$-$$2) (JEE Main 2022 (Online) 30th June Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0, time_s: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'time_s': 's' }
   },
   {
     id: 'motion_in_a_plane_main_37',
@@ -2495,13 +2495,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_39',
     complexity: 'jee_main',
     question: 'A projectile is launched at an angle \'$$\\alpha$$\' with the horizontal with a velocity 20 ms$$-$$1. After 10 s, its inclination with horizontal is \'$$\\beta$$\'. The value of tan$$\\beta$$ will be : (g = 10 ms$$-$$2). (JEE Main 2022 (Online) 27th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 20.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_40',
@@ -2531,13 +2531,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_42',
     complexity: 'jee_main',
     question: 'A projectile is projected with velocity of 25 m/s at an angle $$\\theta$$ with the horizontal. After t seconds its inclination with horizontal becomes zero. If R represents horizontal range of the projectile, the value of $$\\theta$$ will be :\n[use g = 10 m/s2] (JEE Main 2022 (Online) 24th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 25.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_43',
@@ -2567,13 +2567,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_45',
     complexity: 'jee_main',
     question: 'A player kicks a football with an initial speed of 25 ms$$-$$1 at an angle of 45$$^\\circ$$ from the ground. What are the maximum height and the time taken by the football to reach at the highest point during motion ? (Take g = 10 ms$$-$$2) (JEE Main 2021 (Online) 27th August Evening Shift)',
-    given: {},
+    given: { speed_ms: 25.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_46',
@@ -2711,25 +2711,25 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_57',
     complexity: 'jee_main',
     question: 'The trajectory of a projectile near the surface of the earth is given as y = 2x â 9x2\n. If it were launched at an\nangle $$\\theta $$0 with speed v0 then (g = 10 msâ2) : (JEE Main 2019 (Online) 12th April Morning Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_58',
     complexity: 'jee_main',
     question: 'A plane is inclined at an angle $$\\alpha $$ = 30Â° with respect to the horizontal. A particle is projected with a speed u =\n2 msâ1\n, from the base of the plane, making an angle $$\\theta $$ = 15Â° with respect to the plane as shown in the figure.\nthe distance from the base, at which the particle hits the plane is close to : (Take g = 10 ms\nâ2) (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_59',
@@ -2819,25 +2819,25 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_66',
     complexity: 'jee_main',
     question: 'A projectile is given an initial velocity of $$\\left( {\\widehat i + 2\\widehat j} \\right)$$ m/s, where $${\\widehat i}$$ is along the ground and $${\\widehat j}$$ is along the\nvertical. If g = 10 m/s2, the equation of its trajectory is: (JEE Main 2013 (Offline))',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_67',
     complexity: 'jee_main',
     question: 'A boy can throw a stone up to a maximum height of 10 m. The maximum horizontal distance that the boy\ncan throw the same stone up to will be (AIEEE 2012)',
-    given: {},
+    given: { height_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'motion_in_a_plane_main_68',
@@ -2879,13 +2879,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_71',
     complexity: 'jee_main',
     question: 'A particle is moving eastwards with a velocity of 5 m/s. In 10 seconds the velocity\nchanges to 5 m/s northwards. The average acceleration in this time is (AIEEE 2005)',
-    given: {},
+    given: { speed_ms: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_plane_main_72',
@@ -2915,13 +2915,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_74',
     complexity: 'jee_main',
     question: 'A boy playing on the roof of a 10 m high building throws a ball with a speed of 10 m/s at an\nangle of $$30^\\circ $$ with the horizontal. How far from the throwing point will the ball be at the height\nof 10 m from the ground?\n$$\\left[ {g = 10m/{s^2},\\sin 30^\\circ  = {1 \\over 2},\\cos 30^\\circ  = {{\\sqrt 3 } \\over 2}} \\right]$$ (AIEEE 2003)',
-    given: {},
+    given: { speed_ms: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_75',
@@ -2939,13 +2939,13 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_76',
     complexity: 'jee_main',
     question: 'The maximum speed of a boat in still water is 27 km/h. Now this boat is moving downstream in a river flowing at 9 km/h. A man in the boat throws a ball vertically upwards with speed of 10 m/s. Range of the ball as observed by an observer at rest on the bank is __________ cm. (Take $g=10$ m/s2) (JEE Main 2025 (Online) 29th January Morning Shift)',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_plane_main_77',
@@ -3083,25 +3083,25 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_88',
     complexity: 'jee_main',
     question: 'A fighter jet is flying horizontally at a certain altitude with a speed of 200 ms$$-$$1. When it passes directly overhead an anti-aircraft gun, a bullet is fired from the gun, at an angle $$\\theta$$ with the horizontal, to hit the jet. If the bullet speed is 400 m/s, the value of $$\\theta$$ will be ___________$$^\\circ$$. (JEE Main 2022 (Online) 26th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_plane_main_89',
     complexity: 'jee_main',
     question: 'A body is projected from the ground at an angle of 45$$^\\circ$$ with the horizontal. Its velocity after 2s is 20 ms$$-$$1. The maximum height reached by the body during its motion is __________ m. (use g = 10 ms$$-$$2) (JEE Main 2022 (Online) 24th June Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'motion_in_a_plane_main_90',
@@ -3119,36 +3119,36 @@ export const PROJECTILE_PUZZLES: PuzzleConfig[] = [
     id: 'motion_in_a_plane_main_91',
     complexity: 'jee_main',
     question: 'A person is swimming with a speed of 10 m/s at an angle of 120$$^\\circ$$ with the flow and reaches to a point directly opposite on the other side of the river. The speed of the flow is \'x\' m/s. The value of \'x\' to the nearest integer is __________. (JEE Main 2021 (Online) 18th March Morning Shift)',
-    given: {},
+    given: { speed_ms: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'motion_in_a_plane_main_92',
     complexity: 'jee_main',
     question: 'A swimmer can swim with velocity of 12 km/h in still water. Water flowing in a river has velocity 6 km/h. The direction with respect to the direction of flow of river water he should swim in order to reach the point on the other bank just opposite to his starting point is ____________$$^\\circ$$. (Round off to the Nearest Integer) (Find the angle in degrees) (JEE Main 2021 (Online) 16th March Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['angle_deg', 'acceleration_ms2', 'answer'],
+    answer: { 'angle_deg': 0, 'acceleration_ms2': 0, 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'angle_deg': '°', 'acceleration_ms2': 'm/s²', 'answer': '' }
   },
   {
     id: 'motion_in_a_plane_main_93',
     complexity: 'jee_main',
     question: 'A particle is moving along the x-axis with its\ncoordinate with the time \'t\' given be x(t) = 10 + 8t â 3t2. Another particle is moving\nthe y-axis with its coordinate as a function of\ntime given by y(t) = 5 â 8t3. At t = 1s, the speed\nof the second particle as measured in the frame\nof the first particle is given as $$\\sqrt v $$. Then v\n(in m/s) is ______. (JEE Main 2020 (Online) 8th January Morning Slot)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   }
 ]

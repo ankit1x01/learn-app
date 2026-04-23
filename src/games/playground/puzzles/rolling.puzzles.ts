@@ -6,8 +6,8 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     complexity: 'board',
     question: 'A solid sphere rolls without slipping down a 30° incline of height 2 m. Find the velocity at the bottom (g=10 m/s²). Use energy conservation with rotational KE.',
     given: { angle: 30, h: 2, g: 10 },
-    find: ['velocity'],
-    answer: { velocity: 5.35 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 4,
     hints: [
       'Energy: mgh = ½mv² + ½Iω² ; for solid sphere I=2/5 mr², and ω=v/r',
@@ -15,30 +15,30 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
       'v = √(10gh/7) = √(10×10×2/7) ≈ 5.35 m/s',
     ],
     formula: 'v = √(10gh/7)  [solid sphere rolling]',
-    units: { velocity: 'm/s' },
+    units: { 'velocity_ms': 'm/s', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'roll_board_002',
     complexity: 'board',
     question: 'A hollow cylinder (I = mr²) rolls from rest down a 5 m high ramp. Find the speed at the bottom (g=10).',
     given: { h: 5, g: 10 },
-    find: ['velocity'],
-    answer: { velocity: 7.07 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 4,
     hints: [
       'Energy: mgh = ½mv² + ½Iω² = ½mv² + ½mr²(v/r)² = mv²',
       'v² = gh → v = √(gh) = √(10×5) = √50 ≈ 7.07 m/s',
     ],
     formula: 'v = √(gh) for hollow cylinder',
-    units: { velocity: 'm/s' },
+    units: { 'velocity_ms': 'm/s', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'roll_jee_main_001',
     complexity: 'jee_main',
     question: 'A solid cylinder of mass 3 kg and radius 0.1 m rolls without slipping on a horizontal surface. If its linear speed is 4 m/s, find its total KE.',
     given: { m: 3, r: 0.1, v: 4 },
-    find: ['KE_total'],
-    answer: { KE_total: 36 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 3,
     hints: [
       'KE_rot = ½Iω² = ½(mr²/2)(v/r)² = mv²/4',
@@ -46,30 +46,30 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
       'KE_total = 24 + 12 = 36 J',
     ],
     formula: 'KE = ¾mv²  [solid cylinder]',
-    units: { KE_total: 'J' },
+    units: { 'velocity_ms': 'm/s', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'roll_jee_main_002',
     complexity: 'jee_main',
     question: 'A sphere rolls up an incline. If v = 7 m/s at the bottom, find the height reached (g=10).',
     given: { v: 7, g: 10 },
-    find: ['height'],
-    answer: { height: 3.43 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 3,
     hints: [
       '7/10 mv² = mgh  (sphere rolling)',
       'h = 7v²/(10g) = 7×49/100 = 3.43 m',
     ],
     formula: 'h = 7v²/(10g)',
-    units: { height: 'm' },
+    units: { 'velocity_ms': 'm/s', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
   {
     id: 'roll_jee_adv_001',
     complexity: 'jee_advanced',
     question: 'A disc and a sphere of equal mass m and radius r start from rest and roll down the same height h. Find the ratio of their speeds at the bottom.',
     given: { h: 1, g: 10 },
-    find: ['v_ratio'],
-    answer: { v_ratio: 1.069 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 3,
     hints: [
       'Disc: v_d = √(4gh/3);  Sphere: v_s = √(10gh/7)',
@@ -77,20 +77,20 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
       'Actually ratio = √(30/28) ≈ 1.035 — check which is faster',
     ],
     formula: 'v = √(2gh/(1+I/mr²))',
-    units: { v_ratio: '' },
+    units: { 'velocity_ms': 'm/s', 'height_m': 'm', 'g_ms2': 'm/s²' },
   },
 ,
   {
     id: 'rotational_motion_0',
     complexity: 'jee_advanced',
     question: 'The center of a disk of radius $r$ and mass $m$ is attached to a spring of spring constant $k$, inside a ring of radius $R>r$ as shown in the figure. The other end of the spring is attached on the periphery of the ring. Both the ring and the disk are in the same vertical plane. The disk can only roll along the inside periphery of the ring, without slipping. The spring can only be stretched or compressed along the periphery of the ring, following the Hooke\'s law. In equilibrium, the disk is at the bottom of the ring. Assuming small displacement of the disc, the time period of oscillation of center of mass of the disk is written as $T=\\frac{2 \\pi}{\\omega}$. The correct expression for $\\omega$ is ( $g$ is the acceleration due to gravity): (JEE Advanced 2025 Paper 1 Online)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { height_m: 2.0, g_ms2: 10.0 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'velocity_ms': 'm/s', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_1',
@@ -204,13 +204,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_10',
     complexity: 'jee_advanced',
     question: 'A uniform wooden stick of mass 1.6 kg and length $$l$$ rests in an inclined manner on a smooth, vertical wall\nof height h ( < $$l$$ ) such that a small portion of the stick extends beyond the wall. The reaction force of the\nwall on the stick is perpendicular to the stick. The stick makes an angle of $$30^\\circ $$ with the wall and the bottom of the stick is on a rough floor. The reaction of the wall on the stick is equal in magnitude to the reaction of the floor on the stick. The ratio $${h \\over l}$$ and the frictional force f at the bottom of the stick are ( g =10 ms-2 ) (JEE Advanced 2016 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 1.6, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_11',
@@ -409,12 +409,12 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A wooden log of mass M and length L is \nhinged by a frictionless nail at O; a bullet \nof mass m strikes with velocity $$v$$ and sticks \nto it. Find angular velocity of the system \nimmediately after the collision about O. (IIT-JEE 2005 Mains)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_28',
@@ -433,12 +433,12 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'Two identical ladders, each of mass M and \nlength L are resting on the rough horizontal \nsurface as shown in the figure. A block of \nmass $$m$$ hangs from P. If the system is in \nequilibrium, find the magnitude and the \ndirection of frictional force at A and B. (IIT-JEE 2005 Mains)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_30',
@@ -588,73 +588,73 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_42',
     complexity: 'jee_advanced',
     question: 'Two identical uniform discs roll without slipping on two different surfaces AB and CD (see figure) starting at A and C with linear speeds v1 and v2, respectively, and always remain in contact with the surfaces. If they reach B and D with the same linear speed and v1 = 3 m/s, then v2 in m/s is (g = 10 m/s2) (JEE Advanced 2015 Paper 1 Offline)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_43',
     complexity: 'jee_advanced',
     question: 'A uniform circular disc of mass 1.5 kg and radius 0.5 m is initially at rest on a horizontal frictionless surface. Three forces of equal magnitude F = 0.5 N are applied simultaneously along the three sides of an equilateral triangle XYZ with its vertices on the perimeter of the disc (see figure). One second after applying the forces, the angular speed of the disc in rad s-1 is (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 1.5, radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_44',
     complexity: 'jee_advanced',
     question: 'A horizontal circular platform of radius 0.5 m and mass 0.45 kg is free to rotate about its axis. Two massless spring toy-guns, each carrying a steel ball of mass 0.05 kg are attached to the platform at a distance 0.25 m from the centre on its either sides along its diameter (see figure). Each gun simultaneously fires the balls horizontally and perpendicular to the diameter in opposite directions. After leaving the platform, the balls have horizontal speed of 9 ms-1 with respect to the ground. The rotational speed of the platform in rad s-1 after the balls leave the platform is (JEE Advanced 2014 Paper 1 Offline)',
-    given: {},
+    given: { speed_ms: 9.0, mass_kg: 0.45, radius_m: 0.5, length_m: 0.25 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'radius_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_45',
     complexity: 'jee_advanced',
     question: 'A uniform circular disc of mass 50 kg and radius 0.4 m is rotating with an angular velocity of 10 rad s-1\nabout its own axis, which is vertical. Two uniform circular rings, each of mass 6.25 kg and radius 0.2 m,\nare gently placed symmetrically on the disc in such a manner that they are touching each other along the\naxis of the disc and are horizontal. Assume that the friction is large enough such that the rings are at rest\nrelative to the disc and the system rotates about the original axis. The new angular velocity (in rad s-1\n) of the system is (JEE Advanced 2013 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 50.0, radius_m: 0.4 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_46',
     complexity: 'jee_advanced',
     question: 'Four solid spheres each of diameter $$\\sqrt 5 $$ cm and mass 0.5 kg are placed with their centers at the corners of\na square of side 4 cm. The moment of inertia of the system about the diagonal of the square is N $$ \\times $$ 10â4\n kg-m2, then N is (IIT-JEE 2011 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_47',
     complexity: 'jee_advanced',
     question: 'A boy is pushing a ring of mass 2 kg and radius 0.5 m with a stick as shown in the figure. The stick applies a force of 2 N on the ring and rolls it without slipping with an acceleration of 0.2 m/s2. The coefficient of friction between the ground and the ring is large enough that rolling always occurs and the coefficient of friction between the stick and the ring is (P/10). The value of P is _________. (IIT-JEE 2011 Paper 1 Offline)',
-    given: {},
+    given: { mass_kg: 2.0, radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_48',
@@ -708,13 +708,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_52',
     complexity: 'jee_advanced',
     question: 'Consider a body of mass $$1.0$$ $$kg$$ at rest at the origin at time $$t=0.$$ A force $$\\overrightarrow F  = \\left( {\\alpha t \\widehat i + \\beta \\widehat j} \\right)$$ is applied on the body, where $$\\alpha  = 1.0N{s^{ - 1}}$$ and $$\\beta  = 1.0\\,N.$$ The torque acting on the body about the origin at time $$t=1.0s$$ is $$\\overrightarrow \\tau  .$$ Which of the following statements is (are) true? (JEE Advanced 2018 Paper 1 Offline)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'rotational_motion_53',
@@ -780,13 +780,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_58',
     complexity: 'jee_advanced',
     question: 'The position vector $$\\overrightarrow r $$ of a particle of mass m is given by the following equation\n$$$\\overrightarrow r \\left( t \\right) = \\alpha {t^3}\\widehat i + \\beta {t^2}\\widehat j,$$$where $$\\alpha  = {{10} \\over 3}m{s^{ - 3}}$$, $$\\beta  = 5\\,m{s^{ - 2}}$$ and m = 0.1 kg. At t = 1 s, which of the following\nstatement(s) is(are) true about the particle? (JEE Advanced 2016 Paper 1 Offline)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'rotational_motion_59',
@@ -901,13 +901,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_2',
     complexity: 'jee_main',
     question: 'A solid sphere of radius 4 cm and mass 5 kg is rotating (rotation axis is passing through the centre of the sphere) with an angular velocity of 1200 rpm . It is brought to rest in 10 s by applying a constant torque. The torque applied and the number of rotations it made before it comes to rest are $\\_\\_\\_\\_$ and $\\_\\_\\_\\_$ respectively. (JEE Main 2026 (Online) 6th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 5.0, radius_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_3',
@@ -949,13 +949,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_6',
     complexity: 'jee_main',
     question: 'The position of an object having mass 0.1 kg as a function of time $t$ is given as $\\vec{r} = \\left( 10 t^2 \\hat{i} + 5 t^3 \\hat{j} \\right)$ m. At $t = 1$ s, which of the following statements are correct?A. The linear momentum $\\vec{p} = \\left( 2 \\hat{i} + 1.5 \\hat{j} \\right)$ kgÂ·m/s.B. The force acting on the object $\\vec{F} = \\left( 2 \\hat{i} + 3 \\hat{j} \\right)$ N.C. The angular momentum of the object about its origin $\\vec{L} = 15 \\hat{k}$ JÂ·s.D. The torque acting on the object about its origin $\\vec{\\tau} = 20 \\hat{k}$ NÂ·m.Choose the correct answer from the options given below: (JEE Main 2026 (Online) 2nd April Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_7',
@@ -973,13 +973,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_8',
     complexity: 'jee_main',
     question: 'Two circular discs of radius each 10 cm are joined at their centres by a rod of length 30 cm and mass 600 gm as shown in figure.\nIf the mass of each disc is 600 gm and applied torque between two discs is $43 \\times 10^5$ dyne.cm, the angular acceleration of the discs about the given axis $A B$ is $\\_\\_\\_\\_$ $\\mathrm{rad} / \\mathrm{s}^2$. (JEE Main 2026 (Online) 28th January Morning Shift)',
-    given: {},
+    given: { mass_kg: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_9',
@@ -997,13 +997,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_10',
     complexity: 'jee_main',
     question: 'Two masses 400 g and 350 g are suspended from the ends of a light string passing over a heavy pulley of radius 2 cm . When released from rest the heavier mass is observed to fall 81 cm in 9 s . The rotational inertia of the pulley is $\\_\\_\\_\\_$ $\\mathrm{kg} \\cdot \\mathrm{m}^2$. $\\left(\\mathrm{g}=9.8 \\mathrm{~m} / \\mathrm{s}^2\\right)$ (JEE Main 2026 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_11',
@@ -1057,13 +1057,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_15',
     complexity: 'jee_main',
     question: 'A solid sphere of mass 5 kg and radius 10 cm is kept in contact with another solid sphere of mass 10 kg and radius 20 cm . The moment of inertia of this pair of spheres about the tangent passing through the point of contact is $\\_\\_\\_\\_$ $\\mathrm{kg} \\cdot \\mathrm{m}^2$. (JEE Main 2026 (Online) 22nd January Morning Shift)',
-    given: {},
+    given: { mass_kg: 5.0, radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_16',
@@ -1129,13 +1129,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_21',
     complexity: 'jee_main',
     question: 'A force of 49 N acts tangentially at the highest point of a sphere (solid) of mass 20 kg , kept on a rough horizontal plane. If the sphere rolls without slipping, then the acceleration of the center of the sphere is (JEE Main 2025 (Online) 3rd April Morning Shift)',
-    given: {},
+    given: { mass_kg: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_22',
@@ -1177,25 +1177,25 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_25',
     complexity: 'jee_main',
     question: 'A cord of negligible mass is wound around the rim of a wheel supported by spokes with negligible mass. The mass of wheel is 10 kg and radius is 10 cm and it can freely rotate without any friction. Initially the wheel is at rest. If a steady pull of 20 N is applied on the cord, the angular velocity of the wheel, after the cord is unwound by 1 m , would be: (JEE Main 2025 (Online) 2nd April Morning Shift)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_26',
     complexity: 'jee_main',
     question: 'A uniform rod of mass 250 g having length 100 cm is balanced on a sharp edge at 40 cm mark. A mass of 400 g is suspended at 10 cm mark. To maintain the balance of the rod, the mass to be suspended at 90 cm mark, is (JEE Main 2025 (Online) 28th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 250.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_27',
@@ -1274,12 +1274,12 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A uniform circular disc of radius \' $\\mathrm{R}^{\\prime}$ and mass \' $\\mathrm{M}^{\\prime}$ is rotating about an axis perpendicular to its plane and passing through its centre. A small circular part of radius $R / 2$ is removed from the original disc as shown in the figure. Find the moment of inertia of the remaining part of the original disc about the axis as given above. (JEE Main 2025 (Online) 22nd January Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_34',
@@ -1369,13 +1369,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_41',
     complexity: 'jee_main',
     question: 'An object of mass 8 kg is hanging from one end of a uniform rod CD of mass 2 kg and length 1 m pivoted at its end C on a vertical wall as shown in figure. It is supported by a cable AB such that the system is in equilibrium. The tension in the cable is (Take g = 10 m/s$$^2$$) (JEE Main 2023 (Online) 25th January Morning Shift)',
-    given: {},
+    given: { mass_kg: 8.0, g_ms2: 10.0, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_42',
@@ -1429,13 +1429,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_46',
     complexity: 'jee_main',
     question: 'A $$\\sqrt {34} $$ m long ladder weighing 10 kg leans on a frictionless wall. Its feet rest on the floor 3 m away from the wall as shown in the figure. If Ef and Fw are the reaction forces of the floor and the wall, then ratio of $${F_w}/{F_f}$$ will be :\n(Use g = 10 m/s2.) (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_main_47',
@@ -1501,13 +1501,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_52',
     complexity: 'jee_main',
     question: 'A system consists of two identical spheres each of mass 1.5 kg and radius 50 cm at the end of light rod. The distance between the centres of the two spheres is 5 m. What will be the moment of inertia of the system about an axis perpendicular to the rod passing through its midpoint? (JEE Main 2021 (Online) 31st August Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.5, radius_m: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_53',
@@ -1549,13 +1549,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_56',
     complexity: 'jee_main',
     question: 'The solid cylinder of length 80 cm and mass M has a radius of 20 cm. Calculate the density of the material used if the moment of inertia of the cylinder about an axis CD parallel to AB as shown in figure is 2.7 kg m2. (JEE Main 2021 (Online) 26th August Evening Shift)',
-    given: {},
+    given: { radius_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_57',
@@ -1657,13 +1657,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_65',
     complexity: 'jee_main',
     question: 'A sphere of mass 2 kg and radius 0.5 m is rolling with an initial speed of 1 ms-1 goes up an inclined plane which makes an angle of 30$$^\\circ$$ with the horizontal plane, without slipping. How long will the sphere take to return to the starting point A? (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { speed_ms: 1.0, mass_kg: 2.0, radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_66',
@@ -1909,13 +1909,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_86',
     complexity: 'jee_main',
     question: 'A uniform sphere of mass 500 g rolls without\nslipping on a plane horizontal surface with its\ncentre moving at a speed of 5.00 cm/s. Its\nkinetic energy is : (JEE Main 2020 (Online) 8th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_87',
@@ -2005,13 +2005,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_94',
     complexity: 'jee_main',
     question: 'A metal coin of mass 5 g and radius 1 cm is fixed to a thin stick AB of negligible mass as shown in the\nfigure. The system is initially at rest. The constant torque, that will make the system rotate about AB at 25\nrotations per second in 5s, is close to : (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { mass_kg: 5.0, radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_95',
@@ -2137,13 +2137,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_105',
     complexity: 'jee_main',
     question: 'A rectangular solid box of length 0.3 m is held\nhorizontally, with one of its sides on the edge\nof a platform of height 5m. When released, it\nslips off the table in a very short time t = 0.01s,\nremaining essentially horizontal. The angle by\nwhich it would rotate when it hits the ground\nwill be (in radians) close to :- (JEE Main 2019 (Online) 8th April Evening Slot)',
-    given: {},
+    given: { height_m: 5.0, time_s: 0.01, length_m: 0.3 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm', 'time_s': 's', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_106',
@@ -2173,13 +2173,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_108',
     complexity: 'jee_main',
     question: 'A particle of mass 20 g is released with an initial velocity 5 m/s along the curve from the point A, as shown in the figure. The point A is at height h from point B. The particle slides along the frictionless surface. when the particle reaches point b, its angular momentum about O will be :\n(Take g = 10 m/s2) (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { speed_ms: 5.0, mass_kg: 20.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_main_109',
@@ -2209,25 +2209,25 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_111',
     complexity: 'jee_main',
     question: 'Let the moment of inertia of a hollow cylinder of length 30 cm (inner radius 10 cm and outer radius 20 cm), about its axis be I. The radius of a thin cylinder of the same mass such that its moment of inertia about its axis is also I, is : (JEE Main 2019 (Online) 12th January Morning Slot)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_112',
     complexity: 'jee_main',
     question: 'A string is wound around a hollow cylinder of mass 5 kg and radius 0.5m. If the string is now pulled with a horizontal force of 40 N, and the cylinder is rolling without slipping on a horizontal surface (see figure), then the angular acceleration of the cylinder will be (Neglect the mass and thickness of the string) : (JEE Main 2019 (Online) 11th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 5.0, radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_113',
@@ -2245,13 +2245,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_114',
     complexity: 'jee_main',
     question: 'The magnitude of torque on a particle of mass 1 kg is 2.5 Nm about the origin. If the force acting on it is 1 N, and the distance of the particle from the origin is 5m, the angle between the force and the position vector is (in radians) : (JEE Main 2019 (Online) 11th January Evening Slot)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_115',
@@ -2329,13 +2329,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_121',
     complexity: 'jee_main',
     question: 'A rod of length 50 cm is pivoted at one end. It is raised such that if makes an angle of 30o  from the horizontal as shown and released from rest. Its angular speed when it passes through the horizontal (in rad s$$-$$1) will be (g = 10 ms$$-$$2) (JEE Main 2019 (Online) 9th January Evening Slot)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'rotational_motion_main_122',
@@ -2461,13 +2461,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_132',
     complexity: 'jee_main',
     question: 'The machine as shown has 2 rods of length1 m connected by a pivot at the top. The end of one rod is connected to the floor by a stationary pivot and the end of the other rod has a roller that rolls along the floor in a slot. As the roller goes back and forth,  a 2 kg weight moves up and down. If the roller is moving towards right at a constant speed, the weight moves up with a : (JEE Main 2017 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_133',
@@ -2545,13 +2545,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_139',
     complexity: 'jee_main',
     question: 'A cubical block of side 30 cm is moving with velocity 2 msâ1 on a smooth horizontal surface. The surface has a bump at a point O as shown in figure. The angular\nvelocity (in rad/s) of the block immediately after it hits the bump, is : (JEE Main 2016 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'rotational_motion_main_140',
@@ -2893,37 +2893,37 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_168',
     complexity: 'jee_main',
     question: 'Moment of inertia about an axis AB for a rod of mass 40 kg and length 3 m is same as that of a solid sphere of mass of 10 kg and radius $R$ about an axis parallel to AB axis with separation of 3 m as shown in figure below. The value of $R$ is given as $\\sqrt{\\frac{\\alpha}{2}}$. The value of $\\alpha$ is ________. (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { mass_kg: 40.0, length_m: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_169',
     complexity: 'jee_main',
     question: 'A fly wheel having mass 3 kg and radius 5 m is free to rotate about a horizontal axis. A string having negligible mass is wound around the wheel and the loose end of the string is connected to 3 kg mass. The mass is kept at rest initially and released. Kinetic energy of the wheel when the mass descends by 3 m is ________ J. ($g = 10~\\mathrm{m/s^2}$) (JEE Main 2026 (Online) 28th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 3.0, radius_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_170',
     complexity: 'jee_main',
     question: 'A solid sphere of radius 10 cm is rotating about an axis which is at a distance 15 cm from its centre. The radius of gyration about this axis is $\\sqrt{n} \\mathrm{~cm}$. The value of $n$ is (JEE Main 2026 (Online) 28th January Morning Shift)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_171',
@@ -2953,13 +2953,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_173',
     complexity: 'jee_main',
     question: 'Two masses $m$ and 2 m are connected by a light string going over a pulley (disc) of mass 30 m with radius $r=0.1 \\mathrm{~m}$. The pulley is mounted in a vertical plane and it is free to rotate about its axis. The 2 m mass is released from rest and its speed when it has descended through a height of 3.6 m is\n$\\_\\_\\_\\_$ $\\mathrm{m} / \\mathrm{s}$. (Assume string does not slip and $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { height_m: 3.6 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'height_m': 'm' }
   },
   {
     id: 'rotational_motion_main_174',
@@ -3049,13 +3049,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_181',
     complexity: 'jee_main',
     question: 'A wheel of radius 0.2 m rotates freely about its center when a string that is wrapped over its rim is pulled by force of 10 N as shown in figure. The established torque produces an angular acceleration of $2 \\mathrm{rad} / \\mathrm{s}^2$. Moment of intertia of the wheel is___________ $\\mathrm{kg} \\mathrm{}\\,\\, \\mathrm{m}^2$. (Acceleration due to gravity $=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2025 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { radius_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_182',
@@ -3301,13 +3301,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_202',
     complexity: 'jee_main',
     question: 'A light rope is wound around a hollow cylinder of mass 5 kg and radius 70 cm. The rope is pulled with a force of 52.5 N. The angular acceleration of the cylinder will be _________ rad s$$^{-2}$$. (JEE Main 2023 (Online) 13th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0, radius_m: 70.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_203',
@@ -3493,37 +3493,37 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_218',
     complexity: 'jee_main',
     question: 'A particle of mass 100 g is projected at time t = 0 with a speed 20 ms$$^{-1}$$ at an angle 45$$^\\circ$$ to the horizontal as given in the figure. The magnitude of the angular momentum of the particle about the starting point at time t = 2s is found to be $$\\mathrm{\\sqrt K~kg~m^2/s}$$. The value of K is ___________.\n(Take g = 10 ms$$^{-2}$$) (JEE Main 2023 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { speed_ms: 20.0, mass_kg: 100.0, g_ms2: 10.0, time_s: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'g_ms2': 'm/s²', 'time_s': 's' }
   },
   {
     id: 'rotational_motion_main_219',
     complexity: 'jee_main',
     question: 'A solid sphere of mass 2 kg is making pure rolling on a horizontal surface with kinetic energy 2240 J. The velocity of centre of mass of the sphere will be _______ ms$$^{-1}$$. (JEE Main 2023 (Online) 29th January Morning Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_220',
     complexity: 'jee_main',
     question: 'If a solid sphere of mass 5 kg and a disc of mass 4 kg have the same radius. Then the ratio of moment of inertia of the disc about a tangent in its plane to the moment of inertia of the sphere about its tangent will be $$\\frac{x}{7}$$. The value of $$x$$ is ___________. (JEE Main 2023 (Online) 25th January Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_221',
@@ -3625,13 +3625,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_229',
     complexity: 'jee_main',
     question: 'Four particles with a mass of 1 kg, 2 kg, 3 kg and 4 kg are situated at the corners of a square with side 1 m (as shown in the figure). The moment of inertia of the system, about an axis passing through the point O and perpendicular to the plane of the square, is ______________ kg m2. (JEE Main 2022 (Online) 30th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_230',
@@ -3649,13 +3649,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_231',
     complexity: 'jee_main',
     question: 'A uniform disc with mass M = 4 kg and radius R = 10 cm is mounted on a fixed horizontal axle as shown in figure. A block with mass m = 2 kg hangs from a massless cord that is wrapped around the rim of the disc. During the fall of the block, the cord does not slip and there is no friction at the axle. The tension in the cord is ____________ N.\n(Take g = 10 ms$$-$$2) (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_232',
@@ -3673,13 +3673,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_233',
     complexity: 'jee_main',
     question: 'A rolling wheel of 12 kg is on an inclined plane at position P and connected to a mass of 3 kg through a string of fixed length and pulley as shown in figure. Consider PR as friction free surface. The velocity of centre of mass of the wheel when it reaches at the bottom Q of the inclined plane PQ will be $${1 \\over 2}\\sqrt {xgh} $$ m/s. The value of x is ___________. (JEE Main 2022 (Online) 27th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_234',
@@ -3697,25 +3697,25 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_235',
     complexity: 'jee_main',
     question: 'A metre scale is balanced on a knife edge at its centre. When two coins, each of mass 10 g are put one on the top of the other at the 10.0 cm mark the scale is found to be balanced at 40.0 cm mark. The mass of the metre scale is found to be x $$\\times$$ 10$$-$$2 kg. The value of x is ___________. (JEE Main 2022 (Online) 24th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_236',
     complexity: 'jee_main',
     question: 'A 2 kg steel rod of length 0.6 m is clamped on a table vertically at its lower end and is free to rotate in vertical plane. The upper end is pushed so that the rod falls under gravity, ignoring the friction due to clamping at its lower end, the speed of the free end of rod when it passes through its lowest position is ____________ ms$$-$$1. (Take g = 10 ms$$-$$2) (JEE Main 2021 (Online) 1st September Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0, length_m: 0.6 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_237',
@@ -3745,13 +3745,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_239',
     complexity: 'jee_main',
     question: 'A solid disc of radius 20 cm and mass 10 kg is rotating with an angular velocity of 600 rpm, about an axis normal to its circular plane and passing through its centre of mass. The retarding torque required to bring the disc at rest in 10 s is ____________ $$\\pi$$ $$\\times$$ 10$$-$$1 Nm. (JEE Main 2021 (Online) 25th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 10.0, radius_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_240',
@@ -3865,13 +3865,13 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_249',
     complexity: 'jee_main',
     question: 'Consider a 20 kg uniform circular disk of radius 0.2 m. It is pin supported at its center and is at rest initially. The disk is acted upon by a constant force F = 20 N through a massless string wrapped around is periphery as shown in the figure.Suppose the disk makes n number of revolutions to attain an angular speed of 50 rad s$$-$$1.The value of n, to the nearest integer, is __________.[Given : In one complete revolution, the disk rotates by 6.28 rad] (JEE Main 2021 (Online) 16th March Morning Shift)',
-    given: {},
+    given: { radius_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'rotational_motion_main_250',
@@ -3889,25 +3889,25 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_251',
     complexity: 'jee_main',
     question: 'A uniform thin bar of mass 6 kg and length 2.4 meter is bent to make an equilateral hexagon. The moment of inertia about an axis passing through the centre of mass and perpendicular to the plane of hexagon is _______ $$\\times$$ 10$$-$$1 kg m2. (JEE Main 2021 (Online) 24th February Evening Shift)',
-    given: {},
+    given: { mass_kg: 6.0, length_m: 2.4 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_252',
     complexity: 'jee_main',
     question: 'A thin rod of mass 0.9 kg and length 1 m is\nsuspended, at rest, from one end so that it can\nfreely oscillate in the vertical plane. A particle\nof move 0.1 kg moving in a straight line with\nvelocity 80 m/s hits the rod at its bottom most\npoint and sticks to it (see figure). The angular\nspeed (in rad/s) of the rod immediately after the\ncollision will be _________. (JEE Main 2020 (Online) 5th September Evening Slot)',
-    given: {},
+    given: { speed_ms: 80.0, mass_kg: 0.9, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_253',
@@ -3949,25 +3949,25 @@ export const ROLLING_PUZZLES: PuzzleConfig[] = [
     id: 'rotational_motion_main_256',
     complexity: 'jee_main',
     question: 'A person of 80 kg mass is standing on the rim\nof a circular platform of mass 200 kg rotating\nabout its axis at 5 revolutions per minute (rpm).\nThe person now starts moving towards the\ncentre of the platform. What will be the\nrotational speed (in rpm) of the platform when\nthe person reaches its centre _________. (JEE Main 2020 (Online) 3rd September Morning Slot)',
-    given: {},
+    given: { mass_kg: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'rotational_motion_main_257',
     complexity: 'jee_main',
     question: 'A body of mass m = 10 kg is attached to one\nend of a wire of length 0.3 m. The maximum\nangular speed (in rad sâ1) with which it can be\nrotated about its other end in space station is :\n(Breaking stress of wire = 4.8 Ã 107 Nmâ2 and\narea of cross-section of the wire = 10â2 cm2) is: (JEE Main 2020 (Online) 9th January Morning Slot)',
-    given: {},
+    given: { length_m: 0.3 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'rotational_motion_main_258',

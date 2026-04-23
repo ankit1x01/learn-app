@@ -342,13 +342,13 @@ export const CAPACITOR_PUZZLES: PuzzleConfig[] = [
     id: 'capacitor_main_7',
     complexity: 'jee_main',
     question: 'A parallel plate capacitor consisting of two circular plates of radius 10 cm is being charged by a constant current of 0.15 A . If the rate of change of potential difference between the plates is $7 \\times 10^8 \\mathrm{~V} / \\mathrm{s}$ then the integer value of the distance between the parallel plates is $\\left(\\right.$ Take, $\\left.\\epsilon_0=9 \\times 10^{-12} \\frac{\\mathrm{~F}}{\\mathrm{~m}}, \\pi=\\frac{22}{7}\\right)$ ____________ $\\mu \\mathrm{m}$. (JEE Main 2025 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'capacitor_main_8',
@@ -1854,13 +1854,13 @@ export const CAPACITOR_PUZZLES: PuzzleConfig[] = [
     id: 'capacitor_main_133',
     complexity: 'jee_main',
     question: 'The charge on a capacitor plate in a circuit, as a function of time, is shown in the figure :\n\nWhen is the value of current at t = 4 s ? (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { time_s: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'capacitor_main_134',

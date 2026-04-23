@@ -18,8 +18,8 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'Consider an expanding sphere of instantaneous radius R whose total mass remains constant. The expansion is such that the instantaneous density ρ remains uniform. The rate of fractional change in density (dρ/dt)/ρ is -C (constant). Find the velocity v of any point on the surface in terms of R.',
     given: { fractional_rate: -1 },
-    find: ['velocity_coef'],
-    answer: { velocity_coef: 0.33 },
+    find: ['velocity_ms'],
+    answer: { 'velocity_ms': 0 },
     tolerance: 5,
     hints: [
       'Mass M = ρ * (4/3)πR³ = constant.',
@@ -29,7 +29,7 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
       'So v ∝ R with coefficient 1/3 ≈ 0.33.'
     ],
     formula: 'v = (C/3)R',
-    units: { velocity_coef: '' }
+    units: { 'velocity_ms': 'm/s' }
   },
   {
     id: 'motion_jee_adv_vector',
@@ -1752,13 +1752,13 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     id: 'units_and_measurements_main_142',
     complexity: 'jee_main',
     question: 'In order to determine the Young\'s Modulus of a wire of radius 0.2 cm (measured using a scale of least count = 0.001 cm) and length 1m (measured using a scale of least count = 1 mm), a weight of mass 1 kg (measured using a scale of least count = 1 g) was hanged to get the elongation of 0.5 cm (measured using a scale of least count 0.001 cm). What will be the fractional error in the value of Young\'s Modulus determined by this experiment? (JEE Main 2021 (Online) 16th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0, radius_m: 0.2, length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'radius_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'units_and_measurements_main_143',
@@ -2184,13 +2184,13 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     id: 'units_and_measurements_main_178',
     complexity: 'jee_main',
     question: 'The density of a material in SI units is 128 kg mâ3\n. In certain units in which the unit of length is 25 cm and the unit of mass is 50 g, the numerical value of density of the material is - (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { mass_kg: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'units_and_measurements_main_179',
@@ -2328,13 +2328,13 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     id: 'units_and_measurements_main_190',
     complexity: 'jee_main',
     question: 'The following observations were taken for determining surface tension T of water by capillary method:\ndiameter of capillary, D = 1.25 $$\\times$$ 10-2 m\nrise of water, h = 1.45 $$\\times$$ 10-2m\nUsing g = 9.80 m/s2 and the simplified relation T = $${{rhg} \\over 2} \\times {10^3}N/m$$,  the possible error in surface tension is closest to : (JEE Main 2017 (Offline))',
-    given: {},
+    given: { g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'units_and_measurements_main_191',
@@ -2460,25 +2460,25 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     id: 'units_and_measurements_main_201',
     complexity: 'jee_main',
     question: 'Two full turns of the circular scale of a screw gauge cover a distance of 1 mm on its main scale. The\ntotal number of divisions on the circular scale is 50. Further, it is found that the screw gauge has a\nzero error of â 0.03 mm while measuring the diameter of a thin wire, a student notes the main scale\nreading of 3 mm and the number of circular scale divisions in line with the main scale as 35. The\ndiameter of the wire is (AIEEE 2008)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'units_and_measurements_main_202',
     complexity: 'jee_main',
     question: 'A body of mass m = 3.513 kg is moving along the x-axis with a speed of 5.00 msâ1. The magnitude of its momentum is recorded as (AIEEE 2008)',
-    given: {},
+    given: { speed_ms: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'units_and_measurements_main_203',
@@ -2593,12 +2593,12 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A tiny metallic rectangular sheet has length and breadth of 5 mm and 2.5 mm , respectively. Using a specially designed screw gauge which has pitch of 0.75 mm and 15 divisions in the circular scale, you are asked to find the area of the sheet. In this measurement, the maximum fractional error will be $\\frac{x}{100}$ where $x$ is _______ . (JEE Main 2025 (Online) 28th January Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['acceleration_ms2', 'answer'],
+    answer: { 'acceleration_ms2': 0, 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²', 'answer': '' }
   },
   {
     id: 'units_and_measurements_main_213',
@@ -2629,12 +2629,12 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'In an experiment to find acceleration due to gravity (g) using simple pendulum, time period of $$0.5 \\mathrm{~s}$$ is measured from time of 100 oscillation with a watch of $$1 \\mathrm{~s}$$ resolution. If measured value of length is $$10 \\mathrm{~cm}$$ known to $$1 \\mathrm{~mm}$$ accuracy, The accuracy in the determination of $$\\mathrm{g}$$ is found to be $$x \\%$$. The value of $$x$$ is ___________. (JEE Main 2022 (Online) 28th July Evening Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['acceleration_ms2', 'answer'],
+    answer: { 'acceleration_ms2': 0, 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²', 'answer': '' }
   },
   {
     id: 'units_and_measurements_main_216',
@@ -2748,13 +2748,13 @@ export const GENERIC_PUZZLES: PuzzleConfig[] = [
     id: 'units_and_measurements_main_225',
     complexity: 'jee_main',
     question: 'Three students S1, S2 and S3 perform an experiment for determining the acceleration due to gravity (g) using a simple pendulum. They use different lengths of pendulum and record time for different number of oscillations. The observations are as shown in the table.\n\n\nStudentNo.\nLength ofPendulum (cm)\nNo. ofoscillations (n)\nTotal time forn oscillations\nTimeperiod (s)\n\n\n\n\n1\n64.0\n8\n128.0\n16.0\n\n\n2\n64.0\n4\n64.0\n16.0\n\n\n3\n20.0\n4\n36.0\n9.0\n\n\n(Least count of length = 0.1 cm and Least count for time = 0.1 s)If E1, E2 and E3 are the percentage errors in \'g\' for students 1, 2 and 3 respectively, then the minimum percentage error is obtained by student no. ______________. (JEE Main 2021 (Online) 22th July Evening Shift)',
-    given: {},
+    given: { time_s: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'units_and_measurements_main_226',

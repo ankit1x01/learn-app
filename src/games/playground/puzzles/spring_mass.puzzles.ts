@@ -7,24 +7,24 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     complexity: 'board',
     question: 'A spring of k = 200 N/m has a 0.5 kg mass attached. Find the time period of oscillation.',
     given: { k: 200, mass: 0.5 },
-    find: ['period'],
-    answer: { period: 0.314 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 3,
     hints: ['T = 2π√(m/k)', 'T = 2π√(0.5/200)', 'T = 2π × 0.05 ≈ 0.314 s'],
     formula: 'T = 2π√(m/k)',
-    units: { period: 's' }
+    units: { 'time_s': 's' }
   },
   {
     id: 'spr_board_002',
     complexity: 'board',
     question: 'A mass on a spring oscillates with amplitude 5 cm. Spring constant k = 100 N/m, mass = 0.25 kg. Find maximum speed.',
     given: { amplitude: 0.05, k: 100, mass: 0.25 },
-    find: ['max_speed'],
-    answer: { max_speed: 1 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 3,
     hints: ['ω = √(k/m) = √400 = 20 rad/s', 'v_max = ωA', 'v_max = 20 × 0.05 = 1 m/s'],
     formula: 'v_max = ω·A = A√(k/m)',
-    units: { max_speed: 'm/s' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'spr_board_003',
@@ -56,24 +56,24 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A spring-mass system (k=500 N/m, m=2 kg) oscillates. At x=3 cm from equilibrium, speed is 2 m/s. Find amplitude.',
     given: { k: 500, mass: 2, x: 0.03, speed_at_x: 2 },
-    find: ['amplitude'],
-    answer: { amplitude: 0.1 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 2,
     hints: ['Energy conservation: ½mv² + ½kx² = ½kA²', '½×2×4 + ½×500×0.0009 = ½×500×A²', '4 + 0.225 = 250A² → A² ≈ 0.017 → A ≈ 0.1 m'],
     formula: 'A = √(v²/ω² + x²)',
-    units: { amplitude: 'm' }
+    units: { 'acceleration_ms2': 'm/s²', 'speed_ms': 'm/s' }
   },
   {
     id: 'spr_jee_main_003',
     complexity: 'jee_main',
     question: 'A vertical spring (k=200 N/m) is compressed 5 cm and a 0.5 kg mass is placed on it. It is released. Find max height the mass rises above the release point.',
     given: { k: 200, compression: 0.05, mass: 0.5, g: 10 },
-    find: ['max_height'],
-    answer: { max_height: 0.1 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 3,
     hints: ['PE_spring = ½kx² = ½×200×0.0025 = 0.25 J', 'At max height h: mgh = PE_spring (all converts)', 'h = 0.25/(0.5×10) = 0.05 m above natural length — but released from compressed, so h = x + 0.05 = 0.10 m'],
     formula: '½kx² = mg(x + h_extra)',
-    units: { max_height: 'm' }
+    units: { 'mass_kg': 'kg' }
   },
   // JEE ADVANCED
   {
@@ -81,8 +81,8 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'Two masses m₁=1 kg and m₂=3 kg are connected by a spring (k=300 N/m) on a frictionless surface. m₁ is given velocity 4 m/s. Find (a) velocity of centre of mass and (b) maximum compression of the spring.',
     given: { m1: 1, m2: 3, k: 300, u1: 4, u2: 0 },
-    find: ['v_cm', 'max_compression'],
-    answer: { v_cm: 1, max_compression: 0.115 },
+    find: ['answer'],
+    answer: { 'answer': 0 },
     tolerance: 2,
     hints: [
       'v_cm = m₁u₁/(m₁+m₂) = 4/4 = 1 m/s',
@@ -90,7 +90,7 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
       'At max compression: KE_rel → ½kx²  →  ½×0.75×16 = ½×300×x²  →  x=0.115 m'
     ],
     formula: 'v_cm = Σmv/Σm;  ½μ(Δv)² = ½kx_max²',
-    units: { v_cm: 'm/s', max_compression: 'm' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'spr_jee_adv_002',
@@ -113,8 +113,8 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'A block of 2 kg on a frictionless surface is attached to a spring (k=800 N/m) fixed to a wall. The block collides with a 2 kg block coming at 4 m/s (perfectly inelastic). Find the amplitude of the resulting oscillation.',
     given: { k: 800, m_attached: 2, m_bullet: 2, u_bullet: 4 },
-    find: ['amplitude'],
-    answer: { amplitude: 0.1 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 2,
     hints: [
       'Inelastic collision: v = m×u/(m+M) = 2×4/4 = 2 m/s',
@@ -122,7 +122,7 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
       'E = ½×4×4 = 8 J = ½×800×A²  →  A² = 0.02  →  A = 0.141 m'
     ],
     formula: 'v_combined=m·u/(m+M);  A=v_combined√(M_total/k)',
-    units: { amplitude: 'm' }
+    units: { 'acceleration_ms2': 'm/s²' }
   }
 ,
   {
@@ -141,13 +141,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_1',
     complexity: 'jee_advanced',
     question: 'A small block is connected to one end of a massless spring of un-stretched length 4.9 m. The other end of the spring (see the figure) is fixed. The system lies on a horizontal frictionless surface. The block is stretched by 0.2 m and released from rest at t = 0. It then executes simple harmonic motion with angular frequency $$\\omega$$ = ($$\\pi$$/3) rad/s. Simultaneously, at t = 0, a small pebble is projected with speed v from point P at an angle of 45$$^\\circ$$ as shown in the figure. Point O is at a horizontal distance of 10 m from O. If the pebble hits the block at t = 1 s, the value of v is (take g = 10 m/s2) (IIT-JEE 2012 Paper 1 Offline)',
-    given: {},
+    given: { g_ms2: 10.0, time_s: 1.0, length_m: 4.9 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'time_s': 's', 'length_m': 'm' }
   },
   {
     id: 'simple_harmonic_motion_2',
@@ -297,13 +297,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_14',
     complexity: 'jee_advanced',
     question: 'A simple pendulum has time period T1. The point of suspension is now moved upward according to the relation y = Kt2, (K = 1 m/s2) where y is the vertical displacement. The time period now become T2. The ratio of $${{T_1^2} \\over {T_2^2}}$$ is (g = 10 m/s2) (IIT-JEE 2005 Screening)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'simple_harmonic_motion_15',
@@ -369,13 +369,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_20',
     complexity: 'jee_advanced',
     question: 'A person sitting inside an elevator performs a weighing experiment with an object of mass 50 kg . Suppose that the variation of the height $y$ (in m ) of the elevator, from the ground, with time $t$ (in s) is given by $y=8\\left[1+\\sin \\left(\\frac{2 \\pi t}{T}\\right)\\right]$, where $T=40 \\pi \\mathrm{~s}$. Taking acceleration due to gravity, $g=10$ $\\mathrm{m} / \\mathrm{s}^2$, the maximum variation of the object\'s weight (in N ) as observed in the experiment is ___________. (JEE Advanced 2025 Paper 1 Online)',
-    given: {},
+    given: { mass_kg: 50.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_21',
@@ -441,13 +441,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_26',
     complexity: 'jee_advanced',
     question: 'An object of mass 0.2 kg executes simple harmonic oscillation along the x-axis with a frequency of $$\\left( {{{25} \\over \\pi }} \\right)$$ Hz. At the position x = 0.04, the object has kinetic energy of 0.5 J and potential energy 0.4 J. The amplitude of oscillations is ................ m. (IIT-JEE 1994)',
-    given: {},
+    given: { mass_kg: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_27',
@@ -514,13 +514,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_1',
     complexity: 'jee_main',
     question: 'A spring stretches by 2 mm when it is loaded with a mass of 200 g . From equilibrium position the mass is further pulled down by 2 mm and released. The frequency associated with the system and maxmimum energy in the spring are $\\_\\_\\_\\_$ Hz and $\\_\\_\\_\\_$ J, respectively.\n(Take $\\mathrm{g}=10 \\mathrm{~m} / \\mathrm{s}^2$ ) (JEE Main 2026 (Online) 6th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_2',
@@ -646,13 +646,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_12',
     complexity: 'jee_main',
     question: 'A block of mass 2 kg is attached to one end of a massless spring whose other end is fixed at a wall. The spring-mass system moves on a frictionless horizontal table. The spring\'s natural length is 2 m and spring constant is 200 N/m. The block is pushed such that the length of the spring becomes 1 m and then released. At distance x m (x < 2) from the wall, the speed of the block will be (JEE Main 2025 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { mass_kg: 2.0, length_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'simple_harmonic_motion_main_13',
@@ -754,13 +754,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_21',
     complexity: 'jee_main',
     question: 'A light hollow cube of side length 10 cm and mass 10 g , is floating in water. It is pushed down and released to execute simple harmonic oscillations. The time period of oscillations is $y \\pi \\times 10^{-2} \\mathrm{~s}$, where the value of $y$ is\n(Acceleration due to gravity, $g=10 \\mathrm{~m} / \\mathrm{s}^2$, density of water $=10^3 \\mathrm{~kg} / \\mathrm{m}^3$ ) (JEE Main 2025 (Online) 23rd January Morning Shift)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_22',
@@ -1054,13 +1054,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_46',
     complexity: 'jee_main',
     question: 'The equation of a particle executing simple harmonic motion is given by $$x = \\sin \\pi \\left( {t + {1 \\over 3}} \\right)m$$. At t = 1s, the speed of particle will be\n(Given : $$\\pi$$ = 3.14) (JEE Main 2022 (Online) 27th June Evening Shift)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'simple_harmonic_motion_main_47',
@@ -1102,13 +1102,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_50',
     complexity: 'jee_main',
     question: 'A mass of 5 kg is connected to a spring. The potential energy curve of the simple harmonic motion executed by the system is shown in the figure. A simple pendulum of length 4 m has the same period of oscillation as the spring system. What is the value of acceleration due to gravity on the planet where these experiments are performed? (JEE Main 2021 (Online) 1st September Evening Shift)',
-    given: {},
+    given: { mass_kg: 5.0, length_m: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'length_m': 'm' }
   },
   {
     id: 'simple_harmonic_motion_main_51',
@@ -1150,13 +1150,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_54',
     complexity: 'jee_main',
     question: 'An object of mass 0.5 kg is executing simple harmonic motion. It amplitude is 5 cm and time period (T) is 0.2 s. What will be the potential energy of the object at an instant $$t = {T \\over 4}s$$ starting from mean position. Assume that the initial phase of the oscillation is zero. (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { mass_kg: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_55',
@@ -1246,13 +1246,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_62',
     complexity: 'jee_main',
     question: 'A block of mass 1 kg attached to a spring is made to oscillate with an initial amplitude of 12 cm. After 2 minutes the amplitude decreases to 6 cm. Determine the value of the damping constant for this motion . (take ln 2 = 0.693) (JEE Main 2021 (Online) 17th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_63',
@@ -1270,13 +1270,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_64',
     complexity: 'jee_main',
     question: 'Amplitude of a mass-spring system, which is executing simple harmonic motion decreases with time. If mass = 500g, Decay constant = 20 g/s then how much time is required for the amplitude of the system to drop to drop to half of its initial value? (ln 2 = 0.693) (JEE Main 2021 (Online) 16th March Evening Shift)',
-    given: {},
+    given: { mass_kg: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_65',
@@ -1366,13 +1366,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_72',
     complexity: 'jee_main',
     question: 'The point A moves with a uniform speed along the circumference of a circle of radius 0.36 m and covers 30$$^\\circ$$ in 0.1 s. The perpendicular projection \'P\' from \'A\' on the diameter MN represents the simple harmonic motion of \'P\'. The restoration force per unit mass when P touches M will be : (JEE Main 2021 (Online) 25th February Evening Shift)',
-    given: {},
+    given: { radius_m: 0.36 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'simple_harmonic_motion_main_73',
@@ -1570,25 +1570,25 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_89',
     complexity: 'jee_main',
     question: 'A simple pendulum of length 1 m is oscillating with an angular frequency 10 rad/s. The support of the pendulum starts oscillating up and down with a small angular frequency of 1 rad/s and an amplitude of 10â2 m. The relative change in the angular frequency of the pendulum is best given by : (JEE Main 2019 (Online) 11th January Evening Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'simple_harmonic_motion_main_90',
     complexity: 'jee_main',
     question: 'A particle undergoing simple harmonic motion has time dependent displacement given by x(t) = Asin$${{\\pi t} \\over {90}}$$. The ratio of kinetic to potential energy of this particle at t = 210 s will be: (JEE Main 2019 (Online) 11th January Morning Slot)',
-    given: {},
+    given: { time_s: 210.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'simple_harmonic_motion_main_91',
@@ -1702,13 +1702,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_100',
     complexity: 'jee_main',
     question: 'A block of mass 0.1 kg is connected to an elastic spring of spring constant 640 Nmâ1 and oscillates in a damping medium of damping constant 10â2  kg sâ1 . The system dissipates its energy gradually. The  time taken for its mechanical energy of vibration to drop to half of its initial value, is closest to : (JEE Main 2017 (Online) 9th April Morning Slot)',
-    given: {},
+    given: { mass_kg: 0.1 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_101',
@@ -1858,13 +1858,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_113',
     complexity: 'jee_main',
     question: 'If a simple pendulum has significant amplitude (up to a factor of $$1/e$$ of original ) only in the period between $$t = 0s\\,\\,to\\,\\,t = \\tau \\,s,$$ then $$\\tau \\,$$ may be called the average life of the pendulum When the spherical bob of the pendulum suffers a retardation (due to viscous drag) proportional to its velocity with $$b$$ as the constant of proportionality, the average life time of the pendulum is (assuming damping is small) in seconds : (AIEEE 2012)',
-    given: {},
+    given: { time_s: 0.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'simple_harmonic_motion_main_114',
@@ -2434,13 +2434,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_161',
     complexity: 'jee_main',
     question: 'A particle of mass 250 g executes a simple harmonic motion under a periodic force $$\\mathrm{F}=(-25~x)\\mathrm{N}$$. The particle attains a maximum speed of 4 m/s during its oscillation. The amplitude of the motion is ___________ cm. (JEE Main 2023 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { speed_ms: 4.0, mass_kg: 250.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_162',
@@ -2458,13 +2458,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_163',
     complexity: 'jee_main',
     question: 'A block of a mass 2 kg is attached with two identical springs of spring constant 20 N/m each. The block is placed on a frictionless surface and the ends of the springs are attached to rigid supports (see figure). When the mass is displaced from its equilibrium position, it executes a simple harmonic motion. The time period of oscillation is $$\\frac{\\pi}{\\sqrt x}$$ in SI unit. The value of $$x$$ is ____________. (JEE Main 2023 (Online) 24th January Morning Shift)',
-    given: {},
+    given: { mass_kg: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_164',
@@ -2530,13 +2530,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_169',
     complexity: 'jee_main',
     question: 'A pendulum is suspended by a string of length 250 cm. The mass of the bob of the pendulum is 200 g. The bob is pulled aside until the string is at 60$$^\\circ$$ with vertical as shown in the figure. After releasing the bob, the maximum velocity attained by the bob will be ____________ ms$$-$$1. (if g = 10 m/s2) (JEE Main 2022 (Online) 28th June Morning Shift)',
-    given: {},
+    given: { g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²' }
   },
   {
     id: 'simple_harmonic_motion_main_170',
@@ -2554,13 +2554,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_171',
     complexity: 'jee_main',
     question: 'A particle of mass 1 kg is hanging from a spring of force constant 100 Nm$$-$$1. The mass is pulled slightly downward and released so that it executes free simple harmonic motion with time period T. The time when the kinetic energy and potential energy of the system will become equal, is $${T \\over x}$$. The value of x is _____________. (JEE Main 2021 (Online) 31st August Morning Shift)',
-    given: {},
+    given: { mass_kg: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'simple_harmonic_motion_main_172',
@@ -2590,13 +2590,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_174',
     complexity: 'jee_main',
     question: 'A particle executes simple harmonic motion represented by displacement function as x(t) = A sin($$\\omega$$t + $$\\phi$$)If the position and velocity of the particle at t = 0 s are 2 cm and 2$$\\omega$$ cm s$$-$$1 respectively, then its amplitude is $$x\\sqrt 2 $$ cm where the value of x is _________________. (JEE Main 2021 (Online) 27th July Evening Shift)',
-    given: {},
+    given: { time_s: 0.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'simple_harmonic_motion_main_175',
@@ -2614,13 +2614,13 @@ export const SPRING_MASS_PUZZLES: PuzzleConfig[] = [
     id: 'simple_harmonic_motion_main_176',
     complexity: 'jee_main',
     question: 'A pendulum bob has a speed of 3 m/s at its lowest position. The pendulum is 50 cm long. The speed of bob, when the length makes an angle of 60$$^\\circ$$ to the vertical will be (g = 10 m/s2) ____________ m/s. (JEE Main 2021 (Online) 25th July Morning Shift)',
-    given: {},
+    given: { speed_ms: 3.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'g_ms2': 'm/s²' }
   },
   {
     id: 'simple_harmonic_motion_main_177',

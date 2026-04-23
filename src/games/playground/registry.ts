@@ -135,9 +135,14 @@ export const SIMULATION_REGISTRY: Record<SimulationType, SimulationPlugin> = {
     component: Projectile, engine: 'matter', conceptId: 'kinematics_projectile_motion',
     puzzles: PROJECTILE_PUZZLES, label: 'Projectile Motion', icon: 'sports_baseball',
     defaultControls: [
-      { id: 'angle', label: 'Launch Angle', min: 10, max: 80, step: 1, unit: '°', default: 45 },
+      { id: 'angle', label: 'Launch Angle', min: 0, max: 85, step: 1, unit: '°', default: 45 },
       { id: 'speed', label: 'Speed', min: 5, max: 50, step: 1, unit: 'm/s', default: 20 },
       { id: 'height', label: 'Height', min: 0, max: 40, step: 1, unit: 'm', default: 0 },
+      { id: 'drag_coeff', label: 'Air Drag Coeff', min: 0, max: 2, step: 0.1, unit: 'kg/s', default: 0 },
+      { id: 'ground_angle', label: 'Incline Angle', min: -45, max: 45, step: 5, unit: '°', default: 0 },
+      { id: 'explode_peak', label: 'Explode at Peak', min: 0, max: 1, step: 1, unit: '', default: 0 },
+      { id: 'drop_target', label: 'Drop Target B', min: 0, max: 1, step: 1, unit: '', default: 0 },
+      { id: 'target_height', label: 'Target B Height', min: 10, max: 100, step: 1, unit: 'm', default: 40 },
     ],
     formulaRows: (c) => {
       const G = 9.81

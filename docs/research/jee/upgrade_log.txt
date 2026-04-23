@@ -1,0 +1,32 @@
+   Skipped (no changes): ac.puzzles.ts
+   Skipped (no changes): atwood.puzzles.ts
+OK Upgraded: bohr_atom.puzzles.ts
+OK Upgraded: capacitor.puzzles.ts
+OK Upgraded: circular_motion.puzzles.ts
+OK Upgraded: collision.puzzles.ts
+OK Upgraded: current_electricity.puzzles.ts
+OK Upgraded: electric_field.puzzles.ts
+OK Upgraded: emi.puzzles.ts
+OK Upgraded: em_waves.puzzles.ts
+OK Upgraded: fluids.puzzles.ts
+   Skipped (no changes): friction_com_rbd.puzzles.ts
+OK Upgraded: generic.puzzles.ts
+OK Upgraded: gravitation.puzzles.ts
+OK Upgraded: inclined_plane.puzzles.ts
+OK Upgraded: lens.puzzles.ts
+OK Upgraded: magnetism.puzzles.ts
+   Skipped (no changes): mirror.puzzles.ts
+   Skipped (no changes): pendulum.puzzles.ts
+OK Upgraded: photoelectric.puzzles.ts
+OK Upgraded: projectile.puzzles.ts
+OK Upgraded: pseudo_force.puzzles.ts
+OK Upgraded: relative_motion.puzzles.ts
+OK Upgraded: rolling.puzzles.ts
+OK Upgraded: semiconductor.puzzles.ts
+OK Upgraded: spring_mass.puzzles.ts
+OK Upgraded: thermodynamics.puzzles.ts
+OK Upgraded: waves.puzzles.ts
+OK Upgraded: work_energy.puzzles.ts
+OK Upgraded: ydse.puzzles.ts
+
+Done. Upgraded 25/30 puzzle files.

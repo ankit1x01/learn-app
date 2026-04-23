@@ -931,12 +931,12 @@ export const AC_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A resistance of 40 $$\\Omega$$ is connected to a source of alternating current rated 220 V, 50 Hz. Find the time taken by the current to change from its maximum value to the rms value : (JEE Main 2022 (Online) 24th June Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'time_s': 's' }
   },
   {
     id: 'alternating_current_main_59',
@@ -1302,13 +1302,13 @@ export const AC_PUZZLES: PuzzleConfig[] = [
     id: 'alternating_current_main_89',
     complexity: 'jee_main',
     question: 'An emf of 20 V is applied at time t = 0 to a circuit containing in series 10 mH inductor and 5 $$\\Omega $$\nresistor. The ratio of the currents at time t = $$\\infty $$ and at t = 40 s is close to : (Take e2 = 7.389) (JEE Main 2020 (Online) 7th January Evening Slot)',
-    given: {},
+    given: { time_s: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'alternating_current_main_90',
@@ -2442,13 +2442,13 @@ export const AC_PUZZLES: PuzzleConfig[] = [
     id: 'alternating_current_main_184',
     complexity: 'jee_main',
     question: 'A transmitting station releases waves of wavelength 960 m. A capacitor of 2.56 $$\\mu$$F is used in the resonant circuit. The self inductance of coil necessary for resonance is __________ $$\\times$$ 10$$-$$8 H. (JEE Main 2021 (Online) 25th February Morning Shift)',
-    given: {},
+    given: { length_m: 960.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'alternating_current_main_185',

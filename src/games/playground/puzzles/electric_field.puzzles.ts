@@ -64,12 +64,12 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'An electric dipole (p = 2×10⁻⁶ C·m) is placed in a uniform field E = 10⁵ N/C. Find the maximum torque on the dipole.',
     given: { dipole_moment: 2e-6, field: 1e5 },
-    find: ['max_torque'],
-    answer: { max_torque: 0.2 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 2,
     hints: ['τ = pE sinθ', 'Maximum when θ = 90°: τ_max = pE', 'τ_max = 2×10⁻⁶ × 10⁵ = 0.2 N·m'],
     formula: 'τ_max = pE',
-    units: { max_torque: 'N·m' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'ef_jee_main_003',
@@ -93,8 +93,8 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_advanced',
     question: 'Two charges +Q are fixed on the x-axis at x=+d and x=−d. A test charge −q is displaced a small distance y along y-axis from origin. Show it undergoes SHM and find the time period. (mass = m)',
     given: { Q: 1e-6, d: 0.1, q: 1e-9, mass: 1e-3 },
-    find: ['time_period'],
-    answer: { time_period: 0.0644 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 3,
     hints: [
       'Force on −q: F = 2kQq/(d²+y²) × y/√(d²+y²) toward origin (y-component)',
@@ -102,7 +102,7 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
       'ω² = 2kQq/(md³) → T = 2π√(md³/2kQq)'
     ],
     formula: 'T = 2π√(md³/2kQq)',
-    units: { time_period: 's' }
+    units: { 'time_s': 's' }
   },
   {
     id: 'ef_jee_adv_002',
@@ -513,13 +513,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_31',
     complexity: 'jee_advanced',
     question: 'A positive point charge of $10^{-8}$ C is kept at a distance of 20 cm from the center of a neutral conducting sphere of radius 10 cm. The sphere is then grounded and the charge on the sphere is measured. The grounding is then removed and subsequently the point charge is moved by a distance of 10 cm further away from the center of the sphere along the radial direction. Taking $\\frac{1}{4\\pi\\epsilon_0} = 9 \\times 10^9$ Nm$^2$/C$^2$ (where $\\epsilon_0$ is the permittivity of free space), which of the following statements is/are correct: (JEE Advanced 2025 Paper 2 Online)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electrostatics_32',
@@ -861,13 +861,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_60',
     complexity: 'jee_advanced',
     question: 'Two large circular discs separated by a distance of 0.01 m are connected to a battery via a switch as\nshown in the figure. Charged oil drops of density 900 kg mâ3\nare released through a tiny hole at the\ncenter of the top disc. Once some oil drops achieve terminal velocity, the switch is closed to apply a\nvoltage of 200 V across the discs. As a result, an oil drop of radius 8 $$ \\times $$ 10â7 m stops moving\nvertically and floats between the discs. The number of electrons present in this oil drop is ________.\n(neglect the buoyancy force, take acceleration due to gravity = 10 msâ2\nand charge on an electron\n(e) = 1.6 $$ \\times $$ 10â19 C) (JEE Advanced 2020 Paper 2 Offline)',
-    given: {},
+    given: { length_m: 0.01 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electrostatics_61',
@@ -970,13 +970,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_2',
     complexity: 'jee_main',
     question: 'A thin half ring of radius 35 cm is uniformly charged with a total charge of $Q$ coulomb. If the magnitude of the electric field at centre of the half ring is $100 \\mathrm{~V} / \\mathrm{m}$, then the value of $Q$ is $\\_\\_\\_\\_$ nC .\n$$ \\left(\\epsilon_0=8.85 \\times 10^{-12} \\mathrm{C}^2 / \\mathrm{Nm}^2 \\text { and } \\pi=3.14\\right) $$ (JEE Main 2026 (Online) 6th April Morning Shift)',
-    given: {},
+    given: { radius_m: 35.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electrostatics_main_3',
@@ -1006,13 +1006,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_5',
     complexity: 'jee_main',
     question: 'Two metal plates (A, B) are kept horizontally with separation of $ \\left( \\frac{12}{\\pi} \\right) $ cm, with plate A on the top.\nAn atomizer jet sprays oil (density 1.5 g/cm3) droplets of radius 1 mm horizontally. All oil droplets carry a charge 5 nC. The potentials VA and VB are required on plates A and B respectively in order to ensure the droplets do not descend. The values of VA and VB are ______.\n(Neglect the air resistance to the droplets and take g = 10 m/s2) (JEE Main 2026 (Online) 2nd April Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0, radius_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'electrostatics_main_6',
@@ -1318,13 +1318,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_31',
     complexity: 'jee_main',
     question: 'Two charges $q_1$ and $q_2$ are separated by a distance of 30 cm . A third charge $q_3$ initially at \' C \' as shown in the figure, is moved along the circular path of radius 40 cm from C to D . If the difference in potential energy due to movement of $q_3$ from C to D is given by $\\frac{q_3 \\mathrm{~K}}{4 \\pi \\epsilon_0}$, the value of K is : (JEE Main 2025 (Online) 7th April Morning Shift)',
-    given: {},
+    given: { radius_m: 40.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electrostatics_main_32',
@@ -1354,13 +1354,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_34',
     complexity: 'jee_main',
     question: 'Two small spherical balls of mass 10 g each with charges $-2 \\mu \\mathrm{C}$ and $2 \\mu \\mathrm{C}$, are attached to two ends of very light rigid rod of length 20 cm . The arrangement is now placed near an infinite nonconducting charge sheet with uniform charge density of $100 \\mu \\mathrm{C} / \\mathrm{m}^2$ such that length of rod makes an angle of $30^{\\circ}$ with electric field generated by charge sheet. Net torque acting on the rod is:\n(Take $\\varepsilon_{\\mathrm{o}}: 8.85 \\times 10^{-12} \\mathrm{C}^2 / \\mathrm{Nm}^2$ ) (JEE Main 2025 (Online) 4th April Morning Shift)',
-    given: {},
+    given: { mass_kg: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg' }
   },
   {
     id: 'electrostatics_main_35',
@@ -1438,13 +1438,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_41',
     complexity: 'jee_main',
     question: 'A small bob of mass 100 mg and charge $+10 \\mu \\mathrm{C}$ is connected to an insulating string of length 1 m . It is brought near to an infinitely long non-conducting sheet of charge density \' $\\sigma$ \' as shown in figure. If string subtends an angle of $45^{\\circ}$ with the sheet at equilibrium the charge density of sheet will be.\n(Given, $\\epsilon_0=8.85 \\times 10^{-12} \\frac{\\mathrm{~F}}{\\mathrm{~m}}$ and acceleration due to gravity, $\\mathrm{g}=10 \\frac{\\mathrm{~m}}{\\mathrm{~s}^2}$ ) (JEE Main 2025 (Online) 2nd April Morning Shift)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electrostatics_main_42',
@@ -2182,13 +2182,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_103',
     complexity: 'jee_main',
     question: 'A positive charge particle of 100 mg is thrown in opposite direction to a uniform electric field of strength 1 $$\\times$$ 105 NC$$-$$1. If the charge on the particle is 40 $$\\mu$$C and the initial velocity is 200 ms$$-$$1, how much distance it will travel before coming to the rest momentarily : (JEE Main 2022 (Online) 29th June Morning Shift)',
-    given: {},
+    given: { speed_ms: 200.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'electrostatics_main_104',
@@ -2254,13 +2254,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_109',
     complexity: 'jee_main',
     question: 'Sixty four conducting drops each of radius 0.02 m and each carrying a charge of 5 $$\\mu$$C are combined to form a bigger drop. The ratio of surface density of bigger drop to the smaller drop will be : (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { radius_m: 0.02 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'electrostatics_main_110',
@@ -2290,13 +2290,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_112',
     complexity: 'jee_main',
     question: 'Two identical charged particles each having a  mass 10 g and charge 2.0 $$\\times$$ 10$$-$$7C are placed on a horizontal table with a separation of L between them such that they stay in limited equilibrium. If the coefficient of friction between each particle and the table is 0.25, find the value of L. [Use g = 10 ms$$-$$2] (JEE Main 2022 (Online) 24th June Evening Shift)',
-    given: {},
+    given: { mass_kg: 10.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'electrostatics_main_113',
@@ -2314,13 +2314,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_114',
     complexity: 'jee_main',
     question: 'A vertical electric field of magnitude 4.9 $$\\times$$ 105 N/C just prevents a water droplet of a mass 0.1 g from falling. The value of charge on the droplet will be :\n(Given : g = 9.8 m/s2) (JEE Main 2022 (Online) 24th June Morning Shift)',
-    given: {},
+    given: { mass_kg: 0.1, g_ms2: 9.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'electrostatics_main_115',
@@ -2446,13 +2446,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_125',
     complexity: 'jee_main',
     question: 'An electric dipole is placed on x-axis in proximity to a line charge of linear charge density 3.0 $$\\times$$ 10$$-$$6 C/m. Line charge is placed on z-axis and positive and negative charge of dipole is at a distance of 10 mm and 12 mm from the origin respectively. If total force of 4N is exerted on the dipole, find out the amount of positive or negative charge of the dipole. (JEE Main 2021 (Online) 22th July Evening Shift)',
-    given: {},
+    given: { length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electrostatics_main_126',
@@ -2470,13 +2470,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_127',
     complexity: 'jee_main',
     question: 'An oil drop of radius 2 mm with a density 3g cm$$-$$3 is held stationary under a constant electric field 3.55 $$\\times$$ 105 V m$$-$$1 in the Millikan\'s oil drop experiment. What is the number of excess electrons that the oil drop will possess? (consider g = 9.81 m/s2) (JEE Main 2021 (Online) 18th March Morning Shift)',
-    given: {},
+    given: { g_ms2: 9.81, radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'radius_m': 'm' }
   },
   {
     id: 'electrostatics_main_128',
@@ -2506,13 +2506,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_130',
     complexity: 'jee_main',
     question: 'An inclined plane making an angle of 30$$^\\circ$$ with the horizontal is placed in a uniform horizontal electric field $$200{N \\over C}$$ as shown in the figure. A body of mass 1 kg and charge 5 mC is allowed to slide down from rest at a height of 1 m. If the coefficient of friction is 0.2, find the time taken by the body to reach the bottom.[g = 9.8 m/s2; $$\\sin 30^\\circ  = {1 \\over 2}$$; $$\\cos 30^\\circ  = {{\\sqrt 3 } \\over 2}$$] (JEE Main 2021 (Online) 26th February Evening Shift)',
-    given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    given: { mass_kg: 1.0, height_m: 1.0, g_ms2: 9.8 },
+    find: ['time_s'],
+    answer: { 'time_s': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'time_s': 's', 'mass_kg': 'kg', 'height_m': 'm', 'g_ms2': 'm/s²' }
   },
   {
     id: 'electrostatics_main_131',
@@ -2842,13 +2842,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_158',
     complexity: 'jee_main',
     question: 'In free space, a particle A of charge 1$$\\mu $$C is held fixed at a point P. Another particle B of the same charge and\nmass 4$$\\mu $$g is kept at a distance of 1 mm from P. If B is released, then its velocity at a distance of 9 mm from P\nis :\n$$\\left[ {Take\\,{1 \\over {4\\pi { \\in _0}}} = 9 \\times {{10}^9}N{m^2}{C^{ - 2}}} \\right]$$ (JEE Main 2019 (Online) 10th April Evening Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electrostatics_main_159',
@@ -2926,13 +2926,13 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_165',
     complexity: 'jee_main',
     question: 'The bob of a simple pendulum has mass 2g and\na charge of 5.0 Î¼C. It is at rest in a uniform\nhorizontal electric field of intensity 2000 V/m.\nAt equilibrium, the angle that the pendulum\nmakes with the vertical is : (take g = 10 m/s2) (JEE Main 2019 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { mass_kg: 2.0, g_ms2: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'mass_kg': 'kg', 'g_ms2': 'm/s²' }
   },
   {
     id: 'electrostatics_main_166',
@@ -4222,25 +4222,25 @@ export const ELECTRIC_FIELD_PUZZLES: PuzzleConfig[] = [
     id: 'electrostatics_main_273',
     complexity: 'jee_main',
     question: 'Two identical conducting spheres with negligible volume have 2.1 nC and $$-$$0.1 nC charges, respectively. They are brought into contact and then separated by a distance of 0.5 m. The electrostatic force acting between the spheres is __________ $$\\times$$ 10$$-$$9 N.[Given : $$4\\pi {\\varepsilon _0} = {1 \\over {9 \\times {{10}^9}}}$$ SI unit] (JEE Main 2021 (Online) 25th February Evening Shift)',
-    given: {},
+    given: { length_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'electrostatics_main_274',
     complexity: 'jee_main',
     question: 'Two small spheres each of mass 10 mg are suspended from a point by threads 0.5 m long. They are equally charged and repel each other to a distance of 0.20 m. The charge on each of the sphere is $${a \\over {21}} \\times {10^{ - 8}}$$C. The value of \'a\' will be ___________. [Given g = 10 ms$$-$$2] (JEE Main 2021 (Online) 25th February Evening Shift)',
-    given: {},
+    given: { g_ms2: 10.0, length_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'g_ms2': 'm/s²', 'length_m': 'm' }
   },
   {
     id: 'electrostatics_main_275',

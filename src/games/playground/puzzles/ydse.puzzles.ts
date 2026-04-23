@@ -237,13 +237,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_8',
     complexity: 'jee_advanced',
     question: 'In a Young\'s double slit experiment, the slit separation d is 0.3 mm and the screen distance D is 1 m. A parallel beam of light of wavelength 600 nm is incident on the slits at angle $$\\alpha $$ as shown in figure.  On the screen, the point O is equidistant from the slits and distance PO is 11.0 mm. Which of the following statement(s) is/are correct? (JEE Advanced 2019 Paper 2 Offline)',
-    given: {},
+    given: { wavelength: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_9',
@@ -261,13 +261,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_10',
     complexity: 'jee_advanced',
     question: 'While conducting the Young\'s double slit experiment, a student replaced the two slits with a large opaque plate in the XY-plane containing two small holes that act as two coherent point sources (S1, S2) emitting light of wavelength 600 mm. The student mistakenly placed the screen parallel to the XZ-plane (for z > 0) at a distance D = 3 m from the mid-point of S1S2, as shown schematically in the figure. The distance between the source d = 0.6003 mm. The origin O is at the intersection of the screen and the line joining S1S2. Which of the following is(are) true of the intensity pattern on the screen? (JEE Advanced 2016 Paper 2 Offline)',
-    given: {},
+    given: { wavelength: 600.0, length_m: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_11',
@@ -466,13 +466,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_8',
     complexity: 'jee_main',
     question: 'A telescope with objective diameter $R$ is used to observe a distant star emitting light of wavelength 500 nm , at a resolution of $5 \\times 10^{-7}$ radian. The value of $R$ is\n$\\_\\_\\_\\_$ cm . (JEE Main 2026 (Online) 4th April Morning Shift)',
-    given: {},
+    given: { wavelength: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_9',
@@ -587,12 +587,12 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Two plane polarized light waves combine at a certain point whose electric field components are\n$$\\begin{aligned}\n& E_1=E_0 \\operatorname{Sin} \\omega t \\\\\n& E_2=E_0 \\operatorname{Sin}\\left(\\omega t+\\frac{\\pi}{3}\\right)\n\\end{aligned}$$\nFind the amplitude of the resultant wave. (JEE Main 2025 (Online) 7th April Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['acceleration_ms2'],
+    answer: { 'acceleration_ms2': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'acceleration_ms2': 'm/s²' }
   },
   {
     id: 'wave_optics_main_19',
@@ -694,13 +694,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_27',
     complexity: 'jee_main',
     question: 'Young\'s double slit inteference apparatus is immersed in a liquid of refractive index 1.44. It has slit separation of 1.5 mm . The slits are illuminated by a parallel beam of light whose wavelength in air is 690 nm . The fringe-width on a screen placed behind the plane of slits at a distance of 0.72 m , will be: (JEE Main 2025 (Online) 24th January Evening Shift)',
-    given: {},
+    given: { length_m: 0.72 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_28',
@@ -730,13 +730,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_30',
     complexity: 'jee_main',
     question: 'A transparent film of refractive index, 2.0 is coated on a glass slab of refractive index, 1.45. What is the minimum thickness of transparent film to be coated for the maximum transmission of Green light of wavelength 550 nm . [Assume that the light is incident nearly perpendicular to the glass surface.] (JEE Main 2025 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { wavelength: 550.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_31',
@@ -1066,13 +1066,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_58',
     complexity: 'jee_main',
     question: 'For a specific wavelength 670 nm of light coming from a galaxy moving with velocity v, the observed wavelength is 670.7 nm. The value of v is : (JEE Main 2022 (Online) 26th June Evening Shift)',
-    given: {},
+    given: { wavelength: 670.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_59',
@@ -1174,25 +1174,25 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_67',
     complexity: 'jee_main',
     question: 'In Young\'s double slit arrangement, slits are separated by a gap of 0.5 mm, and the screen is placed at a distance of 0.5 m from them. The distance between the first and the third bright fringe formed when the slits are illuminated by a monochromatic light of 5890 $$\\mathop A\\limits^o $$ is :- (JEE Main 2021 (Online) 18th March Morning Shift)',
-    given: {},
+    given: { length_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_68',
     complexity: 'jee_main',
     question: 'In a Young\'s double slit experiment two slits are separated by 2 mm and the screen is placed one meter away. When a light of wavelength 500 nm is used, the fringe separation will be : (JEE Main 2021 (Online) 26th February Morning Shift)',
-    given: {},
+    given: { wavelength: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_69',
@@ -1246,13 +1246,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_73',
     complexity: 'jee_main',
     question: 'In the figure below, P and Q are two equally intense coherent sources emitting radiation of\nwavelength 20 m. The separation between P and Q is 5 m and the phase of P is ahead of that of Q\nby 90o. A, B and C are three distinct points of observation, each equidistant from the midpoint of\nPQ. The intensities of radiation at A, B, C will be in the ratio : (JEE Main 2020 (Online) 6th September Morning Slot)',
-    given: {},
+    given: { length_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_74',
@@ -1306,25 +1306,25 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_78',
     complexity: 'jee_main',
     question: 'In a Youngâs double slit experiment, 16 fringes\nare observed in a certain segment of the\nscreen when light of a wavelength 700 nm is\nused. If the wavelength of light is changed to\n400 nm, the number of fringes observed in the\nsame segment of the screen would be (JEE Main 2020 (Online) 2nd September Evening Slot)',
-    given: {},
+    given: { wavelength: 700.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_79',
     complexity: 'jee_main',
     question: 'Interference fringes are observed on a screen\nby illuminating two thin slits 1 mm apart with a\nlight source ($$\\lambda $$ = 632.8 nm). The distance\nbetween the screen and the slits is 100 cm. If\na bright fringe is observed on a screen at a\ndistance of 1.27 mm from the central bright\nfringe, then the path difference between the\nwaves, which are reaching this point from the\nslits is close is (JEE Main 2020 (Online) 2nd September Morning Slot)',
-    given: {},
+    given: { length_m: 1.27 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_80',
@@ -1426,13 +1426,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_88',
     complexity: 'jee_main',
     question: 'Diameter of the objective lens of a telescope is\n250 cm. For light of wavelength 600nm.\ncoming from a distant object, the limit of\nresolution of the telescope is close to :- (JEE Main 2019 (Online) 9th April Evening Slot)',
-    given: {},
+    given: { wavelength: 600.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_89',
@@ -1450,13 +1450,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_90',
     complexity: 'jee_main',
     question: 'Calculate the limit of resolution of a telescope\nobjective having a diameter of 200 cm, if it has\nto detect light of wavelength 500 nm coming\nfrom a star :- (JEE Main 2019 (Online) 8th April Evening Slot)',
-    given: {},
+    given: { wavelength: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_91',
@@ -1630,13 +1630,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_105',
     complexity: 'jee_main',
     question: 'A single slit of width b is illuminated by a coherent monochromatic light of wavelength  $$\\lambda $$. If the second and fourthminima in the diffraction pattern at a distance 1 m from the slit are at 3 cm and 6 cm respectively from the central maximum, what is the width of the central maximum ? (i.e. distance between first minimum on either side of the central maximum) (JEE Main 2017 (Online) 8th April Morning Slot)',
-    given: {},
+    given: { length_m: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_106',
@@ -1918,13 +1918,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_129',
     complexity: 'jee_main',
     question: 'In a double slit experiment, when one of the slits is covered by a transparent mica sheet of refractive index 1.56 , the central fringe shifts to the position of $7^{\\text {th }}$ bright fringe, obtained with both slits uncovered. If the light source wavelength is 450 nm , the thickness of mica sheet is $\\alpha \\times 10^{-9} \\mathrm{~m}$. The value of $\\alpha$ is\n$\\_\\_\\_\\_$ . (JEE Main 2026 (Online) 4th April Evening Shift)',
-    given: {},
+    given: { wavelength: 450.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_130',
@@ -1954,13 +1954,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_132',
     complexity: 'jee_main',
     question: 'A beam of light consisting of wavelengths 650 nm and 550 nm illuminates the Young\'s double slits with separation of 2 mm such that the interference fringes are formed on a screen, placed at a distance of 1.2 m from the slits. The least distance of a point from the central maximum, where the bright fringes due to both the wavelengths coincide, is ________ $\\times 10^{-5}$ m. (JEE Main 2026 (Online) 28th January Evening Shift)',
-    given: {},
+    given: { length_m: 1.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_133',
@@ -2026,25 +2026,25 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_138',
     complexity: 'jee_main',
     question: 'A thin transparent film with refractive index 1.4 , is held on circular ring of radius 1.8 cm . The fluid in the film evaporates such that transmission through the film at wavelength 560 nm goes to a minimum every 12 seconds. Assuming that the film is flat on its two sides, the rate of evaporation is ____________ $\\pi\\times 10^{-13} \\mathrm{~m}^3 / \\mathrm{s}$. (JEE Main 2025 (Online) 28th January Evening Shift)',
-    given: {},
+    given: { wavelength: 560.0, radius_m: 1.8 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm', 'radius_m': 'm' }
   },
   {
     id: 'wave_optics_main_139',
     complexity: 'jee_main',
     question: 'A double slit interference experiment performed with a light of wavelength 600 nm forms an interference fringe pattern on a screen with 10 th bright fringe having its centre at a distance of 10 mm from the central maximum. Distance of the centre of the same 10 th bright fringe from the central maximum when the source of light is replaced by another source of wavelength 660 nm would be ________ mm . (JEE Main 2025 (Online) 28th January Morning Shift)',
-    given: {},
+    given: { wavelength: 600.0, length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm', 'length_m': 'm' }
   },
   {
     id: 'wave_optics_main_140',
@@ -2350,13 +2350,13 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_165',
     complexity: 'jee_main',
     question: 'In a Young\'s double slit experiment, an angular width of the fringe is 0.35$$^\\circ$$ on a screen placed at 2 m away for particular wavelength of 450 nm. The angular width of the fringe, when whole system is immersed in a medium of refractive index 7/5, is $${1 \\over \\alpha }$$. The value of $$\\alpha$$ is ___________. (JEE Main 2022 (Online) 28th June Evening Shift)',
-    given: {},
+    given: { wavelength: 450.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'wave_optics_main_166',
@@ -2506,12 +2506,12 @@ export const YDSE_PUZZLES: PuzzleConfig[] = [
     id: 'wave_optics_main_178',
     complexity: 'jee_main',
     question: 'In a Young\'s double slit experiment 15 fringes\nare observed on a small portion of the screen\nwhen light of wavelength 500 nm is used. Ten\nfringes are observed on the same section of\nthe screen when another light source of\nwavelength $$\\lambda $$ is used. Then the value of $$\\lambda $$ is\n(in nm) __________. (JEE Main 2020 (Online) 9th January Evening Slot)',
-    given: {},
+    given: { wavelength: 500.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   }
 ]

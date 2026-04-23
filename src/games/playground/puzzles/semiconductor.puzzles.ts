@@ -1446,12 +1446,12 @@ export const SEMICONDUCTOR_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A 5V battery is connected across the points X and Y. Assume D1 and D2 to be normal silicon diodes. Find the current supplied by the battery if the +ve terminal of the battery is connected to point X. (JEE Main 2021 (Online) 25th February Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['current_a'],
+    answer: { 'current_a': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'current_a': 'A' }
   },
   {
     id: 'semiconductor_main_121',
@@ -1565,13 +1565,13 @@ export const SEMICONDUCTOR_PUZZLES: PuzzleConfig[] = [
     id: 'semiconductor_main_130',
     complexity: 'jee_main',
     question: 'If a semiconductor photodiode can detect a photon with a maximum wavelength of 400 nm, then\nits band gap energy is :\nPlanckâs constant h = 6.63 $$ \\times $$ 10â34 J.s. Speed of light c = 3 $$ \\times $$ 108\n m/s (JEE Main 2020 (Online) 3rd September Evening Slot)',
-    given: {},
+    given: { wavelength: 400.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'wavelength': 'nm' }
   },
   {
     id: 'semiconductor_main_131',
@@ -2142,12 +2142,12 @@ export const SEMICONDUCTOR_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A diode detector is used to detect an amplitude modulated wave of $$60\\% $$ modulation by using a condenser of capacity $$250$$ picofarad in parallel with a load resistance $$100$$ kilo $$ohm.$$ Find the maximum modulated frequency which could be detected by it. (JEE Main 2013 (Offline))',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'semiconductor_main_179',

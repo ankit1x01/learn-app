@@ -89,13 +89,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetism_7',
     complexity: 'jee_advanced',
     question: 'A long circular tube of length 10 m and radius 0.3 m carries a current I along its curved surface as shown. A wire-loop of resistance 0.005 $$\\Omega$$ and of radius 0.1 m is placed inside the tube with its axis coinciding with the axis of the tube. The current varies as $$I = {I_0}\\cos (300t)$$, where I0 is constant. If the magnetic moment of the loop is $$N{\\mu _0}{I_0}\\sin (300t)$$, then N is ___________. (IIT-JEE 2011 Paper 1 Offline)',
-    given: {},
+    given: { radius_m: 0.3, length_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'magnetism_8',
@@ -449,13 +449,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetism_37',
     complexity: 'jee_advanced',
     question: 'A long straight wire carries a current, I = 2 ampere. A semi-circular conducting rod is placed beside it on two conducting parallel rails of negligible resistance. Both the rails are parallel to the wire. The wire, the rod and the rails lie in the same horizontal plane, as shown in the figure. Two ends of the semi-circular rod are at the distances 1 cm and 4 cm from the wire. At time t = 0, the rod starts moving on the rails with a speed v = 3.0 m/s (see the figure). A resistor R = 1.4 $$\\Omega$$ and a capacitor C0 = 5.0$$\\mu$$F are connected in series between the rails. At time t = 0, C0 is uncharged. Which of the following statement(s) is(are) correct? [$$\\mu$$0 = 4$$\\pi$$ $$\\times$$ 10$$-$$7 SI units. Take ln 2 = 0.7] (JEE Advanced 2021 Paper 1 Online)',
-    given: {},
+    given: { speed_ms: 3.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s' }
   },
   {
     id: 'magnetism_38',
@@ -606,13 +606,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_0',
     complexity: 'jee_main',
     question: 'A current carrying circular loop of radius 2 cm with unit normal $\\hat{n}=\\frac{\\hat{k}+\\hat{i}}{\\sqrt{2}}$ is placed in a magnetic field, $\\vec{B}=B_o(3 \\hat{i}+2 \\hat{k})$. If $B_o=4 \\times 10^{-3} \\mathrm{~T}$ and current $I=100 \\sqrt{2} \\mathrm{~A}$, the torque experienced by the loop is $\\_\\_\\_\\_$ Wb.A. ( $\\pi=3.14$ ) (JEE Main 2026 (Online) 8th April Evening Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_1',
@@ -630,13 +630,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_2',
     complexity: 'jee_main',
     question: 'A small cube of side 1 mm is placed at the centre of a circular loop of radius 10 cm carrying a current of 2 A . The magnetic energy stored inside the cube is $\\alpha \\times 10^{-14} \\mathrm{~J}$. The value of $\\alpha$ is $\\_\\_\\_\\_$ .\n$$ \\left(\\mu_{\\mathrm{o}}=4 \\pi \\times 10^{-7} \\mathrm{Tm} / \\mathrm{A}, \\pi=3.14\\right) $$ (JEE Main 2026 (Online) 6th April Morning Shift)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_3',
@@ -1159,12 +1159,12 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Find the magnetic field at the point $$\\mathrm{P}$$ in figure. The curved portion is a semicircle connected to two long straight wires. (JEE Main 2023 (Online) 1st February Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'magnetic_effect_of_current_main_47',
@@ -1651,12 +1651,12 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A coil having N turns is wound tightly in the form of a spiral with inner and outer radii \'a\' and \'b\' respectively. Find the magnetic field at centre, when a current I passes through coil: (JEE Main 2021 (Online) 31st August Morning Shift)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'magnetic_effect_of_current_main_88',
@@ -1818,13 +1818,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_101',
     complexity: 'jee_main',
     question: 'Magnetic fields at two points on the axis of a circular coil at a distance of 0.05 m and 0.2 m from the centre are in the ratio 8 : 1. The radius of coil is ________. (JEE Main 2021 (Online) 25th February Morning Shift)',
-    given: {},
+    given: { length_m: 0.05 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_102',
@@ -1914,13 +1914,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_109',
     complexity: 'jee_main',
     question: 'A wire A, bent in the shape of an arc of a circle, carrying a current of 2 A and having radius 2 cm and another wire B, also bent in the shape of arc of a circle, carrying a current of 3 A and having radius of 4 cm, are placed as shown in the figure. The ratio of the magnetic fields due to the wires A and B at the common centre O is : (JEE Main 2020 (Online) 4th September Morning Slot)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_110',
@@ -2083,12 +2083,12 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'Find the magnetic field at point P due to a straight line segment AB of length 6 cm carrying a current of 5A.\n(See figure) ($$\\mu $$0 = 4$$\\pi $$ Ã 10â7 N-Aâ2) (JEE Main 2019 (Online) 12th April Evening Slot)',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['mass_kg'],
+    answer: { 'mass_kg': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'mass_kg': 'kg' }
   },
   {
     id: 'magnetic_effect_of_current_main_124',
@@ -2322,13 +2322,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_143',
     complexity: 'jee_main',
     question: 'A particle having the same charge as of electron moves in a ciurcular path of radius 0.5 cm under the influence of a magnetic field 0f 0.5 T. If an electric field of 100 V/m makes it to move in a straight path, then the mass of the particle is (Given charge of electron = 1.6 $$ \\times $$ 10$$-$$19C) (JEE Main 2019 (Online) 9th January Evening Slot)',
-    given: {},
+    given: { radius_m: 0.5 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_144',
@@ -2515,12 +2515,12 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     complexity: 'jee_main',
     question: 'A conductor lies along the $$z$$-axis at $$ - 1.5 \\le z < 1.5\\,m$$ and carries a fixed current of $$10.0$$ $$A$$ in $$ - {\\widehat a_z}$$ direction (see figure). For a field $$\\overrightarrow B  = 3.0 \\times {10^{ - 4}}\\,{e^{ - 0.2x}}\\,\\,{\\widehat a_y}\\,\\,T,$$ find the power required to move the conductor at constant speed to $$x=2.0$$ $$m$$, $$y=0$$ $$m$$ in $$5 \\times {10^{ - 3}}s.$$ Assume parallel motion along the $$x$$-axis. (JEE Main 2014 (Offline))',
     given: {},
-    find: ['answer'],
-    answer: { answer: 0 },
+    find: ['power_w'],
+    answer: { 'power_w': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'power_w': 'W' }
   },
   {
     id: 'magnetic_effect_of_current_main_160',
@@ -2910,13 +2910,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_192',
     complexity: 'jee_main',
     question: 'A circular coil of radius 2 cm and 125 turns carries a current of 1 A . The coil is placed in a uniform magnetic field of magnitude 0.4 T . The axis of the coil makes an angle of $30^{\\circ}$ with the direction of the magnetic field. The torque acting on the coil is $\\alpha \\times 10^{-4} \\mathrm{~N} . \\mathrm{m}$. The value of $\\alpha$ is $\\_\\_\\_\\_$ .\n$$ (\\pi=3.14) $$ (JEE Main 2026 (Online) 4th April Evening Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_193',
@@ -2970,13 +2970,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_197',
     complexity: 'jee_main',
     question: 'The magnetic field inside a 200 turns solenoid of radius 10 cm is $2.9 \\times 10^{-4} ~\\mathrm{Tesla}$. If the solenoid carries a current of 0.29 A , then the length of the solenoid is _______ $\\pi \\mathrm{cm}$. (JEE Main 2025 (Online) 29th January Evening Shift)',
-    given: {},
+    given: { radius_m: 10.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_198',
@@ -3006,13 +3006,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_200',
     complexity: 'jee_main',
     question: 'A proton is moving undeflected in a region of crossed electric and magnetic fields at a constant speed of $2 \\times 10^5 \\mathrm{~ms}^{-1}$. When the electric field is switched off, the proton moves along a circular path of radius 2 cm . The magnitude of electric field is $x \\times 10^4 \\mathrm{~N} / \\mathrm{C}$. The value of $x$ is _________. Take the mass of the proton $=1.6 \\times 10^{-27} \\mathrm{~kg}$. (JEE Main 2025 (Online) 22nd January Evening Shift)',
-    given: {},
+    given: { radius_m: 2.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_201',
@@ -3366,13 +3366,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_effect_of_current_main_230',
     complexity: 'jee_main',
     question: 'A closely wounded circular coil of radius 5 cm produces a magnetic field of $$37.68 \\times 10^{-4} \\mathrm{~T}$$ at its center. The current through the coil is _________A.\n[Given, number of turns in the coil is 100 and $$\\pi=3.14$$] (JEE Main 2022 (Online) 29th July Morning Shift)',
-    given: {},
+    given: { radius_m: 5.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'radius_m': 'm' }
   },
   {
     id: 'magnetic_effect_of_current_main_231',
@@ -3943,13 +3943,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_properties_of_matter_main_38',
     complexity: 'jee_main',
     question: 'A paramagnetic sample shows a net magnetisation of 6 A/m when it is placed in an external\nmagnetic field of 0.4 T at a temperature of 4 K. When the sample is placed in an external magnetic\nfield of 0.3 T at a temperature of 24 K, then the magnetisation will be: (JEE Main 2020 (Online) 4th September Evening Slot)',
-    given: {},
+    given: { temp_k: 4.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'magnetic_properties_of_matter_main_39',
@@ -4027,13 +4027,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_properties_of_matter_main_45',
     complexity: 'jee_main',
     question: 'A paramagnetic material has 1028 atoms/m3. Its magnetic susceptibility at temperature 350 K is 2.8 $$ \\times $$ 10â4. Its susceptibility at 300 K is : (JEE Main 2019 (Online) 12th January Evening Slot)',
-    given: {},
+    given: { temp_k: 350.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'temp_k': 'K' }
   },
   {
     id: 'magnetic_properties_of_matter_main_46',
@@ -4051,37 +4051,37 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_properties_of_matter_main_47',
     complexity: 'jee_main',
     question: 'At some location on earth, the horizontal component of earthâs magnetic field is 18 Ã 10â6 T. At this location, magnetic needle of length 0.12 m and pole strength 1.8 Am is suspended from its mid-point using a thread, it makes 45o angle with horizontal in equilibrium. To keep this needle horizontal, the vertical force that should be applied at one of its ends is - (JEE Main 2019 (Online) 10th January Evening Slot)',
-    given: {},
+    given: { length_m: 0.12 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'magnetic_properties_of_matter_main_48',
     complexity: 'jee_main',
     question: 'A magnet of total magnetic moment 10-2 $${\\widehat i}$$ A-m2 is placed in a time varying magnetic field, B$${\\widehat i}$$ (cos $$\\omega t$$)  where B  = 1 Tesla and $$\\omega $$ = 0.125 rad/s. The work done for reversing the direction of the magnetic moment at t = 1 second, is - (JEE Main 2019 (Online) 10th January Morning Slot)',
-    given: {},
+    given: { time_s: 1.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'time_s': 's' }
   },
   {
     id: 'magnetic_properties_of_matter_main_49',
     complexity: 'jee_main',
     question: 'A bar magnet is demagnetized by inserting it inside a solenoid of length 0.2 m, 100 turns, and carrying a current of 5.2 A. The corecivity of the bar magnet is : (JEE Main 2019 (Online) 9th January Morning Slot)',
-    given: {},
+    given: { length_m: 0.2 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'length_m': 'm' }
   },
   {
     id: 'magnetic_properties_of_matter_main_50',
@@ -4111,13 +4111,13 @@ export const MAGNETISM_PUZZLES: PuzzleConfig[] = [
     id: 'magnetic_properties_of_matter_main_52',
     complexity: 'jee_main',
     question: 'A fighter plane of length 20 m, wing span (distance from tip of one wing to the tip of the other wing) of 15 m and height 5 m is flying towards east over Delhi. Its speed is 240 msâ1. The earthâs magnetic field over Delhi is 5 $$ \\times $$10â5 T with the declination angle ~ 0o and dip of $$\\theta $$ such that sin $$\\theta $$ = 2/3 . If the voltage developed is VB between the lower and upper side of the plane and VW between the tips of the wings then VB and VW are close to : (JEE Main 2016 (Online) 10th April Morning Slot)',
-    given: {},
+    given: { speed_ms: 240.0, height_m: 5.0, length_m: 20.0 },
     find: ['answer'],
-    answer: { answer: 0 },
+    answer: { 'answer': 0 },
     tolerance: 5,
     hints: ['Refer to original text for values.'],
     formula: 'N/A',
-    units: { answer: '' }
+    units: { 'answer': '', 'speed_ms': 'm/s', 'height_m': 'm', 'length_m': 'm' }
   },
   {
     id: 'magnetic_properties_of_matter_main_53',
