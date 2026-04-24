@@ -91,6 +91,38 @@ export interface AudioLectureConfig extends GameBase {
   }>
 }
 
+export interface MemoryAttentionConfig extends GameBase {
+  type: 'memory-attention'
+  audioUrl: string
+  topics: Array<{ id: string; label: string; position: 'bottom' | 'side' }>
+  timeline: Array<{ timestamp: number; factId: string; label: string; targetTopicId: string }>
+}
+
+export interface MemoryNameRecallConfig extends GameBase {
+  type: 'memory-name-recall'
+  people: Array<{ id: string; name: string; detail: string; faceUrl: string }>
+  mnemonicPairs: Array<{ name: string; mnemonic: string }>
+}
+
+export interface MemoryRetentionConfig extends GameBase {
+  type: 'memory-retention'
+  audioUrl: string
+  questions: Array<{ id: string; prompt: string; options: string[]; answer: string; difficulty: 'low' | 'high' }>
+}
+
+export interface MemorySequencingConfig extends GameBase {
+  type: 'memory-sequencing'
+  audioUrl: string
+  events: Array<{ id: string; label: string; order: number }>
+}
+
+export interface MemorySynthesisConfig extends GameBase {
+  type: 'memory-synthesis'
+  premises: Array<{ id: string; text: string }>
+  conclusion: { text: string; isValid: boolean }
+  question: string
+}
+
 export type GameConfig =
   | ThisOrThatConfig
   | ChronoConfig
@@ -100,3 +132,8 @@ export type GameConfig =
   | RetentionConfig
   | AudioLectureConfig
   | BubbleMatchConfig
+  | MemoryAttentionConfig
+  | MemoryNameRecallConfig
+  | MemoryRetentionConfig
+  | MemorySequencingConfig
+  | MemorySynthesisConfig

@@ -13,8 +13,9 @@ import { ConceptRadar } from './jee/ConceptRadar'
 import { FormulaFactory } from './jee/FormulaFactory'
 import { PressureVault } from './jee/PressureVault'
 import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout, dsaBalloonTap, dsaRetention, dsaAudioLecture, dsaBubbleMatch } from './data/dsa-dummy'
+import { sampleAttentionGame, sampleNameRecallGame, sampleRetentionGame, sampleSequencingGame, sampleSynthesisGame } from './data/memoryGames'
 
-type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph' | 'recall-blitz' | 'twin-or-not' | 'interleaved-sprint' | 'concept-radar' | 'formula-factory' | 'pressure-vault'
+type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph' | 'recall-blitz' | 'twin-or-not' | 'interleaved-sprint' | 'concept-radar' | 'formula-factory' | 'pressure-vault' | 'memory-attention' | 'memory-name-recall' | 'memory-retention' | 'memory-sequencing' | 'memory-synthesis'
 
 interface GameMeta {
   id: Tab
@@ -128,6 +129,11 @@ const CONFIGS: Record<Tab, GameConfig> = {
   'concept-radar':      null as any,
   'formula-factory':    null as any,
   'pressure-vault':     null as any,
+  'memory-attention':   sampleAttentionGame,
+  'memory-name-recall': sampleNameRecallGame,
+  'memory-retention':   sampleRetentionGame,
+  'memory-sequencing':  sampleSequencingGame,
+  'memory-synthesis':   sampleSynthesisGame,
 }
 
 interface Props {
@@ -147,7 +153,16 @@ export function GamesScreen({ onBack, setScreen }: Props) {
   if (selectedGame === 'pressure-vault')     return <PressureVault        onBack={() => setSelectedGame(null)} />
 
   if (selectedGame !== null) {
-    const game = GAMES.find(g => g.id === selectedGame)!
+    const memoryGamesMeta = [
+      { id: 'memory-attention'   as Tab, label: 'Attention',    tagline: 'Sync & Drop',        bg: '#E0F2FE', color: '#0369A1', fold: 'rgba(3,105,161,0.13)', icon: 'target' },
+      { id: 'memory-name-recall' as Tab, label: 'Name Recall',  tagline: 'Faces & Names',      bg: '#FDF4FF', color: '#A21CAF', fold: 'rgba(162,28,175,0.13)', icon: 'face' },
+      { id: 'memory-retention'   as Tab, label: 'Retention',    tagline: 'Listen & Recall',    bg: '#FEF3C7', color: '#B45309', fold: 'rgba(180,83,9,0.13)', icon: 'hearing' },
+      { id: 'memory-sequencing'  as Tab, label: 'Sequencing',   tagline: 'Order Events',       bg: '#F3E8FF', color: '#7E22CE', fold: 'rgba(126,34,206,0.13)', icon: 'format_list_numbered' },
+      { id: 'memory-synthesis'   as Tab, label: 'Synthesis',    tagline: 'Deduce Truth',       bg: '#FFE4E6', color: '#BE123C', fold: 'rgba(190,18,60,0.13)', icon: 'psychology' },
+    ];
+    
+    const game = GAMES.find(g => g.id === selectedGame) || memoryGamesMeta.find(g => g.id === selectedGame)!;
+    
     return (
       <div className="flex flex-col h-screen max-w-md mx-auto" style={{ background: '#F5F0E8' }}>
         <div className="flex items-center gap-3 px-4 py-3 border-b border-[#E3DDD5] bg-white">
@@ -354,6 +369,38 @@ export function GamesScreen({ onBack, setScreen }: Props) {
             { id: 'concept-radar'      as Tab, label: 'Concept Radar',      tagline: 'Classify fast',      bg: '#FFFBEB', color: '#D97706', fold: 'rgba(217,119,6,0.13)', icon: 'radar' },
             { id: 'formula-factory'    as Tab, label: 'Formula Factory',    tagline: 'Fill the blank',     bg: '#F5F3FF', color: '#7C3AED', fold: 'rgba(124,58,237,0.13)', icon: 'calculate' },
             { id: 'pressure-vault'     as Tab, label: 'Pressure Vault',     tagline: 'Beat the ghost',     bg: '#FFF1F2', color: '#DC2626', fold: 'rgba(220,38,38,0.13)', icon: 'lock' },
+          ].map(g => (
+            <button
+              key={g.id}
+              onClick={() => setSelectedGame(g.id)}
+              className="relative rounded-3xl p-4 flex flex-col justify-between overflow-hidden text-left active:scale-[0.97] transition-transform"
+              style={{ background: g.bg, boxShadow: '0 4px 0 rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10)', aspectRatio: '1' }}
+            >
+              <div className="absolute top-0 right-0 w-9 h-9 rounded-bl-3xl" style={{ background: g.fold }} />
+              <div className="flex-1 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.28)' }}>
+                  <span className="material-symbols-rounded" style={{ fontSize: 34, color: g.color, fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>{g.icon}</span>
+                </div>
+              </div>
+              <div className="mt-2">
+                <p className="text-[16px] font-black leading-tight" style={{ color: g.color, fontFamily: 'Plus Jakarta Sans, system-ui' }}>{g.label}</p>
+                <p className="text-[11px] font-medium mt-0.5" style={{ color: g.color, opacity: 0.65, fontFamily: 'Inter, system-ui' }}>{g.tagline}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Memory Training Stack section */}
+      <div className="col-span-2 mt-4">
+        <p className="text-[11px] font-bold uppercase tracking-widest mb-3 px-1" style={{ color: '#9CA3AF', fontFamily: 'Inter, system-ui' }}>Brain Training Stack</p>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { id: 'memory-attention'   as Tab, label: 'Attention',    tagline: 'Sync & Drop',        bg: '#E0F2FE', color: '#0369A1', fold: 'rgba(3,105,161,0.13)', icon: 'target' },
+            { id: 'memory-name-recall' as Tab, label: 'Name Recall',  tagline: 'Faces & Names',      bg: '#FDF4FF', color: '#A21CAF', fold: 'rgba(162,28,175,0.13)', icon: 'face' },
+            { id: 'memory-retention'   as Tab, label: 'Retention',    tagline: 'Listen & Recall',    bg: '#FEF3C7', color: '#B45309', fold: 'rgba(180,83,9,0.13)', icon: 'hearing' },
+            { id: 'memory-sequencing'  as Tab, label: 'Sequencing',   tagline: 'Order Events',       bg: '#F3E8FF', color: '#7E22CE', fold: 'rgba(126,34,206,0.13)', icon: 'format_list_numbered' },
+            { id: 'memory-synthesis'   as Tab, label: 'Synthesis',    tagline: 'Deduce Truth',       bg: '#FFE4E6', color: '#BE123C', fold: 'rgba(190,18,60,0.13)', icon: 'psychology' },
           ].map(g => (
             <button
               key={g.id}
