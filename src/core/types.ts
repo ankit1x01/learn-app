@@ -38,7 +38,7 @@ export interface Concept {
   stage: Stage;
   stability: number;    // S: days this memory lasts (FSRS)
   difficulty: number;   // D: 0–1, this student's hardness for this concept
-  lastTested: number;   // days since last tested; -1 = never
+  lastTested: number;   // Unix timestamp ms of last study; -1 = never. isDue() derives elapsed days from this.
   nextReview: number;   // days until next due
 
   // ── Layer 1: Encoding Depth ──────────────────────────────────────────────

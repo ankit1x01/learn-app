@@ -1,0 +1,66 @@
+,Chapter 2: Being Clear and Direct,,,
+,,,,
+,Page Contents,,,
+,,Lesson,,
+,,Examples,,
+ ,,Example Playground,,
+,,,,
+,Lesson,,,Back to top ↑
+,"Claude responds best to clear and direct instructions. 
+
+Think of Claude like any other human that is new to the job. Claude has no context on what to do aside from what you literally tell it. Just as when you instruct a human for the first time on a task, the more you explain exactly what you want in a straightforward manner to Claude, the better and more accurate Claude's response will be.",,,
+,,,,
+,"When in doubt, follow the Golden Rule of Clear Prompting: show your prompt to a colleague or friend and have them follow the instructions themselves to see if they can produce the result you want. If they're confused, Claude's confused.",,,
+,,,,
+,Examples,,,Back to top ↑
+,Let's take a task like writing poetry. (Ignore any syllable mismatch - LLMs aren't great at counting syllables yet.),,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Write a haiku about robots.,➤,#ERROR!
+,,,,
+,"This haiku is nice enough, but users may want Claude to go directly into the poem without the ""Here is a haiku"" preamble.
+
+How do we achieve that? We ask for it!",,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Write a haiku about robots. Skip the preamble; go straight into the poem.,➤,#ERROR!
+,,,,
+,"Here's another example. Let's ask Claude who's the best basketball player of all time. You can see below that while Claude lists a few names, it doesn't respond with a definitive ""best"".",,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Who is the best basketball player of all time?,➤,#ERROR!
+,,,,
+,,,,
+,Can we get Claude to make up its mind and decide on a best player? Yes! Just ask!,,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Who is the best basketball player of all time? Yes, there are differing opinions, but if you absolutely had to pick one player, who would it be?",➤,#ERROR!
+,,,,
+,,,,
+,,,,
+,"If you're ready to try the chapter exercises, click the link below. If you want to play around with any of the examples in this lesson, scroll down!",,,
+,,,,
+,,,,Chapter 2 Exercises: Being Clear and Direct →
+,,,,
+,Example Playground,,,Back to top ↑
+,"This is an area for you to experiment freely with the prompt examples shown in this lesson. Feel free to tweak prompts to see how it may affect Claude's responses.
+
+Note: The colors in the cells, which have been carried over from above, will not change even if the prompt or Claude's response changes.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Write a haiku about robots.,➤,#ERROR!
+,,,,
+,,User: Write a haiku about robots. Skip the preamble; go straight into the poem.,➤,#ERROR!
+,,,,
+,,User: Who is the best basketball player of all time?,➤,#ERROR!
+,,,,
+,,,,
+,,"User: Who is the best basketball player of all time? Yes, there are differing opinions, but if you absolutely had to pick one player, who would it be?",➤,#ERROR!
+,,,,
+,,,,
+,,,,
+,,,,
+,← Chapter 1 Exercises: Basic Prompt Structure,,,Chapter 2 Exercises: Being Clear and Direct →
+,,,,
+,Back to top ↑,,,
+,Table of Contents,,,

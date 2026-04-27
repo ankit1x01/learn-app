@@ -6,8 +6,10 @@ import { ShapePlaced } from '../components/M3Shapes';
 import type { Screen } from '../types';
 import type { SessionItem, SubjectStats } from '../core/types';
 import { getTimeOfDayNudge } from '../core/scheduler';
-import { loadCourseProgress, getAppStreak } from '../db/store';
+import { loadCourseProgress, getAppStreak, loadPortfolio, savePortfolioItem } from '../db/store';
+import type { PortfolioProgress, PortfolioStatus } from '../db/store';
 import { COURSE_LESSONS } from '../data/course/lessons';
+import { AI_PORTFOLIO_PROJECTS } from '../data/ai_engineer/portfolio';
 import {
   Flame,
   Clock,
@@ -24,27 +26,33 @@ import {
   Zap,
   GraduationCap,
   Gamepad2,
+  Cpu,
+  Database,
+  Shield,
+  Rocket,
 } from 'lucide-react';
 
 const SUBJECT_ICONS: Record<string, React.ElementType> = {
-  'Foundations':               Layers,
-  'Arrays & Search':           BarChart2,
-  'Strings & Data Structures': Link2,
-  'Trees & Graphs':            GitBranch,
-  'DP & Greedy':               Zap,
+  'Core Foundations':            Brain,
+  'ML & Deep Learning':          Cpu,
+  'NLP & Language Understanding': BarChart2,
+  'LLM Mastery':                 Brain,
+  'RAG & Knowledge Systems':     Database,
+  'AI Agents & Automation':      Rocket,
+  'Production AI & MLOps':       Rocket,
+  'AI Leadership & Safety':      Shield,
 };
 
 /** Material Symbols Rounded icon names — M3 Expressive icon system */
 const SUBJECT_MS_ICONS: Record<string, string> = {
-  // IT Placement
-  'Quantitative Aptitude': 'calculate',
-  'DSA & Coding':          'terminal',
-  // DSA FAANG subjects
-  'Foundations':               'layers',
-  'Arrays & Search':           'data_array',
-  'Strings & Data Structures': 'link',
-  'Trees & Graphs':            'account_tree',
-  'DP & Greedy':               'bolt',
+  'Core Foundations':            'code',
+  'ML & Deep Learning':          'memory',
+  'NLP & Language Understanding': 'translate',
+  'LLM Mastery':                 'psychology',
+  'RAG & Knowledge Systems':     'database',
+  'AI Agents & Automation':      'smart_toy',
+  'Production AI & MLOps':       'rocket_launch',
+  'AI Leadership & Safety':      'security',
 };
 
 export const Dashboard = ({
@@ -64,11 +72,25 @@ export const Dashboard = ({
   const [courseCompleted, setCourseCompleted] = useState(0);
   const [selectedPill, setSelectedPill] = useState<string | null>(null);
   const [liveStreak, setLiveStreak] = useState<number>(0);
+  const [portfolio, setPortfolio] = useState<Record<string, PortfolioProgress>>({});
 
   useEffect(() => {
     loadCourseProgress().then(map => setCourseCompleted(map.size));
     getAppStreak().then(setLiveStreak).catch(console.error);
+    loadPortfolio().then(setPortfolio).catch(console.error);
   }, []);
+
+  const handlePortfolioToggle = async (id: string) => {
+    const current = portfolio[id];
+    const nextStatus: PortfolioStatus = !current ? 'in_progress' : current.status === 'not_started' ? 'in_progress' : current.status === 'in_progress' ? 'completed' : 'not_started';
+    const progress: PortfolioProgress = {
+      status: nextStatus,
+      startedAt: nextStatus !== 'not_started' ? (current?.startedAt ?? Date.now()) : undefined,
+      completedAt: nextStatus === 'completed' ? Date.now() : undefined,
+    };
+    await savePortfolioItem(id, progress);
+    setPortfolio(prev => ({ ...prev, [id]: progress }));
+  };
   const totalAutomatic = Object.values(stats).reduce((sum, s) => sum + s.auto, 0);
   const totalConscious = Object.values(stats).reduce((sum, s) => sum + s.conscious, 0);
   const totalFading    = Object.values(stats).reduce((sum, s) => sum + s.fragile, 0);
@@ -194,11 +216,12 @@ export const Dashboard = ({
       </div>
 
       {/* ── Start Session Card (Primary CTA) ── */}
-      <motion.div 
+      <motion.button 
+        onClick={onStartSession}
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...m3SpatialDefault, delay: 0.2 }}
-        className="rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1"
+        className="w-full text-left rounded-m3-xl p-5 mb-6 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1 block"
         style={{ 
           background: 'var(--color-surface-container-low)', 
           borderColor: 'var(--color-primary-border)',
@@ -270,8 +293,7 @@ export const Dashboard = ({
           ))}
         </div>
 
-        <motion.button 
-          onClick={onStartSession} 
+        <motion.div
           className="w-full py-[15px] rounded-m3-xl font-bold font-ui text-[15px] flex justify-center items-center gap-2 transition-all active:scale-[0.98] hover:shadow-lg relative overflow-hidden group"
           style={{ 
             background: 'var(--color-primary)', 
@@ -290,8 +312,8 @@ export const Dashboard = ({
           />
           <Play size={17} fill="currentColor" />
           <span className="relative z-10">Start Session</span>
-        </motion.button>
-      </motion.div>
+        </motion.div>
+      </motion.button>
 
       {/* ── Mastery Ring Card ── */}
       <motion.div 
@@ -523,10 +545,10 @@ export const Dashboard = ({
         </div>
         <div className="flex-1">
           <p className="text-[15px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-primary)' }}>
-            DSA Demo Session
+            AI Engineer Demo Session
           </p>
           <p className="text-[12px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
-            5 concepts · infographics + MCQs · resumes where you left off
+            5 lead-level concepts · infographics + MCQs
           </p>
         </div>
         <ChevronRight size={18} style={{ color: 'var(--color-primary)' }} className="shrink-0" />
@@ -697,6 +719,74 @@ export const Dashboard = ({
                 </div>
                 <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} className="shrink-0" />
               </motion.button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Portfolio Projects ── */}
+      <div className="mb-6 px-4">
+        <div className="flex items-center justify-between mb-3 px-1">
+          <p className="text-[13px] font-semibold font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
+            Portfolio Projects
+          </p>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] font-bold tabular-nums font-ui" style={{ color: 'var(--color-success)' }}>
+              {AI_PORTFOLIO_PROJECTS.filter(p => portfolio[p.id]?.status === 'completed').length}
+            </span>
+            <span className="text-[12px] font-ui" style={{ color: 'var(--color-on-surface-muted)' }}>/ {AI_PORTFOLIO_PROJECTS.length}</span>
+          </div>
+        </div>
+
+        <div className="space-y-2.5">
+          {AI_PORTFOLIO_PROJECTS.map((project, i) => {
+            const status = portfolio[project.id]?.status ?? 'not_started';
+            const statusIcon = status === 'completed' ? 'check_circle' : status === 'in_progress' ? 'pending' : 'circle';
+            const statusColor = status === 'completed' ? '#15803D' : status === 'in_progress' ? '#F59E0B' : 'var(--color-on-surface-muted)';
+            const fill = status === 'completed' ? "'FILL' 1" : status === 'in_progress' ? "'FILL' 1" : "'FILL' 0";
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...m3SpatialDefault, delay: 0.5 + (i * 0.04) }}
+                className="rounded-m3-xl p-4 flex items-center gap-3 border border-solid relative overflow-hidden transition-all hover:shadow-md"
+                style={{ background: status === 'completed' ? '#15803D08' : 'var(--color-surface-container)', borderColor: status === 'completed' ? '#15803D30' : 'var(--color-border)' }}
+              >
+                <div
+                  className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0 text-xl"
+                  style={{ background: project.bgColor }}
+                >
+                  {project.emoji}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[14px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-on-surface)' }}>
+                    {project.name}
+                  </p>
+                  <p className="text-[11px] font-body leading-snug line-clamp-2" style={{ color: 'var(--color-on-surface-variant)' }}>
+                    {project.description}
+                  </p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold" style={{ color: project.color, background: project.bgColor }}>
+                      ~{project.estimatedHours}h
+                    </span>
+                    {Array.from({ length: project.difficulty }, (_, j) => (
+                      <span key={j} className="w-1.5 h-1.5 rounded-full" style={{ background: j < project.difficulty ? project.color : 'var(--color-border)' }} />
+                    ))}
+                  </div>
+                </div>
+                <button
+                  onClick={() => handlePortfolioToggle(project.id)}
+                  className="shrink-0 p-1 rounded-full transition-all active:scale-90"
+                >
+                  <span
+                    className="material-symbols-rounded"
+                    style={{ fontSize: 24, color: statusColor, fontVariationSettings: `${fill}, 'wght' 400, 'GRAD' 0, 'opsz' 24` }}
+                  >
+                    {statusIcon}
+                  </span>
+                </button>
+              </motion.div>
             );
           })}
         </div>

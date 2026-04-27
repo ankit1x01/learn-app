@@ -58,27 +58,27 @@ const playSound = (type: 'tick' | 'success' | 'buzzer' | 'chime') => {
 
 
 const SUBJECT_ICON: Record<string, React.ElementType> = {
-  'Arrays & Search':           BarChart2,
-  'Strings & Data Structures': Link2,
-  'Trees & Graphs':            GitBranch,
-  'Foundations':               Layers,
-  'DP & Greedy':               Zap,
+  'RAG & Knowledge Systems':   Layers,
+  'AI Agents & Automation':    Brain,
+  'LLM Mastery':               Zap,
+  'Production AI & MLOps':     Activity,
+  'AI Leadership & Safety':    BarChart2,
 };
 
 const SUBJECT_COLOR: Record<string, string> = {
-  'Arrays & Search':           'var(--color-subject-physics)',
-  'Strings & Data Structures': 'var(--color-subject-cs)',
-  'Trees & Graphs':            'var(--color-success)',
-  'Foundations':               'var(--color-on-surface-variant)',
-  'DP & Greedy':               'var(--color-warning)',
+  'RAG & Knowledge Systems':   '#EC4899',
+  'AI Agents & Automation':    '#F97316',
+  'LLM Mastery':               '#8B5CF6',
+  'Production AI & MLOps':     '#F59E0B',
+  'AI Leadership & Safety':    '#EF4444',
 };
 
 const SUBJECT_BG: Record<string, string> = {
-  'Arrays & Search':           'var(--color-subject-physics-container)',
-  'Strings & Data Structures': 'var(--color-subject-cs-container)',
-  'Trees & Graphs':            'var(--color-success-container)',
-  'Foundations':               'var(--color-surface-container)',
-  'DP & Greedy':               'var(--color-warning-container)',
+  'RAG & Knowledge Systems':   '#EC489915',
+  'AI Agents & Automation':    '#F9731615',
+  'LLM Mastery':               '#8B5CF615',
+  'Production AI & MLOps':     '#F59E0B15',
+  'AI Leadership & Safety':    '#EF444415',
 };
 
 // ─── Session state persisted in localStorage ──────────────────────────────────

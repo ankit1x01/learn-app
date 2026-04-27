@@ -1,0 +1,84 @@
+,Chapter 5: Formatting Output & Speaking for Claude,,,,,,,
+,,,,,,,,
+,Page Contents,,,,,,,
+,,Lesson,,,,,,
+,,Examples,,,,,,
+ ,,Example Playground,,,, ,,
+,,,,,,,,
+,Lesson,,,,,,,Back to top ↑
+,"Claude can format its output in a wide variety of ways. You just need to ask for it to do so!
+
+One of these ways is by using XML tags to separate out the response from any other superfluous text. You've already learned that you can use XML tags to make your prompt clearer and more parseable to Claude. It turns out, you can also ask Claude to use XML tags to make its output clearer and more easily understandable to humans.",,,,,,,
+,,,,,,,,
+,Examples,,,,,,,Back to top ↑
+,Remember the 'poem preamble problem' we solved in Chapter 2 by asking Claude to skip the preamble entirely? It turns out we can also achieve a similar outcome by telling Claude to put the poem in XML tags.,,,,,,,
+,,,,,,,,
+,,Prompt Template,,Input {{ANIMAL}},,Prompt After Substitution,,Claude's Response
+,,User: Please write a haiku about {{ANIMAL}}. Put it in <haiku> tags.,﹢,Rabbit,＝,User: Please write a haiku about Rabbit. Put it in <haiku> tags.,➤,#ERROR!
+,,,,,,,,
+,"Why is this something we'd want to do? Well, having the output in XML tags allows the end user to reliably get the poem and only the poem by writing a short program to extract the content between XML tags.",,,,,,,
+,,,,,,,,
+,"An extension of this technique is to put the first XML tag AFTER ""Assistant:"". When you put text after ""Assistant:"", you're basically telling Claude that Claude has already said something, and that it should continue from that point onward. This technique is called ""speaking for Claude"" or ""prefilling Claude's response.""
+
+Below, we've done this with the first <haiku> XML tag. Notice how Claude continues directly from where we left off.",,,,,,,
+,,,,,,,,
+,,Prompt Template,,Input {{ANIMAL}},,Prompt After Substitution,,Claude's Response
+,,"User: Please write a haiku about {{ANIMAL}}. Put it in <haiku> tags.
+Assistant: <haiku>",﹢,Cat,＝,"User: Please write a haiku about Cat. Put it in <haiku> tags.
+Assistant: <haiku>",➤,#ERROR!
+,,,,,,,,
+,"Claude also excels at using other output formatting styles, notably JSON. If you want to enforce JSON output (not deterministically, but close to it), you can also prefill Claude's response with the opening bracket, ""{"".",,,,,,,
+,,,,,,,,
+,,Prompt Template,,Input {{ANIMAL}},,Prompt After Substitution,,Claude's Response
+,,"User: Please write a haiku about {{ANIMAL}}. Use JSON format with the keys as ""first_line"", ""second_line"", and ""third_line"".
+Assistant: {",﹢,Cat,＝,"User: Please write a haiku about Cat. Use JSON format with the keys as ""first_line"", ""second_line"", and ""third_line"".
+Assistant: {",➤,#ERROR!
+,,,,,,,,
+,"Below is an example of multiple input variables in the same prompt AND output formatting specification, all done using XML tags.",,,,,,,
+,,,,,,,,
+,,Prompt Template,,Input {{EMAIL}},,Prompt After Substitution,,Claude's Response
+,,"User: Hey Claude. Here is an email: <email>{{EMAIL}}</email>. Make this email more {{ADJECTIVE}}. Write the new version in <{{ADJECTIVE}}_email> XML tags.
+Assistant: <{{ADJECTIVE}}_email>",﹢,"Hi Zack, just pinging you for a quick update on that prompt you were supposed to write.",＝,"User: Hey Claude. Here is an email: <email>Hi Zack, just pinging you for a quick update on that prompt you were supposed to write.</email>. Make this email more olde english. Write the new version in <olde english_email> XML tags.
+Assistant: <olde english_email>",➤,#ERROR!
+,,,,,,,,
+,,,,Input {{ADJECTIVE}},,,,
+,,,﹢,olde english,,,,
+,,,,,,,,
+,"Bonus lesson: To learn more about controlling Claude's output using the API, click on the plus sign (➕) on the far left of this row!",,,,,,,
+,"If you are calling Claude through the API, you can pass the closing XML tag to the ""stop_sequences"" parameter to get Claude to stop sampling once it emits your desired tag. This can save money and time-to-last-token by eliminating Claude's concluding remarks after it's already given you the answer you care about.",,,,,,,
+,,,,,,,,
+,"If you're ready to try the chapter exercises, click the link below. If you want to play around with any of the examples in this lesson, scroll down!",,,,,,,
+,,,,,,,,
+,,,,,,,,Chapter 5 Exercises: Formatting Output & Speaking for Claude →
+,,,,,,,,
+,Example Playground,,,,,,,Back to top ↑
+,"This is an area for you to experiment freely with the prompt examples shown in this lesson. Feel free to tweak prompts to see how it may affect Claude's responses.
+
+Note: The colors in the cells, which have been carried over from above, will not change even if the prompt or Claude's response changes.",,,,,,,
+,,,,,,,,
+,,Prompt Template,,Input {{ANIMAL}},,Prompt After Substitution,,Claude's Response
+,,User: Please write a haiku about {{ANIMAL}}. Put it in <haiku> tags.,﹢,Rabbit,＝,User: Please write a haiku about Rabbit. Put it in <haiku> tags.,➤,#ERROR!
+,,,,,,,,
+,,Prompt Template,,Input {{ANIMAL}},,Prompt After Substitution,,Claude's Response
+,,"User: Please write a haiku about {{ANIMAL}}. Put it in <haiku> tags.
+Assistant: <haiku>",﹢,Cat,＝,"User: Please write a haiku about Cat. Put it in <haiku> tags.
+Assistant: <haiku>",➤,#ERROR!
+,,,,,,,,
+,,Prompt Template,,Input {{ANIMAL}},,Prompt After Substitution,,Claude's Response
+,,"User: Please write a haiku about {{ANIMAL}}. Use JSON format with the keys as ""first_line"", ""second_line"", and ""third_line"".
+Assistant: {",﹢,Cat,＝,"User: Please write a haiku about Cat. Use JSON format with the keys as ""first_line"", ""second_line"", and ""third_line"".
+Assistant: {",➤,#ERROR!
+,,,,,,,,
+,,Prompt Template,,Input {{EMAIL}},,Prompt After Substitution,,Claude's Response
+,,"User: Hey Claude. Here is an email: <email>{{EMAIL}}</email>. Make this email more {{ADJECTIVE}}. Write the new version in <{{ADJECTIVE}}_email> XML tags.
+Assistant: <{{ADJECTIVE}}_email>",﹢,"Hi Zack, just pinging you for a quick update on that prompt you were supposed to write.",＝,"User: Hey Claude. Here is an email: <email>Hi Zack, just pinging you for a quick update on that prompt you were supposed to write.</email>. Make this email more olde english. Write the new version in <olde english_email> XML tags.
+Assistant: <olde english_email>",➤,#ERROR!
+,,,,,,,,
+,,,,Input {{ADJECTIVE}},,,,
+,,,﹢,olde english,,,,
+,,,,,,,,
+,,,,,,,,
+,← Chapter 4 Exercises: Separating Data and Instructions,,,,,,,Chapter 5 Exercises: Formatting Output & Speaking for Claude →
+,,,,,,,,
+,Back to top ↑,,,,,,,
+,Table of Contents,,,,,,,

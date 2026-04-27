@@ -1,0 +1,96 @@
+,Chapter 3: Assigning Roles (Role Prompting),,,
+,,,,
+,Page Contents,,,
+,,Lesson,,
+,,Examples,,
+ ,,Example Playground,,
+,,,,
+,Lesson,,,Back to top ↑
+,"Continuing on the theme of Claude having no context aside from what you say, it's sometimes important to prompt Claude to inhabit a specific role (including all necessary context). This is also known as role prompting. The more detail to the role context, the better.
+
+Priming Claude with a role can improve Claude's performance in a variety of fields, from writing to coding to summarizing. It's like how humans can sometimes be helped when told to ""think like a ______"". Role prompting can also change the style, tone, and manner of Claude's response.
+
+Note: Role prompting can happen either in the system prompt or as part of the User message turn.",,,
+,,,,
+,Examples,,,Back to top ↑
+,"In the example below, we see that without role prompting, Claude provides a straightforward and non-stylized answer when asked to give a single sentence perspective on skateboarding.
+
+However, when we prime Claude to inhabit the role of a cat, Claude's perspective changes, and thus Claude's response tone, style, content adapts to the new role. 
+
+Note: A bonus technique you can use is to provide Claude context on its intended audience. Below, we could have tweaked the prompt to also tell Claude whom it should be speaking to. ""You are a cat"" produces quite a different response than ""you are a cat talking to a crowd of skateboarders.""",,,
+,,,,
+,,System Prompt (without Role Prompting),,Claude's Response
+,,,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: In one sentence, what do you think about skateboarding?",,
+,,,,
+,,,,
+,"Here is the same user question, except with role prompting.",,,
+,,,,
+,,System Prompt (with Role Prompting),,Claude's Response
+,,You are a cat.,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: In one sentence, what do you think about skateboarding?",,
+,,,,
+,"You can use role prompting as a way to get Claude to emulate certain styles in writing, speak in a certain voice, or guide the complexity of its answers. Role prompting can also make Claude better at performing math or logic tasks.
+
+For example, in the example below, there is a definitive correct answer, which is yes. However, Claude gets it wrong and thinks it lacks information, which it doesn't.",,,
+,,,,
+,,System Prompt (without Role Prompting),,Claude's Response
+,,,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don’t know if Anne is married. Is a married person looking at an unmarried person?",,
+,,,,
+,"Now, what if we prime Claude to act as a logic bot? How will that change Claude's answer? 
+
+It turns out that with this new role assignment, Claude gets it right. (Although notably not for all the right reasons)",,,
+,,,,
+,,System Prompt (with Role Prompting),,Claude's Response
+,,You are a logic bot designed to answer complex logic problems. ,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don’t know if Anne is married. Is a married person looking at an unmarried person?",,
+,,,,
+,Note: What you'll learn throughout this course is that there are many prompt engineering techniques you can use to derive similar results. Which techniques you use is up to you and your preference! We encourage you to experiment to find your own prompt engineering style.,,,
+,,,,
+,"If you're ready to try the chapter exercises, click the link below. If you want to play around with any of the examples in this lesson, scroll down!",,,
+,,,,
+,,,,Chapter 3 Exercises: Assigning Roles →
+,,,,
+,Example Playground,,,Back to top ↑
+,"This is an area for you to experiment freely with the prompt examples shown in this lesson. Feel free to tweak prompts to see how it may affect Claude's responses.
+
+Note: The colors in the cells, which have been carried over from above, will not change even if the prompt or Claude's response changes.",,,
+,,,,
+,,System Prompt (without Role Prompting),,Claude's Response
+,,,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: In one sentence, what do you think about skateboarding?",,
+,,,,
+,,System Prompt (with Role Prompting),,Claude's Response
+,,You are a cat.,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: In one sentence, what do you think about skateboarding?",,
+,,,,
+,,System Prompt (without Role Prompting),,Claude's Response
+,,,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don’t know if Anne is married. Is a married person looking at an unmarried person?",,
+,,,,
+,,System Prompt (with Role Prompting),,Claude's Response
+,,You are a logic bot designed to answer complex logic problems. ,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don’t know if Anne is married. Is a married person looking at an unmarried person?",,
+,,,,
+,,,,
+,← Chapter 2 Exercises: Being Clear and Direct,,,Chapter 3 Exercises: Assigning Roles →
+,,,,
+,Back to top ↑,,,
+,Table of Contents,,,

@@ -4,7 +4,6 @@ import { Toast } from '@capacitor/toast';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { RATINGS, QUEUE_LABELS, subjectColor, subjectBg, subjectEmoji } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
-import { SharePromptSheet } from '../components/SharePromptSheet';
 import type { Screen } from '../types';
 import type { SessionItem, Concept } from '../core/types';
 import {
@@ -43,7 +42,6 @@ export const LiveSession = ({
 }) => {
   const [selected, setSelected]       = useState<string | null>(null);
   const [confirmed, setConfirmed]     = useState(false);
-  const [showAI, setShowAI]           = useState(false);
   const [confidence, setConfidence]   = useState<1 | 2 | 3 | null>(null);
   const [showOptions, setShowOptions] = useState(false);
   const questionShownAt               = useRef<number>(Date.now());
@@ -53,12 +51,25 @@ export const LiveSession = ({
 
   useEffect(() => {
     if (!current) {
-      setScreen('dashboard');
+      const t = setTimeout(() => setScreen('dashboard'), 1500);
+      return () => clearTimeout(t);
     }
   }, [current, setScreen]);
 
   if (!current) {
-    return <div className="min-h-screen bg-[var(--color-background)]" />;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 gap-4" style={{ background: 'var(--color-background)' }}>
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
+          <CheckCircle2 size={28} style={{ color: 'var(--color-primary)' }} />
+        </div>
+        <p className="text-[16px] font-bold text-center" style={{ color: 'var(--color-on-surface)', fontFamily: JKS }}>
+          All caught up!
+        </p>
+        <p className="text-[13px] text-center" style={{ color: 'var(--color-on-surface-variant)' }}>
+          No concepts due right now. Come back later or start a new topic.
+        </p>
+      </div>
+    );
   }
 
   const { concept, queue, retrievability } = current;
@@ -125,7 +136,8 @@ export const LiveSession = ({
 
       onUpdateConcept(concept.id, {
         stage: newStage, stability: newStability, difficulty: newDifficulty,
-        lastTested: 0, nextReview: getNextReviewDays(newStability),
+        lastTested: Date.now(),               // Unix timestamp — FSRS derives days elapsed from this
+        nextReview: getNextReviewDays(newStability),
         lastStudiedAt: Date.now(), metacogAccuracy: newMetacogAccuracy,
         overconfidenceFlag: newOverconfidenceFlag, predictionErrorHistory: newPredictionErrorHistory,
       });
@@ -262,23 +274,12 @@ export const LiveSession = ({
               : 'Strengthen this pattern. Apply it to a fresh problem.'}
           </p>
 
-          {/* Stakes fact */}
           {concept.stakesFact && (queue === 'new' || queue === 'strengthen') && (
             <div className="mt-4 px-3 py-2.5 rounded-xl flex items-start gap-2 bg-[#FEF2F2] border border-[#FECACA]">
               <AlertCircle size={13} className="text-[#B91C1C] shrink-0 mt-0.5" />
               <p className="text-[13px] text-[#991B1B] leading-snug font-reading">{concept.stakesFact}</p>
             </div>
           )}
-
-          {/* AI Hint */}
-          <button
-            onClick={() => setShowAI(true)}
-            className="mt-4 flex items-center gap-1.5 px-3 py-2 rounded-xl text-[13px] font-semibold bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] transition-colors hover:bg-[#DBEAFE]"
-            style={{ fontFamily: JKS }}
-          >
-            <Sparkles size={13} />
-            AI Hint
-          </button>
         </div>
 
         {/* ── Confidence Widget ── */}
@@ -371,18 +372,6 @@ export const LiveSession = ({
           </div>
         )}
       </div>
-
-      {/* ── AI Learn sheet ── */}
-      <AnimatePresence>
-        {showAI && (
-          <SharePromptSheet
-            conceptName={concept.name}
-            subject={concept.subject}
-            chapter={concept.chapter}
-            onClose={() => setShowAI(false)}
-          />
-        )}
-      </AnimatePresence>
 
       {/* ── Result bottom sheet ── */}
       <AnimatePresence>

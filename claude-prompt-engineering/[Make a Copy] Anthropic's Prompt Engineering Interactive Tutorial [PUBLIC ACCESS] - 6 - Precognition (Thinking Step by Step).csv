@@ -1,0 +1,93 @@
+,Chapter 6: Precognition (Thinking Step by Step),,,
+,,,,
+,Page Contents,,,
+,,Lesson,,
+,,Examples,,
+ ,,Example Playground,,
+,,,,
+,Lesson,,,Back to top ↑
+,"If someone woke you up and immediately started asking you several complicated questions that you had to respond to right away, how would you do? Probably not as good as if you were given time to think through your answer first. 
+
+Guess what? Claude is the same way.
+
+Giving Claude time to think step by step sometimes makes Claude more accurate, particularly for complex tasks. However, thinking only counts when it's out loud. You cannot ask Claude to think but output only the answer - in this case, no thinking has actually occurred.",,,
+,,,,
+,Examples,,,Back to top ↑
+,"In the movie review prompt below, it's clear to a human reader that the second sentence belies the first. But Claude takes the word ""unrelated"" too literally.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Is this movie review sentiment positive or negative?
+
+This movie blew my mind with its freshness and originality. In totally unrelated news, I have been living under a rock since the year 1900.",➤,#ERROR!
+,,,,
+,"To improve Claude's response, let's allow Claude to think things out first before answering. We do that by literally spelling out the steps that Claude should take in order to process and think through its task. Along with a dash of role prompting, this empowers Claude to understand the review more deeply.",,,
+,,,,
+,,System Prompt,,Claude's Response
+,,You are a savvy reader of movie reviews.,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: Is this review sentiment positive or negative? First, write the best arguments for each side in <positive-argument> and <negative-argument> XML tags, then answer.
+
+This movie blew my mind with its freshness and originality. In totally unrelated news, I have been living under a rock since 1900.",,
+,,,,
+,"Claude is sometimes sensitive to ordering. This example is on the frontier of Claude's ability to understand nuanced text, and when we swap the order of the arguments from the previous example so that negative is first and positive is second, this changes Claude's overall assessment to positive.
+
+In most situations (but not all, confusingly enough), Claude is more likely to choose the second of two options, possibly because in its training data from the web, second options were more likely to be correct.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Is this review sentiment negative or positive? First write the best arguments for each side in <negative-argument> and <positive-argument> XML tags, then answer.
+
+This movie blew my mind with its freshness and originality. Unrelatedly, I have been living under a rock since 1900.",➤,#ERROR!
+,,,,
+,,,,
+,"Letting Claude think can shift Claude's answer from incorrect to correct. It's that simple in many cases where Claude makes mistakes!
+
+Let's go through an example where Claude's answer is incorrect to see how asking Claude to think can fix that.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Name a famous movie starring an actor who was born in the year 1956.,➤,#ERROR!
+,,,,
+,"Let's fix this by asking Claude to think step by step, this time in <brainstorm> tags.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Name a famous movie starring an actor who was born in the year 1956. First brainstorm about some actors and their birth years in <brainstorm> tags, then give your answer.",➤,#ERROR!
+,,,,
+,,,,
+,"If you're ready to try the chapter exercises, click the link below. If you want to play around with any of the examples in this lesson, scroll down!",,,
+,,,,
+,,,,Chapter 6 Exercises: Precognition (Thinking Step by Step) →
+,,,,
+,Example Playground,,,Back to top ↑
+,"This is an area for you to experiment freely with the prompt examples shown in this lesson. Feel free to tweak prompts to see how it may affect Claude's responses.
+
+Note: The colors in the cells, which have been carried over from above, will not change even if the prompt or Claude's response changes.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Is this movie review sentiment positive or negative?
+
+This movie blew my mind with its freshness and originality. In totally unrelated news, I have been living under a rock since the year 1900.",➤,#ERROR!
+,,,,
+,,System Prompt,,Claude's Response
+,,You are a savvy reader of movie reviews.,➤,#ERROR!
+,,,,
+,,Prompt,,
+,,"User: Is this review sentiment positive or negative? First, write the best arguments for each side in <positive-argument> and <negative-argument> XML tags, then answer.
+
+This movie blew my mind with its freshness and originality. In totally unrelated news, I have been living under a rock since 1900.",,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Is this review sentiment negative or positive? First write the best arguments for each side in <negative-argument> and <positive-argument> XML tags, then answer.
+
+This movie blew my mind with its freshness and originality. Unrelatedly, I have been living under a rock since 1900.",➤,#ERROR!
+,,,,
+,,,,
+,,User: Name a famous movie starring an actor who was born in the year 1956.,➤,#ERROR!
+,,,,
+,,"User: Name a famous movie starring an actor who was born in the year 1956. First brainstorm about some actors and their birth years in <brainstorm> tags, then give your answer.",➤,#ERROR!
+,,,,
+,,,,
+,,,,
+,← Chapter 5 Exercises: Formatting Output & Speaking for Claude,,,Chapter 6 Exercises: Precognition (Thinking Step by Step) →
+,,,,
+,Back to top ↑,,,
+,Table of Contents,,,

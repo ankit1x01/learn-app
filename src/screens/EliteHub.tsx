@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Zap, Timer, Shield, BarChart3, FileText, Moon, ChevronRight, Flame, Brain } from 'lucide-react';
+import { Zap, Timer, Shield, BarChart3, FileText, Moon, ChevronRight, Flame, Brain, Terminal } from 'lucide-react';
 import type { Screen } from '../types';
 
 interface Props { setScreen: (s: Screen) => void; chittaScore: number; }
 
 const INTERVIEW_DATE = new Date('2026-10-01');
 const daysLeft = Math.ceil((INTERVIEW_DATE.getTime() - Date.now()) / 86400000);
-const TOTAL_CONCEPTS = 454;
+const TOTAL_CONCEPTS = 76;
 
 const MODES = [
   {
@@ -36,8 +36,8 @@ const MODES = [
     id: 'distractor' as Screen,
     icon: Shield,
     title: 'Trap Immunity',
-    subtitle: 'Kill Off-By-One Thinking',
-    desc: 'Identify WHY common DSA traps seem right. Kills Stage 2 illusions.',
+    subtitle: 'Kill Hallucination Traps',
+    desc: 'Identify WHY common AI architectural traps seem right. Kills Stage 2 illusions.',
     color: 'text-[var(--color-subject-cs)]',
     bg: 'bg-[color:var(--color-subject-cs-container)]',
     border: 'border-[var(--color-subject-cs-container)]',
@@ -58,12 +58,12 @@ const MODES = [
     id: 'mock' as Screen,
     icon: FileText,
     title: 'Mock Interview',
-    subtitle: '10 Problems · 45 Min · FAANG Pattern',
+    subtitle: '10 Problems · 45 Min · System Design',
     desc: 'Full interview loop simulation. Real time pressure. Error report after.',
     color: 'text-[var(--color-success)]',
     bg: 'bg-[color:var(--color-success-container)]',
     border: 'border-[var(--color-success-container)]',
-    badge: 'FAANG',
+    badge: 'MOCK',
   },
   {
     id: 'preexam' as Screen,
@@ -87,6 +87,17 @@ const MODES = [
     border: 'border-[var(--color-subject-chemistry-container)]',
     badge: 'COURSE',
   },
+  {
+    id: 'prompt-playground' as Screen,
+    icon: Terminal,
+    title: 'Prompt Playground',
+    subtitle: 'Build & Test Prompts',
+    desc: 'Write prompts and instantly share them to ChatGPT, Claude, or Gemini for testing.',
+    color: 'text-[#10A37F]',
+    bg: 'bg-[#10A37F]/10',
+    border: 'border-[#10A37F]/20',
+    badge: 'TOOLS',
+  },
 ];
 
 export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
@@ -97,7 +108,7 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
         <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>Pro Mode</span>
       </div>
       <h1 className="text-4xl font-ui font-bold tracking-tight mb-1">
-        FAANG <span style={{ color: 'var(--color-warning)' }}>Ready</span>
+        Lead AI <span style={{ color: 'var(--color-warning)' }}>Ready</span>
       </h1>
       <p className="text-[#6B7280] text-xs font-label">
         {daysLeft} days to interview · {chittaScore} patterns automatic
@@ -117,7 +128,7 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
         />
       </div>
       <p className="text-[12px] text-[#78716C] mt-2">
-        Need {TOTAL_CONCEPTS} / {TOTAL_CONCEPTS} patterns at Stage 3+ for a clean FAANG loop
+        Need {TOTAL_CONCEPTS} / {TOTAL_CONCEPTS} patterns at Stage 3+ for a clean System Design loop
       </p>
     </div>
 
@@ -152,7 +163,7 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
 
     <div className="mt-8 text-center">
       <p className="text-[12px] text-[#A8A29E] font-label uppercase tracking-widest">
-        गुरुकुल · Ghana Patha Method · DSA Methodology
+        गुरुकुल · Ghana Patha Method · AI Methodology
       </p>
     </div>
   </div>

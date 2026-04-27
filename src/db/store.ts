@@ -253,3 +253,27 @@ export async function loadContentSummary(refKeys: string[]): Promise<Map<string,
   }
   return result;
 }
+
+// ─── Portfolio Projects ──────────────────────────────────────────────────────
+
+const KEY_PORTFOLIO = 'chitta:portfolio_projects';
+
+export type PortfolioStatus = 'not_started' | 'in_progress' | 'completed';
+
+export interface PortfolioProgress {
+  status: PortfolioStatus;
+  startedAt?: number;
+  completedAt?: number;
+  githubUrl?: string;
+  notes?: string;
+}
+
+export async function loadPortfolio(): Promise<Record<string, PortfolioProgress>> {
+  return await getJSON<Record<string, PortfolioProgress>>(KEY_PORTFOLIO, {});
+}
+
+export async function savePortfolioItem(id: string, progress: PortfolioProgress): Promise<void> {
+  const raw = await loadPortfolio();
+  raw[id] = progress;
+  await setJSON(KEY_PORTFOLIO, raw);
+}

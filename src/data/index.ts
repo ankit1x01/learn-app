@@ -32,7 +32,7 @@ export const SYLLABUS_REGISTRY: Record<string, SyllabusConfig> = {
 // Change this ID to switch the entire app to a different exam.
 // Switch back to 'dsa_faang' to restore the DSA syllabus.
 
-const ACTIVE_SYLLABUS_ID = 'iit_jee';
+export const ACTIVE_SYLLABUS_ID = 'ai_engineer';
 
 
 export const getActiveSyllabus = (): SyllabusConfig => {

@@ -23,64 +23,26 @@ import type { BubbleMatchConfig } from '../types'
 
 // ─── Custom Math Geometry Config ────────────────────────────────────────────
 
-// Use coordinate geometry to create a completely circular radial magnetic capture zone
-let debugThrottle = 0;
-
+// Circular radial magnetic capture zone via coordinate geometry
 const coordinateGeometryCollision: CollisionDetection = ({
   collisionRect,
   droppableRects,
   droppableContainers,
 }) => {
-  // Use the collisionRect center because pointer offset could skew geometry if dragged by edges
   if (!collisionRect) return []
-
   const activeCenterX = collisionRect.left + collisionRect.width / 2
   const activeCenterY = collisionRect.top + collisionRect.height / 2
-
-  // Only log roughly 1 out of every 30 evaluations to prevent browser console freeze
-  const isLogTick = debugThrottle++ % 30 === 0;
-  
-  if (isLogTick) {
-    console.log('--- DRAGGING TICK ---')
-    console.log(`Active dragged offset: x=${Math.round(activeCenterX)}, y=${Math.round(activeCenterY)}`)
-  }
-
   const collisions = []
-
-  // Compute intersection via pure mathematical distance against visual drop boundaries
   for (const droppable of droppableContainers) {
-    // MUST use 'droppableRects' map; droppable.rect.current is unstable in dnd-kit v6+
     const rect = droppableRects.get(droppable.id)
-    
-    if (!rect) {
-      if (isLogTick) console.log(`[${droppable.id}] RECT IS NULL IN MAP!`)
-      continue
-    }
-
-    const dropCenterX = rect.left + rect.width / 2
-    const dropCenterY = rect.top + rect.height / 2
-
-    const dx = activeCenterX - dropCenterX
-    const dy = activeCenterY - dropCenterY
+    if (!rect) continue
+    const dx = activeCenterX - (rect.left + rect.width / 2)
+    const dy = activeCenterY - (rect.top + rect.height / 2)
     const distance = Math.sqrt(dx * dx + dy * dy)
-
-    if (isLogTick) {
-      console.log(`Target [${droppable.id}] => x=${Math.round(dropCenterX)}, y=${Math.round(dropCenterY)} | calculated distance: ${Math.round(distance)}`)
-    }
-
-    // The entire Droppable node includes the orbit rings (up to ~250px wide) 
-    // To make the snap feel precise to the actual visual circle core, 
-    // we set it so you have to bring the dragged bubble close to the visual target.
-    // Inner Bubble Radius (46px) + Dragged Concept Radius (41px) = 87px. Added ~30px for magnet feel.
     if (distance <= 120) {
-      if (isLogTick) console.log(`>>> SNAP TRIGGERED ON [${droppable.id}] -> distance ${Math.round(distance)} <= 120`)
-      collisions.push({
-        id: droppable.id,
-        data: { droppableContainer: droppable, value: distance },
-      })
+      collisions.push({ id: droppable.id, data: { droppableContainer: droppable, value: distance } })
     }
   }
-
   return collisions.sort((a, b) => a.data.value - b.data.value)
 }
 
@@ -338,17 +300,49 @@ function FeedbackFlash({ text, isCorrect }: { text: string; isCorrect: boolean }
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 999,
-        background: isCorrect ? '#22c55e' : '#ef4444',
+        background: isCorrect ? 'rgba(34,197,94,0.95)' : 'rgba(239,68,68,0.95)',
         color: '#fff',
         borderRadius: 32,
         padding: '10px 28px',
         fontFamily: 'Plus Jakarta Sans, system-ui',
         fontWeight: 800,
         fontSize: 15,
-        boxShadow: `0 4px 20px ${isCorrect ? '#22c55e' : '#ef4444'}88`,
+        boxShadow: `0 4px 20px ${isCorrect ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.5)'}`,
+        backdropFilter: 'blur(8px)',
       }}
     >
       {isCorrect ? '✓ Correct!' : '✗ Wrong!'}
+    </motion.div>
+  )
+}
+
+function StreakBadge({ streak }: { streak: number }) {
+  return (
+    <motion.div
+      initial={{ scale: 0, y: 20 }}
+      animate={{ scale: 1, y: 0 }}
+      exit={{ scale: 0, y: -20, opacity: 0 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+      style={{
+        position: 'fixed',
+        top: 120,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 998,
+        background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+        color: '#fff',
+        borderRadius: 24,
+        padding: '8px 20px',
+        fontFamily: 'Plus Jakarta Sans, system-ui',
+        fontWeight: 900,
+        fontSize: 14,
+        boxShadow: '0 4px 20px rgba(245,158,11,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+      }}
+    >
+      🔥 {streak}x Streak!
     </motion.div>
   )
 }
@@ -359,13 +353,22 @@ function EndScreen({
   won,
   score,
   lives,
+  epq,
+  bestStreak,
+  accuracy,
   onRestart,
 }: {
   won: boolean
   score: number
   lives: number
+  epq: number
+  bestStreak: number
+  accuracy: number
   onRestart: () => void
 }) {
+  const epqTier = epq >= 4000 ? 'Expert' : epq >= 3000 ? 'Advanced' : epq >= 2000 ? 'Intermediate' : epq >= 1000 ? 'Developing' : 'Beginner'
+  const tierColor = epq >= 4000 ? '#a78bfa' : epq >= 3000 ? '#60a5fa' : epq >= 2000 ? '#4ade80' : epq >= 1000 ? '#fcd34d' : '#9ca3af'
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -373,39 +376,56 @@ function EndScreen({
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(8,5,20,0.92)',
+        background: 'rgba(8,5,20,0.95)',
         zIndex: 200,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 24,
+        gap: 16,
+        backdropFilter: 'blur(12px)',
       }}
     >
-      <div style={{ fontSize: 64 }}>{won ? '🎉' : '💀'}</div>
-      <p
+      <div style={{ fontSize: 56 }}>{won ? '🎉' : '💀'}</div>
+      <p style={{ fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 900, fontSize: 28, color: won ? '#a78bfa' : '#f87171', letterSpacing: '-0.02em', margin: 0 }}>
+        {won ? 'Brilliant!' : 'Game Over'}
+      </p>
+
+      {/* EPQ Badge */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.3, type: 'spring', stiffness: 300, damping: 20 }}
         style={{
-          fontFamily: 'Plus Jakarta Sans, system-ui',
-          fontWeight: 900,
-          fontSize: 32,
-          color: won ? '#a78bfa' : '#f87171',
-          letterSpacing: '-0.02em',
+          background: 'rgba(255,255,255,0.06)',
+          borderRadius: 20,
+          padding: '16px 32px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 4,
+          border: `1px solid ${tierColor}33`,
         }}
       >
-        {won ? 'You Won!' : 'Game Over'}
-      </p>
-      <p style={{ color: '#c4b5fd', fontFamily: 'Inter', fontSize: 18 }}>
-        Score: <strong>{score}</strong>
-      </p>
-      {!won && (
-        <p style={{ color: '#9ca3af', fontFamily: 'Inter', fontSize: 15 }}>
-          Lives remaining: {lives}
-        </p>
-      )}
+        <span style={{ color: '#9ca3af', fontFamily: 'Inter', fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Proficiency Quotient</span>
+        <span style={{ color: tierColor, fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 900, fontSize: 40, lineHeight: 1 }}>{epq.toLocaleString()}</span>
+        <span style={{ color: tierColor, fontFamily: 'Inter', fontSize: 13, fontWeight: 700 }}>{epqTier}</span>
+      </motion.div>
+
+      {/* Stats row */}
+      <div style={{ display: 'flex', gap: 24, marginTop: 4 }}>
+        {[{ label: 'Score', value: score.toString() }, { label: 'Accuracy', value: `${Math.round(accuracy * 100)}%` }, { label: 'Best Streak', value: `${bestStreak}x` }].map(s => (
+          <div key={s.label} style={{ textAlign: 'center' }}>
+            <div style={{ color: '#e9d5ff', fontFamily: 'Plus Jakarta Sans', fontWeight: 800, fontSize: 18 }}>{s.value}</div>
+            <div style={{ color: '#6b7280', fontFamily: 'Inter', fontSize: 11, fontWeight: 500 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
       <button
         onClick={onRestart}
         style={{
-          marginTop: 8,
+          marginTop: 12,
           background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
           color: '#fff',
           border: 'none',
@@ -433,7 +453,8 @@ interface Props {
 const MAX_LIVES = 6
 const POINTS_CORRECT = 100
 const WRONG_PENALTY = 50
-const SPAWN_INTERVAL_MS = 900   // delay between concept spawns
+const SPAWN_INTERVAL_MS = 900
+const STREAK_BONUS = [0, 0, 0, 50, 80, 120, 180, 250] // bonus at streak 3,4,5,6,7+
 
 export function BubbleMatchGame({ config }: Props) {
   const [allConcepts]       = useState<Concept[]>(() => buildConcepts(config))
@@ -447,6 +468,11 @@ export function BubbleMatchGame({ config }: Props) {
   const [flashMap, setFlashMap]   = useState<Record<string, 'idle' | 'correct' | 'wrong'>>({})
   const [gameOver, setGameOver]   = useState(false)
   const [gameWon, setGameWon]     = useState(false)
+  const [streak, setStreak]       = useState(0)
+  const [bestStreak, setBestStreak] = useState(0)
+  const [totalCorrect, setTotalCorrect] = useState(0)
+  const [totalAttempts, setTotalAttempts] = useState(0)
+  const [showStreak, setShowStreak] = useState(false)
   const spawnIdx = useRef(0)
   const spawnTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -498,7 +524,7 @@ export function BubbleMatchGame({ config }: Props) {
     }
   }, [allConcepts])
 
-  const showFeedback = (correct: boolean, text: string) => {
+  const showFeedbackMsg = (correct: boolean, text: string) => {
     setFeedback({ text, correct })
     setTimeout(() => setFeedback(null), 1100)
   }
@@ -522,34 +548,40 @@ export function BubbleMatchGame({ config }: Props) {
     const concept = allConcepts.find(c => c.id === String(active.id))
     if (!concept) return
 
+    setTotalAttempts(a => a + 1)
     if (concept.belongsTo === overId) {
-      // ✅ Correct
-      const newScore = score + POINTS_CORRECT
+      // ✅ Correct — streak bonus
+      const newStreak = streak + 1
+      setStreak(newStreak)
+      if (newStreak > bestStreak) setBestStreak(newStreak)
+      setTotalCorrect(c => c + 1)
+      const bonus = STREAK_BONUS[Math.min(newStreak, STREAK_BONUS.length - 1)]
+      const newScore = score + POINTS_CORRECT + bonus
       setScore(newScore)
+      if (newStreak >= 3) { setShowStreak(true); setTimeout(() => setShowStreak(false), 1200) }
       setMatched(m => ({
         ...m,
         [overId]: [...(m[overId] || []), { conceptId: concept.id, text: concept.text }],
       }))
       setVisible(v => v.filter(c => c.id !== concept.id))
       flashEntity(overId, 'correct')
-      showFeedback(true, concept.text)
+      showFeedbackMsg(true, concept.text)
 
-      // check win: all matched
-      const totalFacts = allConcepts.length
+      // check win
       const totalMatched = Object.values({ ...matched, [overId]: [...(matched[overId] || []), { conceptId: concept.id, text: concept.text }] })
         .flat().length
-      if (totalMatched >= totalFacts) {
+      if (totalMatched >= allConcepts.length) {
         setTimeout(() => setGameWon(true), 700)
       }
     } else {
-      // ❌ Wrong
+      // ❌ Wrong — reset streak
+      setStreak(0)
       if (navigator.vibrate) navigator.vibrate(100)
       const newLives = lives - 1
       setLives(newLives)
-      const newScore = Math.max(0, score - WRONG_PENALTY)
-      setScore(newScore)
+      setScore(Math.max(0, score - WRONG_PENALTY))
       flashEntity(overId, 'wrong')
-      showFeedback(false, concept.text)
+      showFeedbackMsg(false, concept.text)
       if (newLives <= 0) {
         setTimeout(() => setGameOver(true), 700)
       }
@@ -564,15 +596,34 @@ export function BubbleMatchGame({ config }: Props) {
     setMatched({})
     setLives(MAX_LIVES)
     setScore(0)
+    setStreak(0)
+    setBestStreak(0)
+    setTotalCorrect(0)
+    setTotalAttempts(0)
     setGameOver(false)
     setGameWon(false)
     setFeedback(null)
     setFlashMap({})
-    // re-init
     const initial = Math.min(3, shuffled.length)
     const newVis: Concept[] = []
     for (let i = 0; i < initial; i++) { newVis.push(shuffled[i]); spawnIdx.current = i + 1 }
     setVisible(newVis)
+  }
+
+  // Progress calculation
+  const totalFacts = allConcepts.length
+  const matchedCount = Object.values(matched).flat().length
+  const progress = totalFacts > 0 ? matchedCount / totalFacts : 0
+
+  // EPQ calculation (0-5000)
+  const calcEPQ = () => {
+    const accuracy = totalAttempts > 0 ? totalCorrect / totalAttempts : 0
+    const completionBonus = gameWon ? 1 : matchedCount / totalFacts
+    const streakFactor = Math.min(bestStreak / 5, 1)
+    const livesRemaining = lives / MAX_LIVES
+    return Math.round(
+      5000 * (accuracy * 0.4 + completionBonus * 0.3 + streakFactor * 0.15 + livesRemaining * 0.15)
+    )
   }
 
   // Note: activeConcept is no longer needed for DragOverlay
@@ -612,48 +663,51 @@ export function BubbleMatchGame({ config }: Props) {
           left: 0,
           right: 0,
           zIndex: 100,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '14px 22px',
           background: 'rgba(11,8,24,0.85)',
           backdropFilter: 'blur(8px)',
         }}
       >
-        {/* Score */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button
-            onClick={() => setPaused(p => !p)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: '#9ca3af',
-              fontSize: 18,
-              padding: 0,
-            }}
-          >
-            ⏸
-          </button>
-          <span
-            style={{
-              color: '#e9d5ff',
-              fontFamily: 'Plus Jakarta Sans, system-ui',
-              fontWeight: 800,
-              fontSize: 22,
-            }}
-          >
-            {score}
-          </span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px' }}>
+          {/* Score */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <button
+              onClick={() => setPaused(p => !p)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 18, padding: 0 }}
+            >
+              ⏸
+            </button>
+            <span style={{ color: '#e9d5ff', fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 800, fontSize: 22 }}>
+              {score}
+            </span>
+            {streak >= 2 && (
+              <span style={{ color: '#f59e0b', fontFamily: 'Inter', fontWeight: 700, fontSize: 13 }}>
+                🔥{streak}x
+              </span>
+            )}
+          </div>
+
+          {/* Progress + Lives */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ color: '#6b7280', fontFamily: 'Inter', fontSize: 12, fontWeight: 500 }}>
+              {matchedCount}/{totalFacts}
+            </span>
+            <div style={{ display: 'flex', gap: 4 }}>
+              {Array.from({ length: MAX_LIVES }).map((_, i) => (
+                <span key={i} style={{ fontSize: 15, opacity: i < lives ? 1 : 0.15, transition: 'opacity 0.3s' }}>
+                  ❤️
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Lives */}
-        <div style={{ display: 'flex', gap: 5 }}>
-          {Array.from({ length: MAX_LIVES }).map((_, i) => (
-            <span key={i} style={{ fontSize: 17, opacity: i < lives ? 1 : 0.2 }}>
-              ❤️
-            </span>
-          ))}
+        {/* Progress Bar */}
+        <div style={{ height: 3, background: 'rgba(255,255,255,0.06)', width: '100%' }}>
+          <motion.div
+            animate={{ width: `${progress * 100}%` }}
+            transition={{ type: 'spring', stiffness: 200, damping: 30 }}
+            style={{ height: '100%', background: 'linear-gradient(90deg, #7c3aed, #a78bfa)', borderRadius: 2 }}
+          />
         </div>
       </div>
 
@@ -661,6 +715,11 @@ export function BubbleMatchGame({ config }: Props) {
       <AnimatePresence>
         {feedback && (
           <FeedbackFlash key={feedback.text} text={feedback.text} isCorrect={feedback.correct} />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showStreak && streak >= 3 && (
+          <StreakBadge key={`streak-${streak}`} streak={streak} />
         )}
       </AnimatePresence>
 
@@ -768,6 +827,9 @@ export function BubbleMatchGame({ config }: Props) {
             won={gameWon}
             score={score}
             lives={lives}
+            epq={calcEPQ()}
+            bestStreak={bestStreak}
+            accuracy={totalAttempts > 0 ? totalCorrect / totalAttempts : 0}
             onRestart={restart}
           />
         )}

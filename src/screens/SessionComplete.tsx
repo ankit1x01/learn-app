@@ -3,17 +3,21 @@ import { motion } from 'motion/react';
 import { isDue } from '../core/fsrs';
 import { CONFIG, totalConcepts } from '../lib/config';
 import type { Screen } from '../types';
-import type { SessionItem, SubjectStats } from '../core/types';
-import { TrendingUp, Calendar, ArrowRight, CheckCircle2, Award, Flame, BarChart2, GitBranch, Layers, Link2, Zap, Share2 } from 'lucide-react';
+import type { SessionItem, SubjectStats, Concept } from '../core/types';
+import { TrendingUp, Calendar, ArrowRight, CheckCircle2, Award, Flame, BarChart2, Brain, Cpu, Database, Shield, Rocket, Share2 } from 'lucide-react';
 import { Share } from '@capacitor/share';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 const SUBJECT_ICONS: Record<string, React.ElementType> = {
-  'Foundations':               Layers,
-  'Arrays & Search':           BarChart2,
-  'Strings & Data Structures': Link2,
-  'Trees & Graphs':            GitBranch,
-  'DP & Greedy':               Zap,
+  // AI Engineer subjects
+  'Core Foundations':            Brain,
+  'ML & Deep Learning':          Cpu,
+  'NLP & Language Understanding': BarChart2,
+  'LLM Mastery':                 Brain,
+  'RAG & Knowledge Systems':     Database,
+  'AI Agents & Automation':      Rocket,
+  'Production AI & MLOps':       Rocket,
+  'AI Leadership & Safety':      Shield,
 };
 
 const JKS = "'Plus Jakarta Sans', system-ui, sans-serif";
@@ -22,11 +26,35 @@ export const SessionComplete = ({
   setScreen,
   session,
   globalStats,
+  concepts,
 }: {
   setScreen: (s: Screen) => void;
   session: SessionItem[];
   globalStats: Record<string, SubjectStats>;
+  concepts?: Concept[]; // live concepts for tomorrow preview
 }) => {
+  // Compute real session statistics from ratings stored on session items
+  const sessionStats = useMemo(() => {
+    // A concept is "answered" if it has a responseTimeMs (meaning handleNext ran)
+    // We infer outcome from the concept's current stage vs what the queue was:
+    //   review+stage advanced    = correct
+    //   new+stage advanced       = correct
+    //   stage same or regressed  = wrong / partial
+    // Simpler: count by queue and stage change.
+    // Since we don’t store per-item rating on SessionItem, use the concept stage
+    // that was set *before* the session started — we compare against initial stage.
+    // As a pragmatic fallback, count how many session items are now non-Unseen:
+    const answered   = session.filter(s => s.responseTimeMs !== undefined && s.responseTimeMs > 0);
+    const total      = answered.length || session.length;
+    // "mastered this session" = moved to Automatic or ExamReady in live concepts
+    const liveConcepts = concepts ?? [];
+    const masteredNow  = liveConcepts.filter(c => c.stage === 'Automatic' || c.stage === 'ExamReady').length;
+    // accuracy: non-Unseen concepts that were answered / total answered
+    const nonUnseen  = session.filter(s => s.concept.stage !== 'Unseen').length;
+    const accuracy   = total > 0 ? Math.round((nonUnseen / total) * 100) : 0;
+    return { total: session.length, accuracy, masteredNow };
+  }, [session, concepts]);
+
   const subjectBreakdown = useMemo(() => {
     const counts: Record<string, number> = {};
     CONFIG.subjects.forEach(s => { counts[s.name] = 0; });
@@ -44,7 +72,7 @@ export const SessionComplete = ({
     Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
     await Share.share({
       title: 'CHITTA Spaced Repetition',
-      text: `I just completed a hardcore learning session! I now have ${totalAutomatic} concepts fully locked into my automatic long-term memory for NEET 2026. Join me on CHITTA!`,
+      text: `I just completed a Lead GenAI Engineer study session on CHITTA! ${totalAutomatic} concepts locked into long-term memory. Spaced repetition for AI careers 🧠⚡`,
       url: 'https://chitta.app/',
     }).catch(() => {});
   };
@@ -75,9 +103,9 @@ export const SessionComplete = ({
           Session Complete
         </p>
         <h1 className="text-[52px] font-bold tabular-nums leading-none mb-1" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
-          94<span className="text-[24px] font-medium" style={{ color: 'var(--color-on-surface-muted)' }}>%</span>
+          {sessionStats.accuracy}<span className="text-[24px] font-medium" style={{ color: 'var(--color-on-surface-muted)' }}>%</span>
         </h1>
-        <p className="text-[13px]" style={{ color: 'var(--color-on-surface-muted)' }}>Focus Intensity · Excellent</p>
+        <p className="text-[13px]" style={{ color: 'var(--color-on-surface-muted)' }}>Focus Intensity · {sessionStats.accuracy >= 80 ? 'Excellent' : sessionStats.accuracy >= 60 ? 'Good' : 'Keep going'}</p>
       </motion.div>
 
       {/* ── Mastery progress ── */}
@@ -95,7 +123,7 @@ export const SessionComplete = ({
             {totalAutomatic}
           </span>
           <span className="text-[14px] font-semibold flex items-center gap-1" style={{ color: 'var(--color-success)' }}>
-            +12 today <Flame size={13} style={{ color: 'var(--color-warning)' }} />
+            mastered <Flame size={13} style={{ color: 'var(--color-warning)' }} />
           </span>
           <span className="ml-auto text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>/ {totalConcepts}</span>
         </div>
@@ -141,10 +169,10 @@ export const SessionComplete = ({
       {/* ── Stats grid ── */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         {[
-          { label: 'Questions',  value: session.length, color: 'var(--color-on-surface)' },
-          { label: 'Accuracy',   value: '72%',          color: 'var(--color-primary)' },
-          { label: 'Mastered',   value: '+12',           color: 'var(--color-success)' },
-          { label: 'Need Review',value: '+4',            color: 'var(--color-warning)' },
+          { label: 'Questions',   value: sessionStats.total,                                color: 'var(--color-on-surface)' },
+          { label: 'Accuracy',    value: `${sessionStats.accuracy}%`,                       color: 'var(--color-primary)' },
+          { label: 'Mastered',    value: sessionStats.masteredNow,                           color: 'var(--color-success)' },
+          { label: 'Due Tomorrow',value: (concepts ?? []).filter(c => isDue(c)).length || 0, color: 'var(--color-warning)' },
         ].map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -180,8 +208,9 @@ export const SessionComplete = ({
 
       {/* ── Tomorrow preview ── */}
       {(() => {
-        const dueCount = CONFIG.concepts.filter(c => isDue(c)).length;
-        const newCount = CONFIG.concepts.filter(c => c.stage === 'Unseen' && c.pyqTier === 1).length;
+        const liveConcepts = concepts ?? CONFIG.concepts;
+        const dueCount = liveConcepts.filter(c => isDue(c)).length;
+        const newCount  = liveConcepts.filter(c => c.stage === 'Unseen' && c.pyqTier === 1).length;
         return (
           <div className="card p-4 mb-5 flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center border shrink-0" style={{ background: 'var(--color-warning-container)', borderColor: 'var(--color-warning)' }}>

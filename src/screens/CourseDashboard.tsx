@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { BookOpen, CheckCircle2, ChevronRight, Brain } from 'lucide-react';
 import type { Screen } from '../types';
 import { COURSE_LESSONS, PHASE_META } from '../data/course/lessons';
+import { AI_ROADMAP_LESSONS, AI_PHASE_META } from '../data/ai_engineer/roadmap';
+import { ACTIVE_SYLLABUS_ID } from '../data';
 import { loadCourseProgress } from '../db/store';
 
 interface Props {
@@ -19,8 +21,11 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
     });
   }, []);
 
+  const lessons = ACTIVE_SYLLABUS_ID === 'ai_engineer' ? AI_ROADMAP_LESSONS : COURSE_LESSONS;
+  const meta = ACTIVE_SYLLABUS_ID === 'ai_engineer' ? AI_PHASE_META : PHASE_META;
+
   const totalDone     = completed.size;
-  const totalLessons  = COURSE_LESSONS.length;
+  const totalLessons  = lessons.length;
   const progress      = Math.round((totalDone / totalLessons) * 100);
 
   // Next lesson = first not completed (1-indexed)
@@ -43,12 +48,16 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
       <div className="mt-4 mb-6">
         <div className="flex items-center gap-2 mb-1">
           <Brain size={14} className="text-primary" />
-          <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>28-Day Course</span>
+          <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>
+            {ACTIVE_SYLLABUS_ID === 'ai_engineer' ? '90-Day Course' : '28-Day Course'}
+          </span>
         </div>
         <h1 className="text-3xl font-ui font-black tracking-tight mb-1">
-          How to <span className="text-primary">Learn</span> Anything
+          {ACTIVE_SYLLABUS_ID === 'ai_engineer' ? <>How to become a <span className="text-primary">Lead AI Engineer</span></> : <>How to <span className="text-primary">Learn</span> Anything</>}
         </h1>
-        <p className="text-xs" style={{ color: 'var(--color-on-surface-variant)' }}>Cognitive Architecture · Meta-Learning System · 1 concept/day</p>
+        <p className="text-xs" style={{ color: 'var(--color-on-surface-variant)' }}>
+          {ACTIVE_SYLLABUS_ID === 'ai_engineer' ? '76 Concepts · Real-World Projects · Capstone' : 'Cognitive Architecture · Meta-Learning System · 1 concept/day'}
+        </p>
       </div>
 
       {/* ── Progress ring ── */}
@@ -90,8 +99,8 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
       </div>
 
       {/* ── Phases ── */}
-      {PHASE_META.map((phase) => {
-        const phaseLessons = COURSE_LESSONS.filter(l => l.phase === phase.phase);
+      {meta.map((phase) => {
+        const phaseLessons = lessons.filter(l => l.phase === phase.phase);
         const phaseDone    = phaseLessons.filter(l => completed.has(l.day)).length;
 
         return (

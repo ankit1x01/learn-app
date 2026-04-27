@@ -18,10 +18,10 @@ export const EXAM_CARDS: ExamCard[] = [
   },
   {
     id: 'ai_engineer',
-    name: 'AI Engineer',
+    name: 'Lead GenAI Engineer',
     icon: 'smart_toy',
     color: '#8B5CF6',
-    description: 'GenAI · PyTorch · MLOps · RAG',
+    description: '76 topics · RAG · Agents · MLOps · Leadership',
   },
   {
     id: 'backend_engineer',

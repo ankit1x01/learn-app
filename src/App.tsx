@@ -22,6 +22,7 @@ import { SessionComplete }    from './screens/SessionComplete';
 import { CourseDashboard }   from './screens/CourseDashboard';
 import { CourseLesson }      from './screens/CourseLesson';
 import { DemoSession }       from './screens/DemoSession';
+import { PromptPlayground }  from './screens/PromptPlayground';
 import { GamesScreen }       from './games/GamesScreen';
 import { ShapeSlicerGame }   from './games/ShapeSlicerGame';
 import { PhysicsPlayground } from './games/playground/PhysicsPlayground';
@@ -121,8 +122,7 @@ function AppContent() {
       ? concepts.filter(c => c.subject === subjectFilter)
       : concepts;
     return buildSessionCore({ ...CONFIG, concepts: pool }, 20, new Date().getHours());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dbReady, subjectFilter]);
+  }, [dbReady, subjectFilter, concepts]);
 
   const totalAutomatic = concepts.filter(c => c.stage === 'Automatic' || c.stage === 'ExamReady').length;
   const { loading } = useLoading();
@@ -151,8 +151,8 @@ function AppContent() {
           {screen === 'session'    && <LiveSession       setScreen={setScreen} session={session} qIndex={qIndex} setQIndex={setQIndex} onUpdateConcept={onUpdateConcept} />}
           {screen === 'encoding'   && <ConceptEncoding   setScreen={setScreen} session={session} onUpdateConcept={onUpdateConcept} qIndex={qIndex} />}
           {screen === 'map'        && <ChittaMap         setScreen={setScreen} globalStats={liveGlobalStats} />}
-          {screen === 'recall'     && <MorningRecall     setScreen={setScreen} />}
-          {screen === 'complete'   && <SessionComplete   setScreen={(s) => { if (s === 'dashboard') setSubjectFilter(null); setScreen(s); }} session={session} globalStats={liveGlobalStats} />}
+          {screen === 'recall'     && <MorningRecall     setScreen={setScreen} concepts={concepts} />}
+          {screen === 'complete'   && <SessionComplete   setScreen={(s) => { if (s === 'dashboard') setSubjectFilter(null); setScreen(s); }} session={session} globalStats={liveGlobalStats} concepts={concepts} />}
           {screen === 'elite'      && <EliteHub          setScreen={setScreen} chittaScore={totalAutomatic} />}
           {screen === 'ghana'      && <GhanaPatha        setScreen={setScreen} concepts={concepts} onUpdateConcept={onUpdateConcept} />}
           {screen === 'stress'     && <StressMode        setScreen={setScreen} concepts={concepts} />}
@@ -164,6 +164,7 @@ function AppContent() {
           {screen === 'course'        && <CourseDashboard   setScreen={setScreen} setCourseDay={setCourseDay} />}
           {screen === 'course-lesson' && <CourseLesson      setScreen={setScreen} courseDay={courseDay} setCourseDay={setCourseDay} />}
           {screen === 'demo-session'  && <DemoSession       setScreen={setScreen} />}
+          {screen === 'prompt-playground' && <PromptPlayground setScreen={setScreen} />}
           {screen === 'games'         && <GamesScreen        onBack={() => setScreen('dashboard')} setScreen={setScreen} />}
           {screen === 'shape-slicer'  && <ShapeSlicerGame onBack={() => setScreen('dashboard')} />}
           {screen === 'physics-sandbox' && <PhysicsPlayground type="collision_elastic" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}

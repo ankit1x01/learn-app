@@ -28,13 +28,26 @@ const INITIAL_STABILITY: Record<Stage, number> = {
 
 // ─── Core Functions ───────────────────────────────────────────────────────────
 
+/** ms per day constant */
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+/**
+ * Convert a lastTested Unix timestamp (ms) to elapsed days.
+ * lastTested === -1 means never studied → returns a very large number so R ≈ 0.
+ */
+export const daysSinceStudied = (lastTestedMs: number): number => {
+  if (lastTestedMs < 0) return 9999; // never studied
+  return Math.max(0, (Date.now() - lastTestedMs) / MS_PER_DAY);
+};
+
 /**
  * Calculate current retrievability for a concept.
- * R = e^(-t/S)
+ * R = e^(-t/S)   where t = elapsed days since last study
  */
-export const calculateR = (stability: number, daysSince: number): number => {
-  if (daysSince < 0 || stability <= 0) return 0;
-  return Math.exp(-daysSince / stability);
+export const calculateR = (stability: number, lastTestedMs: number): number => {
+  if (stability <= 0) return 0;
+  const t = daysSinceStudied(lastTestedMs);
+  return Math.exp(-t / stability);
 };
 
 /**

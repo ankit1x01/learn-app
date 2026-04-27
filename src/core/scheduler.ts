@@ -7,7 +7,7 @@
  */
 
 import type { Concept, SyllabusConfig, SubjectStats, SessionComposition } from './types';
-import { calculateR, isDue, RECALL_THRESHOLD } from './fsrs';
+import { calculateR, isDue, RECALL_THRESHOLD, daysSinceStudied } from './fsrs';
 
 // ─── Due Today ────────────────────────────────────────────────────────────────
 
@@ -18,12 +18,15 @@ export const getDueToday = (concepts: Concept[]): Concept[] =>
   );
 
 /** How many concepts will become due in the next N days */
-export const getDueSoon = (concepts: Concept[], withinDays: number): Concept[] =>
-  concepts.filter(c => {
+export const getDueSoon = (concepts: Concept[], withinDays: number): Concept[] => {
+  const futureMs = withinDays * 24 * 60 * 60 * 1000;
+  return concepts.filter(c => {
     if (c.stage === 'Unseen') return false;
-    const futureR = calculateR(c.stability, c.lastTested + withinDays);
-    return futureR < RECALL_THRESHOLD;
+    // Simulate lastTested as if it were futureMs further in the past
+    const simulatedLastTested = c.lastTested > 0 ? c.lastTested - futureMs : c.lastTested;
+    return calculateR(c.stability, simulatedLastTested) < RECALL_THRESHOLD;
   });
+};
 
 // ─── Forgetting Curve ─────────────────────────────────────────────────────────
 
@@ -31,11 +34,16 @@ export const getDueSoon = (concepts: Concept[], withinDays: number): Concept[] =
 export const getForgettingCurve = (
   concept: Concept,
   days: number = 30
-): { day: number; r: number }[] =>
-  Array.from({ length: days }, (_, i) => ({
+): { day: number; r: number }[] => {
+  const dayMs = 24 * 60 * 60 * 1000;
+  return Array.from({ length: days }, (_, i) => ({
     day: i,
-    r: calculateR(concept.stability, concept.lastTested + i),
+    // Simulate concept as if studied (i) days ago by back-shifting lastTested
+    r: calculateR(concept.stability, concept.lastTested > 0
+      ? concept.lastTested - i * dayMs
+      : -1),
   }));
+};
 
 // ─── Exam Readiness ───────────────────────────────────────────────────────────
 
@@ -154,8 +162,10 @@ export const applyRIFAdjustment = (concepts: Concept[]): Concept[] => {
     if (activeCompetitors.length === 0) return concept;
 
     const interferenceScore = concept.interferenceScore ?? 0.3;
-    // Increase effective lastTested → concept appears more overdue → surfaces earlier
-    return { ...concept, lastTested: concept.lastTested + interferenceScore * 0.5 };
+    // Shift lastTested earlier (further in the past) → concept appears more overdue → surfaces earlier
+    // We reduce the timestamp by interferenceScore * 0.5 days expressed in ms
+    const shiftMs = interferenceScore * 0.5 * 24 * 60 * 60 * 1000;
+    return { ...concept, lastTested: concept.lastTested - shiftMs };
   });
 };
 

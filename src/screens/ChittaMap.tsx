@@ -108,12 +108,16 @@ export const ChittaMap = ({
               </div>
               <p className="text-[12px] text-[#6B7280] uppercase tracking-widest mb-3">{selectedNode.chapter} · Unit {selectedNode.unit}</p>
               <div className="flex gap-2 mb-4">
-                <span className={`inline-block px-2 py-1 rounded-md text-[12px] font-bold uppercase tracking-normal ${
-                  selectedNode.stage === 'Automatic' ? 'bg-[#F0FDF4] text-[#15803D]' :
-                  selectedNode.stage === 'Conscious' ? 'bg-primary/15 text-primary' :
-                  selectedNode.stage === 'Fragile'   ? 'bg-[#FEF2F2] text-[#B91C1C]' :
-                  'bg-[#F0EEE9] text-[#6B7280]'
-                }`}>
+                <span className="inline-block px-2 py-1 rounded-md text-[12px] font-bold uppercase tracking-normal" style={{ 
+                  background: selectedNode.stage === 'Automatic' ? 'var(--color-success-container)' :
+                              selectedNode.stage === 'Conscious' ? 'var(--color-primary-container)' :
+                              selectedNode.stage === 'Fragile'   ? 'var(--color-error-container)' :
+                              'var(--color-surface-variant)',
+                  color:      selectedNode.stage === 'Automatic' ? 'var(--color-on-success-container)' :
+                              selectedNode.stage === 'Conscious' ? 'var(--color-on-primary-container)' :
+                              selectedNode.stage === 'Fragile'   ? 'var(--color-on-error-container)' :
+                              'var(--color-on-surface-variant)'
+                }}>
                   {selectedNode.stage}
                 </span>
                 <TierBadge tier={selectedNode.pyqTier} />
@@ -145,10 +149,10 @@ export const ChittaMap = ({
       <div className="absolute bottom-28 left-4 right-4">
         <div className="card rounded-2xl p-4 flex justify-around items-center">
           {[
-            { color: '#00D97E',             label: 'Auto',     value: counts.auto     },
-            { color: '#6C63FF',             label: 'Conscious', value: counts.conscious },
-            { color: '#FF4D6D',             label: 'Fragile',  value: counts.fragile  },
-            { color: '#C4BFBA',               label: 'Unseen',  value: counts.unseen   },
+            { color: 'var(--color-success)',             label: 'Auto',     value: counts.auto     },
+            { color: 'var(--color-primary)',             label: 'Conscious', value: counts.conscious },
+            { color: 'var(--color-error)',               label: 'Fragile',  value: counts.fragile  },
+            { color: 'var(--color-surface-variant)',     label: 'Unseen',   value: counts.unseen   },
           ].map(s => (
             <div key={s.label} className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ background: s.color }} />

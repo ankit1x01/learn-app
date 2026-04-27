@@ -159,9 +159,6 @@ export const ConceptEncoding = ({
         >
           I UNDERSTAND THIS ✓
         </button>
-        <button className="w-full py-3.5 text-[#6B7280] font-label font-bold text-[12px] uppercase tracking-[0.2em] hover:text-[#6B7280] transition-colors">
-          Explain simpler
-        </button>
       </div>
     </div>
   );

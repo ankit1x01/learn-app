@@ -4,16 +4,18 @@ import { isDue } from '../core/fsrs';
 import { CONFIG } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
 import type { Screen } from '../types';
+import type { Concept } from '../core/types';
 import { Brain } from 'lucide-react';
 
-export const MorningRecall = ({ setScreen }: { setScreen: (s: Screen) => void }) => {
+export const MorningRecall = ({ setScreen, concepts }: { setScreen: (s: Screen) => void; concepts?: Concept[] }) => {
+  const liveConcepts = concepts ?? CONFIG.concepts;
   const recallConcepts = useMemo(() => {
     // Layer 7 — use sleep-optimised recall set (studied 6–14h ago, Fragile/Conscious, stakes-sorted)
-    const morningSet = getMorningRecallSet(CONFIG.concepts, 10);
+    const morningSet = getMorningRecallSet(liveConcepts, 10);
     // Fall back to due-today concepts if no morning set (e.g. first session of the day)
     if (morningSet.length > 0) return morningSet;
-    return CONFIG.concepts.filter(c => c.stage !== 'Unseen' && isDue(c)).slice(0, 5);
-  }, []);
+    return liveConcepts.filter(c => c.stage !== 'Unseen' && isDue(c)).slice(0, 5);
+  }, [liveConcepts]);
   const current = recallConcepts[0];
 
   return (

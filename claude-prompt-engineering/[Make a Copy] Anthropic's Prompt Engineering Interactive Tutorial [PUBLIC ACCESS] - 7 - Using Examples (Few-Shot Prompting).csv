@@ -1,0 +1,121 @@
+,Chapter 7: Using Examples (Few-Shot Prompting),,,
+,,,,
+,Page Contents,,,
+,,Lesson,,
+,,Examples,,
+ ,,Example Playground,,
+,,,,
+,Lesson,,,Back to top ↑
+,"Giving Claude examples of how you want it to behave (or how you want it not to behave) is extremely effective for:
+- Getting the right answer
+- Getting the answer in the right format
+
+This sort of prompting is also called ""few shot prompting"". You might also encounter the phrase ""zero-shot"" or ""n-shot"" or ""one-shot"". The number of ""shots"" refers to how many examples are used within the prompt.",,,
+,,,,
+,Examples,,,Back to top ↑
+,"Pretend you're a developer trying to build a ""parent bot"" that responds to questions from kids. Claude's default response is quite formal and robotic. This is going to break a child's heart.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Will Santa bring me presents on Christmas?,➤,#ERROR!
+,,,,
+,"You could take the time to describe your desired tone, but it's much easier just to give Claude a few examples of ideal responses.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Please complete the conversation by writing the next line, speaking as ""A"".
+Q: Is the tooth fairy real?
+A: Of course, sweetie. Wrap up your tooth and put it under your pillow tonight. There might be something waiting for you in the morning.
+Q: Will Santa bring me presents on Christmas?",➤,#ERROR!
+,,,,
+,,,,
+,"In the following formatting example, we could walk Claude step by step through a set of formatting instructions on how to extract names and professions and then format them exactly the way we want, or we could just provide Claude with some correctly-formatted examples and Claude can extrapolate from there. Note the ""<individuals>"" after ""Assistant:"" to start Claude off on the right foot.
+
+Tip: Double click on the prompt cell to scroll through the entire long prompt.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,"User: Silvermist Hollow, a charming village, was home to an extraordinary group of individuals. Among them was Dr. Liam Patel, a neurosurgeon who revolutionized surgical techniques at the regional medical center. Olivia Chen was an innovative architect who transformed the village's landscape with her sustainable and breathtaking designs. The local theater was graced by the enchanting symphonies of Ethan Kovacs, a professionally-trained musician and composer. Isabella Torres, a self-taught chef with a passion for locally sourced ingredients, created a culinary sensation with her farm-to-table restaurant, which became a must-visit destination for food lovers. These remarkable individuals, each with their distinct talents, contributed to the vibrant tapestry of life in Silvermist Hollow.
+<individuals>
+1. Dr. Liam Patel [NEUROSURGEON]
+2. Olivia Chen [ARCHITECT]
+3. Ethan Kovacs [MISICIAN AND COMPOSER]
+4. Isabella Torres [CHEF]
+</individuals>
+
+At the heart of the town, Chef Oliver Hamilton has transformed the culinary scene with his farm-to-table restaurant, Green Plate. Oliver's dedication to sourcing local, organic ingredients has earned the establishment rave reviews from food critics and locals alike.
+
+Just down the street, you'll find the Riverside Grove Library, where head librarian Elizabeth Chen has worked diligently to create a welcoming and inclusive space for all. Her efforts to expand the library's offerings and establish reading programs for children have had a significant impact on the town's literacy rates.
+
+As you stroll through the charming town square, you'll be captivated by the beautiful murals adorning the walls. These masterpieces are the work of renowned artist, Isabella Torres, whose talent for capturing the essence of Riverside Grove has brought the town to life.
+
+Riverside Grove's athletic achievements are also worth noting, thanks to former Olympic swimmer-turned-coach, Marcus Jenkins. Marcus has used his experience and passion to train the town's youth, leading the Riverside Grove Swim Team to several regional championships.
+<individuals>
+1. Oliver Hamilton [CHEF]
+2. Elizabeth Chen [LIBRARIAN]
+3. Isabella Torres [ARTIST]
+4. Marcus Jenkins [COACH]
+</individuals>
+
+Oak Valley, a charming small town, is home to a remarkable trio of individuals whose skills and dedication have left a lasting impact on the community.
+At the town's bustling farmer's market, you'll find Laura Simmons, a passionate organic farmer known for her delicious and sustainably grown produce. Her dedication to promoting healthy eating has inspired the town to embrace a more eco-conscious lifestyle.
+In Oak Valley's community center, Kevin Alvarez, a skilled dance instructor, has brought the joy of movement to people of all ages. His inclusive dance classes have fostered a sense of unity and self-expression among residents, enriching the local arts scene.
+Lastly, Rachel O'Connor, a tireless volunteer, dedicates her time to various charitable initiatives. Her commitment to improving the lives of others has been instrumental in creating a strong sense of community within Oak Valley.
+Through their unique talents and unwavering dedication, Laura, Kevin, and Rachel have woven themselves into the fabric of Oak Valley, helping to create a vibrant and thriving small town.
+Assistant: <individuals>",➤,#ERROR!
+,,,,
+,,,,
+,,,,
+,,,,
+,"If you're ready to try the chapter exercises, click the link below. If you want to play around with any of the examples in this lesson, scroll down!",,,
+,,,,
+,,,,Chapter 7 Exercises: Using Examples →
+,,,,
+,Example Playground,,,Back to top ↑
+,"This is an area for you to experiment freely with the prompt examples shown in this lesson. Feel free to tweak prompts to see how it may affect Claude's responses.
+
+Note: The colors in the cells, which have been carried over from above, will not change even if the prompt or Claude's response changes.",,,
+,,,,
+,,Prompt,,Claude's Response
+,,User: Will Santa bring me presents on Christmas?,➤,#ERROR!
+,,,,
+,,"User: Please complete the conversation by writing the next line, speaking as ""A"".
+Q: Is the tooth fairy real?
+A: Of course, sweetie. Wrap up your tooth and put it under your pillow tonight. There might be something waiting for you in the morning.
+Q: Will Santa bring me presents on Christmas?",➤,#ERROR!
+,,,,
+,,,,
+,,"User: In the bustling town of Emerald Hills, a diverse group of individuals made their mark. Sarah Martinez, a dedicated nurse, was known for her compassionate care at the local hospital. David Thompson, an innovative software engineer, worked tirelessly on groundbreaking projects that would revolutionize the tech industry. Meanwhile, Emily Nakamura, a talented artist and muralist, painted vibrant and thought-provoking pieces that adorned the walls of buildings and galleries alike. Lastly, Michael O'Connell, an ambitious entrepreneur, opened a unique, eco-friendly cafe that quickly became the town's favorite meeting spot. Each of these individuals contributed to the rich tapestry of the Emerald Hills community.
+<individuals>
+1. Sarah Martinez [NURSE]
+2. David Thompson [SOFTWARE ENGINEER]
+3. Emily Nakamura [ARTIST]
+4. Michael O'Connell [ENTREPRENEUR]
+</individuals>
+
+At the heart of the town, Chef Oliver Hamilton has transformed the culinary scene with his farm-to-table restaurant, Green Plate. Oliver's dedication to sourcing local, organic ingredients has earned the establishment rave reviews from food critics and locals alike.
+
+Just down the street, you'll find the Riverside Grove Library, where head librarian Elizabeth Chen has worked diligently to create a welcoming and inclusive space for all. Her efforts to expand the library's offerings and establish reading programs for children have had a significant impact on the town's literacy rates.
+
+As you stroll through the charming town square, you'll be captivated by the beautiful murals adorning the walls. These masterpieces are the work of renowned artist, Isabella Torres, whose talent for capturing the essence of Riverside Grove has brought the town to life.
+
+Riverside Grove's athletic achievements are also worth noting, thanks to former Olympic swimmer-turned-coach, Marcus Jenkins. Marcus has used his experience and passion to train the town's youth, leading the Riverside Grove Swim Team to several regional championships.
+<individuals>
+1. Oliver Hamilton [CHEF]
+2. Elizabeth Chen [LIBRARIAN]
+3. Isabella Torres [ARTIST]
+4. Marcus Jenkins [COACH]
+</individuals>
+
+Oak Valley, a charming small town, is home to a remarkable trio of individuals whose skills and dedication have left a lasting impact on the community.
+At the town's bustling farmer's market, you'll find Laura Simmons, a passionate organic farmer known for her delicious and sustainably grown produce. Her dedication to promoting healthy eating has inspired the town to embrace a more eco-conscious lifestyle.
+In Oak Valley's community center, Kevin Alvarez, a skilled dance instructor, has brought the joy of movement to people of all ages. His inclusive dance classes have fostered a sense of unity and self-expression among residents, enriching the local arts scene.
+Lastly, Rachel O'Connor, a tireless volunteer, dedicates her time to various charitable initiatives. Her commitment to improving the lives of others has been instrumental in creating a strong sense of community within Oak Valley.
+Through their unique talents and unwavering dedication, Laura, Kevin, and Rachel have woven themselves into the fabric of Oak Valley, helping to create a vibrant and thriving small town.
+Assistant: <individuals>",➤,#ERROR!
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,← Chapter 6 Exercises: Precognition (Thinking Step by Step),,,Chapter 7 Exercises: Using Examples →
+,,,,
+,Back to top ↑,,,
+,Table of Contents,,,

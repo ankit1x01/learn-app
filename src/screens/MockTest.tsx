@@ -4,6 +4,7 @@ import { FileText, Clock, Flag, CheckCircle2, BarChart2, Brain, Zap } from 'luci
 
 import { Screen } from '../types';
 import { Concept } from '../core/types';
+import { CONFIG, subjectColor, subjectBg } from '../lib/config';
 
 interface Props { setScreen: (s: Screen) => void; concepts: Concept[]; }
 
@@ -20,9 +21,8 @@ const PROBLEMS_PER_MOCK = 10;
 const fmt = (s: number) =>
   `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 
-// Pick 2 problems per subject category in priority order
 const buildPaper = (concepts: Concept[]): InterviewProblem[] => {
-  const SUBJECT_ORDER: string[] = ['Trees & Graphs', 'Arrays & Search', 'DP & Greedy', 'Strings & Data Structures', 'Foundations'];
+  const SUBJECT_ORDER: string[] = CONFIG.subjects.map(s => s.name);
   const problems: InterviewProblem[] = [];
 
   SUBJECT_ORDER.forEach((subject, roundIdx) => {
@@ -47,15 +47,6 @@ const buildPaper = (concepts: Concept[]): InterviewProblem[] => {
   }
 
   return problems.slice(0, PROBLEMS_PER_MOCK);
-};
-
-const SUBJECT_COLORS: Record<string, string> = {
-  'Foundations': 'text-[#94A3B8]', 'Arrays & Search': 'text-primary',
-  'Strings & Data Structures': 'text-[#0E7490]', 'Trees & Graphs': 'text-[#15803D]', 'DP & Greedy': 'text-[#B45309]'
-};
-const SUBJECT_BG: Record<string, string> = {
-  'Foundations': 'bg-[#94A3B8]/10', 'Arrays & Search': 'bg-primary/10',
-  'Strings & Data Structures': 'bg-[#ECFEFF]', 'Trees & Graphs': 'bg-[#F0FDF4]', 'DP & Greedy': 'bg-[#FFFBEB]'
 };
 
 const RATING_OPTIONS = [
@@ -105,9 +96,9 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
         <FileText size={36} className="text-[#15803D]" />
       </div>
       <h1 className="text-3xl font-ui font-bold mb-2">Mock Interview</h1>
-      <p className="text-[#6B7280] text-sm mb-1">10 Problems · 45 Minutes · FAANG Pattern</p>
+      <p className="text-[#6B7280] text-sm mb-1">{PROBLEMS_PER_MOCK} Problems · 45 Minutes · Final Interview</p>
       <p className="text-[#78716C] text-[11px] mb-8">
-        Trees & Graphs · Arrays · DP · Strings · Foundations · Self-rated
+        Full Syllabus Integration · High Stakes · Self-rated
       </p>
       <div className="space-y-2 text-left w-full max-w-xs mb-8">
         {[
@@ -162,7 +153,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
           </h1>
           <p className="text-[#6B7280] text-sm">{cleaned} clean · {hinted} hinted · {stuck} stuck</p>
           <p className="text-[11px] text-[#78716C] mt-1">
-            {cleaned >= 8 ? "Strong loop — FAANG ready" : cleaned >= 6 ? "Good — tighten weak areas" : cleaned >= 4 ? "Building momentum" : "More drilling needed"}
+            {cleaned >= 8 ? "Strong loop — Production ready" : cleaned >= 6 ? "Good — tighten weak areas" : cleaned >= 4 ? "Building momentum" : "More drilling needed"}
           </p>
         </header>
 
@@ -190,12 +181,12 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
             return (
               <div key={sub} className="card p-4 rounded-2xl">
                 <div className="flex justify-between items-end mb-2">
-                  <span className={`text-sm font-medium ${SUBJECT_COLORS[sub] ?? ''}`}>{sub}</span>
+                  <span className={`text-sm font-medium ${subjectColor(sub)}`}>{sub}</span>
                   <span className="text-xs text-[#6B7280]">{data.clean} clean / {data.total}</span>
                 </div>
                 <div className="h-1.5 w-full bg-[#F0EEE9] rounded-full overflow-hidden">
                   <div
-                    className={`h-full ${(SUBJECT_BG[sub] ?? 'bg-[#F0EEE9]').replace('/10', '')} transition-all duration-700`}
+                    className={`h-full ${subjectBg(sub).replace('/10', '')} transition-all duration-700`}
                     style={{ width: `${cleanPct}%` }}
                   />
                 </div>
