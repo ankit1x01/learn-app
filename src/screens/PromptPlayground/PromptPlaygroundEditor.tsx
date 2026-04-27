@@ -6,7 +6,7 @@ import {
   ExternalLink, RotateCcw
 } from 'lucide-react';
 import { Share } from '@capacitor/share';
-import { TEMPLATES, getTemplatesByPackAndChapter } from './templates';
+import { TEMPLATES, getTemplatesByPack } from './templates';
 import type { Template, CoursePackId } from '../../types';
 
 interface PromptPlaygroundEditorProps {
@@ -32,7 +32,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
   onBack,
   onNextChapter,
 }) => {
-  const templates = getTemplatesByPackAndChapter(pack, chapter);
+  const templates = getTemplatesByPack(pack);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [system, setSystem] = useState('');
   const [user, setUser] = useState('');
@@ -319,6 +319,17 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
             <p className="text-[11px] text-center pb-2" style={{ color: 'var(--color-on-surface-variant)' }}>
               Copies your prompt to clipboard & opens the AI web app
             </p>
+
+            {onNextChapter && (
+              <motion.button
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                onClick={onNextChapter}
+                className="w-full mt-4 py-3 rounded-2xl font-bold text-[13px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)' }}>
+                Next Chapter →
+              </motion.button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

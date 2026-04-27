@@ -23,6 +23,7 @@ import { CourseDashboard }   from './screens/CourseDashboard';
 import { CourseLesson }      from './screens/CourseLesson';
 import { DemoSession }       from './screens/DemoSession';
 import { PromptPlayground }  from './screens/PromptPlayground';
+import AIEngineeringCourse    from './screens/AIEngineeringCourse';
 import { GamesScreen }       from './games/GamesScreen';
 import { ShapeSlicerGame }   from './games/ShapeSlicerGame';
 import { PhysicsPlayground } from './games/playground/PhysicsPlayground';
@@ -165,6 +166,7 @@ function AppContent() {
           {screen === 'course-lesson' && <CourseLesson      setScreen={setScreen} courseDay={courseDay} setCourseDay={setCourseDay} />}
           {screen === 'demo-session'  && <DemoSession       setScreen={setScreen} />}
           {screen === 'prompt-playground' && <PromptPlayground setScreen={setScreen} />}
+          {screen === 'ai-engineering' && <AIEngineeringCourse setScreen={setScreen} />}
           {screen === 'games'         && <GamesScreen        onBack={() => setScreen('dashboard')} setScreen={setScreen} />}
           {screen === 'shape-slicer'  && <ShapeSlicerGame onBack={() => setScreen('dashboard')} />}
           {screen === 'physics-sandbox' && <PhysicsPlayground type="collision_elastic" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}

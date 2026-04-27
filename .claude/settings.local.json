@@ -98,7 +98,10 @@
       "Bash(cat capacitor.config.ts)",
       "Bash(cat capacitor.config.json)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(pkill -f \"npm run dev\")",
+      "Bash(npm run *)"
     ]
   }
 }

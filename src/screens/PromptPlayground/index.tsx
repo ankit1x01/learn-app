@@ -11,7 +11,7 @@ interface PromptPlaygroundProps {
 
 export const PromptPlayground: React.FC<PromptPlaygroundProps> = ({ setScreen }) => {
   const [selectedPack, setSelectedPack] = useState<CoursePackId | null>(null);
-  const { progress } = usePackProgress();
+  const { progress, advanceToNextChapter } = usePackProgress();
 
   if (selectedPack === null) {
     return <CoursePackSelector onSelectPack={setSelectedPack} />;
@@ -24,9 +24,9 @@ export const PromptPlayground: React.FC<PromptPlaygroundProps> = ({ setScreen })
     setSelectedPack(null);
   };
 
-  const handleNextChapter = () => {
+  const handleNextChapter = async () => {
     if (currentChapter < pack.chapterCount) {
-      setSelectedPack(selectedPack);
+      await advanceToNextChapter(selectedPack);
     }
   };
 

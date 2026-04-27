@@ -867,6 +867,29 @@ export const Dashboard = ({
         </div>
       </motion.div>
 
+      {/* ── AI Engineering Course ── */}
+      <motion.button
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...m3SpatialDefault, delay: 0.6 }}
+        onClick={() => setScreen('ai-engineering')}
+        className="mt-6 w-full mx-4 mb-4 px-4 py-4 rounded-m3-xl flex items-center gap-3 border border-solid bg-gradient-to-br from-[#8B5CF6]/5 to-[#EC4899]/5 hover:shadow-md transition-all active:scale-95"
+        style={{ borderColor: 'var(--color-border)' }}
+      >
+        <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0 bg-[#8B5CF6]/20">
+          <span className="text-xl">🧠</span>
+        </div>
+        <div className="flex-1 text-left">
+          <p className="text-[14px] font-bold mb-0.5" style={{ color: 'var(--color-on-surface)' }}>
+            AI Engineering Path
+          </p>
+          <p className="text-[12px]" style={{ color: 'var(--color-on-surface-variant)' }}>
+            260+ lessons • Build from scratch
+          </p>
+        </div>
+        <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} />
+      </motion.button>
+
     </div>
   );
 }

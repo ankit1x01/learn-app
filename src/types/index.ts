@@ -1,6 +1,6 @@
 export type Screen = 'dashboard' | 'session' | 'encoding' | 'map' | 'recall' | 'complete'
                    | 'elite' | 'stress' | 'ghana' | 'distractor' | 'errors' | 'mock' | 'preexam' | 'topics'
-                   | 'course' | 'course-lesson' | 'demo-session' | 'games' | 'shape-slicer' | 'physics-sandbox' | 'kinematics-cannon' | 'coulombs-collider' | 'prompt-playground';
+                   | 'course' | 'course-lesson' | 'demo-session' | 'games' | 'shape-slicer' | 'physics-sandbox' | 'kinematics-cannon' | 'coulombs-collider' | 'prompt-playground' | 'ai-engineering';
 
 // Prompt Playground Types
 export type CoursePackId = 'foundation' | 'patterns' | 'advanced' | 'domain';
