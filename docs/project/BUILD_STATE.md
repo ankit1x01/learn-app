@@ -1,6 +1,6 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-22 — **Physics simulation review + SelfInductance syntax fix**
+> Last updated: 2026-04-27 — **Prompt Playground expansion: modular course packs with 24 chapters**
 
 ---
 
@@ -161,6 +161,7 @@
 | MockTest | ✅ DONE | screens/MockTest.tsx | 45min, 10 problems |
 | PreExamProtocol | ✅ DONE | screens/PreExamProtocol.tsx | Day-of-exam checklist |
 | TopicsBank | ✅ DONE | screens/TopicsBank.tsx | Search + notes + images |
+| PromptPlayground | ✅ REFACTORED | screens/PromptPlayground/ | Modular course packs (Foundation, Patterns, Advanced, Domain) with 24 chapters |
 | KoshaCheck | ⏳ NOT BUILT | — | Pre-session 5-tap state check |
 | NididhyasanamPause | ⏳ NOT BUILT | — | 60s rest screen after 5 new concepts |
 | MananamPhase | ⏳ NOT BUILT | — | 3 forced questions after ConceptEncoding |
@@ -256,6 +257,37 @@ TopicsBank → search + notes + images (fully working)
 6. **4–6 AM Brahma Muhurta window** — scheduler starts at 6 AM
 7. **Streak count** — hardcoded to 7 in Dashboard
 8. **All Vedic screens** — KoshaCheck, Nididhyasanam, MananamPhase, NetiAnalysis, TeachBack not built
+
+---
+
+## Prompt Playground Expansion ✅ COMPLETE (2026-04-27)
+
+**MVP (Phase 1) — Infrastructure:** ✅ DONE
+- ✅ Modular course pack system (4 packs: Foundation, Patterns, Advanced, Domain)
+- ✅ 24 total chapters with full content written (9 Foundation + 5 Patterns + 6 Advanced + 4 Domain)
+- ✅ CoursePackSelector component (pack picker UI with M3 styling)
+- ✅ PromptPlaygroundEditor component (refactored from original)
+- ✅ Parent PromptPlayground/index.tsx managing pack/chapter navigation
+- ✅ usePackProgress hook (progress tracking per pack in Capacitor Preferences)
+- ✅ File structure: `src/screens/PromptPlayground/` directory with modular components
+- ✅ Zero TypeScript errors, production build verified
+
+**Content Coverage:**
+
+| Pack | Chapters | Topics |
+|---|---|---|
+| Foundation | 9 | Basic Structure, Clarity, Role Prompting, XML Tags, Formatting, CoT, Few-Shot, Hallucinations, Complex Orchestration |
+| Patterns | 5 | Prompt Chaining, Error Recovery, Multi-Turn Conversations, Injection Prevention, Iterative Refinement |
+| Advanced | 6 | Token Optimization, Structured Output, Prompt Caching, Self-Critique, Cost-Quality Tradeoffs, Production Scaling |
+| Domain | 4 | Tutoring & Explanation, Code Generation & Debugging, Creative Writing, Data Analysis & Research |
+
+**Architecture:**
+- Templates restructured by pack/chapter with metadata (technique color, lesson, system/user examples, highlights)
+- Pack metadata stored in `data.ts` (names, icons, colors, difficulty levels)
+- Progress tracked per pack independently (current chapter, completed chapters, last accessed)
+- Share-to-AI feature preserved (copy to clipboard + open in Claude/ChatGPT/Gemini)
+
+**Next (Phase 2):** Chapter progression UI, guided learning path, optional: export as notes
 
 ---
 
