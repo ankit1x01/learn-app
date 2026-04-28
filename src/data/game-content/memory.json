@@ -37,5 +37,48 @@
       "requiredFields": ["items"],
       "expectedDuration": 45000
     }
+  },
+  {
+    "id": "mem_003",
+    "conceptId": "dsa_001",
+    "difficulty": "medium",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "items": [
+        { "name": "Array", "definition": "Ordered collection with fixed size" },
+        { "name": "Linked List", "definition": "Nodes connected via pointers" },
+        { "name": "Stack", "definition": "LIFO - Last In First Out" },
+        { "name": "Queue", "definition": "FIFO - First In First Out" },
+        { "name": "Hash Table", "definition": "Key-value pairs with O(1) lookup" }
+      ]
+    },
+    "metadata": {
+      "gameType": "memory",
+      "requiredFields": ["items"],
+      "expectedDuration": 60000
+    }
+  },
+  {
+    "id": "mem_004",
+    "conceptId": "physics_001",
+    "difficulty": "hard",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "items": [
+        { "name": "Force", "definition": "F = ma (pushes or pulls)" },
+        { "name": "Velocity", "definition": "Rate of change of position" },
+        { "name": "Acceleration", "definition": "Rate of change of velocity" },
+        { "name": "Momentum", "definition": "p = mv (mass × velocity)" },
+        { "name": "Energy", "definition": "Capacity to do work" },
+        { "name": "Power", "definition": "Rate of energy transfer" }
+      ]
+    },
+    "metadata": {
+      "gameType": "memory",
+      "requiredFields": ["items"],
+      "expectedDuration": 90000
+    }
   }
 ]

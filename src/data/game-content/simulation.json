@@ -1,0 +1,65 @@
+[
+  {
+    "id": "sim_001",
+    "conceptId": "physics_003",
+    "difficulty": "medium",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "title": "Projectile Motion",
+      "description": "Launch a projectile and predict where it lands",
+      "variables": {
+        "initialVelocity": { "min": 10, "max": 50, "unit": "m/s", "default": 30 },
+        "angle": { "min": 0, "max": 90, "unit": "degrees", "default": 45 },
+        "gravity": { "value": 9.8, "unit": "m/s²" }
+      },
+      "expectedOutcome": "Parabolic trajectory with maximum range at 45°"
+    },
+    "metadata": {
+      "gameType": "simulation",
+      "requiredFields": ["title", "variables", "expectedOutcome"],
+      "expectedDuration": 120000
+    }
+  },
+  {
+    "id": "sim_002",
+    "conceptId": "dsa_003",
+    "difficulty": "hard",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "title": "Sorting Algorithm Visualizer",
+      "description": "Watch and understand how different sorting algorithms work",
+      "algorithms": ["bubble_sort", "quick_sort", "merge_sort", "heap_sort"],
+      "arraySize": { "min": 10, "max": 100, "default": 50 },
+      "expectedOutcome": "Elements sorted in ascending order with different complexities"
+    },
+    "metadata": {
+      "gameType": "simulation",
+      "requiredFields": ["title", "algorithms", "arraySize"],
+      "expectedDuration": 180000
+    }
+  },
+  {
+    "id": "sim_003",
+    "conceptId": "math_003",
+    "difficulty": "easy",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "title": "Pendulum Motion",
+      "description": "Adjust pendulum length and observe period of oscillation",
+      "variables": {
+        "length": { "min": 0.5, "max": 5, "unit": "meters", "default": 1 },
+        "angle": { "min": 5, "max": 45, "unit": "degrees", "default": 15 }
+      },
+      "formula": "T = 2π√(L/g)",
+      "expectedOutcome": "Period increases with pendulum length"
+    },
+    "metadata": {
+      "gameType": "simulation",
+      "requiredFields": ["title", "variables", "formula"],
+      "expectedDuration": 90000
+    }
+  }
+]

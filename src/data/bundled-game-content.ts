@@ -59,6 +59,90 @@ export const bundledGameContent: Record<string, GameContent[]> = {
         ],
         "expectedDuration": 25000
       }
+    },
+    {
+      "id": "chal_003",
+      "conceptId": "dsa_002",
+      "difficulty": "hard",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "question": "What is the time complexity of binary search?",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(n²)",
+          "O(1)"
+        ],
+        "correctIndex": 1,
+        "explanation": "Binary search eliminates half the search space with each comparison, giving O(log n) complexity."
+      },
+      "correctAnswer": "1",
+      "metadata": {
+        "gameType": "challenge",
+        "requiredFields": [
+          "question",
+          "options",
+          "correctIndex"
+        ],
+        "expectedDuration": 20000
+      }
+    },
+    {
+      "id": "chal_004",
+      "conceptId": "cs_003",
+      "difficulty": "easy",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "question": "Which data structure uses LIFO principle?",
+        "options": [
+          "Queue",
+          "Deque",
+          "Stack",
+          "Heap"
+        ],
+        "correctIndex": 2,
+        "explanation": "A Stack follows Last-In-First-Out (LIFO) principle where the last added element is removed first."
+      },
+      "correctAnswer": "2",
+      "metadata": {
+        "gameType": "challenge",
+        "requiredFields": [
+          "question",
+          "options",
+          "correctIndex"
+        ],
+        "expectedDuration": 15000
+      }
+    },
+    {
+      "id": "chal_005",
+      "conceptId": "physics_002",
+      "difficulty": "medium",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "question": "If an object moves at constant velocity, what is the net force?",
+        "options": [
+          "Maximum force",
+          "Zero",
+          "Equal to mass",
+          "Equal to weight"
+        ],
+        "correctIndex": 1,
+        "explanation": "By Newton's first law, constant velocity means no acceleration, so net force = 0."
+      },
+      "correctAnswer": "1",
+      "metadata": {
+        "gameType": "challenge",
+        "requiredFields": [
+          "question",
+          "options",
+          "correctIndex"
+        ],
+        "expectedDuration": 20000
+      }
     }
   ],
   "memory": [
@@ -124,6 +208,195 @@ export const bundledGameContent: Record<string, GameContent[]> = {
           "items"
         ],
         "expectedDuration": 45000
+      }
+    },
+    {
+      "id": "mem_003",
+      "conceptId": "dsa_001",
+      "difficulty": "medium",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "items": [
+          {
+            "name": "Array",
+            "definition": "Ordered collection with fixed size"
+          },
+          {
+            "name": "Linked List",
+            "definition": "Nodes connected via pointers"
+          },
+          {
+            "name": "Stack",
+            "definition": "LIFO - Last In First Out"
+          },
+          {
+            "name": "Queue",
+            "definition": "FIFO - First In First Out"
+          },
+          {
+            "name": "Hash Table",
+            "definition": "Key-value pairs with O(1) lookup"
+          }
+        ]
+      },
+      "metadata": {
+        "gameType": "memory",
+        "requiredFields": [
+          "items"
+        ],
+        "expectedDuration": 60000
+      }
+    },
+    {
+      "id": "mem_004",
+      "conceptId": "physics_001",
+      "difficulty": "hard",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "items": [
+          {
+            "name": "Force",
+            "definition": "F = ma (pushes or pulls)"
+          },
+          {
+            "name": "Velocity",
+            "definition": "Rate of change of position"
+          },
+          {
+            "name": "Acceleration",
+            "definition": "Rate of change of velocity"
+          },
+          {
+            "name": "Momentum",
+            "definition": "p = mv (mass × velocity)"
+          },
+          {
+            "name": "Energy",
+            "definition": "Capacity to do work"
+          },
+          {
+            "name": "Power",
+            "definition": "Rate of energy transfer"
+          }
+        ]
+      },
+      "metadata": {
+        "gameType": "memory",
+        "requiredFields": [
+          "items"
+        ],
+        "expectedDuration": 90000
+      }
+    }
+  ],
+  "simulation": [
+    {
+      "id": "sim_001",
+      "conceptId": "physics_003",
+      "difficulty": "medium",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "title": "Projectile Motion",
+        "description": "Launch a projectile and predict where it lands",
+        "variables": {
+          "initialVelocity": {
+            "min": 10,
+            "max": 50,
+            "unit": "m/s",
+            "default": 30
+          },
+          "angle": {
+            "min": 0,
+            "max": 90,
+            "unit": "degrees",
+            "default": 45
+          },
+          "gravity": {
+            "value": 9.8,
+            "unit": "m/s²"
+          }
+        },
+        "expectedOutcome": "Parabolic trajectory with maximum range at 45°"
+      },
+      "metadata": {
+        "gameType": "simulation",
+        "requiredFields": [
+          "title",
+          "variables",
+          "expectedOutcome"
+        ],
+        "expectedDuration": 120000
+      }
+    },
+    {
+      "id": "sim_002",
+      "conceptId": "dsa_003",
+      "difficulty": "hard",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "title": "Sorting Algorithm Visualizer",
+        "description": "Watch and understand how different sorting algorithms work",
+        "algorithms": [
+          "bubble_sort",
+          "quick_sort",
+          "merge_sort",
+          "heap_sort"
+        ],
+        "arraySize": {
+          "min": 10,
+          "max": 100,
+          "default": 50
+        },
+        "expectedOutcome": "Elements sorted in ascending order with different complexities"
+      },
+      "metadata": {
+        "gameType": "simulation",
+        "requiredFields": [
+          "title",
+          "algorithms",
+          "arraySize"
+        ],
+        "expectedDuration": 180000
+      }
+    },
+    {
+      "id": "sim_003",
+      "conceptId": "math_003",
+      "difficulty": "easy",
+      "source": "preauthored",
+      "createdAt": 1714425600000,
+      "content": {
+        "title": "Pendulum Motion",
+        "description": "Adjust pendulum length and observe period of oscillation",
+        "variables": {
+          "length": {
+            "min": 0.5,
+            "max": 5,
+            "unit": "meters",
+            "default": 1
+          },
+          "angle": {
+            "min": 5,
+            "max": 45,
+            "unit": "degrees",
+            "default": 15
+          }
+        },
+        "formula": "T = 2π√(L/g)",
+        "expectedOutcome": "Period increases with pendulum length"
+      },
+      "metadata": {
+        "gameType": "simulation",
+        "requiredFields": [
+          "title",
+          "variables",
+          "formula"
+        ],
+        "expectedDuration": 90000
       }
     }
   ]

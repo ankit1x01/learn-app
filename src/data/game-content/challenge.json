@@ -46,5 +46,77 @@
       "requiredFields": ["question", "options", "correctIndex"],
       "expectedDuration": 25000
     }
+  },
+  {
+    "id": "chal_003",
+    "conceptId": "dsa_002",
+    "difficulty": "hard",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "question": "What is the time complexity of binary search?",
+      "options": [
+        "O(n)",
+        "O(log n)",
+        "O(n²)",
+        "O(1)"
+      ],
+      "correctIndex": 1,
+      "explanation": "Binary search eliminates half the search space with each comparison, giving O(log n) complexity."
+    },
+    "correctAnswer": "1",
+    "metadata": {
+      "gameType": "challenge",
+      "requiredFields": ["question", "options", "correctIndex"],
+      "expectedDuration": 20000
+    }
+  },
+  {
+    "id": "chal_004",
+    "conceptId": "cs_003",
+    "difficulty": "easy",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "question": "Which data structure uses LIFO principle?",
+      "options": [
+        "Queue",
+        "Deque",
+        "Stack",
+        "Heap"
+      ],
+      "correctIndex": 2,
+      "explanation": "A Stack follows Last-In-First-Out (LIFO) principle where the last added element is removed first."
+    },
+    "correctAnswer": "2",
+    "metadata": {
+      "gameType": "challenge",
+      "requiredFields": ["question", "options", "correctIndex"],
+      "expectedDuration": 15000
+    }
+  },
+  {
+    "id": "chal_005",
+    "conceptId": "physics_002",
+    "difficulty": "medium",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "question": "If an object moves at constant velocity, what is the net force?",
+      "options": [
+        "Maximum force",
+        "Zero",
+        "Equal to mass",
+        "Equal to weight"
+      ],
+      "correctIndex": 1,
+      "explanation": "By Newton's first law, constant velocity means no acceleration, so net force = 0."
+    },
+    "correctAnswer": "1",
+    "metadata": {
+      "gameType": "challenge",
+      "requiredFields": ["question", "options", "correctIndex"],
+      "expectedDuration": 20000
+    }
   }
 ]
