@@ -27,10 +27,31 @@
 - Storage: localStorage per-game-type + per-concept performance logs
 - Client-side only: no backend required
 
+---
+
+## Game Data Pipeline ✅ PHASE 2 COMPLETE (2026-04-29)
+
+**Expanded Content Library:**
+- ✅ 4 memory games (3 added: dsa_001, physics_001 with 3-6 items each)
+- ✅ 5 challenge games (3 added: dsa_002, cs_003, physics_002)
+- ✅ 3 simulation games (new: projectile motion, sorting algorithm, pendulum)
+- ✅ **Total: 12 pre-authored game items** ready for gameplay
+- ✅ Coverage: CS, Math, DSA, Physics concepts
+
+**Content Organization:**
+- `src/data/game-content/memory.json` — 4 items
+- `src/data/game-content/challenge.json` — 5 items
+- `src/data/game-content/simulation.json` — 3 items
+- All bundled automatically during build
+
+**Documentation:**
+- ✅ `docs/GAME_PIPELINE.md` — Complete API reference + examples
+- ✅ `src/lib/game-pipeline-test.ts` — Test helper for verification
+- ✅ Test available in browser console: `testGamePipeline()`
+
 **Ready For:**
-- Phase 2: Author more content JSON files
 - Phase 3: Wire up Gemini-based content generation
-- Phase 4: Full session integration testing
+- Phase 4: Full session integration testing with real games
 
 ---
 
