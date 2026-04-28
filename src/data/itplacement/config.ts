@@ -39,7 +39,7 @@ export const itPlacementConfig: SyllabusConfig = {
       color: 'text-[#F59E0B]',
       bgColor: 'bg-[#F59E0B]/10',
       barColor: 'bg-[#F59E0B]',
-      emoji: '📊',
+      icon: 'calculate',
       encodingTip: 'Solve 30–50 questions/week timed (5 min/Q). Use IndiaBix sectional mocks. Target ≥80% accuracy per topic before moving on.',
     },
     {
@@ -50,7 +50,7 @@ export const itPlacementConfig: SyllabusConfig = {
       color: 'text-primary',
       bgColor: 'bg-primary/10',
       barColor: 'bg-primary',
-      emoji: '💻',
+      icon: 'code',
       encodingTip: 'Code the pattern from scratch — no copy-paste. Identify the trigger condition. Time yourself: easy in 10 min, medium in 25 min.',
     },
   ],

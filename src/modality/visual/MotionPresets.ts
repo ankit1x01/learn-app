@@ -60,7 +60,7 @@ export const draggableItem: Variants = {
 }
 
 export const dropZoneHighlight: Variants = {
-  idle: { borderColor: '#E8E5DF', backgroundColor: '#FAFAF9' },
+  idle: { borderColor: 'var(--color-border)', backgroundColor: '#FAFAF9' },
   active: {
     borderColor: '#3B82F6',
     backgroundColor: '#EFF6FF',

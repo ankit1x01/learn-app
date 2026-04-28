@@ -1,7 +1,7 @@
 // src/games/components/ThisOrThat.tsx
 import { useState, useRef, useEffect, memo, useCallback, useMemo } from "react";
 import { motion, useAnimation, PanInfo } from "motion/react";
-import { ArrowLeft, Info, Layers } from "lucide-react";
+
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { ThisOrThatConfig, GameResult } from "../types";
 import { GameWinScreen } from "./GameWinScreen";
@@ -322,7 +322,7 @@ export function ThisOrThat({ config }: Props) {
       {/* Header Titles */}
       <div className="flex justify-between items-start px-6 pt-6 pb-4">
         <div className="flex-1">
-          <h1 className="text-[28px] font-black text-[#1C1917] leading-tight" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.02em" }}>
+          <h1 className="text-[28px] font-black text-[var(--color-on-surface)] leading-tight" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.02em" }}>
             {config.columnA.label}
           </h1>
           <p className="text-[12px] font-medium text-[#44403C] mt-0.5 leading-tight">
@@ -330,7 +330,7 @@ export function ThisOrThat({ config }: Props) {
           </p>
         </div>
         <div className="flex-1 text-right">
-          <h1 className="text-[28px] font-black text-[#1C1917] leading-tight" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.02em" }}>
+          <h1 className="text-[28px] font-black text-[var(--color-on-surface)] leading-tight" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.02em" }}>
             {config.columnB.label}
           </h1>
           <p className="text-[12px] font-medium text-[#44403C] mt-0.5 leading-tight">
@@ -362,8 +362,8 @@ export function ThisOrThat({ config }: Props) {
 
       {/* Spacing & Counter */}
       {unassigned.length > 0 && (
-        <div className="flex justify-center items-center gap-1.5 mt-2 mb-2 text-[#1C1917] font-black">
-          <Layers size={16} strokeWidth={2.5} />
+        <div className="flex justify-center items-center gap-1.5 mt-2 mb-2 text-[var(--color-on-surface)] font-black">
+          <span className="material-symbols-rounded" style={{ fontSize: 16 }}>layers</span>
           <span className="text-[15px]">{unassigned.length}</span>
         </div>
       )}
@@ -391,14 +391,14 @@ export function ThisOrThat({ config }: Props) {
           <div className="w-full flex gap-4 items-center mb-6">
             <button
               onClick={handleCheck}
-              className="flex-1 h-[60px] bg-[#1C1917] rounded-[30px] flex items-center justify-center relative active:scale-95 transition-transform"
+              className="flex-1 h-[60px] bg-[var(--color-on-surface)] rounded-[30px] flex items-center justify-center relative active:scale-95 transition-transform"
             >
               <span className="text-white font-bold text-[18px]" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.01em" }}>
                 Guess
               </span>
               <div 
                 className="absolute -top-1.5 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center font-black text-xs"
-                style={{ border: "2px solid #1C1917", color: "#1C1917" }}
+                style={{ border: "2px solid var(--color-on-surface)", color: "var(--color-on-surface)" }}
               >
                 {Math.max(0, 5 - guesses)}
               </div>
@@ -408,15 +408,15 @@ export function ThisOrThat({ config }: Props) {
               onClick={handleHint}
               className="w-[60px] h-[60px] bg-white rounded-full flex items-center justify-center relative active:scale-95 transition-transform shrink-0"
               style={{
-                border: "2px solid #1C1917",
+                border: "2px solid var(--color-on-surface)",
               }}
             >
-              <span className="font-bold text-[#1C1917] text-[15px]" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.01em" }}>
+              <span className="font-bold text-[var(--color-on-surface)] text-[15px]" style={{ fontFamily: "Plus Jakarta Sans, system-ui", letterSpacing: "-0.01em" }}>
                 Hint
               </span>
               <div 
                 className="absolute -top-1.5 -right-1 w-6 h-6 bg-white rounded-full flex items-center justify-center font-black text-xs"
-                style={{ border: "2px solid #1C1917", color: "#1C1917" }}
+                style={{ border: "2px solid var(--color-on-surface)", color: "var(--color-on-surface)" }}
               >
                 {3 - hintsUsed}
               </div>

@@ -4,17 +4,7 @@ import { TierBadge } from '../components/TierBadge';
 import { getInitialStabilityWithEncoding } from '../core/fsrs';
 import type { Screen } from '../types';
 import type { SessionItem, Concept, EncodingDepth } from '../core/types';
-import {
-  BookOpen,
-  Headphones,
-  PenTool,
-  Target,
-  Zap,
-  Brain,
-  Eye,
-  PenLine,
-  Link2,
-} from 'lucide-react';
+
 
 export const ConceptEncoding = ({
   setScreen,
@@ -32,10 +22,10 @@ export const ConceptEncoding = ({
   const subjectCfg = getSubject(concept.subject);
 
   const modalities = [
-    { id: 'read',   icon: BookOpen,   label: 'Read'   },
-    { id: 'listen', icon: Headphones, label: 'Listen' },
-    { id: 'draw',   icon: PenTool,    label: 'Draw'   },
-    { id: 'quiz',   icon: Target,     label: 'Quiz'   },
+    { id: 'read',   icon: 'book',   label: 'Read'   },
+    { id: 'listen', icon: 'headphones', label: 'Listen' },
+    { id: 'draw',   icon: 'edit',    label: 'Draw'   },
+    { id: 'quiz',   icon: 'target',     label: 'Quiz'   },
   ];
 
   const [activeModality, setActiveModality] = useState('draw');
@@ -47,7 +37,7 @@ export const ConceptEncoding = ({
       {/* Badges */}
       <div className="flex flex-wrap gap-2 mb-6 mt-4">
         <span className={`px-3 py-1 ${subjectBg(concept.subject)} ${subjectColor(concept.subject)} rounded-full text-[12px] font-bold tracking-widest uppercase flex items-center gap-1.5`}>
-          <Zap size={11} fill="currentColor" /> New Concept
+          <span className="material-symbols-rounded" style={{ fontSize: 11, fontVariationSettings: "'FILL' 1" }}>bolt</span> New Concept
         </span>
         <span className="px-3 py-1 rounded-full text-[12px] font-bold tracking-widest uppercase" style={{ background: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)' }}>
           {concept.subject}
@@ -67,7 +57,7 @@ export const ConceptEncoding = ({
           <span style={{ color: 'var(--color-on-surface-muted)', fontStyle: 'italic', fontSize: '14px' }}>Diagram: {concept.name}</span>
         </div>
         <div className="absolute top-4 right-4 animate-float">
-          <Zap size={24} className={subjectColor(concept.subject)} />
+          <span className={`material-symbols-rounded ${subjectColor(concept.subject)}`} style={{ fontSize: 24 }}>bolt</span>
         </div>
       </div>
 
@@ -76,7 +66,7 @@ export const ConceptEncoding = ({
 
       {/* Encoding tip */}
       <div className="p-4 rounded-2xl mb-6 flex items-start gap-3" style={{ background: 'rgba(108,99,255,0.07)', border: '1px solid rgba(108,99,255,0.1)' }}>
-        <Brain size={14} className="text-primary mt-0.5 shrink-0" />
+        <span className="material-symbols-rounded text-primary mt-0.5 shrink-0" style={{ fontSize: 14 }}>psychology</span>
         <p className="font-reading text-[13px] leading-relaxed" style={{ color: 'var(--color-on-surface)', letterSpacing: '0.005em' }}>
           {subjectCfg?.encodingTip ?? 'Encode by writing it out from scratch without notes.'}
         </p>
@@ -94,7 +84,7 @@ export const ConceptEncoding = ({
               : { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }
             }
           >
-            <m.icon size={14} style={{ color: m.id === activeModality ? 'white' : 'var(--color-on-surface-variant)' }} />
+            <span className="material-symbols-rounded" style={{ fontSize: 14, color: m.id === activeModality ? 'white' : 'var(--color-on-surface-variant)' }}>{m.icon}</span>
             <span className={`text-[11px] font-bold uppercase tracking-widest ${m.id === activeModality ? 'text-white' : ''}`} style={{ color: m.id === activeModality ? 'white' : 'var(--color-on-surface-variant)' }}>{m.label}</span>
           </button>
         ))}
@@ -116,9 +106,9 @@ export const ConceptEncoding = ({
         </p>
         <div className="space-y-2">
           {([
-            { depth: 'shallow' as EncodingDepth,   Icon: Eye,     label: 'Just read it',             sub: 'Skimmed through — basic exposure',             mult: '×1.0' },
-            { depth: 'own-words' as EncodingDepth, Icon: PenLine, label: 'Explained in own words',   sub: 'Wrote it out from scratch, no notes',          mult: '×1.6' },
-            { depth: 'connected' as EncodingDepth, Icon: Link2,   label: 'Connected to prior knowledge', sub: 'Linked it to something I already know', mult: '×2.4' },
+            { depth: 'shallow' as EncodingDepth,   Icon: 'visibility',     label: 'Just read it',             sub: 'Skimmed through — basic exposure',             mult: '×1.0' },
+            { depth: 'own-words' as EncodingDepth, Icon: 'edit_note', label: 'Explained in own words',   sub: 'Wrote it out from scratch, no notes',          mult: '×1.6' },
+            { depth: 'connected' as EncodingDepth, Icon: 'link',   label: 'Connected to prior knowledge', sub: 'Linked it to something I already know', mult: '×2.4' },
           ]).map(({ depth, Icon, label, sub, mult }) => (
             <button
               key={depth}
@@ -131,14 +121,14 @@ export const ConceptEncoding = ({
             >
               <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
                    style={{ background: encodingDepth === depth ? 'var(--color-primary-container)' : 'var(--color-surface-container)' }}>
-                <Icon size={15} style={{ color: encodingDepth === depth ? 'var(--color-primary)' : 'var(--color-on-surface-variant)' }} />
+                <span className="material-symbols-rounded" style={{ fontSize: 15, color: encodingDepth === depth ? 'var(--color-primary)' : 'var(--color-on-surface-variant)' }}>{Icon}</span>
               </div>
               <div className="flex-1">
                 <div className="font-bold text-sm leading-tight">{label}</div>
                 <div className="text-[11px] mt-0.5" style={{ color: 'var(--color-on-surface-variant)' }}>{sub}</div>
               </div>
               <span className="text-[12px] font-bold shrink-0"
-                    style={{ color: encodingDepth === depth ? '#2563EB' : '#C4BFBA' }}>
+                    style={{ color: encodingDepth === depth ? 'var(--color-primary)' : 'var(--color-on-surface-muted)' }}>
                 {mult}
               </span>
             </button>
@@ -157,7 +147,7 @@ export const ConceptEncoding = ({
           className={`btn-primary ${!encodingDepth ? 'opacity-50' : ''}`}
           disabled={!encodingDepth}
         >
-          I UNDERSTAND THIS ✓
+          I UNDERSTAND THIS <span className="material-symbols-rounded" style={{ fontSize: 16 }}>check</span>
         </button>
       </div>
     </div>

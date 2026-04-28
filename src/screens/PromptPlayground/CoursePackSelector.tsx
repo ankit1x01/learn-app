@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ChevronRight } from 'lucide-react';
+
 import { COURSE_PACKS, PACK_ORDER } from './data';
 import type { CoursePackId } from '../../types';
 
@@ -55,7 +55,7 @@ export const CoursePackSelector: React.FC<CoursePackSelectorProps> = ({ onSelect
                     </span>
                   </div>
                 </div>
-                <ChevronRight size={18} style={{ color: 'var(--color-on-surface-variant)', marginTop: 4 }} className="shrink-0" />
+                <span className="material-symbols-rounded shrink-0" style={{ fontSize: 18,  color: 'var(--color-on-surface-variant)', marginTop: 4  }}>chevron_right</span>
               </div>
             </motion.button>
           );

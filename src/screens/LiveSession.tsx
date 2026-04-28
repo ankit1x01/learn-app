@@ -2,28 +2,24 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toast } from '@capacitor/toast';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
-import { RATINGS, QUEUE_LABELS, subjectColor, subjectBg, subjectEmoji } from '../lib/config';
+import { RATINGS, QUEUE_LABELS, subjectColor, subjectBg, subjectIcon } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
 import type { Screen } from '../types';
 import type { SessionItem, Concept } from '../core/types';
+import type { SessionItemWithQuiz } from '../lib/quiz-session-bridge';
+import type { SessionItemWithGame } from '../lib/game-session-bridge';
 import {
   advanceStage, regressStage,
   updateStabilityOnSuccess, updateStabilityOnFailure,
   updateDifficulty, getNextReviewDays,
   getPredictionErrorMultiplier,
+  updateFSRSFromQuiz,
+  updateFSRSFromGamePerformance,
 } from '../core/fsrs';
+import { gamePerformanceStore } from '../lib/game-performance-store';
 import { updateMetacogAccuracy, detectOverconfidence, detectCognitiveFatigue, getAdaptiveSessionLength } from '../core/metacognition';
-import {
-  CheckCircle2,
-  XCircle,
-  Sparkles,
-  ArrowRight,
-  X,
-  AlertCircle,
-  HelpCircle,
-  PieChart,
-  Zap,
-} from 'lucide-react';
+import { recordTodayLogin } from '../db/store';
+
 
 const JKS = "'Plus Jakarta Sans', system-ui, sans-serif";
 
@@ -33,12 +29,14 @@ export const LiveSession = ({
   qIndex,
   setQIndex,
   onUpdateConcept,
+  subjectFilter,
 }: {
   setScreen: (s: Screen) => void;
-  session: SessionItem[];
+  session: (SessionItem | SessionItemWithQuiz | SessionItemWithGame)[];
   qIndex: number;
   setQIndex: (i: number) => void;
   onUpdateConcept: (id: string, updates: Partial<Concept>) => void;
+  subjectFilter: string | null;
 }) => {
   const [selected, setSelected]       = useState<string | null>(null);
   const [confirmed, setConfirmed]     = useState(false);
@@ -46,6 +44,7 @@ export const LiveSession = ({
   const [showOptions, setShowOptions] = useState(false);
   const questionShownAt               = useRef<number>(Date.now());
   const [responseTimeMs, setResponseTimeMs] = useState<number | null>(null);
+  const [sessionResponseTimes, setSessionResponseTimes] = useState<Record<number, number>>({});
 
   const current = session[qIndex] ?? session[0];
 
@@ -56,11 +55,16 @@ export const LiveSession = ({
     }
   }, [current, setScreen]);
 
+  useEffect(() => {
+    // Deliberate session start: record the login/streak advance
+    recordTodayLogin().catch(console.error);
+  }, []);
+
   if (!current) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 gap-4" style={{ background: 'var(--color-background)' }}>
         <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: 'var(--color-primary-container)' }}>
-          <CheckCircle2 size={28} style={{ color: 'var(--color-primary)' }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 28,  color: 'var(--color-primary)'  }}>check_circle</span>
         </div>
         <p className="text-[16px] font-bold text-center" style={{ color: 'var(--color-on-surface)', fontFamily: JKS }}>
           All caught up!
@@ -72,7 +76,11 @@ export const LiveSession = ({
     );
   }
 
-  const { concept, queue, retrievability } = current;
+  const isQuizItem = (current as any).type === 'quiz';
+  const isGameItem = (current as any).type === 'game';
+  const { concept, queue, retrievability } = (!isQuizItem && !isGameItem) ? current : { concept: null, queue: current.queue, retrievability: current.retrievability };
+  const quiz = isQuizItem ? (current as SessionItemWithQuiz).quiz : null;
+  const game = isGameItem ? (current as SessionItemWithGame).game : null;
   const isPreTest = current.isPreTest ?? false;
   const qLabel = QUEUE_LABELS[queue];
 
@@ -100,59 +108,152 @@ export const LiveSession = ({
     setSelected(id);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (selectedRating && confidence !== null) {
       const wasCorrect = selectedRating.outcome === 'correct';
       const wasPartial = selectedRating.outcome === 'partial';
       const wasWrong   = selectedRating.outcome === 'wrong';
-      const curStability  = concept.stability  ?? 2;
-      const curDifficulty = concept.difficulty ?? 0.5;
-      const curStage      = concept.stage      ?? 'Unseen';
 
-      const hadPriorError = Array.isArray(concept.predictionErrorHistory)
-        && concept.predictionErrorHistory.length > 0
-        && concept.predictionErrorHistory[concept.predictionErrorHistory.length - 1].preTestWrong === true;
+      if (isGameItem && game) {
+        // Create pseudo-concept ID for game tracking
+        const gameConceptId = `game_${game.type}_${game.conceptId}`;
+        const gameStats = JSON.parse(localStorage.getItem('game_stats') || '{}');
+        // Find existing concept stability/difficulty
+        const parentConcept = (current as SessionItemWithGame).concept;
+        const curStage      = parentConcept?.stage ?? 'Unseen';
+        const curStability  = parentConcept?.stability ?? 0;
+        const curDifficulty = parentConcept?.difficulty ?? 0.5;
 
-      const newStage = wasCorrect ? advanceStage(curStage) : wasWrong ? regressStage(curStage) : curStage;
+        // Game scoring: 75% for attempted, 100% for mastered
+        const percentage = selected === 'game_mastered' ? 100 : 75;
+        const gameResult = updateFSRSFromQuiz(curStage as any, curStability, curDifficulty, percentage, 1);
 
-      let newStability: number;
-      if (wasCorrect) {
-        newStability = updateStabilityOnSuccess(curStability, retrievability, confidence);
-        if (hadPriorError) newStability = Math.round(newStability * getPredictionErrorMultiplier(true) * 10) / 10;
-      } else if (wasWrong) {
-        newStability = updateStabilityOnFailure(curStability);
-      } else {
-        newStability = Math.max(1, Math.round(curStability * 0.85 * 10) / 10);
-      }
+        // PERSIST TO CONCEPT STORE
+        onUpdateConcept(game.conceptId, {
+          stage: gameResult.stage as any,
+          stability: gameResult.stability,
+          difficulty: gameResult.difficulty,
+          lastTested: Date.now(),
+          lastStudiedAt: Date.now(),
+          nextReview: getNextReviewDays(gameResult.stability),
+        });
 
-      const newDifficulty       = updateDifficulty(curDifficulty, wasCorrect);
-      const newMetacogAccuracy  = updateMetacogAccuracy(concept, confidence, wasCorrect || wasPartial);
-      const newOverconfidenceFlag = detectOverconfidence({ ...concept, metacogAccuracy: newMetacogAccuracy });
+        // Also save to localStorage for historical game-specific tracking
+        gameStats[gameConceptId] = {
+          gameType: game.type,
+          conceptId: game.conceptId,
+          lastTested: Date.now(),
+          stability: gameResult.stability,
+          difficulty: gameResult.difficulty,
+          stage: gameResult.stage,
+          performance: percentage,
+        };
+        localStorage.setItem('game_stats', JSON.stringify(gameStats));
 
-      let newPredictionErrorHistory = concept.predictionErrorHistory ?? [];
-      if (isPreTest) {
-        newPredictionErrorHistory = [...newPredictionErrorHistory, { date: Date.now(), preTestWrong: !wasCorrect }];
-      }
+        // Track game performance in new pipeline
+        try {
+          await gamePerformanceStore.createPerformance(
+            gameConceptId,
+            game.conceptId,
+            game.type,
+            percentage,
+            0 // timeSpent will be calculated by game component in future
+          );
+        } catch (err) {
+          console.warn('Failed to save game performance:', err);
+        }
 
-      onUpdateConcept(concept.id, {
-        stage: newStage, stability: newStability, difficulty: newDifficulty,
-        lastTested: Date.now(),               // Unix timestamp — FSRS derives days elapsed from this
-        nextReview: getNextReviewDays(newStability),
-        lastStudiedAt: Date.now(), metacogAccuracy: newMetacogAccuracy,
-        overconfidenceFlag: newOverconfidenceFlag, predictionErrorHistory: newPredictionErrorHistory,
-      });
-      
-      if (wasCorrect) {
-        Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
-        Toast.show({ text: `Concepts Updated! Mastered +${Math.round(newStability)} days` }).catch(() => {});
+        if (selected === 'game_mastered') {
+          Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
+          Toast.show({ text: `Game Mastered! +${Math.round(gameResult.stability)} days` }).catch(() => {});
+        } else {
+          Haptics.notification({ type: 'WARNING' as any }).catch(() => {});
+          Toast.show({ text: 'Game attempted. Keep practicing!' }).catch(() => {});
+        }
+      } else if (isQuizItem && quiz) {
+        // Create pseudo-concept ID for quiz tracking
+        const quizConceptId = `quiz_${quiz.lessonId}_${quiz.question.question.substring(0, 20)}`;
+        const quizStats = JSON.parse(localStorage.getItem('quiz_stats') || '{}');
+        const existingQuiz = quizStats[quizConceptId];
+
+        // Quiz scoring: percentage based on correctness
+        const percentage = wasCorrect ? 100 : 0;
+        const quizResult = updateFSRSFromQuiz(existingQuiz?.stage ?? 'Unseen', existingQuiz?.stability ?? 0, existingQuiz?.difficulty ?? 0.5, percentage, 1);
+
+        // Save to localStorage for persistence
+        quizStats[quizConceptId] = {
+          lessonId: quiz.lessonId,
+          lessonName: quiz.lessonName,
+          lastTested: Date.now(),
+          stability: quizResult.stability,
+          difficulty: quizResult.difficulty,
+          stage: quizResult.stage,
+          score: percentage,
+        };
+        localStorage.setItem('quiz_stats', JSON.stringify(quizStats));
+
+        if (wasCorrect) {
+          Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
+          Toast.show({ text: `Quiz Mastered! +${Math.round(quizResult.stability)} days` }).catch(() => {});
+        } else {
+          Haptics.notification({ type: 'WARNING' as any }).catch(() => {});
+          Toast.show({ text: 'Quiz missed. Will review in 1 day.' }).catch(() => {});
+        }
+      } else if (concept) {
+        // Concept scoring: existing FSRS logic
+        const curStability  = concept.stability  ?? 2;
+        const curDifficulty = concept.difficulty ?? 0.5;
+        const curStage      = concept.stage      ?? 'Unseen';
+
+        const hadPriorError = Array.isArray(concept.predictionErrorHistory)
+          && concept.predictionErrorHistory.length > 0
+          && concept.predictionErrorHistory[concept.predictionErrorHistory.length - 1].preTestWrong === true;
+
+        const newStage = wasCorrect ? advanceStage(curStage) : wasWrong ? regressStage(curStage) : curStage;
+
+        let newStability: number;
+        if (wasCorrect) {
+          newStability = updateStabilityOnSuccess(curStability, retrievability, confidence);
+          if (hadPriorError) newStability = Math.round(newStability * getPredictionErrorMultiplier(true) * 10) / 10;
+        } else if (wasWrong) {
+          newStability = updateStabilityOnFailure(curStability);
+        } else {
+          newStability = Math.max(1, Math.round(curStability * 0.85 * 10) / 10);
+        }
+
+        const newDifficulty       = updateDifficulty(curDifficulty, wasCorrect);
+        const newMetacogAccuracy  = updateMetacogAccuracy(concept, confidence, wasCorrect || wasPartial);
+        const newOverconfidenceFlag = detectOverconfidence({ ...concept, metacogAccuracy: newMetacogAccuracy });
+
+        let newPredictionErrorHistory = concept.predictionErrorHistory ?? [];
+        if (isPreTest) {
+          newPredictionErrorHistory = [...newPredictionErrorHistory, { date: Date.now(), preTestWrong: !wasCorrect }];
+        }
+
+        onUpdateConcept(concept.id, {
+          stage: newStage, stability: newStability, difficulty: newDifficulty,
+          lastTested: Date.now(),
+          nextReview: getNextReviewDays(newStability),
+          lastStudiedAt: Date.now(), metacogAccuracy: newMetacogAccuracy,
+          overconfidenceFlag: newOverconfidenceFlag, predictionErrorHistory: newPredictionErrorHistory,
+        });
+
+        if (wasCorrect) {
+          Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {});
+          Toast.show({ text: `Concepts Updated! Mastered +${Math.round(newStability)} days` }).catch(() => {});
+        }
       }
     } else if (selectedRating && selectedRating.outcome !== 'correct' && confidence !== null) {
       Haptics.notification({ type: 'WARNING' as any }).catch(() => {});
     }
 
     // BUG-004: Record response time and detect cognitive fatigue
-    session[qIndex].responseTimeMs = responseTimeMs ?? 0;
-    const answeredItems = session.slice(0, qIndex + 1);
+    const newSessionResponseTimes = { ...sessionResponseTimes, [qIndex]: responseTimeMs ?? 0 };
+    setSessionResponseTimes(newSessionResponseTimes);
+    const answeredItems = session.slice(0, qIndex + 1).map((item, i) => ({
+      ...item,
+      responseTimeMs: newSessionResponseTimes[i] ?? 0
+    })) as SessionItem[];
     const fatigue = detectCognitiveFatigue(answeredItems);
     const adaptiveLength = getAdaptiveSessionLength(fatigue, session.length);
 
@@ -162,7 +263,7 @@ export const LiveSession = ({
          Toast.show({ text: 'High fatigue detected. Session completed early for rest.' }).catch(() => {});
       }
       setQIndex(0); setScreen('complete');
-    } else if (session[qIndex].queue === 'new') {
+    } else if (session[qIndex].queue === 'new' && !isQuizItem && !isGameItem) {
       setQIndex(next); setScreen('encoding');
     } else {
       setQIndex(next);
@@ -182,9 +283,9 @@ export const LiveSession = ({
     <div className="pt-12 pb-8 max-w-md mx-auto min-h-screen flex flex-col" style={{ background: 'var(--color-background)' }}>
 
       {/* ── Top progress bar ── */}
-      <div className="h-1 bg-[#E8E5DF] w-full">
+      <div className="h-1 bg-[var(--color-border)] w-full">
         <motion.div
-          className="h-full bg-[#2563EB]"
+          className="h-full bg-[var(--color-primary)]"
           initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -197,14 +298,21 @@ export const LiveSession = ({
           onClick={() => setScreen('dashboard')}
           className="w-9 h-9 rounded-xl flex items-center justify-center border" style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-border)' }}
         >
-          <X size={16} style={{ color: 'var(--color-on-surface-muted)' }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>close</span>
         </button>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[15px] font-bold" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
-            Q{qIndex + 1}
-          </span>
-          <span className="text-[14px]" style={{ color: 'var(--color-on-surface-muted)' }}>/ {session.length}</span>
+        <div className="flex flex-col items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-[15px] font-bold" style={{ fontFamily: JKS, color: 'var(--color-on-surface)' }}>
+              Q{qIndex + 1}
+            </span>
+            <span className="text-[14px]" style={{ color: 'var(--color-on-surface-muted)' }}>/ {session.length}</span>
+          </div>
+          {subjectFilter && (
+            <span className="text-[10px] font-bold uppercase tracking-widest mt-0.5" style={{ color: 'var(--color-primary)' }}>
+              {subjectFilter}
+            </span>
+          )}
         </div>
 
         {/* Question dots */}
@@ -230,19 +338,53 @@ export const LiveSession = ({
         <div className="card p-5 mb-4">
           {/* Meta badges */}
           <div className="flex flex-wrap gap-2 mb-4">
-            <span
-              className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
-              style={{ fontFamily: JKS, background: '#F7F6F3', color: '#78716C', border: '1px solid #E8E5DF' }}
-            >
-              {subjectEmoji(concept.subject)} {concept.subject}
-            </span>
-            <span
-              className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
-              style={{ fontFamily: JKS, background: qs.bg, color: qs.color, border: `1px solid ${qs.bg}` }}
-            >
-              {qLabel.label}{rPct !== null ? ` · ${rPct}%` : ''}
-            </span>
-            <TierBadge tier={concept.pyqTier} />
+            {isGameItem && game ? (
+              <>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ fontFamily: JKS, background: '#DBEAFE', color: '#0369A1', border: '1px solid #BAE6FD' }}
+                >
+                  <span className="flex items-center gap-1"><span className="material-symbols-rounded" style={{ fontSize: 12 }}>sports_esports</span> Game</span>
+                </span>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ fontFamily: JKS, background: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)', border: '1px solid var(--color-border)' }}
+                >
+                  {game.difficulty.toUpperCase()}
+                </span>
+              </>
+            ) : isQuizItem && quiz ? (
+              <>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ fontFamily: JKS, background: '#F3E8FF', color: '#6B21A8', border: '1px solid #E9D5FF' }}
+                >
+                  <span className="flex items-center gap-1"><span className="material-symbols-rounded" style={{ fontSize: 12 }}>quiz</span> Quiz</span>
+                </span>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ fontFamily: JKS, background: qs.bg, color: qs.color, border: `1px solid ${qs.bg}` }}
+                >
+                  {qLabel.label}{rPct !== null ? ` · ${rPct}%` : ''}
+                </span>
+              </>
+            ) : (
+              <>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ fontFamily: JKS, background: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)', border: '1px solid var(--color-border)' }}
+                >
+                  {concept && <span className="material-symbols-rounded" style={{ fontSize: 16 }}>{subjectIcon(concept.subject)}</span>} {concept?.subject}
+                </span>
+                <span
+                  className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ fontFamily: JKS, background: qs.bg, color: qs.color, border: `1px solid ${qs.bg}` }}
+                >
+                  {qLabel.label}{rPct !== null ? ` · ${rPct}%` : ''}
+                </span>
+                {concept && <TierBadge tier={concept.pyqTier} />}
+              </>
+            )}
             {isPreTest && (
               <span
                 className="px-2.5 py-1 rounded-full text-[11px] font-semibold"
@@ -253,17 +395,27 @@ export const LiveSession = ({
             )}
           </div>
 
-          {/* Chapter path */}
-          <p className="text-[12px] text-[#A8A29E] mb-3">{concept.chapter} · Unit {concept.unit}</p>
+          {/* Chapter path, lesson path, or game context */}
+          {isGameItem && game ? (
+            <p className="text-[12px] text-[var(--color-border)] mb-3">{game.concept.chapter}</p>
+          ) : isQuizItem && quiz ? (
+            <p className="text-[12px] text-[var(--color-border)] mb-3">{quiz.lessonName}</p>
+          ) : (
+            <p className="text-[12px] text-[var(--color-border)] mb-3">{concept?.chapter} · Unit {concept?.unit}</p>
+          )}
 
-          {/* Concept name */}
-          <h2 className="text-[20px] font-bold text-[#1C1917] leading-snug mb-3" style={{ fontFamily: JKS }}>
-            {concept.name}
+          {/* Question text (concept name, quiz question, or game challenge) */}
+          <h2 className="text-[20px] font-bold text-[var(--color-on-surface)] leading-snug mb-3" style={{ fontFamily: JKS }}>
+            {isGameItem && game ? game.concept.name : isQuizItem && quiz ? quiz.question.question : concept?.name}
           </h2>
 
-          {/* Instruction text — Nunito for comfortable reading */}
+          {/* Instruction text */}
           <p className="prose">
-            {isPreTest
+            {isGameItem
+              ? `${game?.description} The challenge will help strengthen your understanding.`
+              : isQuizItem
+              ? 'Answer the question below. Your response will be used to schedule next review.'
+              : isPreTest
               ? "You haven't studied this yet — attempt it cold. The mistake will make it stick."
               : queue === 'new'
               ? 'First encounter — study the pattern, then rate your understanding.'
@@ -274,25 +426,25 @@ export const LiveSession = ({
               : 'Strengthen this pattern. Apply it to a fresh problem.'}
           </p>
 
-          {concept.stakesFact && (queue === 'new' || queue === 'strengthen') && (
+          {!isQuizItem && concept && concept.stakesFact && (queue === 'new' || queue === 'strengthen') && (
             <div className="mt-4 px-3 py-2.5 rounded-xl flex items-start gap-2 bg-[#FEF2F2] border border-[#FECACA]">
-              <AlertCircle size={13} className="text-[#B91C1C] shrink-0 mt-0.5" />
+              <span className="material-symbols-rounded text-[#B91C1C] shrink-0 mt-0.5" style={{ fontSize: 13 }}>error</span>
               <p className="text-[13px] text-[#991B1B] leading-snug font-reading">{concept.stakesFact}</p>
             </div>
           )}
         </div>
 
-        {/* ── Confidence Widget ── */}
-        {!showOptions && (
+        {/* ── Confidence Widget (for concepts only) ── */}
+        {!showOptions && !isGameItem && (
           <div className="mb-4">
-            <p className="text-[13px] font-semibold text-[#78716C] mb-3 text-center" style={{ fontFamily: JKS }}>
+            <p className="text-[13px] font-semibold text-[var(--color-on-surface-variant)] mb-3 text-center" style={{ fontFamily: JKS }}>
               How confident are you?
             </p>
             <div className="flex gap-2.5">
               {([
-                { level: 1 as const, label: 'Unsure',  Icon: HelpCircle, bg: '#FEF2F2', border: '#FECACA',  color: '#B91C1C' },
-                { level: 2 as const, label: 'Partial',  Icon: PieChart,   bg: '#FFFBEB', border: '#FDE68A', color: '#B45309' },
-                { level: 3 as const, label: 'Certain',  Icon: Zap,        bg: '#F0FDF4', border: '#BBF7D0', color: '#15803D' },
+                { level: 1 as const, label: 'Unsure',  Icon: 'help',  bg: '#FEF2F2', border: '#FECACA',  color: '#B91C1C' },
+                { level: 2 as const, label: 'Partial',  Icon: 'pie_chart',   bg: '#FFFBEB', border: '#FDE68A', color: '#B45309' },
+                { level: 3 as const, label: 'Certain',  Icon: 'bolt',        bg: '#F0FDF4', border: '#BBF7D0', color: '#15803D' },
               ]).map(({ level, label, Icon, bg, border, color }) => (
                 <button
                   key={level}
@@ -301,7 +453,7 @@ export const LiveSession = ({
                   style={{ background: bg, border: `1.5px solid ${border}` }}
                 >
                   <div className="flex justify-center mb-1.5">
-                    <Icon size={20} style={{ color }} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 20, color }}>{Icon}</span>
                   </div>
                   <div className="text-[12px] font-semibold" style={{ color, fontFamily: JKS }}>{label}</div>
                 </button>
@@ -310,11 +462,40 @@ export const LiveSession = ({
           </div>
         )}
 
-        {/* ── Self-Assessment Options ── */}
+        {/* ── Game Challenge Widget ── */}
+        {!showOptions && isGameItem && game && (
+          <div className="mb-4 space-y-3">
+            <p className="text-[13px] font-semibold text-[var(--color-on-surface-variant)] text-center" style={{ fontFamily: JKS }}>
+              Mark this challenge
+            </p>
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => { setSelected('game_attempted'); handleConfidenceTap(2); }}
+                className="flex-1 py-3.5 rounded-xl text-center transition-all duration-150 active:scale-95"
+                style={{ background: '#DBEAFE', border: '1.5px solid #BAE6FD' }}
+              >
+                <div className="text-[12px] font-semibold" style={{ color: '#0369A1', fontFamily: JKS }}>
+                  ✓ Attempted
+                </div>
+              </button>
+              <button
+                onClick={() => { setSelected('game_mastered'); handleConfidenceTap(3); }}
+                className="flex-1 py-3.5 rounded-xl text-center transition-all duration-150 active:scale-95"
+                style={{ background: '#F0FDF4', border: '1.5px solid #BBF7D0' }}
+              >
+                <div className="text-[12px] font-semibold" style={{ color: '#15803D', fontFamily: JKS }}>
+                  ✓✓ Mastered
+                </div>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── Options (Quiz MCQs or Self-Assessment) ── */}
         {showOptions && (
           <div className="space-y-2.5 mb-4">
-            {/* Confidence indicator */}
-            {confidence && (
+            {/* Confidence indicator for concepts only */}
+            {!isQuizItem && confidence && (
               <div className="flex justify-center mb-1">
                 <span
                   className="text-[12px] font-semibold px-3 py-1 rounded-full"
@@ -330,44 +511,81 @@ export const LiveSession = ({
               </div>
             )}
 
-            {RATINGS.map((r) => {
-              const isSelected = selected === r.id;
-              const borderColor = isSelected
-                ? r.outcome === 'correct' ? '#15803D' : r.outcome === 'partial' ? '#B45309' : '#B91C1C'
-                : '#E8E5DF';
-              const bgColor = isSelected
-                ? r.outcome === 'correct' ? '#F0FDF4' : r.outcome === 'partial' ? '#FFFBEB' : '#FEF2F2'
-                : '#FFFFFF';
+            {isQuizItem && quiz ? (
+              // Quiz MCQ rendering
+              quiz.question.options.map((option, idx) => {
+                const optionId = `option_${idx}`;
+                const isSelected = selected === optionId;
+                const isCorrect = idx === quiz.question.correct;
+                const borderColor = isSelected
+                  ? isCorrect ? '#15803D' : '#B91C1C'
+                  : 'var(--color-border)';
+                const bgColor = isSelected
+                  ? isCorrect ? '#F0FDF4' : '#FEF2F2'
+                  : '#FFFFFF';
 
-              return (
-                <button
-                  key={r.id}
-                  onClick={() => !confirmed && handleSelect(r.id)}
-                  className="w-full px-4 py-3.5 rounded-xl text-left transition-all duration-120 border"
-                  style={{ background: bgColor, borderColor }}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-[20px]">{r.icon}</span>
-                    <div className="flex-1">
-                      <div className="text-[14px] font-semibold text-[#1C1917] font-reading">{r.label}</div>
-                      <div className="text-[12px] text-[#A8A29E] mt-0.5 font-reading">{r.sub}</div>
+                return (
+                  <button
+                    key={optionId}
+                    onClick={() => !confirmed && handleSelect(optionId)}
+                    className="w-full px-4 py-3.5 rounded-xl text-left transition-all duration-120 border"
+                    style={{ background: bgColor, borderColor }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-[16px] font-bold text-[var(--color-on-surface-variant)]">{String.fromCharCode(65 + idx)}</span>
+                      <div className="flex-1">
+                        <div className="text-[14px] text-[var(--color-on-surface)] font-reading">{option}</div>
+                      </div>
+                      {isSelected && (
+                        isCorrect
+                          ? <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 18 }}>check_circle</span>
+                          : <span className="material-symbols-rounded text-[#B91C1C]" style={{ fontSize: 18 }}>cancel</span>
+                      )}
                     </div>
-                    {isSelected && (
-                      r.outcome === 'correct'
-                        ? <CheckCircle2 size={18} className="text-[#15803D]" />
-                        : <XCircle size={18} style={{ color: r.outcome === 'partial' ? '#B45309' : '#B91C1C' }} />
-                    )}
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })
+            ) : (
+              // Concept self-assessment rendering
+              RATINGS.map((r) => {
+                const isSelected = selected === r.id;
+                const borderColor = isSelected
+                  ? r.outcome === 'correct' ? '#15803D' : r.outcome === 'partial' ? '#B45309' : '#B91C1C'
+                  : 'var(--color-border)';
+                const bgColor = isSelected
+                  ? r.outcome === 'correct' ? '#F0FDF4' : r.outcome === 'partial' ? '#FFFBEB' : '#FEF2F2'
+                  : '#FFFFFF';
+
+                return (
+                  <button
+                    key={r.id}
+                    onClick={() => !confirmed && handleSelect(r.id)}
+                    className="w-full px-4 py-3.5 rounded-xl text-left transition-all duration-120 border"
+                    style={{ background: bgColor, borderColor }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-rounded" style={{ fontSize: 20 }}>{r.icon}</span>
+                      <div className="flex-1">
+                        <div className="text-[14px] font-semibold text-[var(--color-on-surface)] font-reading">{r.label}</div>
+                        <div className="text-[12px] text-[var(--color-border)] mt-0.5 font-reading">{r.sub}</div>
+                      </div>
+                      {isSelected && (
+                        r.outcome === 'correct'
+                          ? <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 18 }}>check_circle</span>
+                          : <span className="material-symbols-rounded" style={{ fontSize: 18,  color: r.outcome === 'partial' ? '#B45309' : '#B91C1C'  }}>cancel</span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })
+            )}
 
             <button
               onClick={() => selected && setConfirmed(true)}
               className={`btn-primary mt-1 ${!selected ? 'opacity-40 cursor-not-allowed' : ''}`}
               disabled={!selected}
             >
-              Confirm <ArrowRight size={17} />
+              Confirm <span className="material-symbols-rounded" style={{ fontSize: 17 }}>arrow_forward</span>
             </button>
           </div>
         )}
@@ -381,26 +599,26 @@ export const LiveSession = ({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 380, damping: 38 }}
-            className="fixed inset-x-0 bottom-0 z-[70] bg-white rounded-t-2xl"
-            style={{ borderTop: '1px solid #E8E5DF', minHeight: '52%', maxWidth: 448, margin: '0 auto' }}
+            className="fixed inset-x-0 bottom-0 z-[70] bg-white rounded-t-2xl overflow-y-auto max-h-[80vh]"
+            style={{ borderTop: '1px solid var(--color-border)', maxWidth: 448, margin: '0 auto' }}
           >
             {/* Handle */}
-            <div className="w-10 h-1 rounded-full bg-[#E8E5DF] mx-auto mt-3 mb-5" />
+            <div className="w-10 h-1 rounded-full bg-[var(--color-border)] mx-auto mt-3 mb-5 sticky top-0" />
 
             <div className="px-5 pb-8">
               {/* Result header */}
               <div className="flex items-center gap-3 mb-5">
                 <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center"
+                  className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                   style={{
                     background: selectedRating.outcome === 'correct' ? '#F0FDF4' : selectedRating.outcome === 'partial' ? '#FFFBEB' : '#FEF2F2',
                   }}
                 >
                   {selectedRating.outcome === 'correct'
-                    ? <CheckCircle2 size={24} className="text-[#15803D]" />
+                    ? <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 24 }}>check_circle</span>
                     : selectedRating.outcome === 'partial'
-                    ? <CheckCircle2 size={24} className="text-[#B45309]" />
-                    : <XCircle size={24} className="text-[#B91C1C]" />}
+                    ? <span className="material-symbols-rounded text-[#B45309]" style={{ fontSize: 24 }}>check_circle</span>
+                    : <span className="material-symbols-rounded text-[#B91C1C]" style={{ fontSize: 24 }}>cancel</span>}
                 </div>
                 <div>
                   <h3
@@ -412,30 +630,64 @@ export const LiveSession = ({
                   >
                     {selectedRating.label}
                   </h3>
-                  <p className="text-[12px] text-[#A8A29E]">
-                    {selectedRating.outcome === 'correct' ? 'Stability ↑ · Difficulty ↓' : selectedRating.outcome === 'partial' ? 'Stability → · Difficulty →' : 'Stability ↓ · Difficulty ↑'}
+                  <p className="text-[12px] text-[var(--color-border)]">
+                    {isGameItem
+                      ? selected === 'game_mastered'
+                        ? 'Will review in 10 days'
+                        : 'Will review in 2 days'
+                      : isQuizItem
+                      ? selectedRating.outcome === 'correct'
+                        ? 'Will review in 7 days'
+                        : 'Will review in 1 day'
+                      : selectedRating.outcome === 'correct'
+                      ? 'Stability ↑ · Difficulty ↓'
+                      : selectedRating.outcome === 'partial'
+                      ? 'Stability → · Difficulty →'
+                      : 'Stability ↓ · Difficulty ↑'}
                   </p>
                 </div>
               </div>
 
-              {/* Next step */}
-              <div className="p-4 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] mb-5">
-                <p className="text-[12px] font-semibold text-[#2563EB] mb-1.5" style={{ fontFamily: JKS }}>
-                  Next Step
-                </p>
-                <p className="prose" style={{ fontSize: '14px', lineHeight: '1.75' }}>
-                  {selectedRating.outcome === 'correct'
-                    ? `${concept.name} is moving toward Automatic. Next review in ${Math.round((concept.stability || 10) * 1.2)} days.`
-                    : selectedRating.outcome === 'partial'
-                    ? `Study the edge cases of ${concept.name}. Re-encode the trigger conditions.`
-                    : `${concept.name} needs re-encoding. Go to the encoding phase now.`}
-                </p>
-              </div>
+              {/* Game feedback, quiz explanation, or concept next step */}
+              {isGameItem && game ? (
+                <div className="p-4 rounded-xl bg-[#DBEAFE] border border-[#BAE6FD] mb-5">
+                  <p className="text-[12px] font-semibold text-[#0369A1] mb-2" style={{ fontFamily: JKS }}>
+                    {selected === 'game_mastered' ? '✓ Great Work!' : '✓ Nice Attempt!'}
+                  </p>
+                  <p className="prose text-[14px] leading-relaxed text-[var(--color-on-surface)]">
+                    {selected === 'game_mastered'
+                      ? `You've mastered the ${game.type.replace('-', ' ')} challenge for ${game.concept.name}. The pattern is now deeply embedded.`
+                      : `You attempted the ${game.type.replace('-', ' ')} challenge. Keep practicing ${game.concept.name} to achieve mastery.`}
+                  </p>
+                </div>
+              ) : isQuizItem && quiz ? (
+                <div className="p-4 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] mb-5">
+                  <p className="text-[12px] font-semibold text-[#2563EB] mb-2" style={{ fontFamily: JKS }}>
+                    Explanation
+                  </p>
+                  <p className="prose text-[14px] leading-relaxed text-[var(--color-on-surface)]">
+                    {quiz.question.explanation}
+                  </p>
+                </div>
+              ) : (
+                <div className="p-4 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] mb-5">
+                  <p className="text-[12px] font-semibold text-[#2563EB] mb-1.5" style={{ fontFamily: JKS }}>
+                    Next Step
+                  </p>
+                  <p className="prose" style={{ fontSize: '14px', lineHeight: '1.75' }}>
+                    {selectedRating.outcome === 'correct'
+                      ? `${concept?.name} is moving toward Automatic. Next review in ${Math.round((concept?.stability || 10) * 1.2)} days.`
+                      : selectedRating.outcome === 'partial'
+                      ? `Study the edge cases of ${concept?.name}. Re-encode the trigger conditions.`
+                      : `${concept?.name} needs re-encoding. Go to the encoding phase now.`}
+                  </p>
+                </div>
+              )}
 
               {/* Actions */}
               <div className="flex gap-3">
                 <button
-                  className="flex-1 py-3.5 rounded-xl text-[14px] font-semibold text-[#78716C] bg-[#F7F6F3] border border-[#E8E5DF]"
+                  className="flex-1 py-3.5 rounded-xl text-[14px] font-semibold text-[var(--color-on-surface-variant)] bg-[var(--color-surface-container)] border border-[var(--color-border)]"
                   style={{ fontFamily: JKS }}
                 >
                   Flag for Review
@@ -445,7 +697,7 @@ export const LiveSession = ({
                   className="flex-1 py-3.5 rounded-xl text-[14px] font-semibold text-white bg-[#2563EB] flex items-center justify-center gap-2"
                   style={{ fontFamily: JKS }}
                 >
-                  Next <ArrowRight size={16} />
+                  Next <span className="material-symbols-rounded" style={{ fontSize: 16 }}>arrow_forward</span>
                 </button>
               </div>
             </div>

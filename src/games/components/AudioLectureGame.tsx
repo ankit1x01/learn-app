@@ -60,7 +60,7 @@ export function AudioLectureGame({ config }: Props) {
   }
 
   return (
-    <div className="flex flex-col min-h-[600px]" style={{ background: '#F7F6F3', userSelect: 'none' }}>
+    <div className="flex flex-col min-h-[600px]" style={{ background: 'var(--color-surface-container)', userSelect: 'none' }}>
       {phase === 'intro'     && <IntroPhase     config={config}              onPlay={() => setPhase('listening')} />}
       {phase === 'listening' && <ListeningPhase config={config} chips={chips} onComplete={handleListeningComplete} />}
       {phase === 'quiz'      && <QuizPhase      questions={config.questions}  onComplete={handleQuizComplete} />}
@@ -224,12 +224,12 @@ function ListeningPhase({ config, chips: initialChips, onComplete }: ListeningPh
   return (
     <div
       className="flex flex-col flex-1 min-h-[600px] px-5 pt-4 pb-6"
-      style={{ background: '#F7F6F3', userSelect: 'none', touchAction: 'none' }}
+      style={{ background: 'var(--color-surface-container)', userSelect: 'none', touchAction: 'none' }}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
       {/* Audio progress bar */}
-      <div className="h-1 bg-[#E8E5DF] rounded-full overflow-hidden mb-4">
+      <div className="h-1 bg-[var(--color-border)] rounded-full overflow-hidden mb-4">
         <motion.div
           className="h-full rounded-full"
           style={{ background: '#6366F1' }}
@@ -241,7 +241,7 @@ function ListeningPhase({ config, chips: initialChips, onComplete }: ListeningPh
 
       {/* Phase label */}
       <p
-        className="text-center text-[11px] font-bold tracking-[0.2em] text-[#A8A29E] mb-4"
+        className="text-center text-[11px] font-bold tracking-[0.2em] text-[var(--color-border)] mb-4"
         style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}
       >
         LISTENING
@@ -249,7 +249,7 @@ function ListeningPhase({ config, chips: initialChips, onComplete }: ListeningPh
 
       {/* Passage with inline blank slots */}
       <div className="bg-white rounded-2xl p-4 mb-5" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-        <p className="text-[15px] text-[#1C1917] leading-relaxed" style={{ fontFamily: 'Inter, system-ui' }}>
+        <p className="text-[15px] text-[var(--color-on-surface)] leading-relaxed" style={{ fontFamily: 'Inter, system-ui' }}>
           {parts.map((part, i) => (
             <span key={i}>
               {part}
@@ -261,7 +261,7 @@ function ListeningPhase({ config, chips: initialChips, onComplete }: ListeningPh
                   className="inline-block mx-1 px-3 py-0.5 rounded-lg text-[14px] font-semibold min-w-[60px] text-center"
                   style={{
                     background: fills[config.blanks[i].id] ? '#EEF2FF' : 'transparent',
-                    border:     `2px solid ${fills[config.blanks[i].id] ? '#6366F1' : '#A8A29E'}`,
+                    border:     `2px solid ${fills[config.blanks[i].id] ? '#6366F1' : 'var(--color-border)'}`,
                     color:      '#6366F1',
                   }}
                 >
@@ -375,21 +375,21 @@ function QuizPhase({ questions, onComplete }: QuizPhaseProps) {
   const q = questions[index]
 
   return (
-    <div className="flex flex-col flex-1 min-h-[600px] px-5 pt-4 pb-6" style={{ background: '#F7F6F3' }}>
+    <div className="flex flex-col flex-1 min-h-[600px] px-5 pt-4 pb-6" style={{ background: 'var(--color-surface-container)' }}>
       {/* Round dots */}
       <div className="flex gap-1.5 justify-center mb-4">
         {questions.map((_, i) => (
           <div
             key={i}
             className="w-2 h-2 rounded-full transition-colors duration-300"
-            style={{ background: i <= index ? '#6366F1' : '#E8E5DF' }}
+            style={{ background: i <= index ? '#6366F1' : 'var(--color-border)' }}
           />
         ))}
       </div>
 
       {/* Phase label */}
       <p
-        className="text-center text-[11px] font-bold tracking-[0.2em] text-[#A8A29E] mb-4"
+        className="text-center text-[11px] font-bold tracking-[0.2em] text-[var(--color-border)] mb-4"
         style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}
       >
         QUIZ
@@ -398,7 +398,7 @@ function QuizPhase({ questions, onComplete }: QuizPhaseProps) {
       {/* Question card */}
       <div className="bg-white rounded-2xl p-5 mb-5" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
         <p
-          className="text-[16px] font-semibold text-[#1C1917] text-center"
+          className="text-[16px] font-semibold text-[var(--color-on-surface)] text-center"
           style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}
         >
           {q.prompt}
@@ -409,8 +409,8 @@ function QuizPhase({ questions, onComplete }: QuizPhaseProps) {
       <div className="grid grid-cols-2 gap-3">
         {q.options.map(option => {
           let bg        = 'white'
-          let border    = '#E8E5DF'
-          let textColor = '#1C1917'
+          let border    = 'var(--color-border)'
+          let textColor = 'var(--color-on-surface)'
           if (selected !== null) {
             if (option === q.answer)      { bg = '#DCFCE7'; border = '#16A34A'; textColor = '#15803D' }
             else if (option === selected) { bg = '#FEE2E2'; border = '#DC2626'; textColor = '#DC2626' }

@@ -1,6 +1,6 @@
 // src/games/components/memory/RetentionGame.tsx
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { MemoryRetentionConfig } from '../../types';
 import { m3SpatialDefault, m3EffectsEase } from '../../../lib/m3-motion';
 

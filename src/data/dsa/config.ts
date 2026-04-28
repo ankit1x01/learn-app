@@ -27,7 +27,7 @@ export const dsaConfig: SyllabusConfig = {
       color: 'text-[#94A3B8]',
       bgColor: 'bg-[#94A3B8]/10',
       barColor: 'bg-[#94A3B8]',
-      emoji: '🧱',
+      icon: 'layers',
       encodingTip: 'Type it out, run it, and verify the output. The feedback loop is the lesson — no passive reading.',
     },
     {
@@ -38,7 +38,7 @@ export const dsaConfig: SyllabusConfig = {
       color: 'text-primary',
       bgColor: 'bg-primary/10',
       barColor: 'bg-primary',
-      emoji: '📐',
+      icon: 'grid_view',
       encodingTip: 'Code the template from scratch without reference. Then identify the exact trigger condition for this pattern.',
     },
     {
@@ -49,7 +49,7 @@ export const dsaConfig: SyllabusConfig = {
       color: 'text-[#0E7490]',
       bgColor: 'bg-[#ECFEFF]',
       barColor: 'bg-[#38BDF8]',
-      emoji: '🔗',
+      icon: 'link',
       encodingTip: 'Draw the structure. Trace pointer/index movements step by step on paper before writing a single line of code.',
     },
     {
@@ -60,7 +60,7 @@ export const dsaConfig: SyllabusConfig = {
       color: 'text-[#15803D]',
       bgColor: 'bg-[#F0FDF4]',
       barColor: 'bg-[#15803D]',
-      emoji: '🌲',
+      icon: 'account_tree',
       encodingTip: 'Draw the tree or graph first. Run BFS or DFS by hand on a 5-node example before touching code.',
     },
     {
@@ -71,7 +71,7 @@ export const dsaConfig: SyllabusConfig = {
       color: 'text-[#B45309]',
       bgColor: 'bg-[#FFFBEB]',
       barColor: 'bg-tertiary',
-      emoji: '⚡',
+      icon: 'bolt',
       encodingTip: 'Define state → write recurrence → identify base case — all in plain English before writing code. DP is design, not implementation.',
     },
   ],

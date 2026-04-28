@@ -11,11 +11,11 @@ export const backendEngineerConfig: SyllabusConfig = {
   examScoreTarget: 95,
 
   subjects: [
-    { name: 'Core Language & Frameworks', weight: 0.15, totalConcepts: 6, examQuestions: 15, color: 'text-[#10B981]', bgColor: 'bg-[#10B981]/10', barColor: 'bg-[#10B981]', emoji: '⚙️', encodingTip: 'Node.js, Python, Java, Go & API Design.' },
-    { name: 'System Design & Architecture', weight: 0.25, totalConcepts: 7, examQuestions: 25, color: 'text-[#8B5CF6]', bgColor: 'bg-[#8B5CF6]/10', barColor: 'bg-[#8B5CF6]', emoji: '🏗️', encodingTip: 'Microservices, CAP Theorem, gRPC & HLD/LLD.' },
-    { name: 'Databases & Distributed Data', weight: 0.20, totalConcepts: 6, examQuestions: 20, color: 'text-[#3B82F6]', bgColor: 'bg-[#3B82F6]/10', barColor: 'bg-[#3B82F6]', emoji: '🗄️', encodingTip: 'SQL, NoSQL, Redis, Sharding & Consistency.' },
-    { name: 'Infrastructure & DevOps', weight: 0.25, totalConcepts: 7, examQuestions: 25, color: 'text-[#F59E0B]', bgColor: 'bg-[#F59E0B]/10', barColor: 'bg-[#F59E0B]', emoji: '☁️', encodingTip: 'Kubernetes, Docker, Terraform & CI/CD.' },
-    { name: 'Leadership & Observability', weight: 0.15, totalConcepts: 5, examQuestions: 15, color: 'text-[#EC4899]', bgColor: 'bg-[#EC4899]/10', barColor: 'bg-[#EC4899]', emoji: '📈', encodingTip: 'Tracing, Mentorship, Tech Roadmap & Tradeoffs.' }
+    { name: 'Core Language & Frameworks', weight: 0.15, totalConcepts: 6, examQuestions: 15, color: 'text-[#10B981]', bgColor: 'bg-[#10B981]/10', barColor: 'bg-[#10B981]', icon: 'code', encodingTip: 'Node.js, Python, Java, Go & API Design.' },
+    { name: 'System Design & Architecture', weight: 0.25, totalConcepts: 7, examQuestions: 25, color: 'text-[#8B5CF6]', bgColor: 'bg-[#8B5CF6]/10', barColor: 'bg-[#8B5CF6]', icon: 'architecture', encodingTip: 'Microservices, CAP Theorem, gRPC & HLD/LLD.' },
+    { name: 'Databases & Distributed Data', weight: 0.20, totalConcepts: 6, examQuestions: 20, color: 'text-[#3B82F6]', bgColor: 'bg-[#3B82F6]/10', barColor: 'bg-[#3B82F6]', icon: 'database', encodingTip: 'SQL, NoSQL, Redis, Sharding & Consistency.' },
+    { name: 'Infrastructure & DevOps', weight: 0.25, totalConcepts: 7, examQuestions: 25, color: 'text-[#F59E0B]', bgColor: 'bg-[#F59E0B]/10', barColor: 'bg-[#F59E0B]', icon: 'cloud', encodingTip: 'Kubernetes, Docker, Terraform & CI/CD.' },
+    { name: 'Leadership & Observability', weight: 0.15, totalConcepts: 5, examQuestions: 15, color: 'text-[#EC4899]', bgColor: 'bg-[#EC4899]/10', barColor: 'bg-[#EC4899]', icon: 'monitoring', encodingTip: 'Tracing, Mentorship, Tech Roadmap & Tradeoffs.' }
   ],
 
   concepts: BACKEND_CONCEPTS,

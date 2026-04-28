@@ -19,6 +19,7 @@ import { ConceptEncoding }    from './screens/ConceptEncoding';
 import { ChittaMap }          from './screens/ChittaMap';
 import { MorningRecall }      from './screens/MorningRecall';
 import { SessionComplete }    from './screens/SessionComplete';
+import { PreSleepReview }    from './screens/PreSleepReview';
 import { CourseDashboard }   from './screens/CourseDashboard';
 import { CourseLesson }      from './screens/CourseLesson';
 import { DemoSession }       from './screens/DemoSession';
@@ -39,6 +40,10 @@ import { CONFIG, computeGlobalStats } from './lib/config';
 import { buildSession as buildSessionCore } from './core/session-builder';
 import { updateMetacogAccuracy } from './core/metacognition';
 import { updateStabilityWithPredictionError } from './core/fsrs';
+import { generateGamesForSession, gameToSessionItem, mixGamesIntoSession } from './lib/game-session-bridge';
+import { getAllQuizzesAsSessionItems, mixQuizzesIntoSession } from './lib/quiz-session-bridge';
+import { gameContentStore } from './lib/game-content-store';
+import { bundledGameContent } from './data/bundled-game-content';
 import type { Screen } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -64,6 +69,9 @@ function AppContent() {
   React.useEffect(() => {
     const initNativeFeatures = async () => {
       try {
+        // Initialize game content store with bundled content
+        await gameContentStore.init(bundledGameContent);
+
         // Native Status Bar to match app theme
         await CapStatusBar.setStyle({ style: Style.Light });
         await CapStatusBar.setBackgroundColor({ color: getComputedStyle(document.documentElement).getPropertyValue('--color-background').trim() });
@@ -76,7 +84,7 @@ function AppContent() {
 
         // Keyboard tuning (prevent input overlaps)
         await Keyboard.setScroll({ isDisabled: false });
-        
+
         // Listeners for App lifecycles
         await CapApp.addListener('appStateChange', ({ isActive }) => {
            console.log('App is active: ', isActive);
@@ -122,7 +130,21 @@ function AppContent() {
     const pool = subjectFilter
       ? concepts.filter(c => c.subject === subjectFilter)
       : concepts;
-    return buildSessionCore({ ...CONFIG, concepts: pool }, 20, new Date().getHours());
+
+    // Build base session with concepts (70%)
+    const baseSession = buildSessionCore({ ...CONFIG, concepts: pool }, 20, new Date().getHours());
+
+    // Generate and mix games into session (5% of session length)
+    const gameCount = Math.max(1, Math.floor(baseSession.length * 0.05));
+    const games = generateGamesForSession(pool, gameCount);
+    const gameItems = games.map(gameToSessionItem);
+
+    // Mix games into session alongside concepts
+    const withGames = mixGamesIntoSession(baseSession, gameItems, 0.05);
+
+    // Mix in quizzes (10% of session length)
+    const quizItems = getAllQuizzesAsSessionItems();
+    return mixQuizzesIntoSession(withGames as any, quizItems, 0.10);
   }, [dbReady, subjectFilter, concepts]);
 
   const totalAutomatic = concepts.filter(c => c.stage === 'Automatic' || c.stage === 'ExamReady').length;
@@ -148,12 +170,13 @@ function AppContent() {
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          {screen === 'dashboard'  && <Dashboard        setScreen={setScreen} session={session} onSubjectClick={handleSubjectClick} onStartSession={handleNavToSession} globalStats={liveGlobalStats} />}
-          {screen === 'session'    && <LiveSession       setScreen={setScreen} session={session} qIndex={qIndex} setQIndex={setQIndex} onUpdateConcept={onUpdateConcept} />}
-          {screen === 'encoding'   && <ConceptEncoding   setScreen={setScreen} session={session} onUpdateConcept={onUpdateConcept} qIndex={qIndex} />}
+          {screen === 'dashboard'  && <Dashboard        setScreen={setScreen} session={session as any} onSubjectClick={handleSubjectClick} onStartSession={handleNavToSession} globalStats={liveGlobalStats} />}
+          {screen === 'session'    && <LiveSession       setScreen={setScreen} session={session} qIndex={qIndex} setQIndex={setQIndex} onUpdateConcept={onUpdateConcept} subjectFilter={subjectFilter} />}
+          {screen === 'encoding'   && <ConceptEncoding   setScreen={setScreen} session={session as any} onUpdateConcept={onUpdateConcept} qIndex={qIndex} />}
           {screen === 'map'        && <ChittaMap         setScreen={setScreen} globalStats={liveGlobalStats} />}
           {screen === 'recall'     && <MorningRecall     setScreen={setScreen} concepts={concepts} />}
-          {screen === 'complete'   && <SessionComplete   setScreen={(s) => { if (s === 'dashboard') setSubjectFilter(null); setScreen(s); }} session={session} globalStats={liveGlobalStats} concepts={concepts} />}
+          {screen === 'presleep'   && <PreSleepReview    setScreen={setScreen} concepts={concepts} onUpdateConcept={onUpdateConcept} />}
+          {screen === 'complete'   && <SessionComplete   setScreen={(s) => { if (s === 'dashboard') setSubjectFilter(null); setScreen(s); }} session={session as any} globalStats={liveGlobalStats} concepts={concepts} />}
           {screen === 'elite'      && <EliteHub          setScreen={setScreen} chittaScore={totalAutomatic} />}
           {screen === 'ghana'      && <GhanaPatha        setScreen={setScreen} concepts={concepts} onUpdateConcept={onUpdateConcept} />}
           {screen === 'stress'     && <StressMode        setScreen={setScreen} concepts={concepts} />}
@@ -172,9 +195,9 @@ function AppContent() {
           {screen === 'physics-sandbox' && <PhysicsPlayground type="collision_elastic" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
           {screen === 'kinematics-cannon' && <PhysicsPlayground type="projectile" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
           {screen === 'coulombs-collider' && <PhysicsPlayground type="electric_field" config={{ freePlay: false }} onBack={() => setScreen('dashboard')} />}
-          {(screen as string) === 'physics-arcade'    && <PhysicsArcade    onBack={() => setScreen('dashboard')} />}
-          {(screen as string) === 'math-arcade'       && <MathArcade       onBack={() => setScreen('dashboard')} />}
-          {(screen as string) === 'chemistry-arcade'  && <ChemistryArcade  onBack={() => setScreen('dashboard')} />}
+          {screen === 'physics-arcade'    && <PhysicsArcade    onBack={() => setScreen('dashboard')} />}
+          {screen === 'math-arcade'       && <MathArcade       onBack={() => setScreen('dashboard')} />}
+          {screen === 'chemistry-arcade'  && <ChemistryArcade  onBack={() => setScreen('dashboard')} />}
         </motion.div>
       </AnimatePresence>
 

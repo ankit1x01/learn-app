@@ -44,7 +44,7 @@ npm run clean     # Remove /dist
 
 ## Architecture
 
-**CHITTA** is a single-page React + TypeScript app (Vite) — an AI-powered NEET 2026 exam prep dashboard built around spaced repetition science.
+**CHITTA** is a single-page React + TypeScript app (Vite) — an AI-powered AI Engineer prep dashboard built around spaced repetition science.
 
 ### Tech Stack
 - React 19 + TypeScript, Vite, Tailwind CSS 4, Motion (animations)
@@ -62,9 +62,10 @@ Neuroscience fields: `encodingDepth, metacogAccuracy, predictionErrorHistory, re
 - **Session composition:** 35% review, 30% new, 25% strengthen, 10% challenge (time-of-day overrides this)
 
 ### Active Syllabi
+- `ai_engineer` — AI Engineering (Current Active)
 - `dsa_faang` — 454 DSA problems (FAANG interviews)
 - `it_placement_india` — 271 concepts (IT campus placement)
-Switch in `src/syllabus/index.ts` → `ACTIVE_SYLLABUS_ID`
+Switch in `src/data/index.ts` → `ACTIVE_SYLLABUS_ID`
 
 ### Screen Navigation (14 screens)
 All screens in `App.tsx` Screen type. Bottom nav: Home / Session / Topics / Map / Pro.
@@ -85,8 +86,9 @@ See `APP_BLUEPRINT.md` for full screen descriptions and navigation map.
 - Set `FILL=0` for inactive/default state
 - Full icon map in `DESIGN_SYSTEM.md` Section 9
 - **Lucide React is legacy** — still present in some screens; migrate to Material Symbols on any screen you touch
-- **No emojis** in any UI element (nav, buttons, badges, cards, headers)
-- Emojis only in static data config files (`encodingTip` field, etc.) as text content
+- **NO emojis anywhere** in the codebase (UI, navigation, buttons, badges, cards, headers, or data files).
+- Every visual indicator must use **Material Symbols Rounded**. Use descriptive text if an icon is not available.
+- "Vibe" emojis or placeholder icons are strictly forbidden. Maintain a professional, technical aesthetic.
 
 ### Path Alias
 `@/*` maps to the project root (`./`) — configured in both `vite.config.ts` and `tsconfig.json`.

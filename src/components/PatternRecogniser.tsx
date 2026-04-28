@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Zap, ChevronRight, RotateCcw } from 'lucide-react';
+
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -344,14 +344,14 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
         <div className="flex items-start justify-between px-6 pb-3 pt-2 shrink-0">
           <div className="flex-1 min-w-0 pr-4">
             <div className="flex items-center gap-2 mb-1">
-              <Zap size={12} className="text-[#F59E0B]" fill="currentColor" />
+              <span className="material-symbols-rounded text-[#F59E0B]" style={{ fontSize: 12, fontVariationSettings: "'FILL' 1" }}>bolt</span>
               <span className="text-[12px] uppercase tracking-widest text-[#F59E0B] font-bold">Pattern Recogniser</span>
             </div>
             <h2 className="font-ui font-bold text-lg leading-tight truncate">{problemName}</h2>
             <p className="text-[11px] text-[#6B7280] mt-0.5">Identify the DSA pattern to apply</p>
           </div>
           <button onClick={onClose} className="btn-icon mt-1 shrink-0">
-            <X size={16} />
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>close</span>
           </button>
         </div>
 
@@ -381,15 +381,15 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
           {mode === 'keywords' && (
             <>
               <div className="flex items-center justify-between mb-3">
-                <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold">
+                <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold">
                   Tap keywords you see in the problem
                 </p>
                 {selectedKeywords.size > 0 && (
                   <button
                     onClick={() => setSelectedKeywords(new Set())}
-                    className="flex items-center gap-1 text-[12px] text-[#78716C] hover:text-[#6B7280]"
+                    className="flex items-center gap-1 text-[12px] text-[var(--color-on-surface-variant)] hover:text-[#6B7280]"
                   >
-                    <RotateCcw size={10} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 10 }}>refresh</span>
                     Clear
                   </button>
                 )}
@@ -407,7 +407,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
                       className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all border ${
                         active
                           ? 'border-transparent text-background font-bold'
-                          : 'bg-[#F0EEE9] border-[#E8E5DF] text-[#6B7280] hover:border-[#E8E5DF]'
+                          : 'bg-[var(--color-surface-container)] border-[var(--color-border)] text-[#6B7280] hover:border-[var(--color-border)]'
                       }`}
                       style={active ? { backgroundColor: entry?.color ?? '#F59E0B' } : undefined}
                     >
@@ -425,7 +425,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-3"
                   >
-                    <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-3">
+                    <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-3">
                       {keywordMatches.length} pattern{keywordMatches.length !== 1 ? 's' : ''} detected
                     </p>
                     {keywordMatches.map((match, i) => (
@@ -436,12 +436,12 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
               </AnimatePresence>
 
               {selectedKeywords.size > 0 && keywordMatches.length === 0 && (
-                <p className="text-center text-[#78716C] text-sm py-4">No pattern detected for selected keywords.</p>
+                <p className="text-center text-[var(--color-on-surface-variant)] text-sm py-4">No pattern detected for selected keywords.</p>
               )}
 
               {selectedKeywords.size === 0 && (
                 <div className="text-center py-6">
-                  <p className="text-[#A8A29E] text-sm leading-relaxed">
+                  <p className="text-[var(--color-border)] text-sm leading-relaxed">
                     Select keywords from the problem statement<br />
                     to identify which pattern applies
                   </p>
@@ -453,7 +453,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
           {/* ── CONSTRAINT MODE ── */}
           {mode === 'constraint' && (
             <>
-              <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-3">
+              <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-3">
                 Enter the input size n from constraints
               </p>
 
@@ -478,7 +478,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
                     className={`px-3 py-1 rounded-full text-[11px] font-mono border transition-all ${
                       constraintInput === v
                         ? 'border-[#F59E0B]/50 text-[#F59E0B] bg-[#F59E0B]/10'
-                        : 'border-[#E8E5DF] text-[#6B7280] bg-[#F0EEE9] hover:border-[#E8E5DF]'
+                        : 'border-[var(--color-border)] text-[#6B7280] bg-[var(--color-surface-container)] hover:border-[var(--color-border)]'
                     }`}
                   >
                     n={v}
@@ -511,13 +511,13 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
                           {constraintMatch.complexity}
                         </span>
                       </div>
-                      <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-2">
+                      <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-2">
                         Algorithms to Consider
                       </p>
                       <div className="space-y-1.5">
                         {constraintMatch.algorithms.map((algo, i) => (
                           <div key={i} className="flex items-center gap-2">
-                            <ChevronRight size={12} style={{ color: constraintMatch.color }} />
+                            <span className="material-symbols-rounded" style={{ fontSize: 12,  color: constraintMatch.color  }}>chevron_right</span>
                             <span className="text-sm text-[#292524]">{algo}</span>
                           </div>
                         ))}
@@ -526,7 +526,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
 
                     {/* Complexity reference */}
                     <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface-container)', border: '1px solid var(--color-border)' }}>
-                      <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-3">
+                      <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-3">
                         Time Limit Reference
                       </p>
                       <div className="space-y-1.5 font-mono text-[11px]">
@@ -550,7 +550,7 @@ export const PatternRecogniser: React.FC<Props> = ({ problemName, onClose }) => 
 
               {!constraintMatch && constraintInput.length === 0 && (
                 <div className="text-center py-6">
-                  <p className="text-[#A8A29E] text-sm leading-relaxed">
+                  <p className="text-[var(--color-border)] text-sm leading-relaxed">
                     Type the input size from the problem constraints<br />
                     to see which complexity class to target
                   </p>

@@ -64,6 +64,7 @@ export interface Concept {
 
   // ── Layer 9: Emotional Tagging / Stakes Framing ──────────────────────────
   stakesFact?: string;            // one-sentence real-world consequence for this concept
+  queue?: Queue;
 }
 
 export interface SessionItem {
@@ -91,7 +92,7 @@ export interface SubjectConfig {
   color: string;          // Tailwind text class e.g. 'text-emerald-400'
   bgColor: string;        // Tailwind bg class e.g. 'bg-emerald-400/10'
   barColor: string;       // Tailwind solid bg e.g. 'bg-emerald-400'
-  emoji: string;          // display emoji e.g. '🧬'
+  icon: string;           // Material Symbols Rounded name e.g. 'science'
   encodingTip: string;    // shown to student during ConceptEncoding phase
 }
 
@@ -138,4 +139,3 @@ export interface SyllabusConfig {
     skip: number;         // e.g. 0
   };
 }
-

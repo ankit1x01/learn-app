@@ -5,7 +5,7 @@ import { CONFIG } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
 import type { Screen } from '../types';
 import type { Concept } from '../core/types';
-import { Brain } from 'lucide-react';
+
 
 export const MorningRecall = ({ setScreen, concepts }: { setScreen: (s: Screen) => void; concepts?: Concept[] }) => {
   const liveConcepts = concepts ?? CONFIG.concepts;
@@ -30,7 +30,7 @@ export const MorningRecall = ({ setScreen, concepts }: { setScreen: (s: Screen) 
       <div className="card w-full p-8 rounded-[2.5rem] mb-10">
         <div className="flex items-center justify-between mb-7">
           <div className="flex items-center gap-2" style={{ opacity: 0.5 }}>
-            <Brain size={14} className="text-primary" />
+            <span className="material-symbols-rounded text-primary" style={{ fontSize: 14 }}>psychology</span>
             <span className="text-[12px] uppercase  font-bold">
               Morning Recall · {current?.subject ?? CONFIG.subjects[0]?.name}
             </span>
@@ -68,7 +68,7 @@ export const MorningRecall = ({ setScreen, concepts }: { setScreen: (s: Screen) 
 
       <div className="text-center space-y-4">
         <p className="text-sm leading-relaxed max-w-[240px]" style={{ color: 'var(--color-on-surface-variant)' }}>
-          {recallConcepts.length} concepts to recall · Your <span className="text-primary italic">chitta</span> consolidated patterns during sleep 🌙
+          {recallConcepts.length} concepts to recall · Your <span className="text-primary italic">chitta</span> consolidated patterns during sleep <span className="material-symbols-rounded" style={{ fontSize: 14 }}>bedtime</span>
         </p>
         <div className="flex justify-center gap-2 pt-2">
           {Array.from({ length: Math.max(recallConcepts.length, 1) }).map((_, i) => (

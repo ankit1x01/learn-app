@@ -8,6 +8,8 @@ export interface Lesson {
   docPath?: string;
   codePaths: string[];
   quizPath?: string;
+  videoUrl?: string; // YouTube, Vimeo, or other video URL
+  estimatedMinutes?: number; // Estimated time to complete in minutes
 }
 
 export interface Phase {

@@ -1,18 +1,19 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Zap, Timer, Shield, BarChart3, FileText, Moon, ChevronRight, Flame, Brain, Terminal } from 'lucide-react';
+
+import { CONFIG } from '../lib/config';
 import type { Screen } from '../types';
 
 interface Props { setScreen: (s: Screen) => void; chittaScore: number; }
 
-const INTERVIEW_DATE = new Date('2026-10-01');
-const daysLeft = Math.ceil((INTERVIEW_DATE.getTime() - Date.now()) / 86400000);
-const TOTAL_CONCEPTS = 76;
+const INTERVIEW_DATE = CONFIG.examDate ? new Date(CONFIG.examDate) : new Date('2026-12-01');
+const daysLeft = Math.max(0, Math.ceil((INTERVIEW_DATE.getTime() - Date.now()) / 86400000));
+const TOTAL_CONCEPTS = CONFIG.concepts.length;
 
 const MODES = [
   {
     id: 'ghana' as Screen,
-    icon: Flame,
+    icon: 'local_fire_department',
     title: 'Ghana Patha',
     subtitle: 'Stage 4 — Interview Ready Drill',
     desc: '15-second hard cutoff. No hints. Pure automatic pattern recall.',
@@ -23,7 +24,7 @@ const MODES = [
   },
   {
     id: 'stress' as Screen,
-    icon: Zap,
+    icon: 'bolt',
     title: 'Stress Inoculation',
     subtitle: 'Interview Pressure Simulation',
     desc: 'Random timer. Auto-submit. Train pattern recall under cortisol.',
@@ -34,7 +35,7 @@ const MODES = [
   },
   {
     id: 'distractor' as Screen,
-    icon: Shield,
+    icon: 'shield',
     title: 'Trap Immunity',
     subtitle: 'Kill Hallucination Traps',
     desc: 'Identify WHY common AI architectural traps seem right. Kills Stage 2 illusions.',
@@ -45,7 +46,7 @@ const MODES = [
   },
   {
     id: 'errors' as Screen,
-    icon: BarChart3,
+    icon: 'bar_chart',
     title: 'Error Clusters',
     subtitle: 'AI Pattern Analysis',
     desc: 'Your recurring mistake patterns. Targeted 20-min deep dives.',
@@ -56,7 +57,7 @@ const MODES = [
   },
   {
     id: 'mock' as Screen,
-    icon: FileText,
+    icon: 'description',
     title: 'Mock Interview',
     subtitle: '10 Problems · 45 Min · System Design',
     desc: 'Full interview loop simulation. Real time pressure. Error report after.',
@@ -67,7 +68,7 @@ const MODES = [
   },
   {
     id: 'preexam' as Screen,
-    icon: Moon,
+    icon: 'bedtime',
     title: 'Pre-Interview Protocol',
     subtitle: 'Final 30-Day System',
     desc: 'Pranayama + Ghana Patha + Mock. Zero new patterns. Pure retrieval.',
@@ -78,7 +79,7 @@ const MODES = [
   },
   {
     id: 'course' as Screen,
-    icon: Brain,
+    icon: 'psychology',
     title: 'How to Learn Anything',
     subtitle: '28-Day Cognitive Architecture Course',
     desc: 'Memory, retrieval, representation, feedback loops, compression. The science behind CHITTA.',
@@ -89,7 +90,7 @@ const MODES = [
   },
   {
     id: 'prompt-playground' as Screen,
-    icon: Terminal,
+    icon: 'terminal',
     title: 'Prompt Playground',
     subtitle: 'Build & Test Prompts',
     desc: 'Write prompts and instantly share them to ChatGPT, Claude, or Gemini for testing.',
@@ -104,7 +105,7 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
   <div className="pt-16 pb-32 px-6 max-w-md mx-auto">
     <header className="mb-8">
       <div className="flex items-center gap-2 mb-1">
-        <Flame size={14} style={{ color: 'var(--color-warning)' }} />
+        <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-warning)'  }}>local_fire_department</span>
         <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>Pro Mode</span>
       </div>
       <h1 className="text-4xl font-ui font-bold tracking-tight mb-1">
@@ -121,13 +122,13 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
         <span className="text-[12px] uppercase tracking-widest text-[#6B7280] font-bold">Interview Readiness</span>
         <span className="text-[12px] text-[#F59E0B] font-bold">{Math.round((chittaScore / TOTAL_CONCEPTS) * 100)}% automatic</span>
       </div>
-      <div className="h-1.5 w-full bg-[#F0EEE9] rounded-full overflow-hidden">
+      <div className="h-1.5 w-full bg-[var(--color-surface-container)] rounded-full overflow-hidden">
         <div
           className="h-full bg-gradient-to-r from-[#F59E0B] to-[#F472B6] transition-all duration-700"
           style={{ width: `${Math.min((chittaScore / TOTAL_CONCEPTS) * 100, 100)}%` }}
         />
       </div>
-      <p className="text-[12px] text-[#78716C] mt-2">
+      <p className="text-[12px] text-[var(--color-on-surface-variant)] mt-2">
         Need {TOTAL_CONCEPTS} / {TOTAL_CONCEPTS} patterns at Stage 3+ for a clean System Design loop
       </p>
     </div>
@@ -144,7 +145,7 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
           className={`w-full card rounded-2xl p-5 border ${mode.border} text-left flex items-center gap-4 active:scale-[0.98] transition-transform`}
         >
           <div className={`${mode.bg} p-3 rounded-xl shrink-0`}>
-            <mode.icon size={20} className={mode.color} />
+            <span className={`material-symbols-rounded ${mode.color}`} style={{ fontSize: 20 }}>{mode.icon}</span>
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
@@ -156,13 +157,13 @@ export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (
             <p className="text-[12px] text-[#6B7280] font-label uppercase tracking-widest mb-1">{mode.subtitle}</p>
             <p className="text-[11px] text-[#6B7280] leading-snug truncate">{mode.desc}</p>
           </div>
-          <ChevronRight size={16} className="text-[#A8A29E] shrink-0" />
+          <span className="material-symbols-rounded text-[var(--color-border)] shrink-0" style={{ fontSize: 16 }}>chevron_right</span>
         </motion.button>
       ))}
     </div>
 
     <div className="mt-8 text-center">
-      <p className="text-[12px] text-[#A8A29E] font-label uppercase tracking-widest">
+      <p className="text-[12px] text-[var(--color-border)] font-label uppercase tracking-widest">
         गुरुकुल · Ghana Patha Method · AI Methodology
       </p>
     </div>

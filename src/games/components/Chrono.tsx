@@ -1,7 +1,7 @@
 // src/games/components/Chrono.tsx
 import { useState, useRef } from 'react'
 import { motion, Reorder } from 'motion/react'
-import { ArrowUp, ArrowDown, CheckCircle, HelpCircle } from 'lucide-react'
+
 import { ChronoConfig, GameResult } from '../types'
 import { GameWinScreen } from './GameWinScreen'
 
@@ -222,7 +222,7 @@ export function Chrono({ config }: Props) {
 
                       {/* Check Icon */}
                       <div className="w-[18px] h-[18px] rounded-full border-[1.5px] border-[#111] bg-transparent flex items-center justify-center mt-0.5 mr-2">
-                        <CheckCircle size={12} color="#111" strokeWidth={3} />
+                        <span className="material-symbols-rounded" style={{ fontSize: 12, color: "#111" }}>check_circle</span>
                       </div>
                     </div>
 

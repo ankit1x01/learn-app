@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Zap, CheckCircle2, XCircle, AlertTriangle, Brain } from 'lucide-react';
+
 
 import { Screen } from '../types';
 import { Concept } from '../core/types';
@@ -77,10 +77,10 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
 
   if (pool.length === 0) return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-      <AlertTriangle size={40} className="text-[#B91C1C] mb-4" />
+      <span className="material-symbols-rounded text-[#B91C1C] mb-4" style={{ fontSize: 40 }}>warning</span>
       <h2 className="text-2xl font-ui font-bold mb-2">No Patterns Available</h2>
       <p className="text-[#6B7280] text-sm mb-6">Complete at least one study session first to unlock Stress Mode.</p>
-      <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-primary text-background rounded-xl font-bold text-sm">← Back</button>
+      <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-primary text-background rounded-xl font-bold text-sm flex items-center gap-2"><span className="material-symbols-rounded" style={{ fontSize: 16 }}>arrow_back</span> Back</button>
     </div>
   );
 
@@ -98,7 +98,7 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
       <div className="flex gap-6 mb-6 text-center">
         <div><div className="text-xl font-bold text-[#15803D]">{correct}</div><div className="text-[12px] text-[#6B7280] uppercase">Clean</div></div>
         <div><div className="text-xl font-bold text-[#B91C1C]">{autoFails}</div><div className="text-[12px] text-[#6B7280] uppercase">Timed Out</div></div>
-        <div><div className="text-xl font-bold text-[#1C1917]">{results.length}</div><div className="text-[12px] text-[#6B7280] uppercase">Total</div></div>
+        <div><div className="text-xl font-bold text-[var(--color-on-surface)]">{results.length}</div><div className="text-[12px] text-[#6B7280] uppercase">Total</div></div>
       </div>
       <p className="text-sm text-[#6B7280] text-center mb-6 max-w-xs">
         {autoFails > 3
@@ -110,7 +110,7 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
       <div className="flex gap-3">
         <button onClick={() => { setIdx(0); setDone(false); setResult(null); setRevealed(false); setResults([]); setPulse(false); }}
           className="px-6 py-3 bg-error text-background rounded-xl font-bold text-sm">Again</button>
-        <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-[#F0EEE9] rounded-xl font-bold text-sm">← Hub</button>
+        <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-[var(--color-surface-container)] rounded-xl font-bold text-sm flex items-center gap-2"><span className="material-symbols-rounded" style={{ fontSize: 16 }}>arrow_back</span> Hub</button>
       </div>
     </div>
   );
@@ -129,11 +129,11 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
           <div className={`w-2 h-2 rounded-full bg-error ${!revealed ? 'animate-pulse' : ''}`} />
           <span className="text-[12px] uppercase tracking-widest font-bold text-[#B91C1C]">INTERVIEW IN PROGRESS</span>
         </div>
-        <span className="text-[12px] text-[#78716C]">{idx + 1}/20</span>
+        <span className="text-[12px] text-[var(--color-on-surface-variant)]">{idx + 1}/20</span>
       </div>
 
       {/* Stress timer bar */}
-      <div className={`h-1.5 w-full rounded-full overflow-hidden mb-6 ${pulse && !revealed ? 'bg-[#FEF2F2]' : 'bg-[#F0EEE9]'}`}>
+      <div className={`h-1.5 w-full rounded-full overflow-hidden mb-6 ${pulse && !revealed ? 'bg-[#FEF2F2]' : 'bg-[var(--color-surface-container)]'}`}>
         <div
           className={`h-full rounded-full transition-all duration-1000 ${pct > 50 ? 'bg-[#15803D]' : pct > 25 ? 'bg-tertiary' : 'bg-error animate-pulse'}`}
           style={{ width: `${pct}%` }}
@@ -149,7 +149,7 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
 
       {/* Subject context */}
       <div className="mb-2">
-        <span className="text-[12px] uppercase tracking-normal text-[#A8A29E] font-bold">
+        <span className="text-[12px] uppercase tracking-normal text-[var(--color-border)] font-bold">
           {concept.subject} · Pattern {idx + 1}
         </span>
       </div>
@@ -160,8 +160,8 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
       </h2>
 
       {/* Recall prompt */}
-      <div className="flex items-start gap-2 mb-8 p-3 rounded-xl bg-[#F0EEE9] border border-[#E8E5DF]">
-        <Brain size={12} className="text-[#B91C1C] mt-0.5 shrink-0" />
+      <div className="flex items-start gap-2 mb-8 p-3 rounded-xl bg-[var(--color-surface-container)] border border-[var(--color-border)]">
+        <span className="material-symbols-rounded text-[#B91C1C] mt-0.5 shrink-0" style={{ fontSize: 12 }}>psychology</span>
         <p className="text-[11px] text-[#6B7280] leading-relaxed">{RECALL_PROMPTS[promptIdx]}</p>
       </div>
 
@@ -185,7 +185,7 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
             {results[results.length - 1]?.autoFail ? (
               <div className="flex items-center gap-2 p-3 rounded-xl bg-[#FEF2F2]">
-                <AlertTriangle size={16} className="text-[#B91C1C]" />
+                <span className="material-symbols-rounded text-[#B91C1C]" style={{ fontSize: 16 }}>warning</span>
                 <span className="text-sm font-bold text-[#B91C1C]">TIMED OUT — Needs more drilling.</span>
               </div>
             ) : (
@@ -193,10 +193,10 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
                 result === 'clean' ? 'bg-[#F0FDF4]' : result === 'partial' ? 'bg-[#FFFBEB]' : 'bg-[#FEF2F2]'
               }`}>
                 {result === 'clean'
-                  ? <CheckCircle2 size={16} className="text-[#15803D]" />
+                  ? <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 16 }}>check_circle</span>
                   : result === 'partial'
-                  ? <CheckCircle2 size={16} className="text-[#B45309]" />
-                  : <XCircle size={16} className="text-[#B91C1C]" />}
+                  ? <span className="material-symbols-rounded text-[#B45309]" style={{ fontSize: 16 }}>check_circle</span>
+                  : <span className="material-symbols-rounded text-[#B91C1C]" style={{ fontSize: 16 }}>cancel</span>}
                 <span className={`text-sm font-bold ${
                   result === 'clean' ? 'text-[#15803D]' : result === 'partial' ? 'text-[#B45309]' : 'text-[#B91C1C]'
                 }`}>
@@ -206,7 +206,7 @@ export const StressMode: React.FC<Props> = ({ setScreen, concepts }) => {
             )}
             <button onClick={next}
               className="w-full py-4 bg-error text-background rounded-2xl font-ui font-bold tracking-widest text-sm">
-              NEXT PATTERN →
+              <div className="flex items-center justify-center gap-2">NEXT PATTERN <span className="material-symbols-rounded" style={{ fontSize: 16 }}>chevron_right</span></div>
             </button>
           </motion.div>
         </AnimatePresence>

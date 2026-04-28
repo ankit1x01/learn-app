@@ -101,7 +101,19 @@
       "Bash(git commit *)",
       "Bash(curl -s http://localhost:3000)",
       "Bash(pkill -f \"npm run dev\")",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "PowerShell($env:JAVA_HOME)",
+      "PowerShell($env:JAVA_HOME; $env:ANDROID_HOME; $env:ANDROID_SDK_ROOT)",
+      "Bash(node scripts/generate-course-index.mjs)",
+      "Bash(npm ls *)",
+      "Bash(curl -s \"http://localhost:3001/ai-engineering-from-scratch-main/phases/00-setup-and-tooling/01-dev-environment/docs/en.md\")",
+      "Bash(node -e ' *)",
+      "Bash(curl -s http://localhost:3001)",
+      "Bash(cd \"C:\\\\\\\\Users\\\\\\\\Ankit\\\\\\\\Desktop\\\\\\\\learn app\")",
+      "Bash(node scripts/generate-quiz-content.mjs)",
+      "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
+      "Bash(xargs wc *)",
+      "Bash(xargs ls *)"
     ]
   }
 }

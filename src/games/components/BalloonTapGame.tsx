@@ -246,20 +246,20 @@ export function BalloonTapGame({ config }: Props) {
   // ── End screens ───────────────────────────────────────────────────────────
   if (phase === 'gameover') {
     return (
-      <div className="flex flex-col items-center justify-center h-full min-h-[500px] gap-3 bg-[#F7F6F3]">
+      <div className="flex flex-col items-center justify-center h-full min-h-[500px] gap-3 bg-[var(--color-surface-container)]">
         <p className="text-[48px]" style={{ fontFamily: 'system-ui' }}>💥</p>
         <p className="text-[24px] font-black text-[#292524]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>Game Over</p>
-        <p className="text-[16px] text-[#78716C]">Score: <strong>{score}</strong></p>
+        <p className="text-[16px] text-[var(--color-on-surface-variant)]">Score: <strong>{score}</strong></p>
       </div>
     );
   }
 
   if (phase === 'win') {
     return (
-      <div className="flex flex-col items-center justify-center h-full min-h-[500px] gap-3 bg-[#F7F6F3]">
+      <div className="flex flex-col items-center justify-center h-full min-h-[500px] gap-3 bg-[var(--color-surface-container)]">
         <p className="text-[48px]" style={{ fontFamily: 'system-ui' }}>🎉</p>
         <p className="text-[24px] font-black text-[#292524]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>All Matched!</p>
-        <p className="text-[16px] text-[#78716C]">Score: <strong>{score}</strong></p>
+        <p className="text-[16px] text-[var(--color-on-surface-variant)]">Score: <strong>{score}</strong></p>
       </div>
     );
   }
@@ -268,7 +268,7 @@ export function BalloonTapGame({ config }: Props) {
   const hearts = Array.from({ length: MAX_MISSED }, (_, i) => i < MAX_MISSED - missed);
 
   return (
-    <div className="flex flex-col h-full min-h-[500px] bg-[#F7F6F3]" style={{ userSelect: 'none' }}>
+    <div className="flex flex-col h-full min-h-[500px] bg-[var(--color-surface-container)]" style={{ userSelect: 'none' }}>
       {/* HUD */}
       <div className="flex items-center justify-between px-5 py-3">
         <p className="text-[22px] font-black text-[#292524]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>
@@ -279,17 +279,17 @@ export function BalloonTapGame({ config }: Props) {
             <div
               key={i}
               className="w-3 h-3 rounded-full transition-colors"
-              style={{ background: alive ? '#F87171' : '#E8E5DF' }}
+              style={{ background: alive ? '#F87171' : 'var(--color-border)' }}
             />
           ))}
         </div>
-        <p className="text-[13px] font-semibold text-[#A8A29E]">
+        <p className="text-[13px] font-semibold text-[var(--color-border)]">
           {pairs.length - gameRef.current.unmatched.size}/{pairs.length}
         </p>
       </div>
 
       {/* Hint */}
-      <p className="text-center text-[12px] text-[#A8A29E] pb-1" style={{ fontFamily: 'Inter, system-ui' }}>
+      <p className="text-center text-[12px] text-[var(--color-border)] pb-1" style={{ fontFamily: 'Inter, system-ui' }}>
         Tap two balloons that belong together
       </p>
 

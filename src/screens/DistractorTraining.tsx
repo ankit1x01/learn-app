@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, CheckCircle2, XCircle, ArrowRight, Brain } from 'lucide-react';
+
 
 import { Screen } from '../types';
 import { Concept } from '../core/types';
@@ -163,14 +163,14 @@ export const DistractorTraining: React.FC<Props> = ({ setScreen }) => {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <Shield size={16} className="text-[#0E7490]" />
+          <span className="material-symbols-rounded text-[#0E7490]" style={{ fontSize: 16 }}>security</span>
           <span className="text-[12px] uppercase tracking-widest font-bold text-[#6B7280]">Trap Immunity</span>
         </div>
         <span className="text-[12px] text-[#15803D] font-bold">{score} correct</span>
       </div>
 
       {/* Progress */}
-      <div className="h-1 w-full bg-[#F0EEE9] rounded-full overflow-hidden mb-8">
+      <div className="h-1 w-full bg-[var(--color-surface-container)] rounded-full overflow-hidden mb-8">
         <div className="h-full bg-[#38BDF8] transition-all duration-500"
           style={{ width: `${((idx + 1) / DISTRACTOR_BANK.length) * 100}%` }} />
       </div>
@@ -180,7 +180,7 @@ export const DistractorTraining: React.FC<Props> = ({ setScreen }) => {
         <span className="px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#ECFEFF] text-[#0E7490]">
           {q.subject}
         </span>
-        <span className="px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#F0EEE9] text-[#6B7280]">
+        <span className="px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[var(--color-surface-container)] text-[#6B7280]">
           {q.concept}
         </span>
       </div>
@@ -191,7 +191,7 @@ export const DistractorTraining: React.FC<Props> = ({ setScreen }) => {
       {/* Correct answer shown */}
       <div className="p-4 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0] mb-4">
         <p className="text-[12px] uppercase tracking-widest text-[#15803D] font-bold mb-1">Correct Answer</p>
-        <p className="text-sm text-[#1C1917]">{q.correctAnswer}</p>
+        <p className="text-sm text-[var(--color-on-surface)]">{q.correctAnswer}</p>
       </div>
 
       {/* The trap */}
@@ -202,7 +202,7 @@ export const DistractorTraining: React.FC<Props> = ({ setScreen }) => {
 
       {/* The challenge */}
       <div className="flex items-center gap-2 mb-4">
-        <Brain size={14} className="text-[#0E7490]" />
+        <span className="material-symbols-rounded text-[#0E7490]" style={{ fontSize: 14 }}>psychology</span>
         <p className="text-sm text-[#6B7280] font-medium">
           Why is the trap answer <span className="text-[#B91C1C] font-bold">wrong</span>?
         </p>
@@ -210,7 +210,7 @@ export const DistractorTraining: React.FC<Props> = ({ setScreen }) => {
 
       <div className="space-y-3 mb-6 flex-1">
         {q.whyWrong.map((reason, i) => {
-          let cls = 'bg-[#F0EEE9] border-[#E8E5DF]';
+          let cls = 'bg-[var(--color-surface-container)] border-[var(--color-border)]';
           if (revealed) {
             if (i === q.correctWhyIdx) cls = 'bg-[#F0FDF4] border-[#BBF7D0]';
             else if (i === selectedWhy && i !== q.correctWhyIdx) cls = 'bg-[#FEF2F2] border-[#FECACA]';
@@ -227,22 +227,22 @@ export const DistractorTraining: React.FC<Props> = ({ setScreen }) => {
       {!revealed ? (
         <button onClick={confirm}
           className={`w-full py-4 rounded-2xl font-ui font-bold tracking-widest text-sm transition-all ${
-            selectedWhy !== null ? 'bg-[#38BDF8] text-background' : 'bg-[#F0EEE9] text-[#A8A29E] cursor-not-allowed'
+            selectedWhy !== null ? 'bg-[#38BDF8] text-background' : 'bg-[var(--color-surface-container)] text-[var(--color-border)] cursor-not-allowed'
           }`}>
-          CONFIRM <ArrowRight size={16} className="inline ml-1" />
+          CONFIRM <span className="material-symbols-rounded inline ml-1" style={{ fontSize: 16 }}>arrow_forward</span>
         </button>
       ) : (
         <AnimatePresence>
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
             <div className={`flex items-start gap-2 p-3 rounded-xl ${selectedWhy === q.correctWhyIdx ? 'bg-[#F0FDF4]' : 'bg-[#FEF2F2]'}`}>
               {selectedWhy === q.correctWhyIdx
-                ? <CheckCircle2 size={16} className="text-[#15803D] mt-0.5 shrink-0" />
-                : <XCircle size={16} className="text-[#B91C1C] mt-0.5 shrink-0" />}
+                ? <span className="material-symbols-rounded text-[#15803D] mt-0.5 shrink-0" style={{ fontSize: 16 }}>check_circle</span>
+                : <span className="material-symbols-rounded text-[#B91C1C] mt-0.5 shrink-0" style={{ fontSize: 16 }}>cancel</span>}
               <p className="text-sm text-[#6B7280] leading-relaxed">{q.correctExplanation}</p>
             </div>
             <button onClick={next}
               className="w-full py-4 bg-[#38BDF8] text-background rounded-2xl font-ui font-bold tracking-widest text-sm">
-              {idx >= DISTRACTOR_BANK.length - 1 ? 'RESTART' : 'NEXT TRAP'} →
+              <div className="flex items-center justify-center gap-2">{idx >= DISTRACTOR_BANK.length - 1 ? 'RESTART' : 'NEXT TRAP'} <span className="material-symbols-rounded" style={{ fontSize: 16 }}>chevron_right</span></div>
             </button>
           </motion.div>
         </AnimatePresence>

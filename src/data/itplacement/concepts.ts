@@ -2,7 +2,7 @@ import type { Concept } from '../../core/types';
 
 export const IT_PLACEMENT_CONCEPTS: Concept[] = [
 
-  // ── 📊 Quantitative Aptitude ─────────────────────────────────────
+  // ── Quantitative Aptitude ─────────────────────────────────────
 
   // Number Systems
   { id: 'q01', name: 'Number System Basics (LCM, HCF)', subject: 'Quantitative Aptitude', chapter: 'Number Systems', unit: 1, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.40, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "LCM and HCF questions appear in every TCS NQT and Wipro NLTH aptitude round — slow calculation here burns time that cascades into failing subsequent questions" },
@@ -101,7 +101,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'q64', name: 'Venn Diagrams — Set Membership Problems', subject: 'Quantitative Aptitude', chapter: 'Logical Reasoning', unit: 16, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.55, lastTested: -1, nextReview: -1 , stakesTier: 2 },
   { id: 'q65', name: 'Cube & Dice — Face & Orientation', subject: 'Quantitative Aptitude', chapter: 'Logical Reasoning', unit: 16, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
 
-  // ── 📝 English & Communication ──────────────────────────────────
+  // ── English & Communication ──────────────────────────────────
 
   // Reading Comprehension
   { id: 'e01', name: 'RC — Identifying Main Idea & Title', subject: 'English & Communication', chapter: 'Reading Comprehension', unit: 1, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.45, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "Reading comprehension carries 20-25 marks in every IT placement test — wrong main idea identification cascades into wrong answers on all 4-5 sub-questions" },
@@ -147,7 +147,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'e29', name: 'Fill in the Blank — Contextual Vocabulary', subject: 'English & Communication', chapter: 'Fill in the Blanks', unit: 7, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.50, lastTested: -1, nextReview: -1 , stakesTier: 1 },
   { id: 'e30', name: 'Double Blanks — Grammar + Vocabulary', subject: 'English & Communication', chapter: 'Fill in the Blanks', unit: 7, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
 
-  // ── 💻 DSA & Coding ────────────────────────────────────────────
+  // ── DSA & Coding ────────────────────────────────────────────
 
   // Arrays & Strings
   { id: 'c01', name: 'Two-Pointer — Pair Sum & Three Sum', subject: 'DSA & Coding', chapter: 'Arrays & Strings', unit: 1, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.50, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "Two-Pointer pattern solves 30% of array interview questions — not recognising the trigger when a problem says 'sorted array and target sum' loses you FAANG-level offers", relatedIds: ["c02","c06"], competingIds: ["c02"], interferenceScore: 0.5 },
@@ -249,7 +249,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'c75', name: 'Amortized Analysis — ArrayList & Hash Table', subject: 'DSA & Coding', chapter: 'Complexity Analysis', unit: 12, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
 
 
-  // ── 🗄️ Databases & SQL ─────────────────────────────────────────
+  // ── Databases & SQL ─────────────────────────────────────────
 
   // SQL Basics
   { id: 'db01', name: 'SELECT, WHERE, ORDER BY, LIMIT', subject: 'Databases & SQL', chapter: 'SQL Basics', unit: 1, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.35, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "SELECT with WHERE and ORDER BY is the first SQL screen question at every company — unable to write a basic query live signals you have never used SQL in practice", relatedIds: ["db02","db03","db04"] },
@@ -283,7 +283,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'db21', name: 'CAP Theorem — Consistency, Availability, Partition Tolerance', subject: 'Databases & SQL', chapter: 'NoSQL Basics', unit: 5, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
   { id: 'db22', name: 'SQL vs NoSQL — When to Use Which?', subject: 'Databases & SQL', chapter: 'NoSQL Basics', unit: 5, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.50, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "SQL vs NoSQL trade-off question appears in 70% of system design interviews at product companies — wrong choice for a use case signals you cannot make architectural decisions" },
 
-  // ── 🖥️ Core CS — OS & Networking ─────────────────────────────
+  // ── Core CS — OS & Networking ─────────────────────────────
 
   // Processes & Threads
   { id: 'os01', name: 'Process vs Thread — Differences & Use Cases', subject: 'Core CS — OS & Networks', chapter: 'Processes & Threads', unit: 1, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.50, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "Process vs Thread distinction is the first OS question in every campus placement technical round — wrong memory isolation answer reveals you studied the surface definition only", relatedIds: ["os02","os04"], competingIds: ["os02"], interferenceScore: 0.4 },
@@ -323,7 +323,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'os25', name: 'How a Web Browser Fetches a Page (Full Flow)', subject: 'Core CS — OS & Networks', chapter: 'Networking Basics', unit: 6, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.55, lastTested: -1, nextReview: -1 , stakesTier: 1 },
   { id: 'os26', name: 'Sockets — TCP Server/Client Model', subject: 'Core CS — OS & Networks', chapter: 'Networking Basics', unit: 6, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
 
-  // ── 🧩 OOP & Programming ─────────────────────────────────────
+  // ── OOP & Programming ─────────────────────────────────────
 
   // OOP Principles
   { id: 'oo01', name: 'Encapsulation — Access Modifiers & Getters/Setters', subject: 'OOP & Programming', chapter: 'OOP Principles', unit: 1, pyqTier: 1, stage: 'Unseen', stability: 0, difficulty: 0.40, lastTested: -1, nextReview: -1 , stakesTier: 1, stakesFact: "Encapsulation vs Abstraction is the most confused OOP question — mixing up hiding implementation from hiding data fails every Java and Python OOP interview at service companies", relatedIds: ["oo03","oo02"], competingIds: ["oo03"], interferenceScore: 0.55 },
@@ -354,7 +354,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'oo18', name: 'Compiler Phases — Lexing, Parsing, Code Gen', subject: 'OOP & Programming', chapter: 'Compiler Basics', unit: 5, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
   { id: 'oo19', name: 'Interpreter vs Compiler vs JIT', subject: 'OOP & Programming', chapter: 'Compiler Basics', unit: 5, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.55, lastTested: -1, nextReview: -1 , stakesTier: 2 },
 
-  // ── 🏗️ System Design ─────────────────────────────────────────
+  // ── System Design ─────────────────────────────────────────
 
   // Architecture
   { id: 'sd01', name: 'Monolith vs Microservices — Trade-offs', subject: 'System Design', chapter: 'Architecture', unit: 1, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.60, lastTested: -1, nextReview: -1 , stakesTier: 2 },
@@ -381,7 +381,7 @@ export const IT_PLACEMENT_CONCEPTS: Concept[] = [
   { id: 'sd14', name: 'Design: Social Media Feed (Fan-out, Timeline, Cache)', subject: 'System Design', chapter: 'Case Studies', unit: 5, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.75, lastTested: -1, nextReview: -1 , stakesTier: 2 },
   { id: 'sd15', name: 'Design: File Storage Service (S3-like — Chunking, CDN)', subject: 'System Design', chapter: 'Case Studies', unit: 5, pyqTier: 3, stage: 'Unseen', stability: 0, difficulty: 0.80, lastTested: -1, nextReview: -1 , stakesTier: 3 },
 
-  // ── 🤖 Domain Topics ─────────────────────────────────────────
+  // ── Domain Topics ─────────────────────────────────────────
 
   // AI / ML Basics
   { id: 'dm01', name: 'Supervised vs Unsupervised vs Reinforcement Learning', subject: 'Domain Topics', chapter: 'AI & ML Basics', unit: 1, pyqTier: 2, stage: 'Unseen', stability: 0, difficulty: 0.55, lastTested: -1, nextReview: -1 , stakesTier: 2 },

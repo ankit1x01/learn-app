@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { BarChart3, AlertTriangle, TrendingDown, Target, ChevronRight, Zap } from 'lucide-react';
+
 
 import { Screen } from '../types';
 import { Concept } from '../core/types';
@@ -93,7 +93,7 @@ export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
 
   if (clusters.length === 0) return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-      <Target size={40} className="text-[#15803D] mb-4" />
+      <span className="material-symbols-rounded text-[#15803D] mb-4" style={{ fontSize: 40 }}>my_location</span>
       <h2 className="text-2xl font-ui font-bold mb-2">No Error Clusters Found</h2>
       <p className="text-[#6B7280] text-sm mb-6">Complete more sessions to build your error profile.</p>
       <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-primary text-background rounded-xl font-bold text-sm">← Back</button>
@@ -104,7 +104,7 @@ export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
     <div className="pt-16 pb-32 px-6 max-w-md mx-auto">
       <header className="mb-8">
         <div className="flex items-center gap-2 mb-1">
-          <BarChart3 size={14} className="text-[#7C3AED]" />
+          <span className="material-symbols-rounded text-[#7C3AED]" style={{ fontSize: 14 }}>bar_chart</span>
           <span className="text-[12px] uppercase tracking-[0.3em] text-[#6B7280] font-bold">AI Pattern Analysis</span>
         </div>
         <h1 className="text-3xl font-ui font-bold tracking-tight mb-1">Error Clusters</h1>
@@ -115,7 +115,7 @@ export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
       {topRisk && (
         <div className="card rounded-2xl p-5 mb-6 border border-[#FECACA]">
           <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle size={14} className="text-[#B91C1C]" />
+            <span className="material-symbols-rounded text-[#B91C1C]" style={{ fontSize: 14 }}>warning</span>
             <span className="text-[12px] uppercase tracking-widest font-bold text-[#B91C1C]">Primary Risk</span>
           </div>
           <h3 className="font-ui font-bold text-lg mb-1">{topRisk.chapter}</h3>
@@ -127,14 +127,14 @@ export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
           </div>
           <button onClick={() => setScreen('session')}
             className="w-full mt-4 py-3 bg-error text-background rounded-xl font-bold text-[12px] uppercase tracking-widest flex items-center justify-center gap-2">
-            <Zap size={12} fill="currentColor" /> Start 20-min Deep Dive
+            <span className="material-symbols-rounded" style={{ fontSize: 12, fontVariationSettings: "'FILL' 1" }}>bolt</span> Start 20-min Deep Dive
           </button>
         </div>
       )}
 
       {/* All clusters */}
       <div className="space-y-3">
-        <h4 className="text-[12px] uppercase tracking-[0.3em] text-[#78716C] font-bold px-1">All Patterns</h4>
+        <h4 className="text-[12px] uppercase tracking-[0.3em] text-[var(--color-on-surface-variant)] font-bold px-1">All Patterns</h4>
         {clusters.map((cluster, i) => {
           const severity = cluster.errorCount >= 6 ? 'error' : cluster.errorCount >= 3 ? 'tertiary' : 'on-surface-variant';
           const isOpen = expanded === cluster.chapter;
@@ -148,7 +148,7 @@ export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
                 <div className={`px-2 py-1 rounded-lg text-sm font-ui font-bold min-w-[2rem] text-center ${
                   cluster.errorCount >= 6 ? 'bg-[#FEF2F2] text-[#B91C1C]' :
                   cluster.errorCount >= 3 ? 'bg-[#FFFBEB] text-[#B45309]' :
-                  'bg-[#F0EEE9] text-[#6B7280]'
+                  'bg-[var(--color-surface-container)] text-[#6B7280]'
                 }`}>
                   {cluster.errorCount}
                 </div>
@@ -157,26 +157,26 @@ export const ErrorDashboard: React.FC<Props> = ({ setScreen, concepts }) => {
                   <p className={`text-[12px] font-label uppercase tracking-widest ${SUBJECT_COLORS[cluster.subject]}`}>{cluster.subject} · {cluster.pattern}</p>
                 </div>
                 <div className={`flex items-center gap-1 ${SUBJECT_BG[cluster.subject]} px-2 py-1 rounded-lg`}>
-                  <TrendingDown size={10} className={SUBJECT_COLORS[cluster.subject]} />
+                  <span className={`material-symbols-rounded ${SUBJECT_COLORS[cluster.subject]}`} style={{ fontSize: 10 }}>trending_down</span>
                   <span className={`text-[12px] font-bold ${SUBJECT_COLORS[cluster.subject]}`}>{cluster.errorCount}x</span>
                 </div>
-                <ChevronRight size={14} className={`text-[#A8A29E] transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+                <span className={`material-symbols-rounded text-[var(--color-border)] transition-transform ${isOpen ? 'rotate-90' : ''}`} style={{ fontSize: 14 }}>chevron_right</span>
               </button>
 
               {isOpen && (
                 <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }}
-                  className="px-4 pb-4 border-t border-[#E8E5DF]">
+                  className="px-4 pb-4 border-t border-[var(--color-border)]">
                   <div className="pt-3 space-y-3">
                     <div>
-                      <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-1">Concepts Affected</p>
+                      <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-1">Concepts Affected</p>
                       <div className="flex flex-wrap gap-2">
                         {cluster.concepts.map(c => (
-                          <span key={c} className="px-2 py-1 bg-[#F0EEE9] rounded-lg text-[11px] text-[#6B7280]">{c}</span>
+                          <span key={c} className="px-2 py-1 bg-[var(--color-surface-container)] rounded-lg text-[11px] text-[#6B7280]">{c}</span>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-1">Root Cause</p>
+                      <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-1">Root Cause</p>
                       <p className="text-sm text-[#6B7280]">{cluster.rootCause}</p>
                     </div>
                     <div className="p-3 rounded-xl bg-primary/5 border border-primary/10">

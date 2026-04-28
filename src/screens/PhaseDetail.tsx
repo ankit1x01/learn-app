@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import LessonDetail from './LessonDetail';
 import type { Phase, Lesson } from '@/data/ai-engineering/types';
 
@@ -49,7 +49,8 @@ export default function PhaseDetail({
           onClick={onBack}
           className="flex items-center gap-2 text-[var(--color-primary)] font-medium mb-4 active:scale-95 transition-transform"
         >
-          ← Back
+          <span className="material-symbols-rounded">arrow_back</span>
+          Back
         </button>
         <h1 className="text-3xl font-bold text-[var(--color-on-background)] mb-1">
           Phase {phase.number}
@@ -82,7 +83,7 @@ export default function PhaseDetail({
                 </div>
                 <p className="text-xs text-[var(--color-on-surface-variant)] mt-2">Click to view lesson</p>
               </div>
-              <span className="text-xl text-[var(--color-outline)]">›</span>
+              <span className="material-symbols-rounded text-[var(--color-outline)]">chevron_right</span>
             </div>
           </motion.button>
         ))}
@@ -95,8 +96,9 @@ export default function PhaseDetail({
         transition={{ delay: 0.3 }}
         className="mt-8 p-4 rounded-xl bg-[var(--color-surface-container-low)] border border-[var(--color-outline-variant)]"
       >
-        <p className="text-xs text-[var(--color-on-surface-variant)]">
-          💡 Tap a lesson to view the markdown documentation and code examples.
+        <p className="text-xs text-[var(--color-on-surface-variant)] flex items-start gap-2">
+          <span className="material-symbols-rounded text-base shrink-0" style={{ color: 'var(--color-warning)' }}>lightbulb</span>
+          Tap a lesson to view the markdown documentation and code examples.
         </p>
       </motion.div>
     </div>

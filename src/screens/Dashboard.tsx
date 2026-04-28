@@ -6,54 +6,13 @@ import { ShapePlaced } from '../components/M3Shapes';
 import type { Screen } from '../types';
 import type { SessionItem, SubjectStats } from '../core/types';
 import { getTimeOfDayNudge } from '../core/scheduler';
-import { loadCourseProgress, getAppStreak, loadPortfolio, savePortfolioItem } from '../db/store';
+import { loadCourseProgress, peekStreak, loadPortfolio, savePortfolioItem } from '../db/store';
 import type { PortfolioProgress, PortfolioStatus } from '../db/store';
 import { COURSE_LESSONS } from '../data/course/lessons';
 import { AI_PORTFOLIO_PROJECTS } from '../data/ai_engineer/portfolio';
-import {
-  Flame,
-  Clock,
-  TrendingUp,
-  ChevronRight,
-  Play,
-  BookOpen,
-  Target,
-  Brain,
-  Layers,
-  BarChart2,
-  Link2,
-  GitBranch,
-  Zap,
-  GraduationCap,
-  Gamepad2,
-  Cpu,
-  Database,
-  Shield,
-  Rocket,
-} from 'lucide-react';
 
-const SUBJECT_ICONS: Record<string, React.ElementType> = {
-  'Core Foundations':            Brain,
-  'ML & Deep Learning':          Cpu,
-  'NLP & Language Understanding': BarChart2,
-  'LLM Mastery':                 Brain,
-  'RAG & Knowledge Systems':     Database,
-  'AI Agents & Automation':      Rocket,
-  'Production AI & MLOps':       Rocket,
-  'AI Leadership & Safety':      Shield,
-};
 
-/** Material Symbols Rounded icon names — M3 Expressive icon system */
-const SUBJECT_MS_ICONS: Record<string, string> = {
-  'Core Foundations':            'code',
-  'ML & Deep Learning':          'memory',
-  'NLP & Language Understanding': 'translate',
-  'LLM Mastery':                 'psychology',
-  'RAG & Knowledge Systems':     'database',
-  'AI Agents & Automation':      'smart_toy',
-  'Production AI & MLOps':       'rocket_launch',
-  'AI Leadership & Safety':      'security',
-};
+
 
 export const Dashboard = ({
   setScreen,
@@ -76,7 +35,7 @@ export const Dashboard = ({
 
   useEffect(() => {
     loadCourseProgress().then(map => setCourseCompleted(map.size));
-    getAppStreak().then(setLiveStreak).catch(console.error);
+    peekStreak().then(setLiveStreak).catch(console.error);
     loadPortfolio().then(setPortfolio).catch(console.error);
   }, []);
 
@@ -135,14 +94,14 @@ export const Dashboard = ({
         </div>
         <div className="flex items-center gap-2">
           <div className="streak-badge">
-            <Flame size={12} />
+            <span className="material-symbols-rounded" style={{ fontSize: 12 }}>local_fire_department</span>
             <span>{liveStreak} day</span>
           </div>
           <div
             className="rounded-full px-3 py-1.5 flex items-center gap-1.5"
             style={{ background: 'var(--color-primary-container)', border: '1px solid var(--color-primary-border)' }}
           >
-            <Clock size={11} style={{ color: 'var(--color-primary)' }} />
+            <span className="material-symbols-rounded" style={{ fontSize: 11,  color: 'var(--color-primary)'  }}>schedule</span>
             <span className="text-[12px] font-bold font-ui" style={{ color: 'var(--color-primary)' }}>
               {computedDaysRemaining}d
             </span>
@@ -153,9 +112,9 @@ export const Dashboard = ({
       {/* ── 3 Stat Pills (Interactive) ── */}
       <div className="flex gap-2.5 mb-6 relative">
         {[
-          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)', help: totalAutomatic === 0 ? '✨ Start your first session to earn mastery' : null, icon: '🏆' },
-          { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)', help: totalConscious === 0 ? '🌱 Complete 2 more sessions to grow' : null, icon: '📚' },
-          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)', help: totalFading === 0 ? '✓ No concepts due for review yet' : null, icon: '⏰' },
+          { label: 'Mastered',  value: totalAutomatic, color: 'var(--color-success)', bg: 'var(--color-success-container)', border: 'var(--color-success-container)', help: totalAutomatic === 0 ? 'Start your first session to earn mastery' : null, icon: 'workspace_premium' },
+          { label: 'Learning',  value: totalConscious, color: 'var(--color-primary)', bg: 'var(--color-primary-container)', border: 'var(--color-primary-border)', help: totalConscious === 0 ? 'Complete 2 more sessions to grow' : null, icon: 'auto_stories' },
+          { label: 'Fading',    value: totalFading,    color: 'var(--color-warning)', bg: 'var(--color-warning-container)', border: 'var(--color-warning-container)', help: totalFading === 0 ? 'No concepts due for review yet' : null, icon: 'schedule' },
         ].map((s, i) => (
           <motion.button
             key={s.label}
@@ -186,8 +145,13 @@ export const Dashboard = ({
             {/* Content */}
             <div className="relative z-10">
               {s.value > 0 && (
-                <div className="absolute -top-1 -right-1 text-[14px]" style={{ lineHeight: 1 }}>
-                  {s.icon}
+                <div className="absolute -top-1 -right-1" style={{ lineHeight: 1 }}>
+                  <span
+                    className="material-symbols-rounded"
+                    style={{ fontSize: 16, color: s.color, fontVariationSettings: "'FILL' 1, 'wght' 500" }}
+                  >
+                    {s.icon}
+                  </span>
                 </div>
               )}
               <motion.span 
@@ -239,9 +203,9 @@ export const Dashboard = ({
               Today's Challenge
             </h3>
             <p className="text-[13px] mt-0.5 font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
-              {session.length === 0 
-                ? '🚀 No patterns queued. Start fresh?' 
-                : `✓ ${session.length} pattern${session.length === 1 ? '' : 's'} queued`}
+              {session.length === 0
+                ? 'No patterns queued. Start fresh?'
+                : `${session.length} pattern${session.length === 1 ? '' : 's'} queued`}
             </p>
           </div>
           <motion.div 
@@ -250,7 +214,7 @@ export const Dashboard = ({
             whileHover={{ rotate: 10, scale: 1.1 }}
             transition={{ type: 'spring', stiffness: 400 }}
           >
-            <Target size={18} style={{ color: 'var(--color-primary)' }} />
+            <span className="material-symbols-rounded" style={{ fontSize: 18,  color: 'var(--color-primary)'  }}>my_location</span>
           </motion.div>
         </div>
 
@@ -310,10 +274,43 @@ export const Dashboard = ({
             whileHover={{ x: '100%' }}
             transition={{ duration: 0.6 }}
           />
-          <Play size={17} fill="currentColor" />
+          <span className="material-symbols-rounded" style={{ fontSize: 17, fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
           <span className="relative z-10">Start Session</span>
         </motion.div>
       </motion.button>
+
+      {/* ── Pre-Sleep Review (20:00–22:00 only) ── */}
+      {new Date().getHours() >= 20 && new Date().getHours() < 22 && (
+        <motion.button
+          onClick={() => setScreen('presleep')}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...m3SpatialDefault, delay: 0.3 }}
+          className="w-full text-left rounded-m3-xl p-5 mb-6 mx-4 relative overflow-hidden border border-solid transition-all hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1"
+          style={{
+            background: 'rgba(88, 28, 135, 0.08)',
+            borderColor: 'rgba(88, 28, 135, 0.3)',
+            boxShadow: '0 4px 12px rgba(88, 28, 135, 0.1)',
+          }}
+        >
+          <div className="relative z-10 flex items-start gap-3">
+            <span
+              className="material-symbols-rounded shrink-0"
+              style={{ fontSize: 22, color: 'rgb(88, 28, 135)', fontVariationSettings: "'FILL' 1, 'wght' 500" }}
+            >
+              bedtime
+            </span>
+            <div>
+              <h3 className="text-base font-bold mb-1" style={{ color: 'var(--color-on-surface)' }}>
+                Pre-Sleep Review
+              </h3>
+              <p className="text-[13px]" style={{ color: 'var(--color-on-surface-variant)' }}>
+                Consolidate high-stakes concepts
+              </p>
+            </div>
+          </div>
+        </motion.button>
+      )}
 
       {/* ── Mastery Ring Card ── */}
       <motion.div 
@@ -429,7 +426,7 @@ export const Dashboard = ({
             style={{ background: 'var(--color-success-container)' }}
             whileHover={{ scale: 1.1, rotate: 5 }}
           >
-            <TrendingUp size={15} style={{ color: 'var(--color-success)' }} />
+            <span className="material-symbols-rounded" style={{ fontSize: 15,  color: 'var(--color-success)'  }}>trending_up</span>
           </motion.div>
           <span className="text-[13px] font-semibold font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
             Exam Readiness
@@ -488,7 +485,7 @@ export const Dashboard = ({
                   className="material-symbols-rounded"
                   style={{ fontSize: 22, color: 'var(--color-primary)', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
                 >
-                  {SUBJECT_MS_ICONS[s.name] ?? 'book'}
+                  {s.icon}
                 </span>
               </div>
               <div className="text-[16px] font-bold tabular-nums font-ui" style={{ color: 'var(--color-on-surface)' }}>{s.ready}</div>
@@ -519,11 +516,11 @@ export const Dashboard = ({
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
           style={{ flexShrink: 0 }}
         >
-          <Clock size={16} style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 16,  color: isMorning ? 'var(--color-success)' : 'var(--color-primary)'  }}>schedule</span>
         </motion.div>
         <div className="flex-1 relative z-10">
           <p className="text-[13px] font-medium font-body" style={{ color: isMorning ? 'var(--color-success)' : 'var(--color-primary)' }}>
-            <span className="font-bold">💡 Pro tip:</span> {isMorning ? 'Perfect for learning new material' : 'Great for consolidating existing knowledge'}
+            <span className="font-bold">Pro tip:</span> {isMorning ? 'Perfect for learning new material' : 'Great for consolidating existing knowledge'}
           </p>
           <p className="text-[12px] font-body mt-0.5" style={{ color: isMorning ? 'rgba(21, 128, 61, 0.8)' : 'rgba(103, 80, 164, 0.8)' }}>
             Best for {nudge}
@@ -541,7 +538,7 @@ export const Dashboard = ({
         style={{ background: 'var(--color-primary-container)', borderColor: 'var(--color-primary-border)' }}
       >
         <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary)' }}>
-          <Play size={22} fill="white" className="text-white ml-0.5" />
+          <span className="material-symbols-rounded text-white ml-0.5" style={{ fontSize: 22, fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
         </div>
         <div className="flex-1">
           <p className="text-[15px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-primary)' }}>
@@ -551,7 +548,7 @@ export const Dashboard = ({
             5 lead-level concepts · infographics + MCQs
           </p>
         </div>
-        <ChevronRight size={18} style={{ color: 'var(--color-primary)' }} className="shrink-0" />
+        <span className="material-symbols-rounded shrink-0" style={{ fontSize: 18,  color: 'var(--color-primary)'  }}>chevron_right</span>
       </motion.button>
 
       {/* ── Daily Games ── */}
@@ -566,7 +563,7 @@ export const Dashboard = ({
               style={{ background: 'var(--color-surface-lowest)', borderColor: 'var(--color-border)' }}
             >
               <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mr-3" style={{ background: 'var(--color-primary-container)' }}>
-                <Gamepad2 size={20} style={{ color: 'var(--color-primary)' }} />
+                <span className="material-symbols-rounded" style={{ fontSize: 20,  color: 'var(--color-primary)'  }}>sports_esports</span>
               </div>
               <div className="text-left">
                 <p className="text-[14px] font-semibold font-ui" style={{ color: 'var(--color-on-surface)' }}>Daily Minigames</p>
@@ -638,7 +635,7 @@ export const Dashboard = ({
           <p className="text-[13px] font-semibold font-ui" style={{ color: 'var(--color-on-surface-variant)' }}>
             My Courses
           </p>
-          <GraduationCap size={14} style={{ color: 'var(--color-on-surface-muted)' }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-on-surface-muted)'  }}>school</span>
         </div>
 
         <div className="space-y-2.5">
@@ -653,7 +650,7 @@ export const Dashboard = ({
           >
             <ShapePlaced position="top-right" shape="flower" color="var(--color-primary)" opacity={0.08} size={28} />
             <div className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary-container)' }}>
-              <Brain size={20} style={{ color: 'var(--color-primary)' }} />
+              <span className="material-symbols-rounded" style={{ fontSize: 20,  color: 'var(--color-primary)'  }}>psychology</span>
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-on-surface)' }}>
@@ -672,7 +669,7 @@ export const Dashboard = ({
                 />
               </div>
             </div>
-            <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} className="shrink-0" />
+            <span className="material-symbols-rounded shrink-0" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>chevron_right</span>
           </motion.button>
 
           {/* Subject courses */}
@@ -680,7 +677,6 @@ export const Dashboard = ({
             const subStats = stats[sub.name] ?? { auto: 0, conscious: 0, fragile: 0, unseen: sub.totalConcepts };
             const done = subStats.auto + subStats.conscious;
             const pct  = Math.round((done / sub.totalConcepts) * 100);
-            const Icon = SUBJECT_ICONS[sub.name] ?? BookOpen;
             const shapes = ['diamond', 'pill', 'arch', 'wave', 'triangle'] as const;
             const shapeIndex = i % shapes.length;
             return (
@@ -698,8 +694,7 @@ export const Dashboard = ({
                   className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0"
                   style={{ backgroundColor: 'var(--color-background)', border: '1px solid var(--color-border)' }}
                 >
-                  {/* @ts-expect-error */}
-                  <Icon size={20} className={sub.color} />
+                  <span className={`material-symbols-rounded ${sub.color}`} style={{ fontSize: 20 }}>{sub.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-on-surface)' }}>
@@ -717,7 +712,7 @@ export const Dashboard = ({
                     />
                   </div>
                 </div>
-                <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} className="shrink-0" />
+                <span className="material-symbols-rounded shrink-0" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>chevron_right</span>
               </motion.button>
             );
           })}
@@ -754,10 +749,10 @@ export const Dashboard = ({
                 style={{ background: status === 'completed' ? '#15803D08' : 'var(--color-surface-container)', borderColor: status === 'completed' ? '#15803D30' : 'var(--color-border)' }}
               >
                 <div
-                  className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0 text-xl"
+                  className="w-11 h-11 rounded-m3-lg flex items-center justify-center shrink-0"
                   style={{ background: project.bgColor }}
                 >
-                  {project.emoji}
+                  <span className="material-symbols-rounded" style={{ fontSize: 22, color: project.color }}>{project.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[14px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-on-surface)' }}>
@@ -826,7 +821,7 @@ export const Dashboard = ({
                     className="material-symbols-rounded"
                     style={{ fontSize: 22, color: 'var(--color-primary)', fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
                   >
-                    {SUBJECT_MS_ICONS[sub.name] ?? 'book'}
+                    {sub.icon}
                   </span>
                 </div>
 
@@ -860,7 +855,7 @@ export const Dashboard = ({
                   </div>
                 </div>
 
-                <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} className="shrink-0" />
+                <span className="material-symbols-rounded shrink-0" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>chevron_right</span>
               </motion.button>
             );
           })}
@@ -877,7 +872,7 @@ export const Dashboard = ({
         style={{ borderColor: 'var(--color-border)' }}
       >
         <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0 bg-[#8B5CF6]/20">
-          <span className="text-xl">🧠</span>
+          <span className="material-symbols-rounded" style={{ fontSize: 24, color: '#8B5CF6' }}>psychology</span>
         </div>
         <div className="flex-1 text-left">
           <p className="text-[14px] font-bold mb-0.5" style={{ color: 'var(--color-on-surface)' }}>
@@ -887,7 +882,7 @@ export const Dashboard = ({
             260+ lessons • Build from scratch
           </p>
         </div>
-        <ChevronRight size={16} style={{ color: 'var(--color-on-surface-muted)' }} />
+        <span className="material-symbols-rounded" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>chevron_right</span>
       </motion.button>
 
     </div>

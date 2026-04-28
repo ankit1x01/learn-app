@@ -1,7 +1,7 @@
 // src/games/components/Links.tsx
 import { useState, useRef } from 'react'
 import { motion, useAnimation, PanInfo } from 'motion/react'
-import { ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react'
+
 import { LinksConfig, GameResult } from '../types'
 import { GameWinScreen } from './GameWinScreen'
 
@@ -305,7 +305,7 @@ export function Links({ config }: Props) {
             className="w-14 h-14 flex items-center justify-center rounded-2xl active:translate-y-1 transition-transform"
             style={{ background: '#F9F6F0', border: '3px solid #111', boxShadow: '0 6px 0 #111' }}
           >
-            <ChevronLeft size={24} color="#111" />
+            <span className="material-symbols-rounded" style={{ fontSize: 24, color: "#111" }}>chevron_left</span>
           </button>
 
           {/* Card with stacked depth effect */}
@@ -348,7 +348,7 @@ export function Links({ config }: Props) {
             className="w-14 h-14 flex items-center justify-center rounded-2xl active:translate-y-1 transition-transform"
             style={{ background: '#F9F6F0', border: '3px solid #111', boxShadow: '0 6px 0 #111' }}
           >
-            <ChevronRight size={24} color="#111" />
+            <span className="material-symbols-rounded" style={{ fontSize: 24, color: "#111" }}>chevron_right</span>
           </button>
         </div>
 

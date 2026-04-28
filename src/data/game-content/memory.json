@@ -1,0 +1,41 @@
+[
+  {
+    "id": "mem_001",
+    "conceptId": "cs_001",
+    "difficulty": "easy",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "items": [
+        { "name": "Variable", "definition": "Named storage location" },
+        { "name": "Function", "definition": "Reusable block of code" },
+        { "name": "Loop", "definition": "Repeated execution" }
+      ]
+    },
+    "metadata": {
+      "gameType": "memory",
+      "requiredFields": ["items"],
+      "expectedDuration": 30000
+    }
+  },
+  {
+    "id": "mem_002",
+    "conceptId": "math_001",
+    "difficulty": "medium",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "items": [
+        { "name": "Prime Number", "definition": "Only divisible by 1 and itself" },
+        { "name": "Composite", "definition": "Has more than 2 factors" },
+        { "name": "Factor", "definition": "Number that divides evenly" },
+        { "name": "Multiple", "definition": "Product of a number with integer" }
+      ]
+    },
+    "metadata": {
+      "gameType": "memory",
+      "requiredFields": ["items"],
+      "expectedDuration": 45000
+    }
+  }
+]

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {
-  ChevronLeft, CheckCircle2, XCircle, ChevronRight,
-  Flame, BookOpen, Youtube, Layers, BarChart2, Link2, GitBranch, Zap,
-  Activity, Wind, Brain, Timer
-} from 'lucide-react';
+
 import type { Screen } from '../types';
 import { DEMO_SESSION, type DemoConcept } from '../data/demo-session';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -57,12 +53,12 @@ const playSound = (type: 'tick' | 'success' | 'buzzer' | 'chime') => {
 };
 
 
-const SUBJECT_ICON: Record<string, React.ElementType> = {
-  'RAG & Knowledge Systems':   Layers,
-  'AI Agents & Automation':    Brain,
-  'LLM Mastery':               Zap,
-  'Production AI & MLOps':     Activity,
-  'AI Leadership & Safety':    BarChart2,
+const SUBJECT_ICON: Record<string, string> = {
+  'RAG & Knowledge Systems':   'layers',
+  'AI Agents & Automation':    'psychology',
+  'LLM Mastery':               'bolt',
+  'Production AI & MLOps':     'monitoring',
+  'AI Leadership & Safety':    'bar_chart',
 };
 
 const SUBJECT_COLOR: Record<string, string> = {
@@ -115,7 +111,7 @@ const KoshaCard = ({ onNext }: { onNext: () => void }) => {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={m3SpatialDefault}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <Activity size={14} style={{ color: 'var(--color-subject-cs)' }} /> Pre-Session Kosha Check
+        <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-subject-cs)'  }}>monitoring</span> Pre-Session Kosha Check
       </div>
       <h2 className="text-display-large-emphasized mb-2 leading-tight" style={{ color: 'var(--color-on-surface)' }}>
         How are you feeling right now?
@@ -126,9 +122,9 @@ const KoshaCard = ({ onNext }: { onNext: () => void }) => {
 
       <div className="grid grid-cols-1 gap-3 mb-8">
         {[
-          { label: 'Highly Focused', desc: 'Ready for deep logical work', icon: Brain, color: 'var(--color-primary)' },
-          { label: 'A bit fatigued', desc: 'Need shorter, high-impact notes', icon: Wind, color: 'var(--color-warning)' },
-          { label: 'Exam Stressed', desc: 'Time pressure is high currently', icon: Timer, color: 'var(--color-error)' }
+          { label: 'Highly Focused', desc: 'Ready for deep logical work', icon: 'psychology', color: 'var(--color-primary)' },
+          { label: 'A bit fatigued', desc: 'Need shorter, high-impact notes', icon: 'air', color: 'var(--color-warning)' },
+          { label: 'Exam Stressed', desc: 'Time pressure is high currently', icon: 'timer', color: 'var(--color-error)' }
         ].map((btn, i) => (
           <button 
             key={i}
@@ -137,7 +133,7 @@ const KoshaCard = ({ onNext }: { onNext: () => void }) => {
             style={{ border: '1px solid var(--color-border)' }}
           >
             <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: `${btn.color}15`, color: btn.color }}>
-              <btn.icon size={20} />
+              <span className="material-symbols-rounded" style={{ fontSize: 20 }}>{btn.icon}</span>
             </div>
             <div>
               <p className="font-bold text-[16px] font-ui" style={{ color: 'var(--color-on-surface)' }}>{btn.label}</p>
@@ -220,7 +216,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <Zap size={14} style={{ color: 'var(--color-warning)' }} /> Prediction Error Phase
+        <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-warning)'  }}>bolt</span> Prediction Error Phase
       </div>
       <h2 className="text-[28px] font-black mb-2 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         Before you learn about <span style={{ color }}>{concept.title}</span>...
@@ -259,7 +255,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
         {selected && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
             <div className={`p-4 rounded-xl mb-2 flex gap-3 items-start ${selected === opts.correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-              {selected === opts.correct ? <CheckCircle2 className="text-green-600 shrink-0 mt-0.5" size={18} /> : <XCircle className="text-red-500 shrink-0 mt-0.5" size={18} />}
+              {selected === opts.correct ? <span className="material-symbols-rounded text-green-600 shrink-0 mt-0.5" style={{ fontSize: 18 }}>check_circle</span> : <span className="material-symbols-rounded text-red-500 shrink-0 mt-0.5" style={{ fontSize: 18 }}>cancel</span>}
               <div>
                 <p className={`text-[14px] font-bold ${selected === opts.correct ? 'text-green-800' : 'text-red-800'}`} style={{ fontFamily: 'var(--font-ui)' }}>
                   {selected === opts.correct ? 'Correct Intuition!' : 'Not Quite!'}
@@ -271,7 +267,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
             </div>
             {selected !== opts.correct && (
               <div className="p-3 rounded-lg flex items-center gap-2" style={{ background: 'var(--color-error-container)', color: 'var(--color-on-error-container)' }}>
-                <Flame size={16} />
+                <span className="material-symbols-rounded" style={{ fontSize: 16 }}>local_fire_department</span>
                 <p className="text-[12px] font-bold">Neuroscience: Guessing wrong creates dopamine which locks the correct answer in next.</p>
               </div>
             )}
@@ -285,7 +281,7 @@ const PredictCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
         className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center transition-all disabled:opacity-50"
         style={{ background: color, fontFamily: 'var(--font-ui)' }}
       >
-        Continue <ChevronRight size={16} className="ml-1" />
+        Continue <span className="material-symbols-rounded ml-1" style={{ fontSize: 16 }}>chevron_right</span>
       </button>
     </motion.div>
   );
@@ -299,7 +295,7 @@ const MetacogCard = ({ concept, onNext }: { concept: DemoConcept; onNext: () => 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.28 }}>
       <div className="flex items-center gap-2 mb-4 font-bold uppercase tracking-widest text-[12px]" style={{ color: 'var(--color-on-surface-muted)' }}>
-        <BarChart2 size={14} style={{ color: 'var(--color-subject-chemistry)' }} /> Solidification Phase
+        <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-subject-chemistry)'  }}>bar_chart</span> Solidification Phase
       </div>
       <h2 className="text-[28px] font-black mb-6 leading-tight" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
         How confident do you feel about this now?
@@ -348,7 +344,7 @@ const CodeBlock = ({ code }: { code: string }) => (
 );
 
 const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => void }) => {
-  const Icon = SUBJECT_ICON[concept.subject] ?? BookOpen;
+  const Icon = SUBJECT_ICON[concept.subject] ?? 'book';
   const color = SUBJECT_COLOR[concept.subject] ?? 'var(--color-primary)';
   const bg    = SUBJECT_BG[concept.subject]   ?? 'var(--color-primary-container)';
   const [revealed, setRevealed] = useState(false);
@@ -363,8 +359,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
       {/* Subject + tag row */}
       <div className="flex items-center gap-2 mb-4">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: bg }}>
-          {/* @ts-expect-error */}
-          <Icon size={16} style={{ color }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 16, color }}>{Icon}</span>
         </div>
         <span className="text-[12px] font-bold uppercase tracking-widest" style={{ color }}>{concept.subject}</span>
         <span className="ml-auto text-[11px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide" style={{ background: 'var(--color-background)', color: 'var(--color-on-surface-variant)' }}>
@@ -424,7 +419,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
       <div className="flex flex-col p-4 rounded-xl mb-6 relative overflow-hidden group"
            style={{ background: '#FFFBEB', border: '1px solid #FDE68A' }}>
         <div className="flex gap-3 items-start relative z-10 w-full">
-          <Zap size={14} className="text-[#B45309] shrink-0 mt-0.5" />
+          <span className="material-symbols-rounded text-[#B45309] shrink-0 mt-0.5" style={{ fontSize: 14 }}>bolt</span>
           <div className="w-full">
             <p className="text-[13px] text-[#92400E] leading-relaxed font-bold mb-1" style={{ fontFamily: 'var(--font-body)' }}>
               Elaborative Interrogation 
@@ -454,7 +449,7 @@ const ContentCard = ({ concept, onDone }: { concept: DemoConcept; onDone: () => 
         className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest text-white flex items-center justify-center gap-2"
         style={{ background: color, fontFamily: 'var(--font-ui)' }}
       >
-        I've read this — Start MCQs <ChevronRight size={16} />
+        I've read this — Start MCQs <span className="material-symbols-rounded" style={{ fontSize: 16 }}>chevron_right</span>
       </button>
     </motion.div>
   );
@@ -579,9 +574,9 @@ const MCQCard = ({
                    style={{ borderColor: revealed && isCorrect ? 'var(--color-success)' : revealed && _isChosen ? 'var(--color-error)' : _isChosen ? 'var(--color-primary)' : 'var(--color-border)',
                             color: revealed && isCorrect ? 'var(--color-success)' : revealed && _isChosen ? 'var(--color-error)' : _isChosen ? 'var(--color-primary)' : 'var(--color-on-surface-muted)' }}>
                 {revealed && isCorrect
-                  ? <CheckCircle2 size={13} />
+                  ? <span className="material-symbols-rounded" style={{ fontSize: 13 }}>check_circle</span>
                   : revealed && _isChosen && !isCorrect
-                  ? <XCircle size={13} />
+                  ? <span className="material-symbols-rounded" style={{ fontSize: 13 }}>cancel</span>
                   : String.fromCharCode(65 + i)}
               </div>
               <span className="text-[14px] leading-snug" style={{ fontFamily: 'var(--font-body)', color: textColor }}>
@@ -603,7 +598,7 @@ const MCQCard = ({
           >
             <div className="p-4 rounded-2xl bg-red-50 border border-red-200 shadow-sm">
               <h3 className="text-sm font-bold text-red-800 mb-1 flex items-center gap-2">
-                <XCircle size={14} /> Neti Analysis — Distractor Tricked You!
+                <span className="material-symbols-rounded" style={{ fontSize: 14 }}>cancel</span> Neti Analysis — Distractor Tricked You!
               </h3>
               <p className="text-sm text-red-900 leading-relaxed font-medium mb-3">
                 {timeoutHappened 
@@ -631,7 +626,7 @@ const MCQCard = ({
           {chosen === mcq.correct ? (
             <>
               <h3 className="text-sm font-bold text-green-800 mb-1 flex items-center gap-2">
-                <CheckCircle2 size={14} /> Correct!
+                <span className="material-symbols-rounded" style={{ fontSize: 14 }}>check_circle</span> Correct!
               </h3>
               <p className="text-[12px] font-bold text-[#15803D] uppercase tracking-widest mb-1 mt-2">Explanation</p>
               <p className="text-[13px] text-[#166534] leading-relaxed mb-4" style={{ fontFamily: 'var(--font-body)' }}>
@@ -641,19 +636,19 @@ const MCQCard = ({
               {/* VEDIC GHANA PATHA: Bi-Directional Flip testing */}
               <div className="bg-white/60 p-4 rounded-xl border border-green-200 shadow-sm mt-3">
                 <p className="text-[10px] font-black uppercase tracking-widest text-[#0E7490] mb-2 flex items-center gap-1 opacity-80">
-                  <Wind size={12}/> Bi-Directional Recall Check
+                  <span className="material-symbols-rounded" style={{ fontSize: 12 }}>air</span> Bi-Directional Recall Check
                 </p>
-                <p className="text-[13px] font-bold text-[#1C1917] mb-3 leading-snug">
+                <p className="text-[13px] font-bold text-[var(--color-on-surface)] mb-3 leading-snug">
                   Which question does the answer "<span className="text-green-700">{mcq.options[mcq.correct]}</span>" belong to?
                 </p>
                 <div className="flex flex-col gap-2">
                   <button className="text-left text-[12px] p-3 bg-gray-50 border border-gray-200 rounded-lg opacity-50 grayscale flex items-center justify-between cursor-default">
                     <span className="truncate pr-2">An algorithm that recalculates every pair possible?</span>
-                    <XCircle size={14} className="text-gray-400 shrink-0" />
+                    <span className="material-symbols-rounded text-gray-400 shrink-0" style={{ fontSize: 14 }}>cancel</span>
                   </button>
                   <button className="text-left text-[12px] p-3 bg-green-100 border border-green-300 text-green-900 font-bold rounded-lg relative overflow-hidden flex items-center justify-between pointer-events-none">
                     <span className="relative z-10 pr-2">{mcq.question}</span>
-                    <CheckCircle2 size={14} className="text-green-600 relative z-10 shrink-0" />
+                    <span className="material-symbols-rounded text-green-600 relative z-10 shrink-0" style={{ fontSize: 14 }}>check_circle</span>
                   </button>
                 </div>
               </div>
@@ -678,7 +673,7 @@ const MCQCard = ({
           className="w-full py-4 font-bold text-[13px] uppercase tracking-widest flex items-center justify-center gap-2"
           style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', borderRadius: 'var(--radius-m3-full)', fontFamily: 'var(--font-ui)' }}
         >
-          {isLast ? 'Next Concept' : 'Next Question'} <ChevronRight size={16} />
+          {isLast ? 'Next Concept' : 'Next Question'} <span className="material-symbols-rounded" style={{ fontSize: 16 }}>chevron_right</span>
         </motion.button>
       )}
 
@@ -710,7 +705,7 @@ const DoneScreen = ({ correctCount, total, onRestart, setScreen }: {
   >
     <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-5"
          style={{ background: '#FFFBEB', border: '2px solid #FDE68A' }}>
-      <Flame size={36} className="text-[#B45309]" />
+      <span className="material-symbols-rounded text-[#B45309]" style={{ fontSize: 36 }}>local_fire_department</span>
     </div>
     <p className="text-[12px] uppercase tracking-[0.3em] font-bold mb-2" style={{ color: 'var(--color-on-surface-muted)' }}>Session complete</p>
     <h1 className="text-[52px] font-black leading-none mb-1" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-on-surface)' }}>
@@ -718,7 +713,7 @@ const DoneScreen = ({ correctCount, total, onRestart, setScreen }: {
     </h1>
     <p className="text-[14px] mb-2" style={{ color: 'var(--color-on-surface-variant)' }}>correct answers</p>
     <div className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FFFBEB] border border-[#FDE68A] mb-10">
-      <Flame size={14} className="text-[#B45309]" />
+      <span className="material-symbols-rounded text-[#B45309]" style={{ fontSize: 14 }}>local_fire_department</span>
       <span className="text-[13px] font-bold text-[#B45309]">Streak alive</span>
     </div>
     <div className="w-full space-y-3">
@@ -825,7 +820,7 @@ export const DemoSession: React.FC<{ setScreen: (s: Screen) => void }> = ({ setS
           className="w-9 h-9 rounded-xl flex items-center justify-center bg-white"
           style={{ border: '1px solid var(--color-border)' }}
         >
-          <ChevronLeft size={18} className="text-[#6B7280]" />
+          <span className="material-symbols-rounded text-[#6B7280]" style={{ fontSize: 18 }}>chevron_left</span>
         </button>
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">

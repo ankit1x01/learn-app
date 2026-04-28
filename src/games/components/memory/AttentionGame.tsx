@@ -13,7 +13,7 @@ import {
 } from '@dnd-kit/core';
 import type { CollisionDetection } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { MemoryAttentionConfig } from '../../types';
 
 // ─── Custom Math Geometry Config (From Bubble Match) ───────────────────────

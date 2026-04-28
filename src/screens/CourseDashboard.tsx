@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { BookOpen, CheckCircle2, ChevronRight, Brain } from 'lucide-react';
+
 import type { Screen } from '../types';
 import { COURSE_LESSONS, PHASE_META } from '../data/course/lessons';
 import { AI_ROADMAP_LESSONS, AI_PHASE_META } from '../data/ai_engineer/roadmap';
@@ -47,7 +47,7 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
       {/* ── Header ── */}
       <div className="mt-4 mb-6">
         <div className="flex items-center gap-2 mb-1">
-          <Brain size={14} className="text-primary" />
+          <span className="material-symbols-rounded text-primary" style={{ fontSize: 14 }}>psychology</span>
           <span className="text-[12px] uppercase tracking-[0.3em] font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>
             {ACTIVE_SYLLABUS_ID === 'ai_engineer' ? '90-Day Course' : '28-Day Course'}
           </span>
@@ -148,8 +148,8 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
                       }}
                     >
                       {isDone
-                        ? <CheckCircle2 size={16} style={{ color: 'var(--color-success)' }} />
-                        : <BookOpen size={15} style={{ color: 'var(--color-primary)' }} />
+                        ? <span className="material-symbols-rounded" style={{ fontSize: 16,  color: 'var(--color-success)'  }}>check_circle</span>
+                        : <span className="material-symbols-rounded" style={{ fontSize: 15,  color: 'var(--color-primary)'  }}>menu_book</span>
                       }
                     </div>
 
@@ -165,7 +165,7 @@ export const CourseDashboard: React.FC<Props> = ({ setScreen, setCourseDay }) =>
                       <p className="text-[12px] mt-0.5 truncate" style={{ color: 'var(--color-on-surface-muted)' }}>{lesson.principle}</p>
                     </div>
 
-                    <ChevronRight size={14} className="text-[#A8A29E] shrink-0" />
+                    <span className="material-symbols-rounded text-[var(--color-border)] shrink-0" style={{ fontSize: 14 }}>chevron_right</span>
                   </motion.button>
                 );
               })}

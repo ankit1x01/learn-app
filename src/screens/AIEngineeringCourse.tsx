@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { aiEngineeringPhases } from '../data/ai-engineering/course-index';
 import PhaseDetail from './PhaseDetail';
 import type { Phase } from '../data/ai-engineering/types';
@@ -50,11 +50,13 @@ export default function AIEngineeringCourse({ setScreen }: AIEngineeringCoursePr
             onClick={() => setScreen('dashboard')}
             className="flex items-center gap-2 text-[var(--color-primary)] font-medium mb-4 active:scale-95 transition-transform"
           >
-            ← Dashboard
-          </button>
+          <span className="material-symbols-rounded">arrow_back</span>
+          Dashboard
+        </button>
         )}
-        <h1 className="text-3xl font-bold text-[var(--color-on-background)] mb-2">
-          🧠 AI Engineering Path
+        <h1 className="text-3xl font-bold text-[var(--color-on-background)] mb-2 flex items-center gap-3">
+          <span className="material-symbols-rounded text-3xl" style={{ color: '#8B5CF6' }}>psychology</span>
+          AI Engineering Path
         </h1>
         <p className="text-[var(--color-on-surface-variant)] text-sm">
           260+ lessons • 20 phases • ~320 hours
@@ -94,7 +96,7 @@ export default function AIEngineeringCourse({ setScreen }: AIEngineeringCoursePr
                   {phase.lessons.length} lessons
                 </p>
               </div>
-              <span className="text-2xl">→</span>
+              <span className="material-symbols-rounded text-[var(--color-outline)]">chevron_right</span>
             </div>
           </motion.button>
         ))}
@@ -108,7 +110,7 @@ export default function AIEngineeringCourse({ setScreen }: AIEngineeringCoursePr
         className="mt-8 p-4 rounded-2xl bg-[var(--color-surface-container-low)] border border-[var(--color-outline-variant)]"
       >
         <p className="text-xs text-[var(--color-on-surface-variant)] leading-relaxed">
-          📖 Learn AI engineering from first principles. Read docs, implement code, test your understanding.
+          Learn AI engineering from first principles. Read docs, implement code, test your understanding.
           Built with spaced repetition science for lasting mastery.
         </p>
       </motion.div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { Toast } from '@capacitor/toast';
 import type { Screen } from '../types';
 import { COURSE_LESSONS } from '../data/course/lessons';
 import { AI_ROADMAP_LESSONS } from '../data/ai_engineer/roadmap';
@@ -33,7 +34,7 @@ export const CourseLesson: React.FC<Props> = ({ setScreen, courseDay, setCourseD
 
   const handleMarkDone = async () => {
     if (isPortfolio && !compressNote.trim()) {
-      alert('Please enter a project or GitHub URL before marking as done.');
+      Toast.show({ text: 'Please enter a project or GitHub URL before marking as done.' }).catch(() => {});
       return;
     }
     await saveCourseDay(courseDay, compressNote);
@@ -58,7 +59,7 @@ export const CourseLesson: React.FC<Props> = ({ setScreen, courseDay, setCourseD
           className="w-9 h-9 rounded-xl flex items-center justify-center border"
           style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-border)' }}
         >
-          <ChevronLeft size={18} style={{ color: 'var(--color-on-surface-variant)' }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 18,  color: 'var(--color-on-surface-variant)'  }}>chevron_left</span>
         </button>
         <div className="flex-1 min-w-0">
           <p className="text-[11px] uppercase tracking-[0.2em] font-bold mb-0.5" style={{ color: 'var(--color-on-surface-variant)' }}>
@@ -70,7 +71,7 @@ export const CourseLesson: React.FC<Props> = ({ setScreen, courseDay, setCourseD
         </div>
         {isDone && (
           <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border" style={{ background: 'var(--color-success-container)', borderColor: 'var(--color-success)' }}>
-            <CheckCircle2 size={12} style={{ color: 'var(--color-on-success-container)' }} />
+            <span className="material-symbols-rounded" style={{ fontSize: 12,  color: 'var(--color-on-success-container)'  }}>check_circle</span>
             <span className="text-[11px] font-bold uppercase tracking-wide" style={{ color: 'var(--color-on-success-container)' }}>Done</span>
           </div>
         )}
@@ -128,12 +129,12 @@ export const CourseLesson: React.FC<Props> = ({ setScreen, courseDay, setCourseD
             className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest flex items-center justify-center gap-2"
             style={{ background: 'var(--color-success)', color: 'var(--color-on-success)', fontFamily: JKS }}
           >
-            <CheckCircle2 size={16} />
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>check_circle</span>
             Mark as Done
           </button>
         ) : (
           <div className="card rounded-2xl p-4 border text-center" style={{ borderColor: 'var(--color-success)' }}>
-            <CheckCircle2 size={24} className="mx-auto mb-1.5" style={{ color: 'var(--color-success)' }} />
+            <span className="material-symbols-rounded mx-auto mb-1.5" style={{ fontSize: 24,  color: 'var(--color-success)'  }}>check_circle</span>
             <p className="font-bold text-[14px]" style={{ fontFamily: JKS, color: 'var(--color-success)' }}>
               Day {lesson.day} complete
             </p>
@@ -152,7 +153,7 @@ export const CourseLesson: React.FC<Props> = ({ setScreen, courseDay, setCourseD
             style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', fontFamily: JKS }}
           >
             Day {nextLesson.day}: {nextLesson.title}
-            <ChevronRight size={16} />
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>chevron_right</span>
           </button>
         )}
 

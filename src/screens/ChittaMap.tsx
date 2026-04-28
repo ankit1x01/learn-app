@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { calculateR } from '../core/fsrs';
-import { CONFIG, subjectEmoji } from '../lib/config';
+import { getForgettingCurve } from '../core/scheduler';
+import { CONFIG, subjectIcon } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
 import type { Screen } from '../types';
 import type { Stage, Concept, SubjectStats } from '../core/types';
-import { Info } from 'lucide-react';
+
 
 export const ChittaMap = ({
   setScreen,
@@ -72,7 +73,7 @@ export const ChittaMap = ({
             }`}
             style={filter === f ? { background: 'var(--color-primary)' } : { background: 'var(--color-surface-container-lowest)' }}
           >
-            {f === 'All' ? f : `${subjectEmoji(f)} ${f}`}
+            {f === 'All' ? f : <div className="flex items-center gap-1.5"><span className="material-symbols-rounded" style={{ fontSize: 16 }}>{subjectIcon(f)}</span>{f}</div>}
           </button>
         ))}
       </div>
@@ -104,7 +105,7 @@ export const ChittaMap = ({
             <div className="card rounded-[1.5rem] p-6">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="font-ui font-bold text-lg leading-tight">{selectedNode.name}</h3>
-                <Info size={16} className="text-[#78716C] shrink-0 ml-2" />
+                <span className="material-symbols-rounded text-[var(--color-on-surface-variant)] shrink-0 ml-2" style={{ fontSize: 16 }}>info</span>
               </div>
               <p className="text-[12px] text-[#6B7280] uppercase tracking-widest mb-3">{selectedNode.chapter} · Unit {selectedNode.unit}</p>
               <div className="flex gap-2 mb-4">
@@ -129,16 +130,47 @@ export const ChittaMap = ({
                   { label: 'Next Review',   value: selectedNode.nextReview >= 0 ? `${selectedNode.nextReview}d` : 'Now' },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex justify-between">
-                    <span className="text-[#78716C] uppercase tracking-widest">{label}</span>
+                    <span className="text-[var(--color-on-surface-variant)] uppercase tracking-widest">{label}</span>
                     <span className="font-bold">{value}</span>
                   </div>
                 ))}
               </div>
+
+              {/* Forgetting Curve Chart */}
+              {selectedNode.stage !== 'Unseen' && (
+                <div className="mt-5 pt-4 border-t border-[var(--color-border)]">
+                  <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-[var(--color-on-surface-variant)] mb-3">Memory Projection (14 days)</p>
+                  <div className="flex items-end justify-between h-12 gap-[2px]">
+                    {getForgettingCurve(selectedNode, 14).map((d, i) => (
+                      <div key={i} className="flex-1 group relative">
+                        <motion.div
+                          initial={{ height: 0 }}
+                          animate={{ height: `${d.r * 100}%` }}
+                          className="w-full rounded-t-[2px]"
+                          style={{
+                            background: d.r > 0.9 ? 'var(--color-success)' : d.r > 0.7 ? 'var(--color-primary)' : 'var(--color-error)',
+                            opacity: 0.3 + (d.r * 0.7)
+                          }}
+                        />
+                        {/* Tooltip on hover */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-[var(--color-on-surface)] text-[var(--color-surface)] text-[8px] px-1 py-0.5 rounded whitespace-nowrap z-50">
+                          Day {i}: {Math.round(d.r * 100)}%
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex justify-between mt-1.5 text-[8px] font-bold text-[var(--color-on-surface-muted)] uppercase tracking-tighter">
+                    <span>Today</span>
+                    <span>Next 2 Weeks</span>
+                  </div>
+                </div>
+              )}
+
               <button
                 onClick={() => { setSelectedNode(null); setScreen('recall'); }}
-                className="w-full mt-5 py-3 text-primary text-[12px] font-bold uppercase tracking-[0.2em] border-t border-[#E8E5DF] pt-4"
+                className="w-full mt-5 py-3 text-primary text-[12px] font-bold uppercase tracking-[0.2em] border-t border-[var(--color-border)] pt-4"
               >
-                Enter Deep Dive →
+                Enter Deep Dive <span className="material-symbols-rounded" style={{ fontSize: 14 }}>chevron_right</span>
               </button>
             </div>
           </motion.div>
@@ -158,7 +190,7 @@ export const ChittaMap = ({
               <div className="w-2 h-2 rounded-full" style={{ background: s.color }} />
               <div className="text-right">
                 <div className="font-ui font-bold text-sm">{s.value}</div>
-                <div className="text-[12px] text-[#78716C] uppercase tracking-normal">{s.label}</div>
+                <div className="text-[12px] text-[var(--color-on-surface-variant)] uppercase tracking-normal">{s.label}</div>
               </div>
             </div>
           ))}

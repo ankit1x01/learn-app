@@ -201,3 +201,81 @@ export const updateStabilityWithPredictionError = (
   // Pre-test was correct — no prediction error, no special multiplier
   return stability;
 };
+
+// ─── Quiz-Based FSRS Updates ──────────────────────────────────────────────────
+
+/**
+ * Update FSRS metrics based on quiz performance.
+ * Used when student completes AI Engineering course quizzes.
+ *
+ * @param currentStability Current stability value
+ * @param currentDifficulty Current difficulty (0-1)
+ * @param percentage Quiz score as percentage (0-100)
+ * @param questionCount Total questions answered
+ *
+ * Returns updated { stability, difficulty, stage } for spaced repetition.
+ */
+export const updateFSRSFromQuiz = (
+  currentStage: Stage,
+  currentStability: number,
+  currentDifficulty: number,
+  percentage: number,
+  questionCount: number
+) => {
+  // Determine if quiz was a success (≥80% threshold)
+  const isSuccess = percentage >= 80;
+  const retrievability = percentage / 100; // Treat score as proxy for retrieval success
+
+  // Update stability: better performance = stronger memory trace
+  let newStability = currentStability;
+  if (isSuccess) {
+    // Success: boost stability based on confidence (100% correct = highest boost)
+    const boost = Math.exp(0.1 * (1 - retrievability));
+    newStability = Math.round(currentStability * boost * 10) / 10;
+  } else {
+    // Failure: reduce stability (memory reset)
+    newStability = Math.max(2, Math.round(currentStability * 0.4 * 10) / 10);
+  }
+
+  // Update difficulty: correct answers = easier, wrong answers = harder
+  const correctCount = Math.round((percentage / 100) * questionCount);
+  const incorrectCount = questionCount - correctCount;
+  const difficultyDelta = (incorrectCount * 0.1) - (correctCount * 0.05);
+  let newDifficulty = Math.min(1, Math.max(0, Math.round((currentDifficulty + difficultyDelta) * 100) / 100));
+
+  // Determine stage advancement based on performance
+  // High score = advance, low score = regress
+  let stage = currentStage;
+  if (percentage >= 80) {
+    stage = advanceStage(currentStage);
+  } else if (percentage < 60) {
+    stage = regressStage(currentStage);
+  }
+
+  return {
+    stability: newStability,
+    difficulty: newDifficulty,
+    stage,
+    quizScore: percentage,
+    nextReviewDays: getNextReviewDays(newStability),
+  };
+};
+
+export const updateFSRSFromGamePerformance = (
+  currentStage: Stage,
+  currentStability: number,
+  currentDifficulty: number,
+  gameScore: number
+) => {
+  // Simple rule: passed (≥75%) = perfect recall (100%), else failed (0%)
+  const percentage = gameScore >= 75 ? 100 : 0;
+
+  // Reuse quiz update logic with fixed questionCount = 1
+  return updateFSRSFromQuiz(
+    currentStage,
+    currentStability,
+    currentDifficulty,
+    percentage,
+    1
+  );
+};

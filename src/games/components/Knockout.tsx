@@ -1,6 +1,6 @@
 // src/games/components/Knockout.tsx
 import { useState, useRef } from 'react'
-import { Trophy, CheckCircle } from 'lucide-react'
+
 import { KnockoutConfig, GameResult } from '../types'
 import { GameWinScreen } from './GameWinScreen'
 
@@ -191,10 +191,10 @@ export function Knockout({ config }: Props) {
                   }}
                 >
                   {isCorrect && (
-                    <CheckCircle size={24} color="#16A34A" style={{ marginBottom: 8 }} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 24, color: "#16A34A",  marginBottom: 8  }}>check_circle</span>
                   )}
                   {isWrong && (
-                    <Trophy size={20} color="#DC2626" style={{ marginBottom: 8, opacity: 0.5 }} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 20, color: "#DC2626",  marginBottom: 8, opacity: 0.5  }}>cancel</span>
                   )}
                   <p
                     className="text-[16px] font-black text-center leading-snug"

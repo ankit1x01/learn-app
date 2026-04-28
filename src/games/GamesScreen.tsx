@@ -1,6 +1,6 @@
 // src/games/GamesScreen.tsx
 import { useState } from 'react'
-import { Shuffle, Clock, Link2, Sword, ChevronLeft, Hand, Brain, Headphones, Target } from 'lucide-react'
+
 import { GameRunner } from './GameRunner'
 import { GameConfig } from './types'
 import { EquationBalancer } from './EquationBalancer'
@@ -32,7 +32,7 @@ const GAMES: GameMeta[] = [
     id: 'this-or-that',
     label: 'This or That',
     tagline: 'Pick a side',
-    icon: Shuffle,
+    icon: 'shuffle' as any,
     bg: '#4ADE80',
     textDark: '#14532D',
     foldColor: 'rgba(0,0,0,0.13)',
@@ -41,7 +41,7 @@ const GAMES: GameMeta[] = [
     id: 'chrono',
     label: 'Chrono',
     tagline: 'Order events',
-    icon: Clock,
+    icon: 'schedule' as any,
     bg: '#FCD34D',
     textDark: '#78350F',
     foldColor: 'rgba(0,0,0,0.10)',
@@ -50,7 +50,7 @@ const GAMES: GameMeta[] = [
     id: 'links',
     label: 'Links',
     tagline: 'Connect cards',
-    icon: Link2,
+    icon: 'link' as any,
     bg: '#60A5FA',
     textDark: '#1E3A5F',
     foldColor: 'rgba(0,0,0,0.12)',
@@ -59,7 +59,7 @@ const GAMES: GameMeta[] = [
     id: 'knockout',
     label: 'Knockout',
     tagline: 'Choose a winner',
-    icon: Sword,
+    icon: 'swords' as any,
     bg: '#FB923C',
     textDark: '#7C2D12',
     foldColor: 'rgba(0,0,0,0.13)',
@@ -68,7 +68,7 @@ const GAMES: GameMeta[] = [
     id: 'balloon-tap',
     label: 'Balloons',
     tagline: 'Pop the right word',
-    icon: Hand,
+    icon: 'back_hand' as any,
     bg: '#A78BFA',
     textDark: '#1E1B4B',
     foldColor: 'rgba(0,0,0,0.13)',
@@ -77,7 +77,7 @@ const GAMES: GameMeta[] = [
     id: 'retention',
     label: 'Memory',
     tagline: 'What did you see?',
-    icon: Brain,
+    icon: 'psychology' as any,
     bg: '#2DD4BF',
     textDark: '#134E4A',
     foldColor: 'rgba(0,0,0,0.12)',
@@ -86,7 +86,7 @@ const GAMES: GameMeta[] = [
     id: 'audio-lecture',
     label: 'Lecture',
     tagline: 'Listen & recall',
-    icon: Headphones,
+    icon: 'headphones' as any,
     bg: '#6366F1',
     textDark: '#1E1B4B',
     foldColor: 'rgba(0,0,0,0.13)',
@@ -95,7 +95,7 @@ const GAMES: GameMeta[] = [
     id: 'bubble-match',
     label: 'Bubble Match',
     tagline: 'Drag & sort facts',
-    icon: Target,
+    icon: 'target' as any,
     bg: '#F97316',
     textDark: '#431407',
     foldColor: 'rgba(0,0,0,0.13)',
@@ -104,7 +104,7 @@ const GAMES: GameMeta[] = [
     id: 'equation-balancer',
     label: 'Equations',
     tagline: 'Balance math',
-    icon: Brain,
+    icon: 'psychology' as any,
     bg: '#E8DEF8',
     textDark: '#1D192B',
     foldColor: 'rgba(0,0,0,0.13)',
@@ -169,15 +169,15 @@ export function GamesScreen({ onBack, setScreen }: Props) {
           <button
             onClick={() => setSelectedGame(null)}
             className="w-9 h-9 flex items-center justify-center rounded-xl"
-            style={{ background: '#F0EEE9' }}
+            style={{ background: 'var(--color-surface-container)' }}
           >
-            <ChevronLeft size={20} color="#292524" />
+            <span className="material-symbols-rounded" style={{ fontSize: 20, color: "#292524" }}>chevron_left</span>
           </button>
           <div className="flex-1">
-            <p className="text-[17px] font-black text-[#1C1917]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>
+            <p className="text-[17px] font-black text-[var(--color-on-surface)]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>
               {game.label}
             </p>
-            <p className="text-[12px] text-[#78716C]" style={{ fontFamily: 'Inter, system-ui' }}>
+            <p className="text-[12px] text-[var(--color-on-surface-variant)]" style={{ fontFamily: 'Inter, system-ui' }}>
               DSA · Today's Theme
             </p>
           </div>
@@ -208,7 +208,7 @@ export function GamesScreen({ onBack, setScreen }: Props) {
           className="w-9 h-9 flex items-center justify-center rounded-xl"
           style={{ background: 'rgba(0,0,0,0.07)' }}
         >
-          <ChevronLeft size={20} color="#292524" />
+          <span className="material-symbols-rounded" style={{ fontSize: 20, color: "#292524" }}>chevron_left</span>
         </button>
         <div className="flex-1 text-center">
           <p
@@ -218,7 +218,7 @@ export function GamesScreen({ onBack, setScreen }: Props) {
             Today's Theme
           </p>
           <h1
-            className="text-[28px] font-black text-[#1C1917] leading-tight mt-0.5"
+            className="text-[28px] font-black text-[var(--color-on-surface)] leading-tight mt-0.5"
             style={{ fontFamily: 'Plus Jakarta Sans, system-ui', letterSpacing: '-0.02em' }}
           >
             DSA Concepts
@@ -255,7 +255,7 @@ export function GamesScreen({ onBack, setScreen }: Props) {
                   className="w-16 h-16 rounded-2xl flex items-center justify-center"
                   style={{ background: 'rgba(255,255,255,0.28)' }}
                 >
-                  <Icon size={34} color={game.textDark} strokeWidth={1.8} />
+                  <span className="material-symbols-rounded" style={{ fontSize: 34, color: game.textDark }}>{game.icon as any}</span>
                 </div>
               </div>
 
@@ -425,7 +425,7 @@ export function GamesScreen({ onBack, setScreen }: Props) {
 
       <p
         className="col-span-2 text-center text-[12px] pb-6 mt-2"
-        style={{ color: '#A8A29E', fontFamily: 'Inter, system-ui' }}
+        style={{ color: 'var(--color-border)', fontFamily: 'Inter, system-ui' }}
       >
         Tap any game to play · DSA edition
       </p>

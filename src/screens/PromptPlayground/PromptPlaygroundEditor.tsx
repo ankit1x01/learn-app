@@ -1,10 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {
-  ChevronLeft, Share2, Copy, Check, MessageSquare, Bot, Sparkles,
-  ChevronDown, ChevronUp, Zap, BookOpen, Code2, Shield,
-  ExternalLink, RotateCcw
-} from 'lucide-react';
+
 import { Share } from '@capacitor/share';
 import { TEMPLATES, getTemplatesByPack } from './templates';
 import type { Template, CoursePackId } from '../../types';
@@ -17,9 +13,9 @@ interface PromptPlaygroundEditorProps {
 }
 
 const AI_APPS = [
-  { label: 'ChatGPT', color: '#10A37F', url: 'https://chatgpt.com', Icon: MessageSquare },
-  { label: 'Claude',  color: '#D97757', url: 'https://claude.ai/new', Icon: Bot },
-  { label: 'Gemini',  color: '#4285F4', url: 'https://gemini.google.com/', Icon: Sparkles },
+  { label: 'ChatGPT', color: '#10A37F', url: 'https://chatgpt.com', Icon: 'chat' },
+  { label: 'Claude',  color: '#D97757', url: 'https://claude.ai/new', Icon: 'smart_toy' },
+  { label: 'Gemini',  color: '#4285F4', url: 'https://gemini.google.com/', Icon: 'auto_awesome' },
 ];
 
 function estimateTokens(text: string) {
@@ -65,9 +61,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
 
   const handleShare = async () => {
     if (!fullPrompt.trim()) return;
-    try {
-      await Share.share({ title: 'Prompt', text: fullPrompt, dialogTitle: 'Share Prompt to AI App' });
-    } catch (e) { console.log('Share failed', e); }
+    await Share.share({ title: 'Prompt', text: fullPrompt, dialogTitle: 'Share Prompt to AI App' }).catch(() => {});
   };
 
   const openApp = (url: string) => {
@@ -89,7 +83,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
         <button onClick={onBack}
           className="w-9 h-9 rounded-xl flex items-center justify-center border shrink-0"
           style={{ background: 'var(--color-surface-container)', borderColor: 'var(--color-border)' }}>
-          <ChevronLeft size={18} style={{ color: 'var(--color-on-surface-variant)' }} />
+          <span className="material-symbols-rounded" style={{ fontSize: 18,  color: 'var(--color-on-surface-variant)'  }}>chevron_left</span>
         </button>
         <div className="flex-1 min-w-0">
           <h1 className="font-bold text-[18px] leading-tight" style={{ color: 'var(--color-on-surface)' }}>
@@ -106,7 +100,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
             onClick={handleShare}
             className="w-9 h-9 rounded-xl flex items-center justify-center border shrink-0"
             style={{ background: 'var(--color-primary-container)', borderColor: 'var(--color-primary)' }}>
-            <Share2 size={15} style={{ color: 'var(--color-on-primary-container)' }} />
+            <span className="material-symbols-rounded" style={{ fontSize: 15,  color: 'var(--color-on-primary-container)'  }}>share</span>
           </motion.button>
         )}
       </div>
@@ -120,7 +114,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
               background: activeTab === tab ? 'var(--color-primary)' : 'transparent',
               color: activeTab === tab ? 'var(--color-on-primary)' : 'var(--color-on-surface-variant)'
             }}>
-            {tab === 'templates' ? '📚 Templates' : '✏️ Editor'}
+            {tab === 'templates' ? <div className="flex items-center justify-center gap-1"><span className="material-symbols-rounded" style={{ fontSize: 14 }}>library_books</span> Templates</div> : <div className="flex items-center justify-center gap-1"><span className="material-symbols-rounded" style={{ fontSize: 14 }}>edit</span> Editor</div>}
           </button>
         ))}
       </div>
@@ -167,7 +161,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
                   {t.highlight && (
                     <div className="flex items-start gap-1.5 mt-1 px-2.5 py-2 rounded-xl"
                       style={{ background: t.techniqueColor + '12' }}>
-                      <Zap size={11} className="shrink-0 mt-0.5" style={{ color: t.techniqueColor }} />
+                      <span className="material-symbols-rounded shrink-0 mt-0.5" style={{ fontSize: 11,  color: t.techniqueColor  }}>bolt</span>
                       <p className="text-[11px] font-medium" style={{ color: t.techniqueColor }}>{t.highlight}</p>
                     </div>
                   )}
@@ -191,12 +185,12 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
             {selectedTemplate && (
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
                 style={{ background: selectedTemplate.techniqueColor + '15' }}>
-                <BookOpen size={13} style={{ color: selectedTemplate.techniqueColor }} />
+                <span className="material-symbols-rounded" style={{ fontSize: 13,  color: selectedTemplate.techniqueColor  }}>menu_book</span>
                 <span className="text-[12px] font-bold flex-1" style={{ color: selectedTemplate.techniqueColor }}>
                   {selectedTemplate.title}
                 </span>
                 <button onClick={reset}>
-                  <RotateCcw size={13} style={{ color: selectedTemplate.techniqueColor }} />
+                  <span className="material-symbols-rounded" style={{ fontSize: 13,  color: selectedTemplate.techniqueColor  }}>refresh</span>
                 </button>
               </div>
             )}
@@ -205,7 +199,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
             <div className="flex flex-col gap-1.5">
               <label className="text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5"
                 style={{ color: 'var(--color-on-surface-variant)' }}>
-                <Shield size={11} /> System Prompt
+                <span className="material-symbols-rounded" style={{ fontSize: 11 }}>security</span> System Prompt
               </label>
               <textarea
                 value={system}
@@ -227,7 +221,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
             <div className="flex flex-col gap-1.5">
               <label className="text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5"
                 style={{ color: 'var(--color-on-surface-variant)' }}>
-                <MessageSquare size={11} /> User Message
+                <span className="material-symbols-rounded" style={{ fontSize: 11 }}>chat</span> User Message
               </label>
               <textarea
                 value={user}
@@ -253,7 +247,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
                   className="w-full flex items-center justify-between px-3 py-2"
                   style={{ background: 'var(--color-surface-container)' }}>
                   <div className="flex items-center gap-2">
-                    <Code2 size={12} style={{ color: 'var(--color-on-surface-variant)' }} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 12,  color: 'var(--color-on-surface-variant)'  }}>code</span>
                     <span className="text-[11px] font-bold uppercase tracking-wider"
                       style={{ color: 'var(--color-on-surface-variant)' }}>Full Prompt</span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded-full"
@@ -265,11 +259,11 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
                     <button onClick={e => { e.stopPropagation(); handleCopy(); }}
                       className="flex items-center gap-1 text-[11px] font-bold"
                       style={{ color: copied ? 'var(--color-success)' : 'var(--color-primary)' }}>
-                      {copied ? <Check size={12} /> : <Copy size={12} />}
+                      {copied ? <span className="material-symbols-rounded" style={{ fontSize: 12 }}>check</span> : <span className="material-symbols-rounded" style={{ fontSize: 12 }}>content_copy</span>}
                       {copied ? 'Copied' : 'Copy'}
                     </button>
-                    {expanded ? <ChevronUp size={14} style={{ color: 'var(--color-on-surface-variant)' }} />
-                      : <ChevronDown size={14} style={{ color: 'var(--color-on-surface-variant)' }} />}
+                    {expanded ? <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-on-surface-variant)'  }}>expand_less</span>
+                      : <span className="material-symbols-rounded" style={{ fontSize: 14,  color: 'var(--color-on-surface-variant)'  }}>expand_more</span>}
                   </div>
                 </button>
                 <AnimatePresence>
@@ -297,7 +291,7 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
               disabled={!fullPrompt.trim()}
               className="w-full py-4 rounded-2xl font-bold text-[13px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-40"
               style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)' }}>
-              <Share2 size={15} />
+              <span className="material-symbols-rounded" style={{ fontSize: 15 }}>share</span>
               Share via OS Sheet
             </button>
 
@@ -308,10 +302,10 @@ export const PromptPlaygroundEditor: React.FC<PromptPlaygroundEditorProps> = ({
                   onClick={() => openApp(url)}
                   className="py-3 rounded-xl border flex flex-col items-center justify-center gap-1.5"
                   style={{ background: 'var(--color-surface-container)', borderColor: color + '30' }}>
-                  <Icon size={20} style={{ color }} />
+                  <span className="material-symbols-rounded" style={{ fontSize: 20, color }}>{Icon}</span>
                   <span className="text-[10px] font-bold uppercase tracking-wider"
                     style={{ color: 'var(--color-on-surface-variant)' }}>{label}</span>
-                  <ExternalLink size={9} style={{ color: 'var(--color-on-surface-variant)' }} />
+                  <span className="material-symbols-rounded" style={{ fontSize: 9,  color: 'var(--color-on-surface-variant)'  }}>open_in_new</span>
                 </motion.button>
               ))}
             </div>

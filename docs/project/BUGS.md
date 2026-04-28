@@ -5,17 +5,13 @@
 
 ## 🔴 Critical (data loss / broken core flow)
 
-### BUG-007 — getPreSleepReviewSet has no entry point
-**File:** `src/core/scheduler.ts` (function exists, never called)
-**Problem:** Pre-sleep review set function correctly identifies high-stakes Fragile/Conscious concepts for NREM seeding, but there's no screen or navigation path that calls it.
-**Fix:** Add "Pre-Sleep Review" mode to Dashboard (show between 20:00–22:00 only) or MorningRecall.
 
----
 
 ## ✅ Fixed
 
 | Bug | Fixed | Description |
 |---|---|---|
+| BUG-007 — getPreSleepReviewSet has no entry point | 2026-04-28 | Fully implemented PreSleepReview screen with FSRS updates. |
 | BUG-004 — detectCognitiveFatigue never called | 2026-04-19 | Evaluates fatigue live in session loop and truncates adaptive session length. |
 | BUG-006 — Streak count hardcoded | 2026-04-19 | Moved streak into `store.ts` tracking `firstLogin` against Capacitor Preferences. |
 | BUG-008 — daysRemaining hardcoded | 2026-04-19 | Computed dynamically from `CONFIG.examDate` in `Dashboard.tsx`. |

@@ -130,10 +130,10 @@ export function RetentionGame({ config }: Props) {
     : null
 
   return (
-    <div className="flex flex-col min-h-[600px] bg-[#F7F6F3]" style={{ userSelect: 'none' }}>
+    <div className="flex flex-col min-h-[600px] bg-[var(--color-surface-container)]" style={{ userSelect: 'none' }}>
       {/* HUD */}
       <div className="flex items-center justify-between px-5 pt-4 pb-2">
-        <p className="text-[13px] font-semibold text-[#A8A29E]" style={{ fontFamily: 'Inter, system-ui' }}>
+        <p className="text-[13px] font-semibold text-[var(--color-border)]" style={{ fontFamily: 'Inter, system-ui' }}>
           Round {round}/{TOTAL_ROUNDS}
         </p>
         <div className="flex gap-1.5">
@@ -141,18 +141,18 @@ export function RetentionGame({ config }: Props) {
             <div
               key={i}
               className="w-2 h-2 rounded-full transition-colors duration-300"
-              style={{ background: i < round ? '#2DD4BF' : '#E8E5DF' }}
+              style={{ background: i < round ? '#2DD4BF' : 'var(--color-border)' }}
             />
           ))}
         </div>
-        <p className="text-[13px] font-semibold text-[#A8A29E]" style={{ fontFamily: 'Inter, system-ui' }}>
+        <p className="text-[13px] font-semibold text-[var(--color-border)]" style={{ fontFamily: 'Inter, system-ui' }}>
           {avgScore !== null ? `${avgScore}%` : '—'}
         </p>
       </div>
 
       {/* Phase label */}
       <p
-        className="text-center text-[11px] font-bold tracking-[0.2em] text-[#A8A29E] mb-4"
+        className="text-center text-[11px] font-bold tracking-[0.2em] text-[var(--color-border)] mb-4"
         style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}
       >
         {phaseLabel[phase]}
@@ -211,7 +211,7 @@ function ShowPhase({ items, pool, duration, onComplete }: ShowPhaseProps) {
   return (
     <div className="flex flex-col flex-1 px-5 gap-5">
       {/* Countdown bar */}
-      <div className="h-1 bg-[#E8E5DF] rounded-full overflow-hidden">
+      <div className="h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ background: '#2DD4BF' }}
@@ -298,11 +298,11 @@ function RecallPhase({ pool, targetCount, onComplete }: RecallPhaseProps) {
   return (
     <div className="flex flex-col flex-1 px-5 gap-4">
       <p
-        className="text-center text-[13px] text-[#78716C]"
+        className="text-center text-[13px] text-[var(--color-on-surface-variant)]"
         style={{ fontFamily: 'Inter, system-ui' }}
       >
         Select <strong>{targetCount}</strong> items you saw ·{' '}
-        <span style={{ color: remaining === 0 ? '#2DD4BF' : '#78716C' }}>
+        <span style={{ color: remaining === 0 ? '#2DD4BF' : 'var(--color-on-surface-variant)' }}>
           {remaining} remaining
         </span>
       </p>
@@ -311,7 +311,7 @@ function RecallPhase({ pool, targetCount, onComplete }: RecallPhaseProps) {
           const isSelected = selected.includes(item.id)
           const { bg, shadow } = isSelected
             ? palettFor(pool, item.id)
-            : { bg: '#D6D3D1', shadow: '#A8A29E' }
+            : { bg: '#D6D3D1', shadow: 'var(--color-border)' }
           return (
             <CognitiveItem
               key={item.id}

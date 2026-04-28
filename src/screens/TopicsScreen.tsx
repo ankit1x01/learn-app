@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Toast } from '@capacitor/toast';
 import { EXAM_CARDS, TOPIC_BANKS } from '../data/topic-banks/index';
 import type { ExamCard, TopicGroup, TopicEntry, TopicProblem } from '../data/topic-banks/index';
 import { SYLLABUS_REGISTRY } from '../data/index';
@@ -28,7 +29,10 @@ export const TopicsScreen: React.FC<Props> = ({ setScreen }) => {
   };
 
   const handleExamSelect = (exam: ExamCard) => {
-    if (!TOPIC_BANKS[exam.id] && exam.id !== 'school_maths' && exam.id !== 'iit_jee') return; // coming soon — no action
+    if (!TOPIC_BANKS[exam.id] && exam.id !== 'school_maths' && exam.id !== 'iit_jee') {
+      Toast.show({ text: "More exams coming soon!" }).catch(() => {});
+      return;
+    }
     setSelectedExam(exam);
     navigate('subjects', 1);
   };
@@ -181,8 +185,8 @@ const SubjectPickerLevel: React.FC<{ exam: ExamCard; onSelect: (subject: string)
           onClick={() => onSelect(subject.name)}
           className="w-full flex items-center gap-4 p-4 rounded-[20px] text-left bg-[var(--color-surface-container-low)] active:scale-[0.98] transition-all"
         >
-          <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-xl shrink-0 ${subject.bgColor}`}>
-            {subject.emoji}
+          <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${subject.bgColor}`}>
+            <span className="material-symbols-rounded" style={{ fontSize: 20, color: 'var(--color-on-surface)' }}>{subject.icon}</span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[14px] font-bold text-[var(--color-on-surface)]">{subject.name}</p>

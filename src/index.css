@@ -140,6 +140,14 @@
 /* ── Base ─────────────────────────────────────────────────────────────────── */
 
 @layer base {
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: text;
+    -webkit-user-select: text;
+    -webkit-touch-callout: default;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-on-surface);
@@ -148,8 +156,9 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  * {
-    box-sizing: border-box;
+  button, a, .btn-icon, .nav-item, [role="button"], [role="tab"] {
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
 }
 

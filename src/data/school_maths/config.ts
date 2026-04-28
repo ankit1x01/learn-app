@@ -13,7 +13,7 @@ export const schoolMathsConfig: SyllabusConfig = {
       color: 'text-primary',
       bgColor: 'bg-primary/10',
       barColor: 'bg-primary',
-      emoji: '➗',
+      icon: 'calculate',
       encodingTip: 'Review class formulas',
     },
   ],

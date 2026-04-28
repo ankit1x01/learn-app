@@ -1,6 +1,6 @@
 // src/games/components/memory/NameRecallGame.tsx
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { MemoryNameRecallConfig } from '../../types';
 import { m3SpatialDefault, m3EffectsEase } from '../../../lib/m3-motion';
 

@@ -20,7 +20,7 @@ export function TimerBar({ timeLeft, totalTime }: Props) {
                '#EF4444'
 
   return (
-    <div className="w-full h-1.5 bg-[#E8E5DF] rounded-full overflow-hidden">
+    <div className="w-full h-1.5 bg-[var(--color-border)] rounded-full overflow-hidden">
       <motion.div
         className="h-full rounded-full"
         style={{ backgroundColor: color }}

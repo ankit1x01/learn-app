@@ -37,8 +37,7 @@ export function useConceptStore(initial: Concept[]): UseConceptStoreResult {
               stability:  saved.stability,
               difficulty: saved.difficulty,
               lastTested: saved.lastTested,
-              // queue is a runtime field not in Concept type — spread as any
-              ...(saved.queue !== undefined && { queue: saved.queue }),
+              queue:      saved.queue as Concept['queue'],
               // Neuroscience fields
               ...(saved.encodingDepth          !== undefined && { encodingDepth:          saved.encodingDepth as Concept['encodingDepth'] }),
               ...(saved.metacogAccuracy        !== undefined && { metacogAccuracy:        saved.metacogAccuracy }),
@@ -66,7 +65,7 @@ export function useConceptStore(initial: Concept[]): UseConceptStoreResult {
           stability:  updated.stability,
           difficulty: updated.difficulty,
           lastTested: updated.lastTested,
-          queue:      (updated as Concept & { queue?: string }).queue ?? 'new',
+          queue:      updated.queue ?? 'new',
           // Neuroscience fields
           encodingDepth:          updated.encodingDepth,
           metacogAccuracy:        updated.metacogAccuracy,

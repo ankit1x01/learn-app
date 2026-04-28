@@ -65,13 +65,34 @@ export async function initDB(): Promise<void> {
 const KEY_LAST_LOGIN = 'chitta:last_login';
 const KEY_STREAK     = 'chitta:current_streak';
 
-export async function getAppStreak(): Promise<number> {
+/**
+ * Read the current streak without mutating storage.
+ * If the user hasn't logged in today but logged in yesterday, the streak is still active.
+ * If the user hasn't logged in since before yesterday, the streak is broken (0).
+ */
+export async function peekStreak(): Promise<number> {
+  const lastLogin = await getJSON<string | null>(KEY_LAST_LOGIN, null);
+  const streak = await getJSON<number>(KEY_STREAK, 0);
+  const today = new Date().toDateString();
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+
+  if (lastLogin === today || lastLogin === yesterday) {
+    return streak;
+  }
+  return 0; // Streak broken
+}
+
+/**
+ * Commits today's activity and advances the streak if applicable.
+ * Called when a session is actually started or completed.
+ */
+export async function recordTodayLogin(): Promise<number> {
   const today = new Date().toDateString();
   const lastLogin = await getJSON<string | null>(KEY_LAST_LOGIN, null);
   let streak = await getJSON<number>(KEY_STREAK, 0);
 
   if (lastLogin === today) {
-    return streak; // Already played today
+    return streak; // Already recorded today
   }
 
   const yesterday = new Date(Date.now() - 86400000).toDateString();

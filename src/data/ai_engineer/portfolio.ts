@@ -8,7 +8,7 @@ export interface PortfolioProject {
   difficulty: 1 | 2 | 3 | 4 | 5;
   subjects: string[];       // which syllabus subjects this covers
   skills: string[];          // specific skills demonstrated
-  emoji: string;
+  icon: string;
   color: string;
   bgColor: string;
   estimatedHours: number;
@@ -22,7 +22,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 3,
     subjects: ['RAG & Knowledge Systems', 'LLM Mastery', 'Production AI & MLOps'],
     skills: ['Embeddings', 'ChromaDB/Pinecone', 'Chunking', 'FastAPI', 'Streaming'],
-    emoji: '💬',
+    icon: 'chat_bubble',
     color: '#EC4899',
     bgColor: '#EC489915',
     estimatedHours: 25,
@@ -34,7 +34,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 4,
     subjects: ['AI Agents & Automation', 'LLM Mastery'],
     skills: ['CrewAI/LangGraph', 'Agent Memory', 'Tool Use', 'Orchestration'],
-    emoji: '🤖',
+    icon: 'smart_toy',
     color: '#F97316',
     bgColor: '#F9731615',
     estimatedHours: 30,
@@ -46,7 +46,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 3,
     subjects: ['AI Leadership & Safety', 'RAG & Knowledge Systems'],
     skills: ['RAGAS', 'LLM-as-Judge', 'Benchmarking', 'CI/CD Integration'],
-    emoji: '📊',
+    icon: 'bar_chart',
     color: '#EF4444',
     bgColor: '#EF444415',
     estimatedHours: 20,
@@ -58,7 +58,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 5,
     subjects: ['LLM Mastery', 'Production AI & MLOps', 'ML & Deep Learning'],
     skills: ['LoRA/QLoRA', 'Hugging Face', 'vLLM', 'Quantization', 'Benchmarking'],
-    emoji: '🧬',
+    icon: 'dna',
     color: '#8B5CF6',
     bgColor: '#8B5CF615',
     estimatedHours: 40,
@@ -70,7 +70,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 4,
     subjects: ['AI Agents & Automation', 'LLM Mastery', 'Production AI & MLOps'],
     skills: ['Whisper', 'TTS', 'Realtime API', 'MCP', 'WebSockets'],
-    emoji: '🎙️',
+    icon: 'mic',
     color: '#06B6D4',
     bgColor: '#06B6D415',
     estimatedHours: 35,
@@ -82,7 +82,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 4,
     subjects: ['AI Agents & Automation', 'Core Foundations', 'AI Leadership & Safety'],
     skills: ['GitHub API', 'MCP', 'Code Analysis', 'Guardrails', 'CI/CD'],
-    emoji: '👨‍💻',
+    icon: 'code',
     color: '#10B981',
     bgColor: '#10B98115',
     estimatedHours: 30,
@@ -94,7 +94,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 5,
     subjects: ['RAG & Knowledge Systems', 'Production AI & MLOps', 'AI Leadership & Safety'],
     skills: ['Multi-Tenancy', 'RBAC', 'LangFuse', 'Docker', 'PostgreSQL'],
-    emoji: '🏢',
+    icon: 'domain',
     color: '#F59E0B',
     bgColor: '#F59E0B15',
     estimatedHours: 50,
@@ -106,7 +106,7 @@ export const AI_PORTFOLIO_PROJECTS: PortfolioProject[] = [
     difficulty: 5,
     subjects: ['Production AI & MLOps', 'AI Leadership & Safety', 'LLM Mastery'],
     skills: ['System Architecture', 'LiteLLM', 'Stripe', 'Analytics', 'Cost Optimization'],
-    emoji: '🚀',
+    icon: 'rocket_launch',
     color: '#7C3AED',
     bgColor: '#7C3AED15',
     estimatedHours: 60,

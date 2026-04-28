@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star } from 'lucide-react';
+
 
 export const TierBadge = ({ tier }: { tier: 1 | 2 | 3 | 4 }) => {
   if (tier > 2) return null;
@@ -12,7 +12,7 @@ export const TierBadge = ({ tier }: { tier: 1 | 2 | 3 | 4 }) => {
           : { background: 'var(--color-surface-container-high)', color: 'var(--color-on-surface-variant)' }
       }
     >
-      {tier === 1 && <Star size={8} fill="currentColor" />}
+      {tier === 1 && <span className="material-symbols-rounded" style={{ fontSize: 8, fontVariationSettings: "'FILL' 1" }}>star</span>}
       T{tier}
     </span>
   );

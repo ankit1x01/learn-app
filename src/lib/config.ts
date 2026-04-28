@@ -6,9 +6,9 @@ export const CONFIG: SyllabusConfig = getActiveSyllabus();
 export const getSubject = (name: string): SubjectConfig | undefined =>
   CONFIG.subjects.find(s => s.name === name);
 export const subjectColor  = (name: string) => getSubject(name)?.color   ?? 'text-[#6B7280]';
-export const subjectBg     = (name: string) => getSubject(name)?.bgColor ?? 'bg-[#F0EEE9]';
-export const subjectBar    = (name: string) => getSubject(name)?.barColor ?? 'bg-[#F0EEE9]';
-export const subjectEmoji  = (name: string) => getSubject(name)?.emoji   ?? '📚';
+export const subjectBg     = (name: string) => getSubject(name)?.bgColor ?? 'bg-[var(--color-surface-container)]';
+export const subjectBar    = (name: string) => getSubject(name)?.barColor ?? 'bg-[var(--color-surface-container)]';
+export const subjectIcon   = (name: string) => getSubject(name)?.icon    ?? 'menu_book';
 export const totalConcepts = CONFIG.subjects.reduce((s, x) => s + x.totalConcepts, 0);
 export const totalExamQ    = CONFIG.subjects.reduce((s, x) => s + x.examQuestions, 0);
 
@@ -20,10 +20,10 @@ export const QUEUE_LABELS: Record<import('../core/types').Queue, { label: string
 };
 
 export const RATINGS = [
-  { id: 'clean',   label: 'Solved Clean',      sub: 'No hesitation, correct approach', outcome: 'correct' as const, icon: '✅' },
-  { id: 'hints',   label: 'Needed a Hint',      sub: 'Right idea, minor gaps',          outcome: 'partial' as const, icon: '🟡' },
-  { id: 'stuck',   label: 'Got Stuck',          sub: 'Couldn\'t complete in time',       outcome: 'wrong'   as const, icon: '⚠️' },
-  { id: 'unseen',  label: 'Never Seen This',    sub: 'First encounter with pattern',     outcome: 'wrong'   as const, icon: '❌' },
+  { id: 'clean',   label: 'Solved Clean',      sub: 'No hesitation, correct approach', outcome: 'correct' as const, icon: 'check_circle' },
+  { id: 'hints',   label: 'Needed a Hint',      sub: 'Right idea, minor gaps',          outcome: 'partial' as const, icon: 'pending' },
+  { id: 'stuck',   label: 'Got Stuck',          sub: 'Couldn\'t complete in time',       outcome: 'wrong'   as const, icon: 'error' },
+  { id: 'unseen',  label: 'Never Seen This',    sub: 'First encounter with pattern',     outcome: 'wrong'   as const, icon: 'cancel' },
 ];
 
 export const examReadiness = (s: { auto: number; conscious: number; fragile: number; unseen: number }, totalConcepts: number, totalQ: number): number => {

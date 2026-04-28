@@ -1,15 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Home, Timer, BookOpen, GitBranch, Zap } from 'lucide-react';
+
 import type { Screen } from '../types';
 import { m3SpatialFast } from '../lib/m3-motion';
 
-const navItems: { id: Screen; Icon: React.ElementType; label: string }[] = [
-  { id: 'dashboard', Icon: Home,      label: 'Home'    },
-  { id: 'session',   Icon: Timer,     label: 'Challenge' },
-  { id: 'topics',    Icon: BookOpen,  label: 'Learn'  },
-  { id: 'map',       Icon: GitBranch, label: 'Memory'     },
-  { id: 'elite',     Icon: Zap,       label: 'Tools'     },
+const navItems: { id: Screen; icon: string; label: string }[] = [
+  { id: 'dashboard', icon: 'home',      label: 'Home'    },
+  { id: 'session',   icon: 'timer',     label: 'Session' },
+  { id: 'topics',    icon: 'book',      label: 'Topics'  },
+  { id: 'map',       icon: 'account_tree', label: 'Map'     },
+  { id: 'elite',     icon: 'terminal',     label: 'Pro'      },
 ];
 
 export const BottomNav = ({
@@ -22,20 +22,26 @@ export const BottomNav = ({
   return (
     <nav
       className="fixed bottom-0 left-0 w-full z-50 border-t"
+      role="navigation"
+      aria-label="Main Navigation"
       style={{
         paddingBottom: 'env(safe-area-inset-bottom)',
         background: 'var(--color-surface-container-high)',
         borderColor: 'var(--color-border)',
       }}
     >
-      <div className="max-w-md mx-auto flex justify-around items-center h-[80px] px-2">
-        {navItems.map(({ id, Icon, label }) => {
+      <div className="max-w-md mx-auto flex justify-around items-center h-[80px] px-2" role="tablist">
+        {navItems.map(({ id, icon, label }) => {
           const active = current === id;
           return (
             <button
               key={id}
+              role="tab"
               onClick={() => setScreen(id)}
-              className="relative flex flex-col items-center gap-1 py-2 w-16"
+              aria-label={label}
+              aria-selected={active}
+              aria-current={active ? 'page' : undefined}
+              className="relative flex flex-col items-center gap-1 py-2 w-16 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-xl"
               style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
             >
               {/* M3 Active Indicator Pill: 64×32px */}
@@ -48,22 +54,20 @@ export const BottomNav = ({
                     transition={m3SpatialFast}
                   />
                 )}
-                { (() => {
-                  const I = Icon as any
-                  return (
-                    <I
-                      size={24}
-                      strokeWidth={active ? 2 : 1.5}
-                      style={{
-                        position: 'relative',
-                        zIndex: 1,
-                        color: active
-                          ? 'var(--color-on-secondary-container)'
-                          : 'var(--color-on-surface-variant)',
-                      }}
-                    />
-                  )
-                })() }
+                <span
+                  className="material-symbols-rounded"
+                  style={{
+                    position: 'relative',
+                    zIndex: 1,
+                    fontSize: 24,
+                    fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0",
+                    color: active
+                      ? 'var(--color-on-secondary-container)'
+                      : 'var(--color-on-surface-variant)',
+                  }}
+                >
+                  {icon}
+                </span>
               </div>
               <span
                 style={{

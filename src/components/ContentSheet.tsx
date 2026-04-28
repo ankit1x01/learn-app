@@ -5,7 +5,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, StickyNote, Image, Trash2, Plus, Check, Camera } from 'lucide-react';
+import { useFocusTrap } from '../lib/useFocusTrap';
+
 import {
   loadImagePaths,
   readImageAsDataURI,
@@ -35,6 +36,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
   const [loading, setLoading]     = useState(true);
   const [noteSaved, setNoteSaved] = useState(false);
   const fileInputRef              = useRef<HTMLInputElement>(null);
+  const containerRef = useFocusTrap(true);
 
   // Load existing content on open
   useEffect(() => {
@@ -114,12 +116,17 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
       <div className="absolute inset-0" style={{ background: 'var(--color-scrim)' }} />
 
       <motion.div
+        ref={containerRef}
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={m3SpatialDefault}
         onClick={e => e.stopPropagation()}
-        className="relative z-10 max-h-[90vh] flex flex-col"
+        className="relative z-10 max-h-[90vh] flex flex-col focus:outline-none"
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="content-sheet-title"
         style={{
           background: 'var(--color-surface-container-low)',
           borderRadius: '28px 28px 0 0',
@@ -136,13 +143,13 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
         <div className="flex items-start justify-between px-6 pb-4 pt-2 shrink-0">
           <div className="flex-1 min-w-0 pr-4">
             <div className="flex items-center gap-2 mb-1">
-              <StickyNote size={12} style={{ color: 'var(--color-subject-cs)' }} />
+              <span className="material-symbols-rounded" style={{ fontSize: 12,  color: 'var(--color-subject-cs)'  }}>sticky_note_2</span>
               <span className="text-[12px] uppercase tracking-widest font-bold" style={{ color: 'var(--color-subject-cs)' }}>My Notes</span>
             </div>
-            <h2 className="font-ui font-bold text-base leading-tight">{label}</h2>
+            <h2 id="content-sheet-title" className="font-ui font-bold text-base leading-tight">{label}</h2>
           </div>
           <button onClick={onClose} className="btn-icon mt-1 shrink-0">
-            <X size={16} />
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>close</span>
           </button>
         </div>
 
@@ -180,7 +187,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                         : { background: 'var(--color-surface-container)', borderColor: 'var(--color-border)', color: 'var(--color-on-surface-variant)' }
                     }
                   >
-                    {noteSaved ? <Check size={14} /> : <StickyNote size={14} />}
+                    {noteSaved ? <span className="material-symbols-rounded" style={{ fontSize: 14 }}>check</span> : <span className="material-symbols-rounded" style={{ fontSize: 14 }}>sticky_note_2</span>}
                     {noteSaved ? 'Saved!' : 'Save Note'}
                   </button>
                   {savedNote && (
@@ -189,7 +196,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                       className="px-4 py-3 rounded-xl border"
                       style={{ background: 'var(--color-error-container)', borderColor: 'var(--color-error)', color: 'var(--color-on-error-container)' }}
                     >
-                      <Trash2 size={14} />
+                      <span className="material-symbols-rounded" style={{ fontSize: 14 }}>delete</span>
                     </button>
                   )}
                 </div>
@@ -206,7 +213,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] font-bold uppercase tracking-widest"
                     style={{ background: 'var(--color-primary-container)', color: 'var(--color-on-primary-container)', border: '1px solid var(--color-primary-border)' }}
                   >
-                    <Camera size={11} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 11 }}>photo_camera</span>
                     Add Photo
                   </button>
                 </div>
@@ -227,7 +234,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                     className="w-full border border-dashed rounded-2xl py-8 flex flex-col items-center gap-2 transition-colors"
                     style={{ borderColor: 'var(--color-border)', color: 'var(--color-on-surface-variant)' }}
                   >
-                    <Image size={24} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 24 }}>image</span>
                     <span className="text-xs">Tap to add a photo of your handwritten notes</span>
                   </button>
                 ) : (
@@ -244,7 +251,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                           className="absolute top-1.5 right-1.5 p-1 rounded-full"
                           style={{ background: 'rgba(255,251,254,0.95)', color: 'var(--color-error)' }}
                         >
-                          <Trash2 size={12} />
+                          <span className="material-symbols-rounded" style={{ fontSize: 12 }}>delete</span>
                         </button>
                       </div>
                     ))}
@@ -254,7 +261,7 @@ export const ContentSheet: React.FC<Props> = ({ refKey, label, onClose }) => {
                       className="aspect-square rounded-xl border border-dashed flex items-center justify-center"
                       style={{ borderColor: 'var(--color-border)', color: 'var(--color-on-surface-variant)' }}
                     >
-                      <Plus size={20} />
+                      <span className="material-symbols-rounded" style={{ fontSize: 20 }}>add</span>
                     </button>
                   </div>
                 )}

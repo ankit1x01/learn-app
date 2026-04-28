@@ -1,0 +1,50 @@
+[
+  {
+    "id": "chal_001",
+    "conceptId": "cs_002",
+    "difficulty": "easy",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "question": "What does a function do?",
+      "options": [
+        "Stores a single value",
+        "Executes a reusable block of code",
+        "Repeats code multiple times",
+        "Declares a variable"
+      ],
+      "correctIndex": 1,
+      "explanation": "A function is a reusable block of code that performs a specific task."
+    },
+    "correctAnswer": "1",
+    "metadata": {
+      "gameType": "challenge",
+      "requiredFields": ["question", "options", "correctIndex"],
+      "expectedDuration": 20000
+    }
+  },
+  {
+    "id": "chal_002",
+    "conceptId": "math_002",
+    "difficulty": "medium",
+    "source": "preauthored",
+    "createdAt": 1714425600000,
+    "content": {
+      "question": "What is the prime factorization of 24?",
+      "options": [
+        "2 × 3 × 4",
+        "2² × 3",
+        "2³ × 3",
+        "2 × 12"
+      ],
+      "correctIndex": 2,
+      "explanation": "24 = 8 × 3 = 2³ × 3. Prime factors are only the prime numbers."
+    },
+    "correctAnswer": "2",
+    "metadata": {
+      "gameType": "challenge",
+      "requiredFields": ["question", "options", "correctIndex"],
+      "expectedDuration": 25000
+    }
+  }
+]

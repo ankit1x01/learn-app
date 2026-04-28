@@ -1,6 +1,6 @@
 // src/games/components/memory/SequencingGame.tsx
 import React, { useState, useEffect } from 'react';
-import { motion, Reorder, AnimatePresence } from 'framer-motion';
+import { motion, Reorder, AnimatePresence } from 'motion/react';
 import { MemorySequencingConfig } from '../../types';
 import { m3SpatialDefault } from '../../../lib/m3-motion';
 

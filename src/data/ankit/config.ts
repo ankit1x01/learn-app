@@ -137,35 +137,35 @@ export const ankitStackConfig: SyllabusConfig = {
   subjects: [
     {
       name: 'AI / GenAI',
-      weight: 0.5, // 50% focus on learning new AI concepts
+      weight: 0.5,
       totalConcepts: 3,
       examQuestions: 10,
-      color: 'text-[#8B5CF6]', // Purple
+      color: 'text-[#8B5CF6]',
       bgColor: 'bg-[#8B5CF6]/10',
       barColor: 'bg-[#8B5CF6]',
-      emoji: '🧠',
+      icon: 'psychology',
       encodingTip: 'Build a small prototype. Use AI to write the AI wrapper. Understand embeddings mathematically vs intuitively.',
     },
     {
       name: 'React Fundamentals',
-      weight: 0.25, // 25% focus on React revision
+      weight: 0.25,
       totalConcepts: 3,
       examQuestions: 10,
-      color: 'text-[#06B6D4]', // Cyan (React blue)
+      color: 'text-[#06B6D4]',
       bgColor: 'bg-[#06B6D4]/10',
       barColor: 'bg-[#06B6D4]',
-      emoji: '⚛️',
+      icon: 'deployed_code',
       encodingTip: 'Check the React docs for React 19 additions. Try building the component without useEffect first.',
     },
     {
       name: 'Node.js Architecture',
-      weight: 0.25, // 25% focus on Node revision
+      weight: 0.25,
       totalConcepts: 3,
       examQuestions: 10,
-      color: 'text-[#10B981]', // Green (Node green)
+      color: 'text-[#10B981]',
       bgColor: 'bg-[#10B981]/10',
       barColor: 'bg-[#10B981]',
-      emoji: '🟢',
+      icon: 'terminal',
       encodingTip: 'Write a raw HTTP server without Express to review streams. Trace the exact event loop phase where your callback runs.',
     },
   ],
@@ -173,8 +173,8 @@ export const ankitStackConfig: SyllabusConfig = {
   concepts: INITIAL_CONCEPTS,
 
   sessionComposition: {
-    review: 0.40, // More review for React/Node
-    new: 0.40, // High new content for AI
+    review: 0.40,
+    new: 0.40,
     strengthen: 0.10,
     challenge: 0.10,
   },

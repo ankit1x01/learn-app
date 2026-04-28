@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Flame, CheckCircle2, XCircle, ArrowRight, Star, Zap, Brain } from 'lucide-react';
+
 
 import { Screen } from '../types';
 import { Concept } from '../core/types';
@@ -107,10 +107,10 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
 
   if (queue.length === 0) return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-      <Flame size={40} className="text-[#F59E0B] mb-4" />
+      <span className="material-symbols-rounded text-[#F59E0B] mb-4" style={{ fontSize: 40 }}>local_fire_department</span>
       <h2 className="text-2xl font-ui font-bold mb-2">No Automatic Patterns Yet</h2>
       <p className="text-[#6B7280] text-sm mb-6">Complete study sessions to advance patterns to Stage 3 first.</p>
-      <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-primary text-background rounded-xl font-bold text-sm">← Back</button>
+      <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-primary text-background rounded-xl font-bold text-sm flex items-center gap-2"><span className="material-symbols-rounded" style={{ fontSize: 16 }}>arrow_back</span> Back</button>
     </div>
   );
 
@@ -125,7 +125,7 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
       <div className="flex gap-3">
         <button onClick={() => { setIdx(0); setDone(false); setResult(null); setRevealed(false); setStreak(0); setSessionStats({ correct: 0, total: 0, examReady: 0 }); }}
           className="px-6 py-3 bg-[#F59E0B] text-background rounded-xl font-bold text-sm">Again</button>
-        <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-[#F0EEE9] rounded-xl font-bold text-sm">← Hub</button>
+        <button onClick={() => setScreen('elite')} className="px-6 py-3 bg-[var(--color-surface-container)] rounded-xl font-bold text-sm flex items-center gap-2"><span className="material-symbols-rounded" style={{ fontSize: 16 }}>arrow_back</span> Hub</button>
       </div>
     </div>
   );
@@ -140,11 +140,11 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <Flame size={16} className="text-[#F59E0B]" />
+          <span className="material-symbols-rounded text-[#F59E0B]" style={{ fontSize: 16 }}>local_fire_department</span>
           <span className="text-[12px] uppercase tracking-widest font-bold text-[#6B7280]">Ghana Patha</span>
           {streak >= 2 && <span className="px-2 py-0.5 bg-[#F59E0B]/10 text-[#F59E0B] text-[12px] font-bold rounded-full">{streak} streak</span>}
         </div>
-        <span className="text-[12px] text-[#78716C]">{idx + 1}/{queue.length}</span>
+        <span className="text-[12px] text-[var(--color-on-surface-variant)]">{idx + 1}/{queue.length}</span>
       </div>
 
       {/* Timer ring */}
@@ -169,12 +169,12 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
 
       {/* Subject badge */}
       <div className="flex gap-2 mb-4">
-        <span className={`px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#F0EEE9] ${SUBJECT_COLORS[concept.subject]}`}>
+        <span className={`px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[var(--color-surface-container)] ${SUBJECT_COLORS[concept.subject]}`}>
           {concept.subject}
         </span>
         {concept.stage === 'ExamReady' && (
           <span className="px-3 py-1 rounded-full text-[12px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] flex items-center gap-1">
-            <Star size={8} fill="currentColor" /> INTERVIEW READY
+            <span className="material-symbols-rounded" style={{ fontSize: 8, fontVariationSettings: "'FILL' 1" }}>star</span> INTERVIEW READY
           </span>
         )}
       </div>
@@ -183,8 +183,8 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
       <h2 className="text-2xl font-ui font-bold leading-tight mb-3 flex-1">{concept.name}</h2>
 
       {/* Challenge prompt */}
-      <div className="flex items-start gap-2 mb-8 p-3 rounded-xl bg-[#F0EEE9] border border-[#E8E5DF]">
-        <Brain size={13} className="text-[#F59E0B] mt-0.5 shrink-0" />
+      <div className="flex items-start gap-2 mb-8 p-3 rounded-xl bg-[var(--color-surface-container)] border border-[var(--color-border)]">
+        <span className="material-symbols-rounded text-[#F59E0B] mt-0.5 shrink-0" style={{ fontSize: 13 }}>psychology</span>
         <p className="text-[11px] text-[#6B7280] leading-relaxed">{getPrompt(concept.chapter)}</p>
       </div>
 
@@ -213,10 +213,10 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
               result === 'clean' ? 'bg-[#F0FDF4]' : result === 'partial' ? 'bg-[#FFFBEB]' : 'bg-[#FEF2F2]'
             }`}>
               {result === 'clean'
-                ? <CheckCircle2 size={18} className="text-[#15803D]" />
+                ? <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 18 }}>check_circle</span>
                 : result === 'partial'
-                ? <CheckCircle2 size={18} className="text-[#B45309]" />
-                : <XCircle size={18} className="text-[#B91C1C]" />}
+                ? <span className="material-symbols-rounded text-[#B45309]" style={{ fontSize: 18 }}>check_circle</span>
+                : <span className="material-symbols-rounded text-[#B91C1C]" style={{ fontSize: 18 }}>cancel</span>}
               <span className={`text-sm font-bold ${
                 result === 'clean' ? 'text-[#15803D]' : result === 'partial' ? 'text-[#B45309]' : 'text-[#B91C1C]'
               }`}>
@@ -226,11 +226,11 @@ export const GhanaPatha: React.FC<Props> = ({ setScreen, concepts, onUpdateConce
                   ? 'Partial · S slightly reduced'
                   : 'Not recalled · S reset to 1d'}
               </span>
-              {streak >= 3 && result === 'clean' && <span className="ml-auto text-[12px] text-[#F59E0B] font-bold">→ INTERVIEW READY</span>}
+              {streak >= 3 && result === 'clean' && <span className="ml-auto text-[12px] text-[#F59E0B] font-bold flex items-center gap-1"><span className="material-symbols-rounded" style={{ fontSize: 14 }}>chevron_right</span> INTERVIEW READY</span>}
             </div>
             <button onClick={next}
               className="w-full py-4 bg-[#F59E0B] text-background rounded-2xl font-ui font-bold tracking-widest text-sm">
-              NEXT <Zap size={14} className="inline ml-1" fill="currentColor" />
+              NEXT <span className="material-symbols-rounded inline ml-1" style={{ fontSize: 14, fontVariationSettings: "'FILL' 1" }}>bolt</span>
             </button>
           </motion.div>
         </AnimatePresence>

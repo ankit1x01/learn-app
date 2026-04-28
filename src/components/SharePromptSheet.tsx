@@ -1,23 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import {
-  X, Copy, Check, ExternalLink, Share2,
-  GitBranch,   // mind map
-  CreditCard,  // flashcard
-  HelpCircle,  // quiz
-  BarChart2,   // infographic
-  Lightbulb,   // mnemonic
-  MessageSquare, // feynman
-  Code2,       // code template
-  Zap, Cpu, StopCircle,
-} from 'lucide-react';
+import { useFocusTrap } from '../lib/useFocusTrap';
 import { askLlm, stopLlm, initLlm, getRateLimitStatus } from '../lib/llm';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Technique {
   id: string;
-  icon: React.ElementType;
+  icon: string;
   label: string;
   tag: string;
   color: string;
@@ -222,7 +212,7 @@ Output rule:
 const TECHNIQUES: Technique[] = [
   {
     id: 'mindmap',
-    icon: GitBranch,
+    icon: 'account_tree',
     label: 'Mind Map',
     tag: 'VISUAL',
     color: 'text-primary',
@@ -232,7 +222,7 @@ const TECHNIQUES: Technique[] = [
   },
   {
     id: 'flashcard',
-    icon: CreditCard,
+    icon: 'credit_card',
     label: 'Flashcards',
     tag: 'RECALL',
     color: 'text-[#0E7490]',
@@ -257,7 +247,7 @@ Keep each BACK answer short enough to fit on a flashcard.`,
   },
   {
     id: 'quiz',
-    icon: HelpCircle,
+    icon: 'help',
     label: 'Quiz',
     tag: 'TEST',
     color: 'text-[#B45309]',
@@ -286,7 +276,7 @@ Make the wrong answers plausible traps, not obviously incorrect.`,
   },
   {
     id: 'infographic',
-    icon: BarChart2,
+    icon: 'bar_chart',
     label: 'Infographic',
     tag: 'VISUAL',
     color: 'text-[#7C3AED]',
@@ -296,7 +286,7 @@ Make the wrong answers plausible traps, not obviously incorrect.`,
   },
   {
     id: 'mnemonic',
-    icon: Lightbulb,
+    icon: 'lightbulb',
     label: 'Mnemonic',
     tag: 'MEMORY',
     color: 'text-[#F59E0B]',
@@ -320,7 +310,7 @@ End with: "To recall this pattern, think of ___"`,
   },
   {
     id: 'feynman',
-    icon: MessageSquare,
+    icon: 'chat',
     label: 'Feynman',
     tag: 'DEEP',
     color: 'text-[#15803D]',
@@ -346,11 +336,11 @@ End with: "In one sentence, ${concept} is ___"`,
   },
   {
     id: 'codetemplate',
-    icon: Code2,
+    icon: 'code',
     label: 'Code Template',
     tag: 'CODE',
     color: 'text-[#292524]',
-    bg: 'bg-[#F0EEE9]',
+    bg: 'bg-[var(--color-surface-container)]',
     description: 'Reusable template in Python + JS',
     generatePrompt: (concept, subject, chapter) =>
       `Give me the production-quality code template for "${concept}" in DSA (${subject}).
@@ -403,6 +393,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
   const [copied, setCopied]       = useState(false);
   const [shared, setShared]       = useState(false);
   const [prompt, setPrompt]       = useState('');
+  const containerRef = useFocusTrap(true);
 
   // Local Gemma state
   const [gemmaResponse, setGemmaResponse] = useState('');
@@ -504,12 +495,17 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
 
       {/* Sheet */}
       <motion.div
+        ref={containerRef}
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', stiffness: 380, damping: 31 }}
         onClick={e => e.stopPropagation()}
-        className="relative z-10 max-h-[85vh] flex flex-col"
+        className="relative z-10 max-h-[85vh] flex flex-col focus:outline-none"
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sheet-title"
         style={{
           background: 'var(--color-surface-container-low)',
           borderRadius: '28px 28px 0 0',
@@ -526,14 +522,14 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
         <div className="flex items-start justify-between px-6 pb-4 pt-2 shrink-0">
           <div className="flex-1 min-w-0 pr-4">
             <div className="flex items-center gap-2 mb-1">
-              <Zap size={12} className="text-primary" fill="currentColor" />
+              <span className="material-symbols-rounded text-primary" style={{ fontSize: 12, fontVariationSettings: "'FILL' 1" }}>bolt</span>
               <span className="text-[12px] uppercase tracking-widest text-primary font-bold">Learn with AI</span>
             </div>
-            <h2 className="font-ui font-bold text-lg leading-tight truncate">{conceptName}</h2>
+            <h2 id="sheet-title" className="font-ui font-bold text-lg leading-tight truncate">{conceptName}</h2>
             <p className="text-[11px] text-[#6B7280] mt-0.5">{subject} · {chapter}</p>
           </div>
           <button onClick={onClose} className="btn-icon mt-1 shrink-0">
-            <X size={16} />
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>close</span>
           </button>
         </div>
 
@@ -556,10 +552,9 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div className="p-2 rounded-xl" style={{ background: 'var(--color-surface-container)' }}>
-                        {/* @ts-expect-error */}
-                        <tech.icon size={16} className={tech.color} />
+                        <span className={`material-symbols-rounded ${tech.color}`} style={{ fontSize: 16 }}>{tech.icon}</span>
                       </div>
-                      <span className={`text-[12px] font-bold px-1.5 py-0.5 rounded-full bg-[#F0EEE9] text-[#6B7280] uppercase tracking-wider`}>
+                      <span className={`text-[12px] font-bold px-1.5 py-0.5 rounded-full bg-[var(--color-surface-container)] text-[#6B7280] uppercase tracking-wider`}>
                         {tech.tag}
                       </span>
                     </div>
@@ -580,10 +575,9 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
               </button>
 
               {/* Selected technique header */}
-              <div className={`flex items-center gap-3 p-4 rounded-2xl ${selected.bg} border border-[#E8E5DF] mb-4`}>
-                <div className="p-2 rounded-xl bg-[#F0EEE9]">
-                  {/* @ts-expect-error */}
-                  <selected.icon size={18} className={selected.color} />
+              <div className={`flex items-center gap-3 p-4 rounded-2xl ${selected.bg} border border-[var(--color-border)] mb-4`}>
+                <div className="p-2 rounded-xl bg-[var(--color-surface-container)]">
+                  <span className={`material-symbols-rounded ${selected.color}`} style={{ fontSize: 18 }}>{selected.icon}</span>
                 </div>
                 <div>
                   <p className={`font-bold text-sm ${selected.color}`}>{selected.label}</p>
@@ -608,7 +602,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                     : { background: 'var(--color-primary)', color: 'var(--color-on-primary)' }
                   }
                 >
-                  {copied ? <Check size={18} /> : <Copy size={18} />}
+                  {copied ? <span className="material-symbols-rounded" style={{ fontSize: 18 }}>check</span> : <span className="material-symbols-rounded" style={{ fontSize: 18 }}>content_copy</span>}
                   {copied ? 'COPIED!' : 'COPY PROMPT'}
                 </button>
 
@@ -622,14 +616,14 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                   }
                     title="Share via Android share sheet"
                   >
-                    {shared ? <Check size={18} /> : <Share2 size={18} />}
+                    {shared ? <span className="material-symbols-rounded" style={{ fontSize: 18 }}>check</span> : <span className="material-symbols-rounded" style={{ fontSize: 18 }}>share</span>}
                   </button>
                 )}
               </div>
 
               {/* Gemma Local button */}
               <div className="mb-4">
-                <p className="text-[12px] text-center text-[#78716C] uppercase tracking-widest font-bold mb-3">
+                <p className="text-[12px] text-center text-[var(--color-on-surface-variant)] uppercase tracking-widest font-bold mb-3">
                   Ask on-device · no internet needed
                 </p>
                 <button
@@ -649,9 +643,9 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                       WAIT {rateLimitSecs}s — RATE LIMITED
                     </>
                   ) : gemmaLoading ? (
-                    <><StopCircle size={16} /> STOP GEMMA</>
+                    <><span className="material-symbols-rounded" style={{ fontSize: 16 }}>stop_circle</span> STOP GEMMA</>
                   ) : (
-                    <><Cpu size={16} /> ASK GEMMA (LOCAL)</>
+                    <><span className="material-symbols-rounded" style={{ fontSize: 16 }}>memory</span> ASK GEMMA (LOCAL)</>
                   )}
                 </button>
 
@@ -669,7 +663,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                         className="bg-[#7c3aed]/5 border border-[#7c3aed]/20 rounded-2xl p-4 max-h-64 overflow-y-auto"
                       >
                         <div className="flex items-center gap-2 mb-2">
-                          <Cpu size={10} className="text-[#bc8cff]" />
+                          <span className="material-symbols-rounded text-[#bc8cff]" style={{ fontSize: 10 }}>memory</span>
                           <span className="text-[12px] uppercase tracking-normal text-[#bc8cff] font-bold">
                             Gemma 4 · On-device
                           </span>
@@ -695,9 +689,9 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                           onClick={async () => {
                             try { await navigator.clipboard.writeText(gemmaResponse); } catch {}
                           }}
-                          className="mt-2 w-full py-2 rounded-xl bg-[#F0EEE9] border border-[#E8E5DF] text-[12px] uppercase tracking-widest text-[#6B7280] font-bold flex items-center justify-center gap-2"
+                          className="mt-2 w-full py-2 rounded-xl bg-[var(--color-surface-container)] border border-[var(--color-border)] text-[12px] uppercase tracking-widest text-[#6B7280] font-bold flex items-center justify-center gap-2"
                         >
-                          <Copy size={10} /> Copy Gemma's Response
+                          <span className="material-symbols-rounded" style={{ fontSize: 10 }}>content_copy</span> Copy Gemma's Response
                         </button>
                       )}
                     </motion.div>
@@ -711,7 +705,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
 
               {/* AI app direct buttons */}
               <div>
-                <p className="text-[12px] text-center text-[#78716C] uppercase tracking-widest font-bold mb-3">
+                <p className="text-[12px] text-center text-[var(--color-on-surface-variant)] uppercase tracking-widest font-bold mb-3">
                   Open AI · prompt copies on tap
                 </p>
                 <div className="grid grid-cols-2 gap-2">
@@ -726,7 +720,7 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                         color: app.color,
                       }}
                     >
-                      <ExternalLink size={12} />
+                      <span className="material-symbols-rounded" style={{ fontSize: 12 }}>open_in_new</span>
                       {app.label}
                     </button>
                   ))}
@@ -734,13 +728,13 @@ export const SharePromptSheet: React.FC<Props> = ({ conceptName, subject, chapte
                 {canShare && (
                   <button
                     onClick={handleShare}
-                    className="mt-2 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#F0EEE9] border border-[#E8E5DF] text-[#6B7280] font-bold text-[11px] uppercase tracking-widest hover:bg-[#F0EEE9] transition-all"
+                    className="mt-2 w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[var(--color-surface-container)] border border-[var(--color-border)] text-[#6B7280] font-bold text-[11px] uppercase tracking-widest hover:bg-[var(--color-surface-container)] transition-all"
                   >
-                    <Share2 size={12} />
+                    <span className="material-symbols-rounded" style={{ fontSize: 12 }}>share</span>
                     Share via Android…
                   </button>
                 )}
-                <p className="text-[12px] text-center text-[#A8A29E] mt-2 leading-relaxed">
+                <p className="text-[12px] text-center text-[var(--color-border)] mt-2 leading-relaxed">
                   Tap any app — prompt is auto-copied, then paste with long-press
                 </p>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { FileText, Clock, Flag, CheckCircle2, BarChart2, Brain, Zap } from 'lucide-react';
+
 
 import { Screen } from '../types';
 import { Concept } from '../core/types';
@@ -93,11 +93,11 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
   if (!started) return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center pb-32">
       <div className="w-24 h-24 rounded-full bg-[#F0FDF4] border border-[#BBF7D0] flex items-center justify-center mb-6">
-        <FileText size={36} className="text-[#15803D]" />
+        <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 36 }}>description</span>
       </div>
       <h1 className="text-3xl font-ui font-bold mb-2">Mock Interview</h1>
       <p className="text-[#6B7280] text-sm mb-1">{PROBLEMS_PER_MOCK} Problems · 45 Minutes · Final Interview</p>
-      <p className="text-[#78716C] text-[11px] mb-8">
+      <p className="text-[var(--color-on-surface-variant)] text-[11px] mb-8">
         Full Syllabus Integration · High Stakes · Self-rated
       </p>
       <div className="space-y-2 text-left w-full max-w-xs mb-8">
@@ -122,7 +122,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
           START INTERVIEW
         </button>
       )}
-      <button onClick={() => setScreen('elite')} className="mt-3 text-[11px] text-[#78716C] font-label">← Back to Hub</button>
+      <button onClick={() => setScreen('elite')} className="mt-3 text-[11px] text-[var(--color-on-surface-variant)] font-label flex items-center gap-1"><span className="material-symbols-rounded" style={{ fontSize: 12 }}>arrow_back</span> Back to Hub</button>
     </div>
   );
 
@@ -152,7 +152,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
             {cleaned}<span className="text-xl text-[#6B7280]">/{maxScore}</span>
           </h1>
           <p className="text-[#6B7280] text-sm">{cleaned} clean · {hinted} hinted · {stuck} stuck</p>
-          <p className="text-[11px] text-[#78716C] mt-1">
+          <p className="text-[11px] text-[var(--color-on-surface-variant)] mt-1">
             {cleaned >= 8 ? "Strong loop — Production ready" : cleaned >= 6 ? "Good — tighten weak areas" : cleaned >= 4 ? "Building momentum" : "More drilling needed"}
           </p>
         </header>
@@ -184,13 +184,13 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
                   <span className={`text-sm font-medium ${subjectColor(sub)}`}>{sub}</span>
                   <span className="text-xs text-[#6B7280]">{data.clean} clean / {data.total}</span>
                 </div>
-                <div className="h-1.5 w-full bg-[#F0EEE9] rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-[var(--color-surface-container)] rounded-full overflow-hidden">
                   <div
                     className={`h-full ${subjectBg(sub).replace('/10', '')} transition-all duration-700`}
                     style={{ width: `${cleanPct}%` }}
                   />
                 </div>
-                <p className="text-[12px] text-[#78716C] mt-1">{cleanPct}% clean solve rate</p>
+                <p className="text-[12px] text-[var(--color-on-surface-variant)] mt-1">{cleanPct}% clean solve rate</p>
               </div>
             );
           })}
@@ -198,7 +198,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
 
         {/* Problem list */}
         <div className="space-y-2 mb-8">
-          <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold px-1">Problem Breakdown</p>
+          <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold px-1">Problem Breakdown</p>
           {paper.map((p, i) => {
             const r = ratings[i];
             return (
@@ -206,7 +206,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
                 <span className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[12px] font-bold ${
                   r === 'clean' ? 'bg-[#F0FDF4] text-[#15803D]' :
                   r === 'hint' ? 'bg-[#FFFBEB] text-[#B45309]' :
-                  flagged.has(i) ? 'bg-[#FEF2F2] text-[#B91C1C]' : 'bg-[#F0EEE9] text-[#78716C]'
+                  flagged.has(i) ? 'bg-[#FEF2F2] text-[#B91C1C]' : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
                 }`}>{i + 1}</span>
                 <span className="text-sm text-[#374151] flex-1 truncate">{p.concept.name}</span>
                 <span className={`text-[12px] font-bold uppercase ${
@@ -220,11 +220,11 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
         <div className="flex gap-3">
           <button onClick={() => setScreen('errors')}
             className="flex-1 py-4 rounded-xl bg-[#F5F3FF] border border-[#F472B6]/20 text-[#7C3AED] font-bold text-[11px] uppercase tracking-widest flex items-center justify-center gap-2">
-            <BarChart2 size={14} /> Error Analysis
+            <span className="material-symbols-rounded" style={{ fontSize: 14 }}>bar_chart</span> Error Analysis
           </button>
           <button onClick={() => setScreen('elite')}
-            className="flex-1 py-4 rounded-xl bg-[#F0EEE9] font-bold text-[11px] uppercase tracking-widest">
-            ← Hub
+            className="flex-1 py-4 rounded-xl bg-[var(--color-surface-container)] font-bold text-[11px] uppercase tracking-widest">
+            <span className="material-symbols-rounded" style={{ fontSize: 16 }}>arrow_back</span> Hub
           </button>
         </div>
       </div>
@@ -241,29 +241,29 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
       {/* Interview header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Clock size={14} className={urgentTime ? 'text-[#B91C1C]' : 'text-[#6B7280]'} />
+          <span className={`material-symbols-rounded ${urgentTime ? 'text-[#B91C1C]' : 'text-[#6B7280]'}`} style={{ fontSize: 14 }}>schedule</span>
           <span className={`font-ui font-bold text-lg ${urgentTime ? 'text-[#B91C1C] animate-pulse' : ''}`}>{fmt(timeLeft)}</span>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setFlagged(f => { const n = new Set(f); n.has(current) ? n.delete(current) : n.add(current); return n; })}
-            className={`p-2 rounded-lg transition-all ${isFlagged ? 'bg-[#FFFBEB] text-[#B45309]' : 'bg-[#F0EEE9] text-[#78716C]'}`}>
-            <Flag size={14} />
+            className={`p-2 rounded-lg transition-all ${isFlagged ? 'bg-[#FFFBEB] text-[#B45309]' : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'}`}>
+            <span className="material-symbols-rounded" style={{ fontSize: 14 }}>flag</span>
           </button>
-          <span className="px-3 py-1.5 rounded-lg bg-[#F0EEE9] text-[12px] font-bold uppercase tracking-widest">
+          <span className="px-3 py-1.5 rounded-lg bg-[var(--color-surface-container)] text-[12px] font-bold uppercase tracking-widest">
             {current + 1}/{paper.length}
           </span>
         </div>
       </div>
 
       {/* Progress */}
-      <div className="h-0.5 w-full bg-[#F0EEE9] rounded-full overflow-hidden mb-6">
+      <div className="h-0.5 w-full bg-[var(--color-surface-container)] rounded-full overflow-hidden mb-6">
         <div className="h-full bg-[#15803D] transition-all" style={{ width: `${(Object.keys(ratings).length / paper.length) * 100}%` }} />
       </div>
 
       {/* Round + subject */}
       <div className="flex gap-2 mb-3">
-        <span className="px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[#F0EEE9] text-[#6B7280]">
+        <span className="px-3 py-1 rounded-full text-[12px] font-bold uppercase tracking-widest bg-[var(--color-surface-container)] text-[#6B7280]">
           Round {problem.round}
         </span>
       </div>
@@ -274,8 +274,8 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
       </h2>
 
       {/* Recall prompt */}
-      <div className="flex items-start gap-2 mb-10 p-4 rounded-2xl bg-[#F0EEE9] border border-[#E8E5DF]">
-        <Brain size={14} className="text-primary mt-0.5 shrink-0" />
+      <div className="flex items-start gap-2 mb-10 p-4 rounded-2xl bg-[var(--color-surface-container)] border border-[var(--color-border)]">
+        <span className="material-symbols-rounded text-primary mt-0.5 shrink-0" style={{ fontSize: 14 }}>psychology</span>
         <p className="text-sm text-[#6B7280] leading-relaxed">
           Code a working solution. Aim for the optimal approach. State your time and space complexity before submitting.
         </p>
@@ -284,13 +284,13 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
       {/* Rating */}
       {!confirmed ? (
         <div className="space-y-3">
-          <p className="text-[12px] uppercase tracking-widest text-[#78716C] font-bold mb-2 px-1">Rate your solution</p>
+          <p className="text-[12px] uppercase tracking-widest text-[var(--color-on-surface-variant)] font-bold mb-2 px-1">Rate your solution</p>
           {RATING_OPTIONS.map(opt => (
             <button
               key={opt.id}
               onClick={() => setSelected(opt.id)}
               className={`w-full p-4 rounded-xl text-left border transition-all ${
-                selected === opt.id ? `${opt.bg} ${opt.border}` : 'bg-[#F0EEE9] border-[#E8E5DF] hover:bg-[#F0EEE9]'
+                selected === opt.id ? `${opt.bg} ${opt.border}` : 'bg-[var(--color-surface-container)] border-[var(--color-border)] hover:bg-[var(--color-surface-container)]'
               }`}
             >
               <div className={`font-bold text-sm ${selected === opt.id ? opt.color : ''}`}>{opt.label}</div>
@@ -300,7 +300,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
           <button
             onClick={handleRate}
             className={`w-full mt-2 py-4 rounded-2xl font-ui font-bold tracking-widest text-sm transition-all ${
-              selected ? 'bg-primary text-background' : 'bg-[#F0EEE9] text-[#A8A29E] cursor-not-allowed'
+              selected ? 'bg-primary text-background' : 'bg-[var(--color-surface-container)] text-[var(--color-border)] cursor-not-allowed'
             }`}
           >
             CONFIRM RATING
@@ -314,8 +314,8 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
             'bg-[#FEF2F2] border border-[#FECACA]'
           }`}>
             {ratings[current] === 'clean'
-              ? <CheckCircle2 className="text-[#15803D]" size={20} />
-              : <Zap className={ratings[current] === 'hint' ? 'text-[#B45309]' : 'text-[#B91C1C]'} size={20} />}
+              ? <span className="material-symbols-rounded text-[#15803D]" style={{ fontSize: 20 }}>check_circle</span>
+              : <span className={`material-symbols-rounded ${ratings[current] === 'hint' ? 'text-[#B45309]' : 'text-[#B91C1C]'}`} style={{ fontSize: 20 }}>bolt</span>}
             <div>
               <p className={`font-bold text-sm ${
                 ratings[current] === 'clean' ? 'text-[#15803D]' :
@@ -332,7 +332,7 @@ export const MockTest: React.FC<Props> = ({ setScreen, concepts }) => {
             onClick={goNext}
             className="w-full py-4 bg-primary text-background rounded-2xl font-ui font-bold tracking-widest text-sm"
           >
-            {current < paper.length - 1 ? 'NEXT PROBLEM →' : 'SUBMIT INTERVIEW'}
+            {current < paper.length - 1 ? <div className="flex items-center justify-center gap-2">NEXT PROBLEM <span className="material-symbols-rounded" style={{ fontSize: 16 }}>chevron_right</span></div> : 'SUBMIT INTERVIEW'}
           </button>
         </motion.div>
       )}

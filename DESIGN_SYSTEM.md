@@ -323,9 +323,12 @@ Check        → check_circle
 Close        → close
 ```
 
-**Rule:** FILL=1 for active/selected states, FILL=0 for inactive/default states.
-**No emojis** in nav bars, buttons, badges, headers, cards, or any interactive element.
-Emojis are only acceptable inside static data config files (`encodingTip`, etc.) as content text.
+**Rule: ZERO EMOJIS.**
+- No emojis in nav bars, buttons, badges, headers, cards, or any interactive element.
+- No emojis in data files, content strings, or JSON configs.
+- No literal arrow characters (←, →, ↑, ↓) in UI text; use Material Symbols.
+- Use Material Symbols for all visual metaphors. If an icon is missing, use plain text.
+- This rule is absolute and applies to all AI tools and contributors.
 
 > **Note:** Lucide React (`lucide-react`) is still present in some legacy screens.
 > Migrate to Material Symbols Rounded on any screen you touch.
