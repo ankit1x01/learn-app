@@ -74,17 +74,34 @@ npm run bundle-game-content  # Auto-includes your new content
 npm run dev                   # Content available in app
 ```
 
-### Option 2: Generate from Concept
+### Option 2: Generate from Concept (Automatic)
 
-Use the generator for dynamic content:
+When a game needs content and bundled content isn't available, generation happens automatically:
+
+```typescript
+// Game asks for memory content
+const content = await gameContentStore.getGameContent('memory', 'memory', {
+  concept,  // Pass concept for automatic generation
+});
+
+// If bundled exists: returns immediately
+// If not bundled: calls Gemini to generate
+// If generated: caches to localStorage for next time
+```
+
+### Option 2b: Manual Generation
+
+Explicitly regenerate or create content:
 
 ```typescript
 import { generateGameContent } from '@/lib/game-content-generator';
-import { concepts } from '@/db/useConceptStore';
 
-const concept = concepts.find(c => c.id === 'cs_005');
+const concept = { id: 'cs_005', name: 'Functions', ... };
 const gameContent = await generateGameContent(concept, 'memory');
-await gameContentStore.cacheGameContent(gameContent);
+
+if (gameContent) {
+  await gameContentStore.cacheGameContent(gameContent);
+}
 ```
 
 ---
@@ -321,9 +338,56 @@ await onUpdateConcept(concept.id, updated);
 | Performance Store | ✅ Complete | `src/lib/game-performance-store.ts` |
 | FSRS Integration | ✅ Complete | `src/core/fsrs.ts` |
 | Content Bundler | ✅ Complete | `scripts/bundle-game-content.mjs` |
-| Gemini Generator | 🔄 Ready | `src/lib/game-content-generator.ts` |
+| Gemini Generator | ✅ Complete | `src/lib/game-content-generator.ts` |
+| Auto-Generation | ✅ Complete | Retry + timeout + safe JSON parsing |
 | Sample Content | ✅ 12 items | `src/data/game-content/` |
 | LiveSession Wiring | ✅ Complete | `src/screens/LiveSession.tsx` |
+| Integration Examples | ✅ Complete | `src/lib/game-integration-examples.ts` |
+| Test Helper | ✅ Complete | `src/lib/game-pipeline-test.ts` |
+
+---
+
+## Gemini Generation Features
+
+### Automatic Fallback
+
+When bundled content is unavailable, games can request auto-generation:
+
+```typescript
+const content = await gameContentStore.getGameContent('memory', 'memory', {
+  concept: myConceptObject,
+});
+// Returns bundled → cached → or newly generated content
+```
+
+### Safe Parsing
+
+Handles multiple JSON formats from Gemini:
+- Direct JSON objects
+- Markdown code blocks (`` ```json ... ``` ``)
+- JSON patterns extracted from text
+
+### Retry Logic
+
+- **Exponential backoff:** 1s → 2s → 4s delays between retries
+- **Max retries:** 2 (3 total attempts)
+- **Timeout:** 30 seconds per request
+- Graceful failure if all attempts exhaust
+
+### Supported Game Types
+
+- **memory** — 3–5 term-definition pairs
+- **challenge** — Multiple-choice with explanation
+- **simulation** — Interactive simulation descriptions
+
+### Caching
+
+Generated content automatically cached to localStorage at:
+```
+Key: game_content_<conceptId>_<gameType>
+```
+
+Next request for same concept/gameType returns instantly from cache.
 
 ---
 
@@ -334,3 +398,4 @@ await onUpdateConcept(concept.id, updated);
 - **Personalization:** Recommend games based on weak concepts
 - **Database Sync:** Migrate from localStorage to Supabase
 - **Community Content:** User-authored game content sharing
+- **Custom Prompt Templates:** User-defined generation prompts per game type
