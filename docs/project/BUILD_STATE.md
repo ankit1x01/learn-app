@@ -49,9 +49,36 @@
 - ✅ `src/lib/game-pipeline-test.ts` — Test helper for verification
 - ✅ Test available in browser console: `testGamePipeline()`
 
+---
+
+## Game Data Pipeline ✅ PHASE 3 COMPLETE (2026-04-29)
+
+**Gemini-Powered Content Generation:**
+- ✅ Enhanced generator with safe JSON parsing (supports markdown code blocks + direct JSON)
+- ✅ Retry logic with exponential backoff (3 attempts, 1-2-4 second delays)
+- ✅ 30-second timeout per generation request
+- ✅ Auto-detection and caching of generated content
+- ✅ Integration into GameContentStore (automatic fallback)
+
+**Automatic Content Flow:**
+1. Game requests content: `getGameContent(conceptId, gameType, { concept })`
+2. Store checks bundled first (instant)
+3. If missing: checks localStorage cache (instant if hit)
+4. If still missing: generates with Gemini (with retry)
+5. Caches result for next request
+
+**Supported Generation Templates:**
+- ✅ Memory (3–5 term-definition pairs)
+- ✅ Challenge (multiple-choice with explanation)
+- ✅ Simulation (game descriptions with parameters)
+
+**Documentation & Examples:**
+- ✅ Complete API reference in `docs/GAME_PIPELINE.md`
+- ✅ Integration examples in `src/lib/game-integration-examples.ts`
+- ✅ Test helper in `src/lib/game-pipeline-test.ts`
+
 **Ready For:**
-- Phase 3: Wire up Gemini-based content generation
-- Phase 4: Full session integration testing with real games
+- Phase 4: Full session integration testing with real gameplay
 
 ---
 
