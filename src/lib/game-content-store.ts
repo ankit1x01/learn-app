@@ -1,4 +1,6 @@
 import { Preferences } from '@capacitor/preferences';
+import { generateGameContent } from './game-content-generator';
+import type { Concept } from '@/core/types';
 
 export type GameContentData = {
   id: string;
@@ -36,25 +38,40 @@ class GameContentStoreImpl {
   async getGameContent(
     conceptId: string,
     gameType: string,
-    options?: { forceGenerate?: boolean }
+    options?: { forceGenerate?: boolean; concept?: Concept }
   ): Promise<GameContent | null> {
     if (!this.initialized) return null;
 
-    // Check bundled content first
-    const bundled = this.bundledContent.get(gameType);
-    if (bundled) {
-      const found = bundled.find(c => c.conceptId === conceptId);
-      if (found) return found;
+    // Check bundled content first (unless forcing generation)
+    if (!options?.forceGenerate) {
+      const bundled = this.bundledContent.get(gameType);
+      if (bundled) {
+        const found = bundled.find(c => c.conceptId === conceptId);
+        if (found) return found;
+      }
+
+      // Check localStorage cache
+      const cacheKey = `game_content_${conceptId}_${gameType}`;
+      const cached = await Preferences.get({ key: cacheKey });
+      if (cached.value) {
+        try {
+          return JSON.parse(cached.value);
+        } catch {
+          // Cache corrupted, continue
+        }
+      }
     }
 
-    // Check localStorage cache
-    const cacheKey = `game_content_${conceptId}_${gameType}`;
-    const cached = await Preferences.get({ key: cacheKey });
-    if (cached.value && !options?.forceGenerate) {
+    // If concept provided, try to generate
+    if (options?.concept) {
       try {
-        return JSON.parse(cached.value);
-      } catch {
-        // Cache corrupted, continue
+        const generated = await generateGameContent(options.concept, gameType);
+        if (generated) {
+          await this.cacheGameContent(generated);
+          return generated;
+        }
+      } catch (error) {
+        console.warn(`Generation failed for ${gameType}:`, error);
       }
     }
 
