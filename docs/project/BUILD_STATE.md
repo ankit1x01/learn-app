@@ -1,6 +1,36 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-28 — **AI Engineering course: dynamic index generation from repository**
+> Last updated: 2026-04-29 — **Game Data Pipeline Phase 1: core pipeline infrastructure complete**
+
+---
+
+## Game Data Pipeline ✅ PHASE 1 COMPLETE (2026-04-29)
+
+**Core Infrastructure:**
+- ✅ `GameContentStore` API — fetch/cache game content (bundled or generated)
+- ✅ `GamePerformanceStore` — track game performance in localStorage
+- ✅ `bundled-game-content.ts` — auto-generated from JSON source files
+- ✅ Build script: `scripts/bundle-game-content.mjs` integrated into npm dev/build
+- ✅ FSRS integration: `updateFSRSFromGamePerformance()` function added to fsrs.ts
+- ✅ LiveSession wiring: game completion now saves performance + updates FSRS immediately
+- ✅ TypeScript: zero errors for game pipeline code
+
+**Sample Content (Pre-Authored):**
+- ✅ 2 memory game content items (cs_001, math_001)
+- ✅ 2 challenge game content items (cs_002, math_002)
+- ✅ Bundler generated 4 total items into bundled-game-content.ts
+
+**Architecture:**
+- Content source: `src/data/game-content/*.json` (pre-authored, human-editable)
+- Content bundler: `scripts/bundle-game-content.mjs` (build-time)
+- Generated content support: `GameContentGenerator` ready for Gemini integration
+- Storage: localStorage per-game-type + per-concept performance logs
+- Client-side only: no backend required
+
+**Ready For:**
+- Phase 2: Author more content JSON files
+- Phase 3: Wire up Gemini-based content generation
+- Phase 4: Full session integration testing
 
 ---
 
