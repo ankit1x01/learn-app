@@ -1,6 +1,6 @@
 # BUILD STATE
 > Update this at the end of every session.
-> Last updated: 2026-04-29 — **Game Data Pipeline Phase 1: core pipeline infrastructure complete**
+> Last updated: 2026-04-30 — **Timeline Orchestration Architecture Complete: Action System + Playback Engine + Teaching Framework**
 
 ---
 
@@ -79,6 +79,110 @@
 
 **Ready For:**
 - Phase 4: Full session integration testing with real gameplay
+
+---
+
+## Timeline Orchestration ✅ PHASE 1 COMPLETE (2026-04-30)
+
+**OpenMAIC Architecture Ported & Adapted:**
+- ✅ `src/lib/action-types.ts` — 20+ unified action types (fire-and-forget + synchronous)
+- ✅ `src/lib/action-engine.ts` — ActionEngine class with callback pattern
+- ✅ `src/lib/playback/` — Complete Playback Engine for timeline orchestration
+  - `types.ts` — Engine modes, callbacks, snapshots
+  - `engine.ts` — State machine (idle→playing→paused→completed)
+  - `derived-state.ts` — Pure function for UI state computation
+
+**Core Features:**
+- Timeline-driven action execution (sequential scene processing)
+- Fire-and-forget vs synchronous action handling
+- Pause/resume with timer preservation
+- Progress snapshots for persistence
+- CJK language detection for speech timing estimation
+
+**Testing:**
+- ✅ `src/screens/TimelineDemo.tsx` — Interactive test environment
+  - Start/pause/resume/stop controls
+  - Real-time execution logs
+  - Sample scenes with mixed action types
+  - Accessible from Dashboard
+
+**Build Status:** ✓ Zero TypeScript errors
+
+---
+
+## UI Components ✅ PHASE 2 COMPLETE (2026-04-30)
+
+**Full Implementations (Not Stubs):**
+
+1. **Whiteboard** — Interactive canvas drawing
+   - 5 tools: pen, line, rectangle, circle, text
+   - Color picker + line width slider
+   - Clear button
+   - Real-time rendering to canvas
+   - Touch support (touchAction: none)
+
+2. **Checkpoint** — Interactive quiz/assessment
+   - Multiple choice with radio buttons
+   - Answer validation against expectedAnswer
+   - Visual feedback states:
+     - Correct answers: green highlight + ✓ icon
+     - Wrong answers: red highlight + ✗ icon
+   - "Try Again" vs "Continue" logic
+   - Skip option support
+
+3. **Feedback** — Toast notifications
+   - 4 types: success (🎉), failure (📚), hint (💡), info (ℹ️)
+   - Color-coded: green/red/orange/blue
+   - Auto-dismiss after duration
+   - Manual close on click
+   - Fixed position bottom-right
+
+**Location:** `src/lib/ui/` with index.ts exports
+
+---
+
+## Teaching Scenarios ✅ PHASE 3 COMPLETE (2026-04-30)
+
+**3 Complete Curriculum Scenarios:**
+
+1. **Intro to Variables** (2 scenes, 4 actions)
+   - Scene 1: Concept intro + examples
+   - Scene 2: Checkpoint + validation
+
+2. **Data Types** (5 scenes, 10+ actions)
+   - Scene 1: Overview (numbers, strings, booleans)
+   - Scenes 2-4: Individual type explanations + laser highlights
+   - Scene 5: Multi-choice checkpoint
+
+3. **Functions & Reusability** (2 scenes, 5 actions)
+   - Scene 1: Function benefits + code example
+   - Scene 2: Checkpoint + feedback
+
+**Architecture:**
+- `src/lib/teaching-scenarios.ts` — Scenario registry
+- `scenarioRegistry` — Lookup: scenario name → GameScene[]
+- `getScenario()`, `listScenarios()` — Helper functions
+- All scenarios use standardized action types (speech, checkpoint, feedback, laser, spotlight)
+
+**Pattern:** Concept Intro → Explanation → Visual Highlight → Checkpoint → Feedback → Summary
+
+**Ready For:** Loading into TimelineDemo selector or custom lesson builders
+
+---
+
+## Integration Points ✅ READY
+
+- ✅ Game performance tracking (GamesScreen → gamePerformanceStore)
+- ✅ FSRS integration (performance → concept updates)
+- ✅ Timeline Demo accessible from Dashboard
+- ✅ Teaching scenarios loadable via scene registry
+- ✅ All components composable and reusable
+
+**Next Session Start Point:** 
+- Load teaching scenarios into TimelineDemo selector
+- Build scenario player UI (scene chooser)
+- Integrate with concept curriculum alignment
+- Extended teaching scenario library (math, science, history)
 
 ---
 

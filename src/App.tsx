@@ -24,6 +24,7 @@ import { CourseDashboard }   from './screens/CourseDashboard';
 import { CourseLesson }      from './screens/CourseLesson';
 import { DemoSession }       from './screens/DemoSession';
 import { PromptPlayground }  from './screens/PromptPlayground';
+import { TimelineDemo }      from './screens/TimelineDemo';
 import AIEngineeringCourse    from './screens/AIEngineeringCourse';
 import { GamesScreen }       from './games/GamesScreen';
 import { ShapeSlicerGame }   from './games/ShapeSlicerGame';
@@ -88,7 +89,7 @@ function AppContent() {
         // Global Android back button handler
         await CapApp.addListener('backButton', () => {
           // Navigate back based on current screen
-          if (screen === 'session' || screen === 'encoding' || screen === 'map' || screen === 'recall' || screen === 'presleep' || screen === 'complete' || screen === 'course-lesson' || screen === 'ai-engineering' || screen === 'games') {
+          if (screen === 'session' || screen === 'encoding' || screen === 'map' || screen === 'recall' || screen === 'presleep' || screen === 'complete' || screen === 'course-lesson' || screen === 'ai-engineering' || screen === 'games' || screen === 'timeline-demo') {
             setScreen('dashboard');
           } else if (screen !== 'dashboard') {
             setScreen('dashboard');
@@ -199,6 +200,7 @@ function AppContent() {
           {screen === 'course-lesson' && <CourseLesson      setScreen={setScreen} courseDay={courseDay} setCourseDay={setCourseDay} />}
           {screen === 'demo-session'  && <DemoSession       setScreen={setScreen} />}
           {screen === 'prompt-playground' && <PromptPlayground setScreen={setScreen} />}
+          {screen === 'timeline-demo' && <TimelineDemo onBack={() => setScreen('dashboard')} />}
           {screen === 'ai-engineering' && <AIEngineeringCourse setScreen={setScreen} />}
           {screen === 'games'         && <GamesScreen        onBack={() => setScreen('dashboard')} setScreen={setScreen} />}
           {screen === 'shape-slicer'  && <ShapeSlicerGame onBack={() => setScreen('dashboard')} />}
@@ -211,7 +213,7 @@ function AppContent() {
         </motion.div>
       </AnimatePresence>
 
-      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade', 'math-arcade', 'chemistry-arcade'].includes(screen) ? 'none' : 'block' }}>
+      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade', 'math-arcade', 'chemistry-arcade', 'timeline-demo'].includes(screen) ? 'none' : 'block' }}>
         <BottomNav current={screen} setScreen={setScreen} />
       </div>
       </div>

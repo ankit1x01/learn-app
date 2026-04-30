@@ -1,5 +1,5 @@
 // Auto-generated quiz content from lessons
-// Generated at: 2026-04-30T06:07:42.369Z
+// Generated at: 2026-04-30T09:34:20.693Z
 // DO NOT EDIT MANUALLY - run: npm run generate-quiz-content
 
 export interface QuizQuestion {

@@ -114,7 +114,9 @@
       "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
       "Bash(xargs wc *)",
       "Bash(xargs ls *)",
-      "PowerShell(Get-Command *)"
+      "PowerShell(Get-Command *)",
+      "Bash(cat)",
+      "Read(//tmp/**)"
     ]
   }
 }

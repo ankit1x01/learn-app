@@ -1,88 +1,117 @@
 // src/games/components/memory/AttentionGame.tsx
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+// Attention Game — drag concept chips onto the correct entity bubble
+// Visual style: dark bg, pastel entity bubbles, outline concept chips
+
+import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   DndContext,
   DragEndEvent,
   DragStartEvent,
+  DragOverlay,
   PointerSensor,
   TouchSensor,
   useSensor,
   useSensors,
   useDroppable,
   useDraggable,
-} from '@dnd-kit/core';
-import type { CollisionDetection } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
-import { motion, AnimatePresence } from 'motion/react';
-import { MemoryAttentionConfig } from '../../types';
+  defaultDropAnimationSideEffects,
+} from '@dnd-kit/core'
+import type { CollisionDetection } from '@dnd-kit/core'
+import { CSS } from '@dnd-kit/utilities'
+import { motion, AnimatePresence } from 'motion/react'
+import type { BubbleMatchConfig, MemoryAttentionConfig } from '../types'
 
-// ─── Custom Math Geometry Config (From Bubble Match) ───────────────────────
+// ─── Custom Math Geometry Config ────────────────────────────────────────────
 
+// Circular radial magnetic capture zone via coordinate geometry
 const coordinateGeometryCollision: CollisionDetection = ({
   collisionRect,
   droppableRects,
   droppableContainers,
 }) => {
-  if (!collisionRect) return [];
-
-  const activeCenterX = collisionRect.left + collisionRect.width / 2;
-  const activeCenterY = collisionRect.top + collisionRect.height / 2;
-
-  const collisions = [];
-
+  if (!collisionRect) return []
+  const activeCenterX = collisionRect.left + collisionRect.width / 2
+  const activeCenterY = collisionRect.top + collisionRect.height / 2
+  const collisions = []
   for (const droppable of droppableContainers) {
-    const rect = droppableRects.get(droppable.id);
-    if (!rect) continue;
-
-    const dropCenterX = rect.left + rect.width / 2;
-    const dropCenterY = rect.top + rect.height / 2;
-
-    const dx = activeCenterX - dropCenterX;
-    const dy = activeCenterY - dropCenterY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
+    const rect = droppableRects.get(droppable.id)
+    if (!rect) continue
+    const dx = activeCenterX - (rect.left + rect.width / 2)
+    const dy = activeCenterY - (rect.top + rect.height / 2)
+    const distance = Math.sqrt(dx * dx + dy * dy)
     if (distance <= 120) {
-      collisions.push({
-        id: droppable.id,
-        data: { droppableContainer: droppable, value: distance },
-      });
+      collisions.push({ id: droppable.id, data: { droppableContainer: droppable, value: distance } })
     }
   }
-
-  return collisions.sort((a, b) => a.data.value - b.data.value);
-};
-
-// ─── UI Components (Adapted from Bubble Match) ─────────────────────────────
-
-interface FactNodeProps {
-  fact: any;
-  isDragging?: boolean;
+  return collisions.sort((a, b) => a.data.value - b.data.value)
 }
 
-function FactNodeChip({ fact, isDragging }: FactNodeProps) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: fact.id });
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+interface Concept {
+  id: string
+  text: string
+  belongsTo: string // entity id
+}
+
+interface MatchedFact {
+  conceptId: string
+  text: string
+}
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+function buildConcepts(config: BubbleMatchConfig | MemoryAttentionConfig): Concept[] {
+  const all: Concept[] = []
+  const bubbleConfig = config as BubbleMatchConfig
+  if (!bubbleConfig.entities) {
+    console.warn('AttentionGame requires BubbleMatchConfig with entities field')
+    return []
+  }
+  bubbleConfig.entities.forEach(e => {
+    e.facts.forEach((fact, fi) => {
+      all.push({ id: `${e.id}-f${fi}`, text: fact, belongsTo: e.id })
+    })
+  })
+  return shuffle(all)
+}
+
+// ─── Draggable Concept Chip ────────────────────────────────────────────────
+
+interface ConceptChipProps {
+  concept: Concept
+  isDragging?: boolean
+  size?: 'normal' | 'overlay'
+}
+
+function ConceptChip({ concept, isDragging }: ConceptChipProps) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: concept.id })
   
+  // Custom drag smoothing applied directly to container natively since DragOverlay is removed
   const style = {
+    // This allows exact smooth follow behind the cursor
     transform: CSS.Transform.toString(transform),
     transition: transform ? 'transform 150ms ease-out' : undefined,
     zIndex: isDragging ? 999 : 1,
     opacity: isDragging ? 0.9 : 1,
-    position: 'absolute' as const,
-    left: '50%',
-    top: '50%',
-  };
-  
-  const dim = isDragging ? 90 : 82;
+  }
+  const dim = isDragging ? 90 : 82
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes} className="touch-none select-none">
       <motion.div
-        animate={{ 
-          scale: isDragging ? 1.05 : 1,
-          x: `calc(-50% + ${fact.driftX}px)`, 
-          y: `calc(-50% + ${fact.driftY}px)`
-        }}
-        transition={isDragging ? { type: 'spring', stiffness: 300, damping: 20 } : { duration: 15, ease: "linear" }}
+        // Use a spring for pop-in scaling to interact when dragging
+        animate={{ scale: isDragging ? 1.05 : 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         style={{
           width: dim,
           height: dim,
@@ -107,30 +136,42 @@ function FactNodeChip({ fact, isDragging }: FactNodeProps) {
             lineHeight: 1.35,
           }}
         >
-          {fact.label}
+          {concept.text}
         </span>
       </motion.div>
     </div>
-  );
+  )
 }
 
-function TopicBubble({ topic, matched, flashState, color }: any) {
-  const { setNodeRef, isOver } = useDroppable({ id: topic.id });
+// No separate overlay needed anymore
 
-  const BASE = 92;
-  const RING_W = 28;
-  const baseScale = 1 + matched.length * 0.07;
-  const bubbleSize = BASE * baseScale;
+// ─── Droppable Entity Bubble ───────────────────────────────────────────────
 
-  const cx = bubbleSize / 2 + RING_W;
-  const r = bubbleSize / 2 + RING_W / 2;
-  const svgSize = cx * 2;
+interface EntityBubbleProps {
+  entity: { id: string; name: string; color: string }
+  matched: MatchedFact[]
+  flashState: 'idle' | 'correct' | 'wrong'
+}
 
+function EntityBubble({ entity, matched, flashState }: EntityBubbleProps) {
+  // Use a SINGLE useDroppable hook to safely bind both isOver state and the DOM ref
+  const { setNodeRef, isOver } = useDroppable({ id: entity.id })
+
+  const BASE = 92
+  const RING_W = 28
+  const baseScale = 1 + matched.length * 0.07
+  const bubbleSize = BASE * baseScale
+
+  const cx = bubbleSize / 2 + RING_W
+  const r = bubbleSize / 2 + RING_W / 2
+  const svgSize = cx * 2
+
+  // SVG Path definition: clockwise circle starting at top center
   const pathData = `
     M ${cx}, ${cx - r}
     A ${r}, ${r} 0 1, 1 ${cx}, ${cx + r}
     A ${r}, ${r} 0 1, 1 ${cx}, ${cx - r}
-  `;
+  `
 
   return (
     <div
@@ -152,7 +193,7 @@ function TopicBubble({ topic, matched, flashState, color }: any) {
             : flashState === 'wrong'
             ? '0 0 40px rgba(239, 68, 68, 0.8)'
             : isOver
-            ? `0 0 40px 12px ${color}55`
+            ? `0 0 40px 12px ${entity.color}55`
             : `0 4px 24px rgba(0,0,0,0.5)`,
           x: flashState === 'wrong' ? [-10, 10, -8, 8, -5, 5, 0] : 0,
         }}
@@ -166,33 +207,60 @@ function TopicBubble({ topic, matched, flashState, color }: any) {
           justifyContent: 'center',
         }}
       >
-        <svg width={svgSize} height={svgSize} style={{ position: 'absolute', zIndex: 1, pointerEvents: 'none' }}>
+        {/* The Outer Orbital Track & Text Wrapping */}
+        <svg
+          width={svgSize}
+          height={svgSize}
+          style={{ position: 'absolute', zIndex: 1, pointerEvents: 'none' }}
+        >
           <defs>
-            <path id={`circlePath-${topic.id}`} d={pathData} fill="none" />
+            <path id={`circlePath-${entity.id}`} d={pathData} fill="none" />
           </defs>
           
+          {/* Subdued ring acting as matched facts orbit lane */}
           {matched.length > 0 && (
-            <circle cx={cx} cy={cx} r={r} fill="none" stroke={color} strokeWidth={RING_W} opacity={0.35} />
+            <circle
+              cx={cx}
+              cy={cx}
+              r={r}
+              fill="none"
+              stroke={entity.color}
+              strokeWidth={RING_W}
+              opacity={0.35} 
+            />
           )}
 
-          <text fill="#f0e8ff" fontSize={12} fontFamily="Inter, system-ui" fontWeight={600} letterSpacing={0.5}>
-            {matched.map((mf: any, i: number) => {
-              const startOffset = `${(i * 100) / Math.max(matched.length, 1)}%`;
+          {/* Curved facts mapped uniformly around the path */}
+          <text 
+            fill="#f0e8ff" 
+            fontSize={12} 
+            fontFamily="Inter, system-ui" 
+            fontWeight={600}
+            letterSpacing={0.5}
+          >
+            {matched.map((mf, i) => {
+              const startOffset = `${(i * 100) / Math.max(matched.length, 1)}%`
               return (
-                <textPath key={mf.id} href={`#circlePath-${topic.id}`} startOffset={startOffset} textAnchor={matched.length <= 1 ? "middle" : "start"}>
-                  {matched.length <= 1 ? mf.label : ` • ${mf.label}`}
+                <textPath
+                  key={mf.conceptId}
+                  href={`#circlePath-${entity.id}`}
+                  startOffset={startOffset}
+                  textAnchor={matched.length <= 1 ? "middle" : "start"}
+                >
+                  {matched.length <= 1 ? mf.text : ` • ${mf.text}`}
                 </textPath>
-              );
+              )
             })}
           </text>
         </svg>
 
+        {/* Solid Main Bubble Center */}
         <div
           style={{
             width: bubbleSize,
             height: bubbleSize,
             borderRadius: '50%',
-            background: color,
+            background: entity.color,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -211,205 +279,620 @@ function TopicBubble({ topic, matched, flashState, color }: any) {
               textAlign: 'center',
             }}
           >
-            {topic.label}
+            {entity.name}
           </span>
         </div>
       </motion.div>
     </div>
-  );
+  )
 }
 
-// ─── Main Component ─────────────────────────────────────────────────────────
+// DroppableEntityWrapper is retired; EntityBubble intrinsically tracks everything
 
-export function AttentionGame({ config, onBack }: { config: MemoryAttentionConfig; onBack?: () => void }) {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [activeFacts, setActiveFacts] = useState<any[]>([]);
-  const [matched, setMatched] = useState<Record<string, any[]>>({});
-  const [score, setScore] = useState(0);
-  const [latencies, setLatencies] = useState<number[]>([]);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [flashMap, setFlashMap] = useState<Record<string, 'idle' | 'correct' | 'wrong'>>({});
-  
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const processedTimelineIds = useRef<Set<string>>(new Set());
+// ─── Feedback Flash ───────────────────────────────────────────────────────
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(TouchSensor, { activationConstraint: { delay: 0, tolerance: 5 } })
-  );
+function FeedbackFlash({ text, isCorrect }: { text: string; isCorrect: boolean }) {
+  return (
+    <motion.div
+      key={text + isCorrect}
+      initial={{ opacity: 0, y: -20, scale: 0.85 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -30, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
+      style={{
+        position: 'fixed',
+        top: 80,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 999,
+        background: isCorrect ? 'rgba(34,197,94,0.95)' : 'rgba(239,68,68,0.95)',
+        color: '#fff',
+        borderRadius: 32,
+        padding: '10px 28px',
+        fontFamily: 'Plus Jakarta Sans, system-ui',
+        fontWeight: 800,
+        fontSize: 15,
+        boxShadow: `0 4px 20px ${isCorrect ? 'rgba(34,197,94,0.5)' : 'rgba(239,68,68,0.5)'}`,
+        backdropFilter: 'blur(8px)',
+      }}
+    >
+      {isCorrect ? '✓ Correct!' : '✗ Wrong!'}
+    </motion.div>
+  )
+}
 
-  const topicColors = ['#FCD34D', '#60A5FA', '#F472B6', '#34D399'];
+function StreakBadge({ streak }: { streak: number }) {
+  return (
+    <motion.div
+      initial={{ scale: 0, y: 20 }}
+      animate={{ scale: 1, y: 0 }}
+      exit={{ scale: 0, y: -20, opacity: 0 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+      style={{
+        position: 'fixed',
+        top: 120,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 998,
+        background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+        color: '#fff',
+        borderRadius: 24,
+        padding: '8px 20px',
+        fontFamily: 'Plus Jakarta Sans, system-ui',
+        fontWeight: 900,
+        fontSize: 14,
+        boxShadow: '0 4px 20px rgba(245,158,11,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+      }}
+    >
+      🔥 {streak}x Streak!
+    </motion.div>
+  )
+}
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+// ─── Win / Game-Over Overlay ──────────────────────────────────────────────
 
-    const handleTimeUpdate = () => {
-      const time = audio.currentTime;
-      setCurrentTime(time);
-
-      config.timeline.forEach(item => {
-        if (time >= item.timestamp && !processedTimelineIds.current.has(item.factId)) {
-          processedTimelineIds.current.add(item.factId);
-          spawnFact(item);
-        }
-      });
-
-      // Cleanup missed facts (nodes that take too long to sort)
-      setActiveFacts(prev => {
-        const missed = prev.filter(f => time - f.spawnTime > 10);
-        if (missed.length > 0) {
-          // penalize score or trigger an animation here if desired
-        }
-        return prev.filter(f => time - f.spawnTime <= 10);
-      });
-    };
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
-  }, [config.timeline]);
-
-  const spawnFact = (item: typeof config.timeline[0]) => {
-    const angle = Math.random() * Math.PI * 2;
-    const driftDist = 150 + Math.random() * 150;
-    
-    setActiveFacts(prev => [...prev, {
-      id: `${item.factId}-${Date.now()}`,
-      factId: item.factId,
-      label: item.label,
-      targetTopicId: item.targetTopicId,
-      driftX: Math.cos(angle) * driftDist,
-      driftY: Math.sin(angle) * driftDist,
-      spawnTime: audioRef.current?.currentTime || 0,
-    }]);
-  };
-
-  const flashEntity = (entityId: string, state: 'correct' | 'wrong') => {
-    setFlashMap(m => ({ ...m, [entityId]: state }));
-    setTimeout(() => setFlashMap(m => ({ ...m, [entityId]: 'idle' })), 600);
-  };
-
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id as string);
-  };
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    setActiveId(null);
-
-    if (!over) return;
-
-    const overId = String(over.id);
-    const fact = activeFacts.find(f => f.id === String(active.id));
-    if (!fact) return;
-
-    const latency = (audioRef.current?.currentTime || 0) - fact.spawnTime;
-
-    if (fact.targetTopicId === overId) {
-      // Base points + speed bonus
-      const speedBonus = latency < 2 ? 50 : latency < 5 ? 20 : 0;
-      setScore(s => s + 100 + speedBonus);
-      setLatencies(prev => [...prev, latency]);
-      
-      setMatched(m => ({
-        ...m,
-        [overId]: [...(m[overId] || []), fact],
-      }));
-      setActiveFacts(v => v.filter(f => f.id !== fact.id));
-      flashEntity(overId, 'correct');
-    } else {
-      setScore(s => Math.max(0, s - 50));
-      flashEntity(overId, 'wrong');
-    }
-  };
-
-  const topicPositions: Record<number, { top: string; left: string }> = {
-    0: { top: '25%', left: '50%' },
-    1: { top: '75%', left: '30%' },
-    2: { top: '75%', left: '70%' },
-    3: { top: '50%', left: '15%' },
-  };
+function EndScreen({
+  won,
+  score,
+  lives,
+  epq,
+  bestStreak,
+  accuracy,
+  onRestart,
+}: {
+  won: boolean
+  score: number
+  lives: number
+  epq: number
+  bestStreak: number
+  accuracy: number
+  onRestart: () => void
+}) {
+  const epqTier = epq >= 4000 ? 'Expert' : epq >= 3000 ? 'Advanced' : epq >= 2000 ? 'Intermediate' : epq >= 1000 ? 'Developing' : 'Beginner'
+  const tierColor = epq >= 4000 ? '#a78bfa' : epq >= 3000 ? '#60a5fa' : epq >= 2000 ? '#4ade80' : epq >= 1000 ? '#fcd34d' : '#9ca3af'
 
   return (
-    <div style={{ background: '#0b0818', height: '100%', position: 'relative', overflow: 'hidden', fontFamily: 'Inter, system-ui', userSelect: 'none', display: 'flex', flexDirection: 'column' }}>
-      {/* Header with Back Button and Audio */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'rgba(11,8,24,0.95)', borderBottom: '1px solid rgba(255,255,255,0.1)', zIndex: 50 }}>
-        {/* Back Button */}
-        <button
-          onClick={() => onBack?.()}
-          style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '10px',
-            border: '2px solid rgba(255,255,255,0.3)',
-            background: 'rgba(220, 100, 255, 0.5)',
-            color: '#fff',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '24px',
-            fontWeight: 'bold',
-            flexShrink: 0,
-            transition: 'all 0.2s ease',
-          }}
-          title="Back to games"
-        >
-          ←
-        </button>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(8,5,20,0.95)',
+        zIndex: 200,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 16,
+        backdropFilter: 'blur(12px)',
+      }}
+    >
+      <div style={{ fontSize: 56 }}>{won ? '🎉' : '💀'}</div>
+      <p style={{ fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 900, fontSize: 28, color: won ? '#a78bfa' : '#f87171', letterSpacing: '-0.02em', margin: 0 }}>
+        {won ? 'Brilliant!' : 'Game Over'}
+      </p>
 
-        {/* Audio Controls */}
-        <audio ref={audioRef} src={config.audioUrl} controls style={{ height: '36px', flex: 1, marginLeft: '12px', marginRight: '12px' }} />
+      {/* EPQ Badge */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 0.3, type: 'spring', stiffness: 300, damping: 20 }}
+        style={{
+          background: 'rgba(255,255,255,0.06)',
+          borderRadius: 20,
+          padding: '16px 32px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 4,
+          border: `1px solid ${tierColor}33`,
+        }}
+      >
+        <span style={{ color: '#9ca3af', fontFamily: 'Inter', fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Proficiency Quotient</span>
+        <span style={{ color: tierColor, fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 900, fontSize: 40, lineHeight: 1 }}>{epq.toLocaleString()}</span>
+        <span style={{ color: tierColor, fontFamily: 'Inter', fontSize: 13, fontWeight: 700 }}>{epqTier}</span>
+      </motion.div>
+
+      {/* Stats row */}
+      <div style={{ display: 'flex', gap: 24, marginTop: 4 }}>
+        {[{ label: 'Score', value: score.toString() }, { label: 'Accuracy', value: `${Math.round(accuracy * 100)}%` }, { label: 'Best Streak', value: `${bestStreak}x` }].map(s => (
+          <div key={s.label} style={{ textAlign: 'center' }}>
+            <div style={{ color: '#e9d5ff', fontFamily: 'Plus Jakarta Sans', fontWeight: 800, fontSize: 18 }}>{s.value}</div>
+            <div style={{ color: '#6b7280', fontFamily: 'Inter', fontSize: 11, fontWeight: 500 }}>{s.label}</div>
+          </div>
+        ))}
       </div>
 
-      <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd} collisionDetection={coordinateGeometryCollision}>
-        <div style={{ position: 'relative', flex: 1, width: '100%', maxWidth: 800, margin: '0 auto', overflow: 'hidden' }}>
-          
-          {config.topics.map((topic, i) => {
-            const pos = topicPositions[i] ?? { top: '50%', left: '50%' };
+      <button
+        onClick={onRestart}
+        style={{
+          marginTop: 12,
+          background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
+          color: '#fff',
+          border: 'none',
+          borderRadius: 32,
+          padding: '14px 48px',
+          fontFamily: 'Plus Jakarta Sans, system-ui',
+          fontWeight: 800,
+          fontSize: 17,
+          cursor: 'pointer',
+          boxShadow: '0 4px 20px rgba(124,58,237,0.5)',
+        }}
+      >
+        Play Again
+      </button>
+    </motion.div>
+  )
+}
+
+// ─── Main Game Component ───────────────────────────────────────────────────
+
+interface Props {
+  config: BubbleMatchConfig | MemoryAttentionConfig
+  onBack?: () => void
+}
+
+const MAX_LIVES = 6
+const POINTS_CORRECT = 100
+const WRONG_PENALTY = 50
+const SPAWN_INTERVAL_MS = 900
+const STREAK_BONUS = [0, 0, 0, 50, 80, 120, 180, 250] // bonus at streak 3,4,5,6,7+
+
+export function AttentionGame({ config, onBack }: Props) {
+  const bubbleConfig = config as BubbleMatchConfig
+
+  // Guard: AttentionGame requires BubbleMatchConfig with entities
+  if (!bubbleConfig.entities) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', color: '#e9d5ff' }}>
+        <div style={{ textAlign: 'center', fontFamily: 'Inter, system-ui' }}>
+          <p style={{ fontSize: 16, margin: '0 0 8px' }}>Invalid game configuration</p>
+          <p style={{ fontSize: 12, color: '#9ca3af', margin: 0 }}>AttentionGame requires entities field in config</p>
+          {onBack && <button onClick={onBack} style={{ marginTop: 16, padding: '8px 16px', background: '#7c3aed', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer' }}>Back</button>}
+        </div>
+      </div>
+    )
+  }
+
+  const [allConcepts]       = useState<Concept[]>(() => buildConcepts(config))
+  const [visible, setVisible]     = useState<Concept[]>([])
+  const [matched, setMatched]     = useState<Record<string, MatchedFact[]>>({})
+  const [lives, setLives]         = useState(MAX_LIVES)
+  const [score, setScore]         = useState(0)
+  const [paused, setPaused]       = useState(false)
+  const [activeId, setActiveId]   = useState<string | null>(null)
+  const [feedback, setFeedback]   = useState<{ text: string; correct: boolean } | null>(null)
+  const [flashMap, setFlashMap]   = useState<Record<string, 'idle' | 'correct' | 'wrong'>>({})
+  const [gameOver, setGameOver]   = useState(false)
+  const [gameWon, setGameWon]     = useState(false)
+  const [streak, setStreak]       = useState(0)
+  const [bestStreak, setBestStreak] = useState(0)
+  const [totalCorrect, setTotalCorrect] = useState(0)
+  const [totalAttempts, setTotalAttempts] = useState(0)
+  const [showStreak, setShowStreak] = useState(false)
+  const spawnIdx = useRef(0)
+  const spawnTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor,   { activationConstraint: { delay: 0, tolerance: 5 } })
+  )
+
+  // Spawn concepts one by one
+  const spawnNext = useCallback(() => {
+    if (spawnIdx.current >= allConcepts.length) return
+    setVisible(v => [...v, allConcepts[spawnIdx.current]])
+    spawnIdx.current++
+  }, [allConcepts])
+
+  useEffect(() => {
+    // Prevent strict mode double-spawning by resetting cleanly
+    let isMounted = true
+    const initial = Math.min(3, allConcepts.length)
+    
+    setVisible(allConcepts.slice(0, initial))
+    spawnIdx.current = initial
+
+    // Then spawn rest with delay
+    const scheduleNext = () => {
+      if (!isMounted || spawnIdx.current >= allConcepts.length) return
+      
+      spawnTimer.current = setTimeout(() => {
+        if (!isMounted) return
+        const idx = spawnIdx.current
+        
+        setVisible(v => {
+          // Extra safety check to prevent duplicate keys
+          if (v.some(c => c.id === allConcepts[idx].id)) return v
+          return [...v, allConcepts[idx]]
+        })
+        
+        spawnIdx.current++
+        scheduleNext()
+      }, SPAWN_INTERVAL_MS)
+    }
+    
+    scheduleNext()
+    
+    return () => { 
+      isMounted = false
+      if (spawnTimer.current) clearTimeout(spawnTimer.current) 
+    }
+  }, [allConcepts])
+
+  const showFeedbackMsg = (correct: boolean, text: string) => {
+    setFeedback({ text, correct })
+    setTimeout(() => setFeedback(null), 1100)
+  }
+
+  const flashEntity = (entityId: string, state: 'correct' | 'wrong') => {
+    setFlashMap(m => ({ ...m, [entityId]: state }))
+    setTimeout(() => setFlashMap(m => ({ ...m, [entityId]: 'idle' })), 600)
+  }
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string)
+  }
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    setActiveId(null)
+
+    if (!over) return
+
+    const overId = String(over.id)
+    const concept = allConcepts.find(c => c.id === String(active.id))
+    if (!concept) return
+
+    setTotalAttempts(a => a + 1)
+    if (concept.belongsTo === overId) {
+      // ✅ Correct — streak bonus
+      const newStreak = streak + 1
+      setStreak(newStreak)
+      if (newStreak > bestStreak) setBestStreak(newStreak)
+      setTotalCorrect(c => c + 1)
+      const bonus = STREAK_BONUS[Math.min(newStreak, STREAK_BONUS.length - 1)]
+      const newScore = score + POINTS_CORRECT + bonus
+      setScore(newScore)
+      if (newStreak >= 3) { setShowStreak(true); setTimeout(() => setShowStreak(false), 1200) }
+      setMatched(m => ({
+        ...m,
+        [overId]: [...(m[overId] || []), { conceptId: concept.id, text: concept.text }],
+      }))
+      setVisible(v => v.filter(c => c.id !== concept.id))
+      flashEntity(overId, 'correct')
+      showFeedbackMsg(true, concept.text)
+
+      // check win
+      const totalMatched = Object.values({ ...matched, [overId]: [...(matched[overId] || []), { conceptId: concept.id, text: concept.text }] })
+        .flat().length
+      if (totalMatched >= allConcepts.length) {
+        setTimeout(() => setGameWon(true), 700)
+      }
+    } else {
+      // ❌ Wrong — reset streak
+      setStreak(0)
+      if (navigator.vibrate) navigator.vibrate(100)
+      const newLives = lives - 1
+      setLives(newLives)
+      setScore(Math.max(0, score - WRONG_PENALTY))
+      flashEntity(overId, 'wrong')
+      showFeedbackMsg(false, concept.text)
+      if (newLives <= 0) {
+        setTimeout(() => setGameOver(true), 700)
+      }
+    }
+  }
+
+  const restart = () => {
+    spawnIdx.current = 0
+    if (spawnTimer.current) clearTimeout(spawnTimer.current)
+    const shuffled = buildConcepts(config)
+    setVisible([])
+    setMatched({})
+    setLives(MAX_LIVES)
+    setScore(0)
+    setStreak(0)
+    setBestStreak(0)
+    setTotalCorrect(0)
+    setTotalAttempts(0)
+    setGameOver(false)
+    setGameWon(false)
+    setFeedback(null)
+    setFlashMap({})
+    const initial = Math.min(3, shuffled.length)
+    const newVis: Concept[] = []
+    for (let i = 0; i < initial; i++) { newVis.push(shuffled[i]); spawnIdx.current = i + 1 }
+    setVisible(newVis)
+  }
+
+  // Progress calculation
+  const totalFacts = allConcepts.length
+  const matchedCount = Object.values(matched).flat().length
+  const progress = totalFacts > 0 ? matchedCount / totalFacts : 0
+
+  // EPQ calculation (0-5000)
+  const calcEPQ = () => {
+    const accuracy = totalAttempts > 0 ? totalCorrect / totalAttempts : 0
+    const completionBonus = gameWon ? 1 : matchedCount / totalFacts
+    const streakFactor = Math.min(bestStreak / 5, 1)
+    const livesRemaining = lives / MAX_LIVES
+    return Math.round(
+      5000 * (accuracy * 0.4 + completionBonus * 0.3 + streakFactor * 0.15 + livesRemaining * 0.15)
+    )
+  }
+
+  // Note: activeConcept is no longer needed for DragOverlay
+
+  // Fixed layout coordinates centered into a visual grouping
+  // 3 entities create a centered triangle; up to 5 gracefully distribute
+  const entityPositions: Record<number, { top: string; left: string }> = {
+    0: { top: '25%', left: '50%' }, // Top Center
+    1: { top: '65%', left: '30%' }, // Bottom Left
+    2: { top: '65%', left: '70%' }, // Bottom Right
+    3: { top: '45%', left: '15%' }, // Far Left
+    4: { top: '45%', left: '85%' }, // Far Right
+  }
+
+  // Pool area positions for concept chips (bottom grid)
+  const conceptPositions: Array<{ x: number; y: number }> = visible.map((_, i) => ({
+    x: (i % 3) * 110 + 20,
+    y: Math.floor(i / 3) * 110 + 10,
+  }))
+
+  return (
+    <div
+      style={{
+        background: '#0b0818',
+        minHeight: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        fontFamily: 'Inter, system-ui',
+        userSelect: 'none',
+      }}
+    >
+      {/* HUD */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          background: 'rgba(11,8,24,0.85)',
+          backdropFilter: 'blur(8px)',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px' }}>
+          {/* Back + Score */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {onBack && (
+              <button
+                onClick={onBack}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 20, padding: 0 }}
+              >
+                ←
+              </button>
+            )}
+            <button
+              onClick={() => setPaused(p => !p)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 18, padding: 0 }}
+            >
+              ⏸
+            </button>
+            <span style={{ color: '#e9d5ff', fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 800, fontSize: 22 }}>
+              {score}
+            </span>
+            {streak >= 2 && (
+              <span style={{ color: '#f59e0b', fontFamily: 'Inter', fontWeight: 700, fontSize: 13 }}>
+                🔥{streak}x
+              </span>
+            )}
+          </div>
+
+          {/* Progress + Lives */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ color: '#6b7280', fontFamily: 'Inter', fontSize: 12, fontWeight: 500 }}>
+              {matchedCount}/{totalFacts}
+            </span>
+            <div style={{ display: 'flex', gap: 4 }}>
+              {Array.from({ length: MAX_LIVES }).map((_, i) => (
+                <span key={i} style={{ fontSize: 15, opacity: i < lives ? 1 : 0.15, transition: 'opacity 0.3s' }}>
+                  ❤️
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div style={{ height: 3, background: 'rgba(255,255,255,0.06)', width: '100%' }}>
+          <motion.div
+            animate={{ width: `${progress * 100}%` }}
+            transition={{ type: 'spring', stiffness: 200, damping: 30 }}
+            style={{ height: '100%', background: 'linear-gradient(90deg, #7c3aed, #a78bfa)', borderRadius: 2 }}
+          />
+        </div>
+      </div>
+
+      {/* Feedback flash */}
+      <AnimatePresence>
+        {feedback && (
+          <FeedbackFlash key={feedback.text} text={feedback.text} isCorrect={feedback.correct} />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showStreak && streak >= 3 && (
+          <StreakBadge key={`streak-${streak}`} streak={streak} />
+        )}
+      </AnimatePresence>
+
+      <DndContext 
+        sensors={sensors} 
+        onDragStart={handleDragStart} 
+        onDragEnd={handleDragEnd}
+        collisionDetection={coordinateGeometryCollision}
+      >
+        {/* Entity bubbles – unified container bounds */}
+        <div
+          style={{
+            position: 'relative',
+            height: '60vh',
+            marginTop: 56,
+            maxWidth: 800, // Clamp layout stretch on destkops 
+            marginLeft: 'auto',
+            marginRight: 'auto', 
+          }}
+        >
+          {bubbleConfig.entities.map((entity, i) => {
+            const pos = entityPositions[i] ?? { top: '50%', left: '50%' }
             return (
-              <div key={topic.id} style={{ position: 'absolute', ...pos, transform: 'translate(-50%,-50%)' }}>
-                <TopicBubble
-                  topic={topic}
-                  matched={matched[topic.id] || []}
-                  flashState={flashMap[topic.id] || 'idle'}
-                  color={topicColors[i % topicColors.length]}
+              <div
+                key={entity.id}
+                style={{
+                  position: 'absolute',
+                  ...pos,
+                  transform: 'translate(-50%,-50%)',
+                }}
+              >
+                <EntityBubble
+                  entity={entity}
+                  matched={matched[entity.id] || []}
+                  flashState={flashMap[entity.id] || 'idle'}
                 />
               </div>
-            );
+            )
           })}
-
-          <AnimatePresence>
-            {activeFacts.map((fact) => (
-              <motion.div key={fact.id} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }}>
-                <FactNodeChip fact={fact} isDragging={fact.id === activeId} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-
         </div>
+
+        {/* Divider */}
+        <div
+          style={{
+            height: 1,
+            background: 'rgba(255,255,255,0.07)',
+            margin: '0 24px',
+          }}
+        />
+
+        {/* Concept chips pool – bottom area */}
+        <div
+          style={{
+            padding: '18px 20px 32px',
+            minHeight: 180,
+            position: 'relative',
+          }}
+        >
+          <p
+            style={{
+              color: '#6b7280',
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              marginBottom: 14,
+            }}
+          >
+            Drag to match ↑
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 14,
+              justifyContent: 'center',
+            }}
+          >
+            <AnimatePresence>
+              {visible.map((concept, idx) => (
+                <motion.div
+                  key={concept.id}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.5, opacity: 0 }}
+                  transition={{ delay: Math.min(idx * 0.1, 0.5), type: 'spring', stiffness: 380, damping: 22 }}
+                >
+                  <ConceptChip
+                    concept={concept}
+                    isDragging={concept.id === activeId}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* DragOverlay removed; ConceptChip intrinsically handles its state when dragged */}
       </DndContext>
 
-      {/* HUD Overlay */}
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: '24px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        pointerEvents: 'none',
-        zIndex: 40,
-        background: 'linear-gradient(to top, rgba(11,8,24,0.9), transparent)',
-      }}>
-        <div style={{ color: '#e0d6f5', fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 800, fontSize: 18 }}>
-          Score: {score}
-        </div>
-        <div style={{ color: '#9ca3af', fontFamily: 'Inter, system-ui', fontWeight: 500, fontSize: 14 }}>
-          Avg Latency: {latencies.length > 0 ? (latencies.reduce((a, b) => a + b, 0) / latencies.length).toFixed(2) : 0}s
-        </div>
-      </div>
+      {/* End screens */}
+      <AnimatePresence>
+        {(gameOver || gameWon) && (
+          <EndScreen
+            won={gameWon}
+            score={score}
+            lives={lives}
+            epq={calcEPQ()}
+            bestStreak={bestStreak}
+            accuracy={totalAttempts > 0 ? totalCorrect / totalAttempts : 0}
+            onRestart={restart}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Pause overlay */}
+      <AnimatePresence>
+        {paused && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setPaused(false)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(8,5,20,0.88)',
+              zIndex: 150,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 16,
+              cursor: 'pointer',
+            }}
+          >
+            <span style={{ fontSize: 52 }}>⏸</span>
+            <p style={{ color: '#a78bfa', fontFamily: 'Plus Jakarta Sans', fontWeight: 800, fontSize: 22 }}>
+              Paused
+            </p>
+            <p style={{ color: '#6b7280', fontSize: 14 }}>Tap to resume</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  );
+  )
 }

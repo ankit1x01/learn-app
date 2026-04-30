@@ -1,38 +1,39 @@
 // src/games/data/memoryGames.ts
-import { 
+import {
+  GameConfig,
   MemoryAttentionConfig,
-  MemoryNameRecallConfig, 
-  MemoryRetentionConfig, 
-  MemorySequencingConfig, 
+  MemoryNameRecallConfig,
+  MemoryRetentionConfig,
+  MemorySequencingConfig,
   MemorySynthesisConfig,
   BubbleMatchConfig
 } from '../types';
 
-export const sampleAttentionGame: BubbleMatchConfig = {
+export const sampleAttentionGame: GameConfig = {
   type: 'bubble-match',
-  subject: 'Astronomy',
-  theme: 'Solar System',
+  subject: 'Solar System',
+  theme: 'Planets & Their Moons',
   entities: [
     {
-      id: 't1',
-      name: 'Planets',
-      color: '#FCD34D',
-      facts: ['Jupiter', 'Saturn']
+      id: 'terrestrial',
+      name: 'Terrestrial',
+      color: 'hsl(35, 80%, 55%)',
+      facts: ['Mercury closest to sun', 'Venus hottest planet', 'Earth has life', 'Mars red planet'],
     },
     {
-      id: 't2',
-      name: 'Moons',
-      color: '#60A5FA',
-      facts: ['Europa', 'Titan']
+      id: 'gas-giant',
+      name: 'Gas Giant',
+      color: 'hsl(280, 60%, 60%)',
+      facts: ['Jupiter has Great Red Spot', 'Saturn has prominent rings', 'Uranus tilted 98°', 'Neptune coldest'],
     },
     {
-      id: 't3',
-      name: 'Asteroids',
-      color: '#F472B6',
-      facts: ['Ceres']
-    }
-  ]
-};
+      id: 'moon',
+      name: 'Moon',
+      color: 'hsl(200, 65%, 55%)',
+      facts: ['Earth\'s Moon causes tides', 'Mars has Phobos & Deimos', 'Jupiter has Io', 'Saturn has Titan'],
+    },
+  ],
+} as GameConfig;
 
 
 export const sampleNameRecallGame: MemoryNameRecallConfig = {

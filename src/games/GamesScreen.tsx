@@ -1,9 +1,10 @@
 // src/games/GamesScreen.tsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { App as CapApp } from '@capacitor/app'
 
 import { GameRunner } from './GameRunner'
-import { GameConfig } from './types'
+import { GameConfig, GameResult } from './types'
+import { gamePerformanceStore } from '../lib/game-performance-store'
 import { EquationBalancer } from './EquationBalancer'
 import { ParabolaCannon } from './ParabolaCannon'
 import { MatrixMorph } from './MatrixMorph'
@@ -13,10 +14,10 @@ import { InterleavedSprint } from './jee/InterleavedSprint'
 import { ConceptRadar } from './jee/ConceptRadar'
 import { FormulaFactory } from './jee/FormulaFactory'
 import { PressureVault } from './jee/PressureVault'
-import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout, dsaBalloonTap, dsaRetention, dsaAudioLecture, dsaBubbleMatch } from './data/dsa-dummy'
+import { dsaThisOrThat, dsaChrono, dsaLinks, dsaKnockout, dsaBalloonTap, dsaRetention, dsaAudioLecture } from './data/dsa-dummy'
 import { sampleAttentionGame, sampleNameRecallGame, sampleRetentionGame, sampleSequencingGame, sampleSynthesisGame } from './data/memoryGames'
 
-type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'bubble-match' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph' | 'recall-blitz' | 'twin-or-not' | 'interleaved-sprint' | 'concept-radar' | 'formula-factory' | 'pressure-vault' | 'memory-attention' | 'memory-name-recall' | 'memory-retention' | 'memory-sequencing' | 'memory-synthesis'
+type Tab = 'this-or-that' | 'chrono' | 'links' | 'knockout' | 'balloon-tap' | 'retention' | 'audio-lecture' | 'equation-balancer' | 'parabola-cannon' | 'matrix-morph' | 'recall-blitz' | 'twin-or-not' | 'interleaved-sprint' | 'concept-radar' | 'formula-factory' | 'pressure-vault' | 'memory-attention' | 'memory-name-recall' | 'memory-retention' | 'memory-sequencing' | 'memory-synthesis'
 
 interface GameMeta {
   id: Tab
@@ -93,15 +94,6 @@ const GAMES: GameMeta[] = [
     foldColor: 'rgba(0,0,0,0.13)',
   },
   {
-    id: 'bubble-match',
-    label: 'Bubble Match',
-    tagline: 'Drag & sort facts',
-    icon: 'target' as any,
-    bg: '#F97316',
-    textDark: '#431407',
-    foldColor: 'rgba(0,0,0,0.13)',
-  },
-  {
     id: 'equation-balancer',
     label: 'Equations',
     tagline: 'Balance math',
@@ -120,7 +112,6 @@ const CONFIGS: Record<Tab, GameConfig> = {
   'balloon-tap':   dsaBalloonTap,
   retention:       dsaRetention,
   'audio-lecture': dsaAudioLecture,
-  'bubble-match':  dsaBubbleMatch,
   'equation-balancer': null as any,
   'recall-blitz':       null as any,
   'parabola-cannon':    null as any,
@@ -144,6 +135,13 @@ interface Props {
 
 export function GamesScreen({ onBack, setScreen }: Props) {
   const [selectedGame, setSelectedGame] = useState<Tab | null>(null)
+  const startTimeRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    if (selectedGame) {
+      startTimeRef.current = Date.now()
+    }
+  }, [selectedGame])
 
   // Full-screen games that manage their own layout
   if (selectedGame === 'recall-blitz')       return <SpacedRecallBlitz    onBack={() => setSelectedGame(null)} />
@@ -161,8 +159,27 @@ export function GamesScreen({ onBack, setScreen }: Props) {
       { id: 'memory-sequencing'  as Tab, label: 'Sequencing',   tagline: 'Order Events',       bg: '#F3E8FF', color: '#7E22CE', fold: 'rgba(126,34,206,0.13)', icon: 'format_list_numbered' },
       { id: 'memory-synthesis'   as Tab, label: 'Synthesis',    tagline: 'Deduce Truth',       bg: '#FFE4E6', color: '#BE123C', fold: 'rgba(190,18,60,0.13)', icon: 'psychology' },
     ];
-    
+
     const game = GAMES.find(g => g.id === selectedGame) || memoryGamesMeta.find(g => g.id === selectedGame)!;
+
+    const handleGameComplete = async (result: GameResult) => {
+      const timeSpent = startTimeRef.current ? Date.now() - startTimeRef.current : 0;
+      const syntheticConceptId = `game_${selectedGame}`;
+
+      try {
+        await gamePerformanceStore.createPerformance(
+          `${selectedGame}_${Date.now()}`,
+          syntheticConceptId,
+          selectedGame,
+          result.score,
+          timeSpent
+        );
+      } catch (error) {
+        console.warn('Failed to save game performance:', error);
+      }
+
+      setSelectedGame(null);
+    };
     
     return (
       <div className="flex flex-col h-screen max-w-md mx-auto" style={{ background: '#F5F0E8' }}>
@@ -189,7 +206,11 @@ export function GamesScreen({ onBack, setScreen }: Props) {
             {selectedGame === 'equation-balancer' ? (
               <EquationBalancer />
             ) : (
-              <GameRunner key={selectedGame} config={CONFIGS[selectedGame]} onBack={() => setSelectedGame(null)} />
+              <GameRunner
+                key={selectedGame}
+                config={{ ...CONFIGS[selectedGame], onComplete: handleGameComplete }}
+                onBack={() => setSelectedGame(null)}
+              />
             )}
           </div>
         </div>

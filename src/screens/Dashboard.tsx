@@ -551,6 +551,24 @@ export const Dashboard = ({
         </div>
       </motion.div>
 
+      {/* ── Orchestration Lab ── */}
+      <motion.button
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...m3SpatialDefault, delay: 0.25 }}
+        onClick={() => setScreen('timeline-demo')}
+        className="mx-4 mb-3 flex items-center justify-start px-4 py-3 rounded-m3-lg border border-solid transition-all hover:shadow-md hover:-translate-y-1"
+        style={{ background: '#E8F5E9', borderColor: '#4CAF50' }}
+      >
+        <div className="w-10 h-10 rounded-m3-lg flex items-center justify-center mr-3" style={{ background: '#C8E6C9' }}>
+          <span className="material-symbols-rounded" style={{ fontSize: 20, color: '#2E7D32' }}>motion_photos_auto</span>
+        </div>
+        <div className="text-left">
+          <p className="text-[14px] font-semibold font-ui" style={{ color: '#1B5E20' }}>Timeline Demo</p>
+          <p className="text-[11px] font-body" style={{ color: '#388E3C' }}>Action System Test</p>
+        </div>
+      </motion.button>
+
       {/* ── Daily Games ── */}
       <div className="flex flex-col gap-4 px-4 w-full mb-4 max-w-[calc(100%-32px)]">
           <div className="grid grid-cols-2 gap-3 w-full">

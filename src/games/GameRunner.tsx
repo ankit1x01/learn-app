@@ -7,8 +7,6 @@ import { Knockout } from './components/Knockout'
 import { BalloonTapGame } from './components/BalloonTapGame'
 import { RetentionGame } from './components/RetentionGame'
 import { AudioLectureGame } from './components/AudioLectureGame'
-import { BubbleMatchGame } from './components/BubbleMatchGame'
-
 import { AttentionGame } from './components/memory/AttentionGame'
 import { NameRecallGame } from './components/memory/NameRecallGame'
 import { RetentionGame as MemoryRetentionGame } from './components/memory/RetentionGame'
@@ -29,7 +27,7 @@ export function GameRunner({ config, onBack }: Props) {
     case 'balloon-tap':    return <BalloonTapGame   config={config} />
     case 'retention':      return <RetentionGame    config={config} />
     case 'audio-lecture':  return <AudioLectureGame config={config} />
-    case 'bubble-match':   return <BubbleMatchGame  config={config} />
+    case 'bubble-match':   return <AttentionGame config={config} onBack={onBack} />
 
     case 'memory-attention':   return <AttentionGame config={config} onBack={onBack} />
     case 'memory-name-recall': return <NameRecallGame config={config} />
