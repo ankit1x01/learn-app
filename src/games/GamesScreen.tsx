@@ -1,5 +1,6 @@
 // src/games/GamesScreen.tsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { App as CapApp } from '@capacitor/app'
 
 import { GameRunner } from './GameRunner'
 import { GameConfig } from './types'
@@ -165,13 +166,13 @@ export function GamesScreen({ onBack, setScreen }: Props) {
     
     return (
       <div className="flex flex-col h-screen max-w-md mx-auto" style={{ background: '#F5F0E8' }}>
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-[#E3DDD5] bg-white">
+        <div className="flex items-center gap-3 px-4 border-b border-[#E3DDD5] bg-white" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 12px)', paddingBottom: '12px' }}>
           <button
             onClick={() => setSelectedGame(null)}
-            className="w-9 h-9 flex items-center justify-center rounded-xl"
-            style={{ background: 'var(--color-surface-container)' }}
+            className="w-12 h-12 flex items-center justify-center rounded-xl active:scale-95 transition-transform"
+            style={{ background: 'var(--color-surface-container)', cursor: 'pointer', pointerEvents: 'auto', touchAction: 'manipulation' }}
           >
-            <span className="material-symbols-rounded" style={{ fontSize: 20, color: "#292524" }}>chevron_left</span>
+            <span className="material-symbols-rounded" style={{ fontSize: 24, color: "#292524" }}>chevron_left</span>
           </button>
           <div className="flex-1">
             <p className="text-[17px] font-black text-[var(--color-on-surface)]" style={{ fontFamily: 'Plus Jakarta Sans, system-ui' }}>
@@ -188,7 +189,7 @@ export function GamesScreen({ onBack, setScreen }: Props) {
             {selectedGame === 'equation-balancer' ? (
               <EquationBalancer />
             ) : (
-              <GameRunner key={selectedGame} config={CONFIGS[selectedGame]} />
+              <GameRunner key={selectedGame} config={CONFIGS[selectedGame]} onBack={() => setSelectedGame(null)} />
             )}
           </div>
         </div>
@@ -205,10 +206,10 @@ export function GamesScreen({ onBack, setScreen }: Props) {
       >
         <button
           onClick={onBack}
-          className="w-9 h-9 flex items-center justify-center rounded-xl"
-          style={{ background: 'rgba(0,0,0,0.07)' }}
+          className="w-12 h-12 flex items-center justify-center rounded-xl active:scale-95 transition-transform"
+          style={{ background: 'rgba(0,0,0,0.07)', cursor: 'pointer', pointerEvents: 'auto', touchAction: 'manipulation' }}
         >
-          <span className="material-symbols-rounded" style={{ fontSize: 20, color: "#292524" }}>chevron_left</span>
+          <span className="material-symbols-rounded" style={{ fontSize: 24, color: "#292524" }}>chevron_left</span>
         </button>
         <div className="flex-1 text-center">
           <p

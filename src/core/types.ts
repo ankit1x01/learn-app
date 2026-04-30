@@ -77,6 +77,24 @@ export interface SessionItem {
 
   // ── Layer 3: Pre-testing ─────────────────────────────────────────────────
   isPreTest?: boolean;     // true = question shown BEFORE concept explanation
+  predictionMCQ?: {        // prediction question shown before main content
+    id: string;
+    question: string;
+    options: string[];
+    correct: number;
+  };
+  predictionAccuracy?: boolean;  // true if user predicted correctly
+  predictionTimeMs?: number;     // time to make prediction
+
+  // ── MCQ Phase ───────────────────────────────────────────────────────────
+  quizMCQs?: Array<{       // 2-3 regular MCQs from quiz content
+    id: string;
+    question: string;
+    options: string[];
+    correct: number;
+    explanation: string;
+    stage: 'pre' | 'post';
+  }>;
 
   // ── Layer 8: Cognitive Load ──────────────────────────────────────────────
   responseTimeMs?: number; // how long the student took to answer

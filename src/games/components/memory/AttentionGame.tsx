@@ -221,7 +221,7 @@ function TopicBubble({ topic, matched, flashState, color }: any) {
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 
-export function AttentionGame({ config }: { config: MemoryAttentionConfig }) {
+export function AttentionGame({ config, onBack }: { config: MemoryAttentionConfig; onBack?: () => void }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [activeFacts, setActiveFacts] = useState<any[]>([]);
   const [matched, setMatched] = useState<Record<string, any[]>>({});
@@ -331,13 +331,39 @@ export function AttentionGame({ config }: { config: MemoryAttentionConfig }) {
   };
 
   return (
-    <div style={{ background: '#0b0818', minHeight: '100vh', position: 'relative', overflow: 'hidden', fontFamily: 'Inter, system-ui', userSelect: 'none' }}>
-      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', justifyContent: 'center', padding: '14px 22px', background: 'rgba(11,8,24,0.85)', backdropFilter: 'blur(8px)' }}>
-        <audio ref={audioRef} src={config.audioUrl} controls style={{ height: '36px' }} />
+    <div style={{ background: '#0b0818', height: '100%', position: 'relative', overflow: 'hidden', fontFamily: 'Inter, system-ui', userSelect: 'none', display: 'flex', flexDirection: 'column' }}>
+      {/* Header with Back Button and Audio */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', background: 'rgba(11,8,24,0.95)', borderBottom: '1px solid rgba(255,255,255,0.1)', zIndex: 50 }}>
+        {/* Back Button */}
+        <button
+          onClick={() => onBack?.()}
+          style={{
+            width: '44px',
+            height: '44px',
+            borderRadius: '10px',
+            border: '2px solid rgba(255,255,255,0.3)',
+            background: 'rgba(220, 100, 255, 0.5)',
+            color: '#fff',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            flexShrink: 0,
+            transition: 'all 0.2s ease',
+          }}
+          title="Back to games"
+        >
+          ←
+        </button>
+
+        {/* Audio Controls */}
+        <audio ref={audioRef} src={config.audioUrl} controls style={{ height: '36px', flex: 1, marginLeft: '12px', marginRight: '12px' }} />
       </div>
 
       <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd} collisionDetection={coordinateGeometryCollision}>
-        <div style={{ position: 'relative', height: '100vh', width: '100%', maxWidth: 800, margin: '0 auto', paddingTop: 80 }}>
+        <div style={{ position: 'relative', flex: 1, width: '100%', maxWidth: 800, margin: '0 auto', overflow: 'hidden' }}>
           
           {config.topics.map((topic, i) => {
             const pos = topicPositions[i] ?? { top: '50%', left: '50%' };
@@ -366,7 +392,7 @@ export function AttentionGame({ config }: { config: MemoryAttentionConfig }) {
 
       {/* HUD Overlay */}
       <div style={{
-        position: 'fixed',
+        position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
@@ -374,7 +400,7 @@ export function AttentionGame({ config }: { config: MemoryAttentionConfig }) {
         display: 'flex',
         justifyContent: 'space-between',
         pointerEvents: 'none',
-        zIndex: 200,
+        zIndex: 40,
         background: 'linear-gradient(to top, rgba(11,8,24,0.9), transparent)',
       }}>
         <div style={{ color: '#e0d6f5', fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 800, fontSize: 18 }}>

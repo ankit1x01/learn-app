@@ -11,20 +11,32 @@ import type { Stage, Concept, SubjectStats } from '../core/types';
 export const ChittaMap = ({
   setScreen,
   globalStats,
+  concepts,
 }: {
   setScreen: (s: Screen) => void;
   globalStats: Record<string, SubjectStats>;
+  concepts: Concept[];
 }) => {
   const [selectedNode, setSelectedNode] = useState<Concept | null>(null);
   const [filter, setFilter] = useState<string>('All');
 
-  const allConcepts = CONFIG.concepts;
+  const allConcepts = concepts;
   const filterOptions = ['All', ...CONFIG.subjects.map(s => s.name)];
 
-  const visible = useMemo(() =>
-    allConcepts.filter(c => filter === 'All' || c.subject === filter),
-    [filter, allConcepts]
-  );
+  const visible = useMemo(() => {
+    const filtered = allConcepts.filter(c => filter === 'All' || c.subject === filter);
+    console.log('🗺️ ChittaMap visible concepts:', {
+      total: allConcepts.length,
+      filtered: filtered.length,
+      auto: filtered.filter(c => c.stage === 'Automatic').length,
+      examReady: filtered.filter(c => c.stage === 'ExamReady').length,
+      conscious: filtered.filter(c => c.stage === 'Conscious').length,
+      fragile: filtered.filter(c => c.stage === 'Fragile').length,
+      unseen: filtered.filter(c => c.stage === 'Unseen').length,
+      filter,
+    });
+    return filtered;
+  }, [filter, allConcepts]);
 
   const stageColor: Record<Stage, string> = {
     Automatic:  'bg-[color:var(--color-success)]',
@@ -80,16 +92,20 @@ export const ChittaMap = ({
 
       {/* Nodes */}
       <div className="absolute inset-0">
-        {visible.map((concept, i) => (
-          <div
-            key={concept.id}
-            className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-150 transition-transform"
-            style={getPos(concept, i)}
-            onClick={() => setSelectedNode(concept)}
-          >
-            <div className={`rounded-full ${stageSize[concept.stage]} ${stageColor[concept.stage]}`} />
-          </div>
-        ))}
+        {visible.map((concept, i) => {
+          const hasDebug = concept.stage === 'Automatic' || concept.stage === 'ExamReady';
+          if (hasDebug) console.log(`📍 Rendering ${concept.stage}:`, concept.name, stageColor[concept.stage], stageSize[concept.stage]);
+          return (
+            <div
+              key={concept.id}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:scale-150 transition-transform"
+              style={getPos(concept, i)}
+              onClick={() => setSelectedNode(concept)}
+            >
+              <div className={`rounded-full ${stageSize[concept.stage]} ${stageColor[concept.stage]}`} />
+            </div>
+          );
+        })}
       </div>
 
       {/* Node detail */}
@@ -103,6 +119,15 @@ export const ChittaMap = ({
             onClick={() => setSelectedNode(null)}
           >
             <div className="card rounded-[1.5rem] p-6">
+              {(() => {
+                console.log('📊 Node detail panel:', {
+                  name: selectedNode.name,
+                  stage: selectedNode.stage,
+                  stability: selectedNode.stability,
+                  showChart: selectedNode.stage !== 'Unseen',
+                });
+                return null;
+              })()}
               <div className="flex justify-between items-start mb-2">
                 <h3 className="font-ui font-bold text-lg leading-tight">{selectedNode.name}</h3>
                 <span className="material-symbols-rounded text-[var(--color-on-surface-variant)] shrink-0 ml-2" style={{ fontSize: 16 }}>info</span>
@@ -137,34 +162,41 @@ export const ChittaMap = ({
               </div>
 
               {/* Forgetting Curve Chart */}
-              {selectedNode.stage !== 'Unseen' && (
-                <div className="mt-5 pt-4 border-t border-[var(--color-border)]">
-                  <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-[var(--color-on-surface-variant)] mb-3">Memory Projection (14 days)</p>
-                  <div className="flex items-end justify-between h-12 gap-[2px]">
-                    {getForgettingCurve(selectedNode, 14).map((d, i) => (
-                      <div key={i} className="flex-1 group relative">
-                        <motion.div
-                          initial={{ height: 0 }}
-                          animate={{ height: `${d.r * 100}%` }}
-                          className="w-full rounded-t-[2px]"
-                          style={{
-                            background: d.r > 0.9 ? 'var(--color-success)' : d.r > 0.7 ? 'var(--color-primary)' : 'var(--color-error)',
-                            opacity: 0.3 + (d.r * 0.7)
-                          }}
-                        />
-                        {/* Tooltip on hover */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block bg-[var(--color-on-surface)] text-[var(--color-surface)] text-[8px] px-1 py-0.5 rounded whitespace-nowrap z-50">
-                          Day {i}: {Math.round(d.r * 100)}%
-                        </div>
-                      </div>
-                    ))}
+              {selectedNode.stage !== 'Unseen' && (() => {
+                const curve = getForgettingCurve(selectedNode, 14);
+                console.log('📊 Chart rendering:', { stage: selectedNode.stage, curveLength: curve.length, isShowing: true });
+                return (
+                  <div className="mt-5 pt-4 border-t border-[var(--color-border)]">
+                    <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-[var(--color-on-surface-variant)] mb-3">Memory Projection (14 days)</p>
+                    <div className="flex items-end gap-1 rounded-lg p-3" style={{ background: '#f3e8ff', height: '120px', width: '100%', alignItems: 'flex-end' }}>
+                      {curve.map((d, i) => {
+                        const pct = Math.round(d.r * 100);
+                        const flexGrow = Math.max(d.r, 0.02);
+                        console.log(`Bar ${i}:`, { r: d.r, pct, flexGrow });
+                        return (
+                          <div key={i} style={{ flex: `${flexGrow} 0 0`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '4px' }}>
+                            <div
+                              style={{
+                                width: '100%',
+                                flexGrow: 1,
+                                background: pct > 70 ? '#22c55e' : pct > 40 ? '#3b82f6' : '#ef4444',
+                                borderRadius: '4px 4px 0 0',
+                                minHeight: '4px'
+                              }}
+                              title={`Day ${i}: ${pct}%`}
+                            />
+                            <span style={{ fontSize: '10px', color: '#666', fontWeight: 'bold' }}>{i}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-between mt-2 text-[8px] font-bold text-[var(--color-on-surface-muted)] uppercase tracking-tighter">
+                      <span>Today</span>
+                      <span>Day 13</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between mt-1.5 text-[8px] font-bold text-[var(--color-on-surface-muted)] uppercase tracking-tighter">
-                    <span>Today</span>
-                    <span>Next 2 Weeks</span>
-                  </div>
-                </div>
-              )}
+                );
+              })()}
 
               <button
                 onClick={() => { setSelectedNode(null); setScreen('recall'); }}

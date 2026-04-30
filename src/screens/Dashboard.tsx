@@ -179,6 +179,29 @@ export const Dashboard = ({
         ))}
       </div>
 
+     {/* ── AI Engineering Course ── */}
+      <motion.button
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...m3SpatialDefault, delay: 0.6 }}
+        onClick={() => setScreen('ai-engineering')}
+        className="mt-6 w-full mx-4 mb-4 px-4 py-4 rounded-m3-xl flex items-center gap-3 border border-solid bg-gradient-to-br from-[#8B5CF6]/5 to-[#EC4899]/5 hover:shadow-md transition-all active:scale-95"
+        style={{ borderColor: 'var(--color-border)' }}
+      >
+        <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0 bg-[#8B5CF6]/20">
+          <span className="material-symbols-rounded" style={{ fontSize: 24, color: '#8B5CF6' }}>psychology</span>
+        </div>
+        <div className="flex-1 text-left">
+          <p className="text-[14px] font-bold mb-0.5" style={{ color: 'var(--color-on-surface)' }}>
+            AI Engineering Path
+          </p>
+          <p className="text-[12px]" style={{ color: 'var(--color-on-surface-variant)' }}>
+            260+ lessons • Build from scratch
+          </p>
+        </div>
+        <span className="material-symbols-rounded" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>chevron_right</span>
+      </motion.button>
+
       {/* ── Start Session Card (Primary CTA) ── */}
       <motion.button 
         onClick={onStartSession}
@@ -528,29 +551,6 @@ export const Dashboard = ({
         </div>
       </motion.div>
 
-      {/* ── Demo Session Banner ── */}
-      <motion.button
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...m3SpatialDefault, delay: 0.25 }}
-        onClick={() => setScreen('demo-session')}
-        className="w-full rounded-m3-xl p-4 mb-4 mx-4 max-w-[calc(100%-32px)] flex items-center gap-4 text-left border border-solid transition-all hover:shadow-md hover:-translate-y-1"
-        style={{ background: 'var(--color-primary-container)', borderColor: 'var(--color-primary-border)' }}
-      >
-        <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0" style={{ background: 'var(--color-primary)' }}>
-          <span className="material-symbols-rounded text-white ml-0.5" style={{ fontSize: 22, fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
-        </div>
-        <div className="flex-1">
-          <p className="text-[15px] font-bold mb-0.5 font-ui" style={{ color: 'var(--color-primary)' }}>
-            AI Engineer Demo Session
-          </p>
-          <p className="text-[12px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>
-            5 lead-level concepts · infographics + MCQs
-          </p>
-        </div>
-        <span className="material-symbols-rounded shrink-0" style={{ fontSize: 18,  color: 'var(--color-primary)'  }}>chevron_right</span>
-      </motion.button>
-
       {/* ── Daily Games ── */}
       <div className="flex flex-col gap-4 px-4 w-full mb-4 max-w-[calc(100%-32px)]">
           <div className="grid grid-cols-2 gap-3 w-full">
@@ -566,8 +566,8 @@ export const Dashboard = ({
                 <span className="material-symbols-rounded" style={{ fontSize: 20,  color: 'var(--color-primary)'  }}>sports_esports</span>
               </div>
               <div className="text-left">
-                <p className="text-[14px] font-semibold font-ui" style={{ color: 'var(--color-on-surface)' }}>Daily Minigames</p>
-                <p className="text-[11px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>DSA · 4 games</p>
+                <p className="text-[14px] font-semibold font-ui" style={{ color: 'var(--color-on-surface)' }}>Games</p>
+                <p className="text-[11px] font-body" style={{ color: 'var(--color-on-surface-variant)' }}>7 simulations</p>
               </div>
             </motion.button>
   
@@ -862,29 +862,7 @@ export const Dashboard = ({
         </div>
       </motion.div>
 
-      {/* ── AI Engineering Course ── */}
-      <motion.button
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...m3SpatialDefault, delay: 0.6 }}
-        onClick={() => setScreen('ai-engineering')}
-        className="mt-6 w-full mx-4 mb-4 px-4 py-4 rounded-m3-xl flex items-center gap-3 border border-solid bg-gradient-to-br from-[#8B5CF6]/5 to-[#EC4899]/5 hover:shadow-md transition-all active:scale-95"
-        style={{ borderColor: 'var(--color-border)' }}
-      >
-        <div className="w-12 h-12 rounded-m3-lg flex items-center justify-center shrink-0 bg-[#8B5CF6]/20">
-          <span className="material-symbols-rounded" style={{ fontSize: 24, color: '#8B5CF6' }}>psychology</span>
-        </div>
-        <div className="flex-1 text-left">
-          <p className="text-[14px] font-bold mb-0.5" style={{ color: 'var(--color-on-surface)' }}>
-            AI Engineering Path
-          </p>
-          <p className="text-[12px]" style={{ color: 'var(--color-on-surface-variant)' }}>
-            260+ lessons • Build from scratch
-          </p>
-        </div>
-        <span className="material-symbols-rounded" style={{ fontSize: 16,  color: 'var(--color-on-surface-muted)'  }}>chevron_right</span>
-      </motion.button>
-
+ 
     </div>
   );
 }

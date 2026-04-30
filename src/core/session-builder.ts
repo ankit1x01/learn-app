@@ -16,6 +16,8 @@ import type { SessionItem, SyllabusConfig, Queue, FatigueLevel, SessionCompositi
 import { calculateR, isDue } from './fsrs';
 import { getTimeOptimizedComposition, applyRIFAdjustment } from './scheduler';
 import { getAdaptiveSessionLength } from './metacognition';
+import { generatePredictionMCQ } from '../lib/prediction-generator';
+import { getQuizMCQsForConcept } from '../lib/concept-quiz-mapper';
 
 // ─── Session Builder ──────────────────────────────────────────────────────────
 
@@ -76,29 +78,42 @@ export const buildSession = (
   const newItems = newConcepts.slice(0, slots.new);
   const preTestCount = Math.round(newItems.length * 0.4);
 
-  // Fill pool
-  const pool: SessionItem[] = [
-    ...due.slice(0, slots.review).map(c => ({
+  // Helper to add prediction MCQ + quiz MCQs to concept
+  const addPredictionMCQ = (c: typeof concepts[0]): SessionItem => {
+    const base = {
       concept: c,
       queue: 'review' as Queue,
       retrievability: calculateR(c.stability, c.lastTested),
-    })),
-    ...newItems.map((c, i) => ({
-      concept: c,
-      queue: 'new' as Queue,
-      retrievability: 0,
-      isPreTest: i < preTestCount,   // first 40% of new items are pre-tests
-    })),
-    ...strengthen.slice(0, slots.strengthen).map(c => ({
-      concept: c,
-      queue: 'strengthen' as Queue,
-      retrievability: calculateR(c.stability, c.lastTested),
-    })),
-    ...challenge.slice(0, slots.challenge).map(c => ({
-      concept: c,
-      queue: 'challenge' as Queue,
-      retrievability: calculateR(c.stability, c.lastTested),
-    })),
+    };
+    return {
+      ...base,
+      predictionMCQ: generatePredictionMCQ(c),
+      quizMCQs: getQuizMCQsForConcept(c), // Fetch quiz questions for this concept
+    };
+  };
+
+  // Fill pool with prediction MCQs
+  const pool: SessionItem[] = [
+    ...due.slice(0, slots.review).map(c => addPredictionMCQ(c)),
+    ...newItems.map((c, i) => {
+      const item = addPredictionMCQ(c);
+      item.queue = 'new' as Queue;
+      item.retrievability = 0;
+      item.isPreTest = i < preTestCount;   // first 40% of new items are pre-tests
+      return item;
+    }),
+    ...strengthen.slice(0, slots.strengthen).map(c => {
+      const item = addPredictionMCQ(c);
+      item.queue = 'strengthen' as Queue;
+      item.retrievability = calculateR(c.stability, c.lastTested);
+      return item;
+    }),
+    ...challenge.slice(0, slots.challenge).map(c => {
+      const item = addPredictionMCQ(c);
+      item.queue = 'challenge' as Queue;
+      item.retrievability = calculateR(c.stability, c.lastTested);
+      return item;
+    }),
   ];
 
   // Interleave by subject weight — never 2 same subject in a row

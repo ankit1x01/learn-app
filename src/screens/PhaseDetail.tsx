@@ -37,6 +37,10 @@ export default function PhaseDetail({
           setCurrentLesson(null);
           onSelectLesson('');
         }}
+        onNavigateLesson={(targetLesson: Lesson, targetPhase: Phase) => {
+          setCurrentLesson(targetLesson);
+          onSelectLesson(targetLesson.id);
+        }}
       />
     );
   }

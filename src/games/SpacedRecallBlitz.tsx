@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { App as CapApp } from '@capacitor/app'
 import { useConceptStore } from '../db/useConceptStore'
 import { CONFIG } from '../lib/config'
 import { buildSession } from '../core/session-builder'
@@ -142,13 +143,13 @@ export function SpacedRecallBlitz({ onBack }: Props) {
   if (phase === 'ready') {
     return (
       <div className="flex flex-col h-screen max-w-md mx-auto" style={{ background: 'var(--color-background)' }}>
-        <div className="flex items-center gap-3 px-4 pt-5 pb-3">
+        <div className="flex items-center gap-3 px-4 pb-3" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 12px)' }}>
           <button
             onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center rounded-xl"
-            style={{ background: 'var(--color-surface-container)' }}
+            className="w-12 h-12 flex items-center justify-center rounded-xl active:scale-95 transition-transform"
+            style={{ background: 'var(--color-surface-container)', cursor: 'pointer', pointerEvents: 'auto', touchAction: 'manipulation' }}
           >
-            <span className="material-symbols-rounded" style={{ fontSize: 20, color: 'var(--color-on-surface)' }}>arrow_back</span>
+            <span className="material-symbols-rounded" style={{ fontSize: 24, color: 'var(--color-on-surface)' }}>arrow_back</span>
           </button>
           <h1 className="text-[18px] font-black" style={{ color: 'var(--color-on-surface)', fontFamily: 'Plus Jakarta Sans, system-ui' }}>
             Recall Blitz

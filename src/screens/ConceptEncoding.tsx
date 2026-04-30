@@ -18,6 +18,24 @@ export const ConceptEncoding = ({
   qIndex: number;
 }) => {
   const current = session[qIndex] ?? session[0];
+
+  if (!current || !current.concept) {
+    return (
+      <div className="pt-14 pb-24 px-4 max-w-md mx-auto flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-sm mb-4" style={{ color: 'var(--color-on-surface-variant)' }}>No concept available in this session item</p>
+          <button
+            onClick={() => setScreen('dashboard')}
+            className="px-4 py-2 rounded-full text-sm font-bold"
+            style={{ background: 'var(--color-primary)', color: 'white' }}
+          >
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const concept = current.concept;
   const subjectCfg = getSubject(concept.subject);
 

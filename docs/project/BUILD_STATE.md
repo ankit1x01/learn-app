@@ -596,6 +596,45 @@ LiveSession.tsx fully implements confidence calibration:
 
 ---
 
+## Session 2026-04-29 Mobile Responsiveness & Android Safe Area ✅
+
+**Priority 1 — Mobile Responsive Design for LessonDetail ✅ COMPLETE**
+- ✅ Header: Responsive layout with stacked elements on mobile (flex-col sm:flex-row)
+- ✅ Tab navigation: Mobile scrollable with compressed labels on small screens (<12px, icon-only on mobile)
+- ✅ Footer nav: Previous/Next buttons stack vertically on mobile, horizontal on desktop
+- ✅ Video/Code sections: Responsive padding and borders (2px mobile, 4px desktop)
+- ✅ Breadcrumb: Abbreviated text on small screens ("AI Eng" vs "AI Engineering", "P{n}" vs "Phase {n}")
+- ✅ Content layout: Flex from column (mobile) to row (desktop lg:) for TOC placement
+
+**Priority 2 — Lesson Navigation (Previous/Next) ✅ COMPLETE**
+File: `src/screens/LessonDetail.tsx` + `src/screens/PhaseDetail.tsx`
+- ✅ Added `onNavigateLesson` callback prop to LessonDetail
+- ✅ Previous/Next buttons now properly navigate between lessons
+- ✅ PhaseDetail handles lesson state updates on navigation
+- ✅ Working end-to-end: navigation buttons update currentLesson state
+
+**Priority 3 — Android Back Button Support ✅ COMPLETE**
+File: `src/screens/LessonDetail.tsx`
+- ✅ Integrated Capacitor App plugin to listen for hardware back button
+- ✅ Back button triggers `onBack` callback for proper screen navigation
+- ✅ Graceful fallback for web-only environments (try-catch)
+
+**Priority 4 — Confirm Button Visibility ✅ COMPLETE**
+File: `src/screens/LiveSession.tsx`
+- ✅ Increased bottom padding from `pb-8` (32px) to `pb-24` (96px)
+- ✅ Confirm button now visible above bottom navigation on all screen sizes
+- ✅ Content properly scrolls above fixed bottom nav
+
+**Priority 5 — Android Safe Area Insets ✅ COMPLETE**
+Files: `src/games/GamesScreen.tsx`, `src/games/SpacedRecallBlitz.tsx`
+- ✅ Game screen headers: Added `paddingTop: 'calc(env(safe-area-inset-top) + 12px)'`
+- ✅ Back buttons no longer collide with notch/safe area on Android devices
+- ✅ Applied to all game screens with headers
+
+**Build Status:** ✅ Zero TypeScript errors • All responsiveness fixes deployed
+
+---
+
 ## Next Session: Pick Up Here
 
 **Priority 2 — Optimize AI Engineering Course Content (1-2h)**

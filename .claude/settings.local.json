@@ -113,7 +113,8 @@
       "Bash(node scripts/generate-quiz-content.mjs)",
       "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
       "Bash(xargs wc *)",
-      "Bash(xargs ls *)"
+      "Bash(xargs ls *)",
+      "PowerShell(Get-Command *)"
     ]
   }
 }

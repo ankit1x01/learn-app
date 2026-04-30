@@ -40,6 +40,17 @@ npm run lint      # TypeScript type-check (no emit)
 npm run clean     # Remove /dist
 ```
 
+### Android Build
+
+```bash
+# Build debug APK (requires JAVA_HOME set to Android Studio JDK)
+export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"
+cd android && ./gradlew assembleDebug
+
+# Install APK on device/emulator
+adb install "android/app/build/intermediates/apk/debug/app-debug.apk"
+```
+
 **Setup:** Copy `.env.example` to `.env.local` and set `GEMINI_API_KEY` before running.
 
 ## Architecture

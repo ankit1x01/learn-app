@@ -85,6 +85,16 @@ function AppContent() {
         // Keyboard tuning (prevent input overlaps)
         await Keyboard.setScroll({ isDisabled: false });
 
+        // Global Android back button handler
+        await CapApp.addListener('backButton', () => {
+          // Navigate back based on current screen
+          if (screen === 'session' || screen === 'encoding' || screen === 'map' || screen === 'recall' || screen === 'presleep' || screen === 'complete' || screen === 'course-lesson' || screen === 'ai-engineering' || screen === 'games') {
+            setScreen('dashboard');
+          } else if (screen !== 'dashboard') {
+            setScreen('dashboard');
+          }
+        });
+
         // Listeners for App lifecycles
         await CapApp.addListener('appStateChange', ({ isActive }) => {
            console.log('App is active: ', isActive);
@@ -173,7 +183,7 @@ function AppContent() {
           {screen === 'dashboard'  && <Dashboard        setScreen={setScreen} session={session as any} onSubjectClick={handleSubjectClick} onStartSession={handleNavToSession} globalStats={liveGlobalStats} />}
           {screen === 'session'    && <LiveSession       setScreen={setScreen} session={session} qIndex={qIndex} setQIndex={setQIndex} onUpdateConcept={onUpdateConcept} subjectFilter={subjectFilter} />}
           {screen === 'encoding'   && <ConceptEncoding   setScreen={setScreen} session={session as any} onUpdateConcept={onUpdateConcept} qIndex={qIndex} />}
-          {screen === 'map'        && <ChittaMap         setScreen={setScreen} globalStats={liveGlobalStats} />}
+          {screen === 'map'        && <ChittaMap         setScreen={setScreen} globalStats={liveGlobalStats} concepts={concepts} />}
           {screen === 'recall'     && <MorningRecall     setScreen={setScreen} concepts={concepts} />}
           {screen === 'presleep'   && <PreSleepReview    setScreen={setScreen} concepts={concepts} onUpdateConcept={onUpdateConcept} />}
           {screen === 'complete'   && <SessionComplete   setScreen={(s) => { if (s === 'dashboard') setSubjectFilter(null); setScreen(s); }} session={session as any} globalStats={liveGlobalStats} concepts={concepts} />}

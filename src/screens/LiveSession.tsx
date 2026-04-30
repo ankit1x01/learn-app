@@ -4,6 +4,10 @@ import { Toast } from '@capacitor/toast';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { RATINGS, QUEUE_LABELS, subjectColor, subjectBg, subjectIcon } from '../lib/config';
 import { TierBadge } from '../components/TierBadge';
+import { ConceptPrediction } from './ConceptPrediction';
+import { QuizMCQ } from '../components/QuizMCQ';
+import type { QuizMCQData } from '../components/QuizMCQ';
+import { EnhancedFeedback } from '../components/EnhancedFeedback';
 import type { Screen } from '../types';
 import type { SessionItem, Concept } from '../core/types';
 import type { SessionItemWithQuiz } from '../lib/quiz-session-bridge';
@@ -45,6 +49,21 @@ export const LiveSession = ({
   const questionShownAt               = useRef<number>(Date.now());
   const [responseTimeMs, setResponseTimeMs] = useState<number | null>(null);
   const [sessionResponseTimes, setSessionResponseTimes] = useState<Record<number, number>>({});
+
+  // ── Prediction Flow (Phase 4.1) ────────────────────────────────────────
+  const [showingPrediction, setShowingPrediction] = useState(false);
+  const [predictionAnswered, setPredictionAnswered] = useState(false);
+  const [predictionTimeMs, setPredictionTimeMs] = useState<number | null>(null);
+
+  // ── Quiz MCQ Flow (Phase 4.2) ──────────────────────────────────────────
+  const [quizMCQIndex, setQuizMCQIndex] = useState(0);
+  const [quizMCQSelected, setQuizMCQSelected] = useState<number | null>(null);
+  const [quizMCQConfidence, setQuizMCQConfidence] = useState<1 | 2 | 3 | null>(null);
+  const [quizMCQConfirmed, setQuizMCQConfirmed] = useState(false);
+  const [quizMCQAnswers, setQuizMCQAnswers] = useState<Array<{ mcqId: string; selected: number; confidence: 1 | 2 | 3; correct: boolean }>>([]);
+
+  // ── Feedback Phase (Phase 4.3) ─────────────────────────────────────────
+  const [showingFeedback, setShowingFeedback] = useState(false);
 
   const current = session[qIndex] ?? session[0];
 
@@ -89,13 +108,137 @@ export const LiveSession = ({
   const progress = ((qIndex + 1) / session.length) * 100;
 
   useEffect(() => {
+    console.log('🔄 Effect running: qIndex =', qIndex);
     setConfidence(null);
     setShowOptions(false);
     setSelected(null);
     setConfirmed(false);
     setResponseTimeMs(null);
     questionShownAt.current = Date.now();
+
+    // Reset prediction flow state when question changes
+    setPredictionAnswered(false);
+    setPredictionTimeMs(null);
+
+    // Reset quiz MCQ flow when question changes
+    setQuizMCQIndex(0);
+    setQuizMCQSelected(null);
+    setQuizMCQConfidence(null);
+    setQuizMCQConfirmed(false);
+    setQuizMCQAnswers([]);
+
+    // Reset feedback when question changes
+    setShowingFeedback(false);
+
+    // Show prediction if this item has a prediction MCQ and it hasn't been answered yet
+    const hasUnstartedPrediction = current?.predictionMCQ && !predictionAnswered;
+    setShowingPrediction(hasUnstartedPrediction ?? false);
   }, [qIndex]);
+
+  const handlePredictionAnswered = (userChoice: number, predictionTime: number) => {
+    console.log('🔵 Prediction answered:', { userChoice, predictionTime, conceptId: concept?.id });
+
+    // Track prediction accuracy
+    if (current?.predictionMCQ) {
+      const wasCorrect = userChoice === current.predictionMCQ.correct;
+      console.log('✓ Prediction correct:', wasCorrect);
+
+      // Update session item with prediction result
+      const updatedCurrent = {
+        ...current,
+        predictionAccuracy: wasCorrect,
+        predictionTimeMs: predictionTime,
+      };
+
+      // If it's a concept item, update FSRS with prediction error
+      if (concept && !isQuizItem && !isGameItem) {
+        let newPredictionErrorHistory = concept.predictionErrorHistory ?? [];
+        newPredictionErrorHistory = [...newPredictionErrorHistory, {
+          date: Date.now(),
+          preTestWrong: !wasCorrect
+        }];
+
+        onUpdateConcept(concept.id, {
+          predictionErrorHistory: newPredictionErrorHistory,
+        });
+      }
+    }
+
+    // Move to next phase: quiz MCQs or feedback
+    setPredictionTimeMs(predictionTime);
+    setPredictionAnswered(true);
+    setShowingPrediction(false);
+
+    // If no quiz MCQs exist for this concept, skip directly to feedback
+    if (!current?.quizMCQs || current.quizMCQs.length === 0) {
+      console.log('⏭️ No quiz MCQs, skipping to feedback');
+      setTimeout(() => {
+        setShowingFeedback(true);
+      }, 500);
+    } else {
+      console.log('📋 Quiz MCQs found:', current.quizMCQs.length);
+    }
+  };
+
+  const handleQuizMCQSelect = (optionIndex: number) => {
+    if (!quizMCQConfirmed) {
+      setQuizMCQSelected(optionIndex);
+    }
+  };
+
+  const handleQuizMCQConfidence = (level: 1 | 2 | 3) => {
+    setQuizMCQConfidence(level);
+  };
+
+  const handleFeedbackContinue = () => {
+    console.log('➡️ Feedback continue, moving to next concept');
+    // Move to next concept
+    const next = qIndex + 1;
+    if (next >= session.length) {
+      console.log('✅ Session complete');
+      setQIndex(0);
+      setScreen('complete');
+    } else {
+      console.log('📍 Moving to concept', next + 1);
+      setQIndex(next);
+    }
+  };
+
+  const handleQuizMCQConfirm = () => {
+    if (quizMCQSelected !== null && quizMCQConfidence !== null && current?.quizMCQs && current.quizMCQs.length > quizMCQIndex) {
+      const mcq = current.quizMCQs[quizMCQIndex];
+      const wasCorrect = quizMCQSelected === mcq.correct;
+
+      // Record answer
+      setQuizMCQAnswers([
+        ...quizMCQAnswers,
+        {
+          mcqId: mcq.id,
+          selected: quizMCQSelected,
+          confidence: quizMCQConfidence,
+          correct: wasCorrect,
+        }
+      ]);
+
+      setQuizMCQConfirmed(true);
+
+      // Move to next MCQ or end quiz flow
+      const nextIndex = quizMCQIndex + 1;
+      if (nextIndex < current.quizMCQs.length) {
+        setTimeout(() => {
+          setQuizMCQIndex(nextIndex);
+          setQuizMCQSelected(null);
+          setQuizMCQConfidence(null);
+          setQuizMCQConfirmed(false);
+        }, 1000);
+      } else {
+        // All quiz MCQs answered, show feedback
+        setTimeout(() => {
+          setShowingFeedback(true);
+        }, 1000);
+      }
+    }
+  };
 
   const handleConfidenceTap = (level: 1 | 2 | 3) => {
     setConfidence(level);
@@ -279,8 +422,82 @@ export const LiveSession = ({
   };
   const qs = queueStyle[queue] ?? { bg: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)' };
 
+  // Show prediction flow if needed
+  if (showingPrediction && current?.predictionMCQ && concept) {
+    console.log('🎯 Showing prediction');
+    return (
+      <>
+        <ConceptPrediction
+          concept={concept}
+          predictionMCQ={current.predictionMCQ}
+          onNext={handlePredictionAnswered}
+        />
+      </>
+    );
+  }
+
+  // Show feedback if quiz MCQs are all answered
+  if (showingFeedback && concept && !isQuizItem && !isGameItem) {
+    console.log('📊 Showing feedback');
+    return (
+      <EnhancedFeedback
+        concept={concept}
+        predictionAccuracy={current?.predictionAccuracy ?? null}
+        quizAnswers={quizMCQAnswers}
+        onContinue={handleFeedbackContinue}
+      />
+    );
+  }
+
+  // Show quiz MCQ flow if prediction is answered and there are quiz MCQs
+  if (predictionAnswered && current?.quizMCQs && current.quizMCQs.length > 0 && quizMCQIndex < current.quizMCQs.length) {
+    console.log('📝 Showing quiz MCQ', quizMCQIndex + 1, 'of', current.quizMCQs.length);
+    const currentMCQ = current.quizMCQs[quizMCQIndex];
+    return (
+      <div className="pt-14 pb-24 px-4 max-w-md mx-auto">
+        {/* Progress bar */}
+        <div className="mb-6">
+          <div className="flex justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-on-surface-variant)' }}>
+              Question Phase
+            </span>
+            <span className="text-xs font-bold" style={{ color: 'var(--color-on-surface-variant)' }}>
+              {quizMCQIndex + 1}/{current.quizMCQs.length}
+            </span>
+          </div>
+          <div className="h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[var(--color-primary)] transition-all"
+              style={{ width: `${((quizMCQIndex + 1) / current.quizMCQs.length) * 100}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Concept brief reminder */}
+        <div className="mb-6 p-3 rounded-lg" style={{ background: 'var(--color-surface-container)' }}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: 'var(--color-on-surface-variant)' }}>
+            Topic: {concept?.name}
+          </p>
+        </div>
+
+        {/* MCQ */}
+        <QuizMCQ
+          mcq={currentMCQ}
+          index={quizMCQIndex}
+          total={current.quizMCQs.length}
+          selected={quizMCQSelected}
+          confidence={quizMCQConfidence}
+          confirmed={quizMCQConfirmed}
+          onSelect={handleQuizMCQSelect}
+          onConfidence={handleQuizMCQConfidence}
+          onConfirm={handleQuizMCQConfirm}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="pt-12 pb-8 max-w-md mx-auto min-h-screen flex flex-col" style={{ background: 'var(--color-background)' }}>
+    <div className="pt-12 pb-24 max-w-md mx-auto min-h-screen flex flex-col" style={{ background: 'var(--color-background)' }}>
 
       {/* ── Top progress bar ── */}
       <div className="h-1 bg-[var(--color-border)] w-full">

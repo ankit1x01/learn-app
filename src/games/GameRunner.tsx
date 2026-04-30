@@ -9,6 +9,7 @@ import { RetentionGame } from './components/RetentionGame'
 import { AudioLectureGame } from './components/AudioLectureGame'
 import { BubbleMatchGame } from './components/BubbleMatchGame'
 
+import { AttentionGame } from './components/memory/AttentionGame'
 import { NameRecallGame } from './components/memory/NameRecallGame'
 import { RetentionGame as MemoryRetentionGame } from './components/memory/RetentionGame'
 import { SequencingGame } from './components/memory/SequencingGame'
@@ -16,9 +17,10 @@ import { SynthesisGame } from './components/memory/SynthesisGame'
 
 interface Props {
   config: GameConfig
+  onBack?: () => void
 }
 
-export function GameRunner({ config }: Props) {
+export function GameRunner({ config, onBack }: Props) {
   switch (config.type) {
     case 'this-or-that': return <ThisOrThat config={config} />
     case 'chrono':       return <Chrono config={config} />
@@ -29,6 +31,7 @@ export function GameRunner({ config }: Props) {
     case 'audio-lecture':  return <AudioLectureGame config={config} />
     case 'bubble-match':   return <BubbleMatchGame  config={config} />
 
+    case 'memory-attention':   return <AttentionGame config={config} onBack={onBack} />
     case 'memory-name-recall': return <NameRecallGame config={config} />
     case 'memory-retention':   return <MemoryRetentionGame config={config} />
     case 'memory-sequencing':  return <SequencingGame config={config} />

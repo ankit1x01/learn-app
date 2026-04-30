@@ -12,6 +12,7 @@ interface LessonDetailProps {
   lesson: Lesson;
   phase: Phase;
   onBack: () => void;
+  onNavigateLesson?: (lesson: Lesson, phase: Phase) => void;
 }
 
 interface HeadingItem {
@@ -137,7 +138,7 @@ function getNextLesson(allPhases: typeof aiEngineeringPhases, currentPhase: Phas
   return null;
 }
 
-export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProps) {
+export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }: LessonDetailProps) {
   const [content, setContent] = useState<string>('');
   const [codeFiles, setCodeFiles] = useState<{ name: string; content: string }[]>([]);
   const [quizData, setQuizData] = useState<any>(null);
@@ -221,6 +222,7 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
     }
   }, [lesson.id, content, isCompleted]);
 
+
   const handleCopyLink = () => {
     const link = `${window.location.origin}?lesson=${lesson.id}&phase=${phase.id}`;
     navigator.clipboard.writeText(link);
@@ -229,47 +231,53 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
   };
 
   const handleNavigateLesson = (targetLesson: Lesson, targetPhase: Phase) => {
-    // In a real app, you'd update parent state or use routing
-    // For now, we'll just scroll to top
-    window.scrollTo(0, 0);
+    if (onNavigateLesson) {
+      onNavigateLesson(targetLesson, targetPhase);
+      window.scrollTo(0, 0);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       {/* Breadcrumb Navigation */}
-      <div className="sticky top-0 z-20 bg-[var(--color-background)]/95 backdrop-blur border-b border-[var(--color-outline-variant)] px-4 py-2">
-        <div className="flex items-center gap-2 text-sm text-[var(--color-on-surface-variant)]">
-          <button onClick={onBack} className="text-[var(--color-primary)] hover:opacity-80">
-            AI Engineering
+      <div className="sticky top-0 z-20 bg-[var(--color-background)]/95 backdrop-blur border-b border-[var(--color-outline-variant)] px-3 sm:px-4 py-2 overflow-x-auto">
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-[var(--color-on-surface-variant)] whitespace-nowrap">
+          <button onClick={onBack} className="text-[var(--color-primary)] hover:opacity-80 shrink-0">
+            <span className="hidden sm:inline">AI Engineering</span>
+            <span className="sm:hidden">AI Eng</span>
           </button>
-          <span>/</span>
-          <span>Phase {phase.number}</span>
-          <span>/</span>
-          <span className="text-[var(--color-primary)] font-medium">{lesson.name}</span>
+          <span className="hidden sm:inline">/</span>
+          <span className="hidden sm:inline">Phase {phase.number}</span>
+          <span className="sm:hidden">P{phase.number}</span>
+          <span className="hidden sm:inline">/</span>
+          <span className="text-[var(--color-primary)] font-medium truncate">{lesson.name}</span>
         </div>
       </div>
 
       {/* Header with Back, Title, and Copy Link */}
-      <div className="sticky top-11 z-10 bg-[var(--color-background)]/95 backdrop-blur border-b border-[var(--color-outline-variant)] p-4">
-        <div className="flex items-start justify-between mb-4 gap-4">
-          <div className="flex-1">
+      <div className="sticky top-11 z-10 bg-[var(--color-background)]/95 backdrop-blur border-b border-[var(--color-outline-variant)] p-3 sm:p-4">
+        {/* Mobile: Stack layout, Desktop: Side-by-side */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+          <div className="flex-1 min-w-0">
             <button
               onClick={onBack}
               className="flex items-center gap-2 text-[var(--color-primary)] font-medium mb-3 active:scale-95 transition-transform hover:opacity-80"
             >
               <span className="material-symbols-rounded">arrow_back</span>
-              Back
+              <span className="hidden sm:inline">Back</span>
             </button>
-            <div>
-              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">
+            <div className="pr-2 sm:pr-0">
+              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1 truncate">
                 Phase {phase.number} • Lesson {lesson.number}
               </p>
-              <h1 className="text-xl font-bold text-[var(--color-on-background)]">{lesson.name}</h1>
+              <h1 className="text-lg sm:text-xl font-bold text-[var(--color-on-background)] line-clamp-2">
+                {lesson.name}
+              </h1>
             </div>
           </div>
           <button
             onClick={handleCopyLink}
-            className="px-3 py-2 rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] active:scale-95 transition-all hover:bg-[var(--color-surface-container-high)]"
+            className="shrink-0 px-3 py-2 rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] active:scale-95 transition-all hover:bg-[var(--color-surface-container-high)]"
             title="Copy lesson link"
           >
             <span className="material-symbols-rounded text-sm">
@@ -278,81 +286,86 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
           </button>
         </div>
 
-        {/* Progress and Time Indicator */}
-        <div className="flex items-center gap-3 mb-3">
-          <div className="flex-1 flex items-center gap-2">
-            <span className="text-xs font-medium text-[var(--color-on-surface-variant)]">
-              <span className="material-symbols-rounded text-sm" style={{ color: 'var(--color-primary)' }}>schedule</span>
+        {/* Progress and Time Indicator - Responsive Layout */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3 text-xs sm:text-sm">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-rounded text-sm" style={{ color: 'var(--color-primary)' }}>
+              schedule
+            </span>
+            <span className="font-medium text-[var(--color-on-surface-variant)]">
               {estimatedTime} min
             </span>
-            {isCompleted && (
-              <span className="px-2 py-1 rounded-full bg-[var(--color-success)]/10 text-[var(--color-success)] text-xs font-medium flex items-center gap-1">
-                <span className="material-symbols-rounded text-sm">check_circle</span>
-                Completed
-              </span>
-            )}
           </div>
+          {isCompleted && (
+            <span className="px-2 py-1 rounded-full bg-[var(--color-success)]/10 text-[var(--color-success)] font-medium flex items-center gap-1 w-fit">
+              <span className="material-symbols-rounded text-sm">check_circle</span>
+              <span className="hidden sm:inline">Completed</span>
+              <span className="sm:hidden">Done</span>
+            </span>
+          )}
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex gap-2 mb-2 overflow-x-auto pb-2">
+        {/* Tab Navigation - Mobile Scrollable, Desktop Grid */}
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 sm:mx-0 px-3 sm:px-0 sm:flex-wrap">
           <button
             onClick={() => setActiveTab('docs')}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 whitespace-nowrap ${
+            className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
               activeTab === 'docs'
                 ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
                 : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
             }`}
           >
             <span className="material-symbols-rounded text-base">description</span>
-            Docs
+            <span className="hidden sm:inline">Docs</span>
           </button>
           {videoUrl && (
             <button
               onClick={() => setActiveTab('video')}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
                 activeTab === 'video'
                   ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
                   : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
               }`}
             >
               <span className="material-symbols-rounded text-base">play_circle</span>
-              Video
+              <span className="hidden sm:inline">Video</span>
             </button>
           )}
           {codeFiles.length > 0 && (
             <button
               onClick={() => setActiveTab('code')}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
                 activeTab === 'code'
                   ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
                   : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
               }`}
             >
               <span className="material-symbols-rounded text-base">code</span>
-              Code ({codeFiles.length})
+              <span className="hidden sm:inline">Code</span>
+              <span className="text-xs">({codeFiles.length})</span>
             </button>
           )}
           {quizData && (
             <button
               onClick={() => setActiveTab('quiz')}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 whitespace-nowrap ${
+              className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
                 activeTab === 'quiz'
                   ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
                   : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
               }`}
             >
               <span className="material-symbols-rounded text-base">quiz</span>
-              Quiz ({quizData.questions.length})
+              <span className="hidden sm:inline">Quiz</span>
+              <span className="text-xs">({quizData.questions.length})</span>
             </button>
           )}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex gap-6 p-4 pb-40 max-w-7xl mx-auto">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 p-3 sm:p-4 pb-40 max-w-7xl mx-auto">
         {/* Left: Documentation */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {loading ? (
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5] }}
@@ -370,7 +383,7 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
             </motion.div>
           ) : activeTab === 'video' && videoUrl ? (
             <motion.div key="video" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-              <div className="aspect-video rounded-lg overflow-hidden border-4 border-[var(--color-on-background)]" style={{ boxShadow: `4px 4px 0px var(--color-on-background)` }}>
+              <div className="aspect-video rounded-lg overflow-hidden border-2 sm:border-4 border-[var(--color-on-background)]" style={{ boxShadow: `2px 2px 0px var(--color-on-background)` }}>
                 <iframe
                   width="100%"
                   height="100%"
@@ -381,7 +394,7 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
                   allowFullScreen
                 />
               </div>
-              <p className="text-sm text-[var(--color-on-surface-variant)] flex items-start gap-2">
+              <p className="text-xs sm:text-sm text-[var(--color-on-surface-variant)] flex items-start gap-2">
                 <span className="material-symbols-rounded text-base shrink-0" style={{ color: 'var(--color-warning)' }}>lightbulb</span>
                 Watch the video and read the documentation for the best learning experience.
               </p>
@@ -411,12 +424,12 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
             <motion.div key="code" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               {codeFiles.length > 0 && (
                 <div className="space-y-4">
-                  <div className="flex gap-2 flex-wrap">
+                  <div className="flex gap-2 flex-wrap overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
                     {codeFiles.map((file, idx) => (
                       <button
                         key={idx}
                         onClick={() => setSelectedCodeFile(idx)}
-                        className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
                           selectedCodeFile === idx
                             ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
                             : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
@@ -428,23 +441,22 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
                   </div>
 
                   <div
-                    className="rounded-lg bg-[var(--color-surface-container)] overflow-hidden border border-[var(--color-outline-variant)]"
+                    className="rounded-lg bg-[var(--color-surface-container)] overflow-hidden border-2 sm:border-4 border-[var(--color-on-background)]"
                     style={{
-                      border: `3px solid var(--color-on-background)`,
-                      boxShadow: `4px 4px 0px var(--color-on-background)`,
+                      boxShadow: `2px 2px 0px var(--color-on-background)`,
                     }}
                   >
-                    <div className="bg-[var(--color-surface-container-high)] px-4 py-2 border-b border-[var(--color-outline-variant)] text-xs font-mono text-[var(--color-on-surface-variant)]">
+                    <div className="bg-[var(--color-surface-container-high)] px-3 sm:px-4 py-2 border-b border-[var(--color-outline-variant)] text-xs font-mono text-[var(--color-on-surface-variant)] truncate">
                       {codeFiles[selectedCodeFile]?.name}
                     </div>
-                    <pre className="p-4 overflow-x-auto text-xs leading-relaxed text-[var(--color-on-surface)] font-mono">
+                    <pre className="p-3 sm:p-4 overflow-x-auto text-xs leading-relaxed text-[var(--color-on-surface)] font-mono">
                       <code>{codeFiles[selectedCodeFile]?.content}</code>
                     </pre>
                   </div>
 
                   <p className="text-xs text-[var(--color-on-surface-variant)] mt-4 flex items-start gap-2">
                     <span className="material-symbols-rounded text-base shrink-0" style={{ color: 'var(--color-warning)' }}>lightbulb</span>
-                    Tip: Copy and run this code locally. Modify it, extend it, break it, learn from it.
+                    <span>Tip: Copy and run this code locally. Modify it, extend it, break it, learn from it.</span>
                   </p>
                 </div>
               )}
@@ -478,40 +490,43 @@ export default function LessonDetail({ lesson, phase, onBack }: LessonDetailProp
       </div>
 
       {/* Previous/Next Navigation Footer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-background)] border-t border-[var(--color-outline-variant)] p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-background)] border-t border-[var(--color-outline-variant)] p-3 sm:p-4">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
           {previousLesson ? (
             <button
               onClick={() => handleNavigateLesson(previousLesson.lesson, previousLesson.phase)}
-              className="flex-1 p-3 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-left border border-[var(--color-outline-variant)]"
+              className="flex-1 p-3 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-left border border-[var(--color-outline-variant)] min-w-0"
             >
-              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">Previous Lesson</p>
-              <p className="text-sm font-semibold text-[var(--color-on-background)] flex items-center gap-2">
-                <span className="material-symbols-rounded">arrow_back</span>
-                {previousLesson.lesson.name}
+              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">Previous</p>
+              <p className="text-sm font-semibold text-[var(--color-on-background)] flex items-center gap-2 truncate">
+                <span className="material-symbols-rounded shrink-0">arrow_back</span>
+                <span className="truncate hidden sm:inline">{previousLesson.lesson.name}</span>
+                <span className="truncate sm:hidden">{previousLesson.lesson.name.substring(0, 15)}...</span>
               </p>
             </button>
           ) : (
-            <div />
+            <div className="flex-1" />
           )}
 
-          <div className="text-center text-xs text-[var(--color-on-surface-variant)]">
-            Phase {phase.number} • Lesson {lesson.number} / {phase.lessons.length}
+          <div className="text-center text-xs text-[var(--color-on-surface-variant)] px-2 py-1">
+            <span className="hidden sm:inline">Phase {phase.number} • </span>
+            <span>Lesson {lesson.number} / {phase.lessons.length}</span>
           </div>
 
           {nextLesson ? (
             <button
               onClick={() => handleNavigateLesson(nextLesson.lesson, nextLesson.phase)}
-              className="flex-1 p-3 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-right border border-[var(--color-outline-variant)]"
+              className="flex-1 p-3 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-right border border-[var(--color-outline-variant)] min-w-0"
             >
-              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">Next Lesson</p>
-              <p className="text-sm font-semibold text-[var(--color-on-background)] flex items-center justify-end gap-2">
-                {nextLesson.lesson.name}
-                <span className="material-symbols-rounded">arrow_forward</span>
+              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">Next</p>
+              <p className="text-sm font-semibold text-[var(--color-on-background)] flex items-center justify-end gap-2 truncate">
+                <span className="truncate hidden sm:inline">{nextLesson.lesson.name}</span>
+                <span className="truncate sm:hidden">{nextLesson.lesson.name.substring(0, 15)}...</span>
+                <span className="material-symbols-rounded shrink-0">arrow_forward</span>
               </p>
             </button>
           ) : (
-            <div />
+            <div className="flex-1" />
           )}
         </div>
       </div>
