@@ -1,0 +1,63 @@
+import type { DerivativeDojoConfig } from '@/games/types'
+
+export const derivativeDojoContent: DerivativeDojoConfig = {
+  type: 'derivative-dojo',
+  theme: 'dojo',
+  subject: 'mathematics',
+  items: [
+    {
+      id: 'derivative-dojo-1',
+      skillId: 'derivative_polynomial',
+      functionLatex: 'y = x^3 + 2x^2 - 5x + 1',
+      rulesNeeded: [],
+      expectedDerivative: '3x^2 + 4x - 5',
+      comboReward: false,
+      timeLimit: 30,
+    },
+    {
+      id: 'derivative-dojo-2',
+      skillId: 'derivative_chain_rule',
+      functionLatex: 'y = (2x + 1)^5',
+      rulesNeeded: ['chain'],
+      expectedDerivative: '10(2x + 1)^4',
+      comboReward: true,
+      timeLimit: 35,
+    },
+    {
+      id: 'derivative-dojo-3',
+      skillId: 'derivative_product_rule',
+      functionLatex: 'y = x^2 \\sin(x)',
+      rulesNeeded: ['product'],
+      expectedDerivative: '2x \\sin(x) + x^2 \\cos(x)',
+      comboReward: true,
+      timeLimit: 40,
+    },
+    {
+      id: 'derivative-dojo-4',
+      skillId: 'derivative_quotient_rule',
+      functionLatex: 'y = \\frac{x}{x^2 + 1}',
+      rulesNeeded: ['quotient'],
+      expectedDerivative: '\\frac{1 - x^2}{(x^2 + 1)^2}',
+      comboReward: true,
+      timeLimit: 40,
+    },
+    {
+      id: 'derivative-dojo-5',
+      skillId: 'derivative_chain_product',
+      functionLatex: 'y = x \\cdot e^{2x}',
+      rulesNeeded: ['product', 'chain'],
+      expectedDerivative: 'e^{2x} + 2x e^{2x}',
+      comboReward: true,
+      timeLimit: 45,
+    },
+    {
+      id: 'derivative-dojo-6',
+      skillId: 'derivative_trig',
+      functionLatex: 'y = \\cos(x^2)',
+      rulesNeeded: ['chain'],
+      expectedDerivative: '-2x \\sin(x^2)',
+      comboReward: true,
+      timeLimit: 35,
+    },
+  ],
+}
