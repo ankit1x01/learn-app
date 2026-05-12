@@ -2,7 +2,7 @@ export type Screen = 'dashboard' | 'session' | 'encoding' | 'map' | 'recall' | '
                    | 'elite' | 'stress' | 'ghana' | 'distractor' | 'errors' | 'mock' | 'preexam' | 'topics'
                    | 'course' | 'course-lesson' | 'demo-session' | 'games' | 'shape-slicer' | 'physics-sandbox' | 'kinematics-cannon' | 'coulombs-collider' | 'prompt-playground' | 'ai-engineering'
                    | 'physics-arcade' | 'math-arcade' | 'chemistry-arcade'
-                   | 'presleep' | 'timeline-demo';
+                   | 'presleep' | 'timeline-demo' | 'local-ai';
 
 // Prompt Playground Types
 export type CoursePackId = 'foundation' | 'patterns' | 'advanced' | 'domain';

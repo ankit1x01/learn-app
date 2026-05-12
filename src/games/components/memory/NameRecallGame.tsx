@@ -35,7 +35,9 @@ export function NameRecallGame({ config }: { config: MemoryNameRecallConfig }) {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-surface overflow-y-auto">
-      <AnimatePresence mode="wait">
+      {/* Game Content */}
+      <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-6">
+        <AnimatePresence mode="wait">
         {mode === 'learning' && (
           <motion.div
             key="learning"
@@ -148,6 +150,7 @@ export function NameRecallGame({ config }: { config: MemoryNameRecallConfig }) {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
     </div>
   );
 }

@@ -12,6 +12,9 @@ import { NameRecallGame } from './components/memory/NameRecallGame'
 import { RetentionGame as MemoryRetentionGame } from './components/memory/RetentionGame'
 import { SequencingGame } from './components/memory/SequencingGame'
 import { SynthesisGame } from './components/memory/SynthesisGame'
+import { VisualizationGame } from './components/memory/VisualizationGame'
+import { TeachBackGame } from './components/memory/TeachBackGame'
+import { InversionGame } from './components/memory/InversionGame'
 
 interface Props {
   config: GameConfig
@@ -34,5 +37,8 @@ export function GameRunner({ config, onBack }: Props) {
     case 'memory-retention':   return <MemoryRetentionGame config={config} />
     case 'memory-sequencing':  return <SequencingGame config={config} />
     case 'memory-synthesis':   return <SynthesisGame config={config} />
+    case 'memory-visualization': return <VisualizationGame config={config} />
+    case 'memory-teach-back': return <TeachBackGame config={config} />
+    case 'memory-inversion': return <InversionGame config={config} />
   }
 }

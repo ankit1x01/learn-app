@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import MarkdownRenderer from '@/lib/markdown-renderer';
 import QuizComponent from '@/lib/quiz-component';
 import { getMarkdownContent } from '@/data/ai-engineering/markdown-content';
@@ -21,121 +21,83 @@ interface HeadingItem {
   level: number;
 }
 
-// Estimate reading time based on markdown content
 function estimateReadingTime(markdown: string): number {
   if (!markdown) return 5;
-
   const wordCount = markdown.split(/\s+/).length;
   const codeBlockCount = (markdown.match(/```/g) || []).length / 2;
-
-  // Regular text at 200 wpm, code at 100 wpm
   const regularWords = Math.max(0, wordCount - codeBlockCount * 50);
   const codeWords = codeBlockCount * 50;
-
   const readingMinutes = Math.ceil(regularWords / 200 + codeWords / 100);
-  return Math.max(5, Math.min(readingMinutes + 5, 60)); // 5-60 min range
+  return Math.max(5, Math.min(readingMinutes + 5, 60));
 }
 
-// Extract video URL from markdown or metadata
 function extractVideoUrl(markdown: string): string | null {
-  // Look for video URLs in markdown
   const videoRegex = /(https?:\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com|wistia\.net)\S+)/;
   const match = markdown.match(videoRegex);
   return match ? match[1] : null;
 }
 
-// Convert video URLs to embeddable format
 function convertVideoUrl(url: string): string {
-  // YouTube
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
     const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)?.[1];
     if (videoId) return `https://www.youtube.com/embed/${videoId}`;
   }
-
-  // Vimeo
   if (url.includes('vimeo.com')) {
     const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
     if (videoId) return `https://player.vimeo.com/video/${videoId}`;
   }
-
-  // Wistia
   if (url.includes('wistia.net')) {
     const videoId = url.match(/wistia\.net\/medias\/([a-z0-9]+)/)?.[1];
     if (videoId) return `https://fast.wistia.net/embed/iframe/${videoId}`;
   }
-
-  return url; // Return as-is if not recognized
+  return url;
 }
 
-// Extract headings from markdown
 function extractHeadings(markdown: string): HeadingItem[] {
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   const headings: HeadingItem[] = [];
   let match;
-
   while ((match = headingRegex.exec(markdown)) !== null) {
     const level = match[1].length;
     const text = match[2];
-    const id = text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
-
+    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     headings.push({ id, text, level });
   }
-
   return headings;
 }
 
-// Get lesson index in phase
 function getLessonIndex(phase: Phase, lessonId: string): number {
   return phase.lessons.findIndex(l => l.id === lessonId);
 }
 
-// Get previous lesson
 function getPreviousLesson(allPhases: typeof aiEngineeringPhases, currentPhase: Phase, currentLesson: Lesson) {
   const currentPhaseIndex = allPhases.findIndex(p => p.id === currentPhase.id);
   const currentLessonIndex = getLessonIndex(currentPhase, currentLesson.id);
-
-  if (currentLessonIndex > 0) {
-    return {
-      lesson: currentPhase.lessons[currentLessonIndex - 1],
-      phase: currentPhase,
-    };
-  }
-
+  if (currentLessonIndex > 0) return { lesson: currentPhase.lessons[currentLessonIndex - 1], phase: currentPhase };
   if (currentPhaseIndex > 0) {
     const prevPhase = allPhases[currentPhaseIndex - 1];
-    return {
-      lesson: prevPhase.lessons[prevPhase.lessons.length - 1],
-      phase: prevPhase,
-    };
+    return { lesson: prevPhase.lessons[prevPhase.lessons.length - 1], phase: prevPhase };
   }
-
   return null;
 }
 
-// Get next lesson
 function getNextLesson(allPhases: typeof aiEngineeringPhases, currentPhase: Phase, currentLesson: Lesson) {
   const currentPhaseIndex = allPhases.findIndex(p => p.id === currentPhase.id);
   const currentLessonIndex = getLessonIndex(currentPhase, currentLesson.id);
-
-  if (currentLessonIndex < currentPhase.lessons.length - 1) {
-    return {
-      lesson: currentPhase.lessons[currentLessonIndex + 1],
-      phase: currentPhase,
-    };
-  }
-
+  if (currentLessonIndex < currentPhase.lessons.length - 1) return { lesson: currentPhase.lessons[currentLessonIndex + 1], phase: currentPhase };
   if (currentPhaseIndex < allPhases.length - 1) {
     const nextPhase = allPhases[currentPhaseIndex + 1];
-    return {
-      lesson: nextPhase.lessons[0],
-      phase: nextPhase,
-    };
+    return { lesson: nextPhase.lessons[0], phase: nextPhase };
   }
-
   return null;
+}
+
+function tabClass(active: boolean) {
+  return `px-3 py-1.5 rounded-lg font-medium text-sm transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+    active
+      ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
+      : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
+  }`;
 }
 
 export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }: LessonDetailProps) {
@@ -149,58 +111,58 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
   const [isCompleted, setIsCompleted] = useState(false);
   const [estimatedTime, setEstimatedTime] = useState(0);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showMobileToc, setShowMobileToc] = useState(false);
 
   const headings = useMemo(() => extractHeadings(content), [content]);
   const previousLesson = useMemo(() => getPreviousLesson(aiEngineeringPhases, phase, lesson), [phase, lesson]);
   const nextLesson = useMemo(() => getNextLesson(aiEngineeringPhases, phase, lesson), [phase, lesson]);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     setActiveTab('docs');
     setSelectedCodeFile(0);
+    setShowMobileToc(false);
 
-    // Get the lesson path
     const lessonPath = lesson.path.split('/phases/')[1];
 
     if (lessonPath) {
       const markdownContent = getMarkdownContent(lessonPath);
       if (markdownContent) {
         setContent(markdownContent);
-
-        // Calculate estimated reading time
-        const timeEstimate = estimateReadingTime(markdownContent);
-        setEstimatedTime(timeEstimate);
-
-        // Extract video URL from markdown
-        const videoLink = extractVideoUrl(markdownContent);
-        setVideoUrl(videoLink);
+        setEstimatedTime(estimateReadingTime(markdownContent));
+        setVideoUrl(extractVideoUrl(markdownContent));
       } else {
         setContent(`# ${lesson.name}\n\n## Content Not Found`);
         setEstimatedTime(5);
         setVideoUrl(null);
       }
 
-      // Load code files if they exist
       if (lesson.codePaths && lesson.codePaths.length > 0) {
         const codes = lesson.codePaths.map(codePath => {
           const fileName = codePath.split('/').pop() || 'code';
           const normalizedPath = codePath.replace(/\\/g, '/');
           const codeContent = getCodeContent(normalizedPath);
-          return {
-            name: fileName,
-            content: codeContent || `// File: ${fileName}\n// Path: ${codePath}\n\n// Content not found`,
-          };
+          return { name: fileName, content: codeContent || `// File: ${fileName}\n// Path: ${codePath}\n\n// Content not found` };
         });
         setCodeFiles(codes);
       } else {
         setCodeFiles([]);
       }
 
-      // Load quiz if it exists
       const quiz = getQuizContent(lessonPath);
       setQuizData(quiz || null);
 
-      // Check if lesson was completed (from localStorage)
       const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
       setIsCompleted(completedLessons[lesson.id] || false);
     }
@@ -208,20 +170,17 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
     setLoading(false);
   }, [lesson, phase]);
 
-  // Mark lesson as completed when user spends time viewing it
   useEffect(() => {
-    if (!isCompleted && content) {
+    if (!isCompleted && content && activeTab === 'docs') {
       const timer = setTimeout(() => {
         const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
         completedLessons[lesson.id] = true;
         localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
         setIsCompleted(true);
-      }, 30000); // Mark as completed after 30 seconds of viewing
-
+      }, 30000);
       return () => clearTimeout(timer);
     }
-  }, [lesson.id, content, isCompleted]);
-
+  }, [lesson.id, content, isCompleted, activeTab]);
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}?lesson=${lesson.id}&phase=${phase.id}`;
@@ -239,132 +198,99 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
-      {/* Breadcrumb Navigation */}
-      <div className="sticky top-0 z-20 bg-[var(--color-background)]/95 backdrop-blur border-b border-[var(--color-outline-variant)] px-3 sm:px-4 py-2 overflow-x-auto">
-        <div className="flex items-center gap-2 text-xs sm:text-sm text-[var(--color-on-surface-variant)] whitespace-nowrap">
-          <button onClick={onBack} className="text-[var(--color-primary)] hover:opacity-80 shrink-0">
-            <span className="hidden sm:inline">AI Engineering</span>
-            <span className="sm:hidden">AI Eng</span>
-          </button>
-          <span className="hidden sm:inline">/</span>
-          <span className="hidden sm:inline">Phase {phase.number}</span>
-          <span className="sm:hidden">P{phase.number}</span>
-          <span className="hidden sm:inline">/</span>
-          <span className="text-[var(--color-primary)] font-medium truncate">{lesson.name}</span>
-        </div>
-      </div>
 
-      {/* Header with Back, Title, and Copy Link */}
-      <div className="sticky top-11 z-10 bg-[var(--color-background)]/95 backdrop-blur border-b border-[var(--color-outline-variant)] p-3 sm:p-4">
-        {/* Mobile: Stack layout, Desktop: Side-by-side */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-          <div className="flex-1 min-w-0">
+      {/* ── Single compact sticky header ── */}
+      <div className="sticky top-0 z-20 bg-[var(--color-background)] border-b border-[var(--color-outline-variant)]">
+
+        {/* Scroll progress bar */}
+        <div className="h-0.5 bg-[var(--color-surface-container-high)]">
+          <motion.div
+            className="h-full bg-[var(--color-primary)]"
+            style={{ width: `${scrollProgress}%` }}
+            transition={{ duration: 0.1 }}
+          />
+        </div>
+
+        <div className="px-3 sm:px-4 pt-2 pb-3 space-y-2">
+
+          {/* Row 1: back · breadcrumb · lesson counter · share */}
+          <div className="flex items-center gap-2">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 text-[var(--color-primary)] font-medium mb-3 active:scale-95 transition-transform hover:opacity-80"
+              className="flex items-center gap-1 text-[var(--color-primary)] font-medium active:scale-95 transition-transform shrink-0"
             >
-              <span className="material-symbols-rounded">arrow_back</span>
-              <span className="hidden sm:inline">Back</span>
+              <span className="material-symbols-rounded text-base">arrow_back</span>
+              <span className="text-sm">AI Eng</span>
             </button>
-            <div className="pr-2 sm:pr-0">
-              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1 truncate">
-                Phase {phase.number} • Lesson {lesson.number}
-              </p>
-              <h1 className="text-lg sm:text-xl font-bold text-[var(--color-on-background)] line-clamp-2">
-                {lesson.name}
-              </h1>
+            <span className="text-[var(--color-outline)] text-sm">/</span>
+            <span className="text-sm text-[var(--color-on-surface-variant)] truncate flex-1">
+              Phase {phase.number}
+            </span>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-xs text-[var(--color-on-surface-variant)]">
+                {lesson.number}/{phase.lessons.length}
+              </span>
+              {isCompleted && (
+                <span className="material-symbols-rounded text-base" style={{ color: 'var(--color-success)', fontVariationSettings: "'FILL' 1" }}>
+                  check_circle
+                </span>
+              )}
+              <button
+                onClick={handleCopyLink}
+                className="p-1.5 rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] active:scale-95 transition-all hover:bg-[var(--color-surface-container-high)]"
+                title="Copy lesson link"
+              >
+                <span className="material-symbols-rounded text-base">
+                  {copied ? 'check' : 'share'}
+                </span>
+              </button>
             </div>
           </div>
-          <button
-            onClick={handleCopyLink}
-            className="shrink-0 px-3 py-2 rounded-lg bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)] active:scale-95 transition-all hover:bg-[var(--color-surface-container-high)]"
-            title="Copy lesson link"
-          >
-            <span className="material-symbols-rounded text-sm">
-              {copied ? 'check' : 'share'}
-            </span>
-          </button>
-        </div>
 
-        {/* Progress and Time Indicator - Responsive Layout */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3 text-xs sm:text-sm">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-rounded text-sm" style={{ color: 'var(--color-primary)' }}>
-              schedule
-            </span>
-            <span className="font-medium text-[var(--color-on-surface-variant)]">
-              {estimatedTime} min
-            </span>
+          {/* Row 2: title + reading time */}
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="text-base sm:text-lg font-bold text-[var(--color-on-background)] leading-snug line-clamp-2 flex-1">
+              {lesson.name}
+            </h1>
+            <div className="flex items-center gap-1 shrink-0 text-xs text-[var(--color-on-surface-variant)] pt-0.5">
+              <span className="material-symbols-rounded text-sm" style={{ color: 'var(--color-warning)' }}>schedule</span>
+              <span>{estimatedTime} min</span>
+            </div>
           </div>
-          {isCompleted && (
-            <span className="px-2 py-1 rounded-full bg-[var(--color-success)]/10 text-[var(--color-success)] font-medium flex items-center gap-1 w-fit">
-              <span className="material-symbols-rounded text-sm">check_circle</span>
-              <span className="hidden sm:inline">Completed</span>
-              <span className="sm:hidden">Done</span>
-            </span>
-          )}
-        </div>
 
-        {/* Tab Navigation - Mobile Scrollable, Desktop Grid */}
-        <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 sm:mx-0 px-3 sm:px-0 sm:flex-wrap">
-          <button
-            onClick={() => setActiveTab('docs')}
-            className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
-              activeTab === 'docs'
-                ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
-                : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
-            }`}
-          >
-            <span className="material-symbols-rounded text-base">description</span>
-            <span className="hidden sm:inline">Docs</span>
-          </button>
-          {videoUrl && (
-            <button
-              onClick={() => setActiveTab('video')}
-              className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
-                activeTab === 'video'
-                  ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
-                  : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
-              }`}
-            >
-              <span className="material-symbols-rounded text-base">play_circle</span>
-              <span className="hidden sm:inline">Video</span>
+          {/* Row 3: tabs */}
+          <div className="flex gap-2 overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-0.5">
+            <button onClick={() => setActiveTab('docs')} className={tabClass(activeTab === 'docs')}>
+              <span className="material-symbols-rounded text-base">description</span>
+              Docs
             </button>
-          )}
-          {codeFiles.length > 0 && (
-            <button
-              onClick={() => setActiveTab('code')}
-              className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
-                activeTab === 'code'
-                  ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
-                  : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
-              }`}
-            >
-              <span className="material-symbols-rounded text-base">code</span>
-              <span className="hidden sm:inline">Code</span>
-              <span className="text-xs">({codeFiles.length})</span>
-            </button>
-          )}
-          {quizData && (
-            <button
-              onClick={() => setActiveTab('quiz')}
-              className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0 ${
-                activeTab === 'quiz'
-                  ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
-                  : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
-              }`}
-            >
-              <span className="material-symbols-rounded text-base">quiz</span>
-              <span className="hidden sm:inline">Quiz</span>
-              <span className="text-xs">({quizData.questions.length})</span>
-            </button>
-          )}
+            {videoUrl && (
+              <button onClick={() => setActiveTab('video')} className={tabClass(activeTab === 'video')}>
+                <span className="material-symbols-rounded text-base">play_circle</span>
+                Video
+              </button>
+            )}
+            {codeFiles.length > 0 && (
+              <button onClick={() => setActiveTab('code')} className={tabClass(activeTab === 'code')}>
+                <span className="material-symbols-rounded text-base">code</span>
+                Code
+                <span className="text-xs opacity-70">({codeFiles.length})</span>
+              </button>
+            )}
+            {quizData && (
+              <button onClick={() => setActiveTab('quiz')} className={tabClass(activeTab === 'quiz')}>
+                <span className="material-symbols-rounded text-base">quiz</span>
+                Quiz
+                <span className="text-xs opacity-70">({quizData.questions.length})</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 p-3 sm:p-4 pb-40 max-w-7xl mx-auto">
-        {/* Left: Documentation */}
+      {/* ── Main content ── */}
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 p-3 sm:p-4 max-w-7xl mx-auto" style={{ paddingBottom: 'calc(200px + env(safe-area-inset-bottom))' }}>
+
         <div className="flex-1 min-w-0">
           {loading ? (
             <motion.div
@@ -372,13 +298,55 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
               transition={{ duration: 2, repeat: Infinity }}
               className="text-center py-8 text-[var(--color-on-surface-variant)]"
             >
-              <div className="material-symbols-rounded text-4xl animate-spin mx-auto mb-2">
-                hourglass_empty
-              </div>
+              <div className="material-symbols-rounded text-4xl animate-spin mx-auto mb-2">hourglass_empty</div>
               <p>Loading lesson...</p>
             </motion.div>
           ) : activeTab === 'docs' ? (
             <motion.div key="docs" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+
+              {/* Mobile ToC toggle */}
+              {headings.length > 0 && (
+                <div className="lg:hidden mb-4">
+                  <button
+                    onClick={() => setShowMobileToc(v => !v)}
+                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-[var(--color-surface-container)] text-sm font-medium text-[var(--color-on-surface-variant)]"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="material-symbols-rounded text-base">list</span>
+                      Contents
+                    </div>
+                    <span className="material-symbols-rounded text-base transition-transform" style={{ transform: showMobileToc ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                      expand_more
+                    </span>
+                  </button>
+                  <AnimatePresence>
+                    {showMobileToc && (
+                      <motion.nav
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-1 px-3 py-2 rounded-lg bg-[var(--color-surface-container)] space-y-2 text-sm">
+                          {headings.filter(h => h.level <= 3).map(heading => (
+                            <a
+                              key={heading.id}
+                              href={`#${heading.id}`}
+                              onClick={() => setShowMobileToc(false)}
+                              className="block text-[var(--color-primary)] hover:opacity-80 transition-opacity"
+                              style={{ paddingLeft: `${(heading.level - 1) * 12}px` }}
+                            >
+                              {heading.text}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.nav>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
+
               <MarkdownRenderer markdown={content} />
             </motion.div>
           ) : activeTab === 'video' && videoUrl ? (
@@ -409,7 +377,6 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
                   quizData={quizData}
                   lessonId={lesson.id}
                   onComplete={(stats) => {
-                    // Update lesson completion based on quiz performance
                     if (stats.percentage >= 80) {
                       const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
                       completedLessons[lesson.id] = true;
@@ -429,22 +396,15 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
                       <button
                         key={idx}
                         onClick={() => setSelectedCodeFile(idx)}
-                        className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap shrink-0 ${
-                          selectedCodeFile === idx
-                            ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)]'
-                            : 'bg-[var(--color-surface-container)] text-[var(--color-on-surface-variant)]'
-                        }`}
+                        className={tabClass(selectedCodeFile === idx)}
                       >
                         {file.name}
                       </button>
                     ))}
                   </div>
-
                   <div
                     className="rounded-lg bg-[var(--color-surface-container)] overflow-hidden border-2 sm:border-4 border-[var(--color-on-background)]"
-                    style={{
-                      boxShadow: `2px 2px 0px var(--color-on-background)`,
-                    }}
+                    style={{ boxShadow: `2px 2px 0px var(--color-on-background)` }}
                   >
                     <div className="bg-[var(--color-surface-container-high)] px-3 sm:px-4 py-2 border-b border-[var(--color-outline-variant)] text-xs font-mono text-[var(--color-on-surface-variant)] truncate">
                       {codeFiles[selectedCodeFile]?.name}
@@ -453,7 +413,6 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
                       <code>{codeFiles[selectedCodeFile]?.content}</code>
                     </pre>
                   </div>
-
                   <p className="text-xs text-[var(--color-on-surface-variant)] mt-4 flex items-start gap-2">
                     <span className="material-symbols-rounded text-base shrink-0" style={{ color: 'var(--color-warning)' }}>lightbulb</span>
                     <span>Tip: Copy and run this code locally. Modify it, extend it, break it, learn from it.</span>
@@ -464,7 +423,7 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
           ) : null}
         </div>
 
-        {/* Right: Table of Contents (on large screens) */}
+        {/* Desktop sidebar ToC */}
         {activeTab === 'docs' && headings.length > 0 && (
           <div className="hidden lg:block w-64 sticky top-40 h-fit">
             <div className="bg-[var(--color-surface-container)] p-4 rounded-lg border border-[var(--color-outline-variant)]">
@@ -489,47 +448,44 @@ export default function LessonDetail({ lesson, phase, onBack, onNavigateLesson }
         )}
       </div>
 
-      {/* Previous/Next Navigation Footer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-background)] border-t border-[var(--color-outline-variant)] p-3 sm:p-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-          {previousLesson ? (
-            <button
-              onClick={() => handleNavigateLesson(previousLesson.lesson, previousLesson.phase)}
-              className="flex-1 p-3 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-left border border-[var(--color-outline-variant)] min-w-0"
-            >
-              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">Previous</p>
-              <p className="text-sm font-semibold text-[var(--color-on-background)] flex items-center gap-2 truncate">
-                <span className="material-symbols-rounded shrink-0">arrow_back</span>
-                <span className="truncate hidden sm:inline">{previousLesson.lesson.name}</span>
-                <span className="truncate sm:hidden">{previousLesson.lesson.name.substring(0, 15)}...</span>
-              </p>
-            </button>
-          ) : (
-            <div className="flex-1" />
-          )}
-
-          <div className="text-center text-xs text-[var(--color-on-surface-variant)] px-2 py-1">
-            <span className="hidden sm:inline">Phase {phase.number} • </span>
-            <span>Lesson {lesson.number} / {phase.lessons.length}</span>
+      {/* ── Fixed bottom prev/next bar ── */}
+      {(previousLesson || nextLesson) && (
+        <div className="fixed left-0 right-0 z-[55] px-3 py-2 bg-[var(--color-background)] border-t border-[var(--color-outline-variant)]" style={{ bottom: 'calc(80px + env(safe-area-inset-bottom))', boxShadow: '0 -2px 8px rgba(0,0,0,0.06)' }}>
+          <div className="flex items-center gap-2 max-w-7xl mx-auto">
+            {previousLesson ? (
+              <button
+                onClick={() => handleNavigateLesson(previousLesson.lesson, previousLesson.phase)}
+                className="flex-1 flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-left min-w-0"
+              >
+                <span className="material-symbols-rounded shrink-0 text-base text-[var(--color-on-surface-variant)]">arrow_back</span>
+                <div className="min-w-0">
+                  <p className="text-[10px] text-[var(--color-on-surface-variant)]">Previous</p>
+                  <p className="text-xs font-semibold text-[var(--color-on-background)] truncate">{previousLesson.lesson.name}</p>
+                </div>
+              </button>
+            ) : (
+              <div className="flex-1" />
+            )}
+            <span className="text-xs text-[var(--color-on-surface-variant)] shrink-0 px-1">
+              {lesson.number}/{phase.lessons.length}
+            </span>
+            {nextLesson ? (
+              <button
+                onClick={() => handleNavigateLesson(nextLesson.lesson, nextLesson.phase)}
+                className="flex-1 flex items-center justify-end gap-2 px-3 py-2 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-right min-w-0"
+              >
+                <div className="min-w-0">
+                  <p className="text-[10px] text-[var(--color-on-surface-variant)]">Next</p>
+                  <p className="text-xs font-semibold text-[var(--color-on-background)] truncate">{nextLesson.lesson.name}</p>
+                </div>
+                <span className="material-symbols-rounded shrink-0 text-base text-[var(--color-on-surface-variant)]">arrow_forward</span>
+              </button>
+            ) : (
+              <div className="flex-1" />
+            )}
           </div>
-
-          {nextLesson ? (
-            <button
-              onClick={() => handleNavigateLesson(nextLesson.lesson, nextLesson.phase)}
-              className="flex-1 p-3 rounded-lg bg-[var(--color-surface-container)] hover:bg-[var(--color-surface-container-high)] transition-all active:scale-95 text-right border border-[var(--color-outline-variant)] min-w-0"
-            >
-              <p className="text-xs text-[var(--color-on-surface-variant)] mb-1">Next</p>
-              <p className="text-sm font-semibold text-[var(--color-on-background)] flex items-center justify-end gap-2 truncate">
-                <span className="truncate hidden sm:inline">{nextLesson.lesson.name}</span>
-                <span className="truncate sm:hidden">{nextLesson.lesson.name.substring(0, 15)}...</span>
-                <span className="material-symbols-rounded shrink-0">arrow_forward</span>
-              </p>
-            </button>
-          ) : (
-            <div className="flex-1" />
-          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

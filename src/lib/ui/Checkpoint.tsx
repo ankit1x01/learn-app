@@ -10,6 +10,9 @@ export interface CheckpointProps {
   options?: string[];
   expectedAnswer?: string | number;
   allowContinue?: boolean;
+  explanation?: string;
+  hint?: string;
+  conceptId?: string;
   onAnswer?: (answer: string | number, isCorrect: boolean) => void;
   onSkip?: () => void;
 }
@@ -25,27 +28,25 @@ export function Checkpoint({
   options,
   expectedAnswer,
   allowContinue = true,
+  explanation,
+  hint,
+  conceptId,
   onAnswer,
   onSkip,
 }: CheckpointProps) {
   const [selected, setSelected] = useState<string | number | null>(null);
   const [feedback, setFeedback] = useState<FeedbackState>('idle');
-  const [showExplanation, setShowExplanation] = useState(false);
+  const [confidence, setConfidence] = useState<'low' | 'medium' | 'high'>('medium');
+  const [attempts, setAttempts] = useState(0);
 
   const handleSubmit = () => {
     if (selected === null) return;
 
     setFeedback('submitted');
 
-    // Check if answer is correct
     const isCorrect = selected === expectedAnswer || String(selected) === String(expectedAnswer);
     setFeedback(isCorrect ? 'correct' : 'incorrect');
-    setShowExplanation(!isCorrect || true);
-
-    // Notify parent after brief delay
-    setTimeout(() => {
-      onAnswer?.(selected, isCorrect);
-    }, 1200);
+    setAttempts((value) => value + 1);
   };
 
   const handleContinue = () => {
@@ -54,7 +55,6 @@ export function Checkpoint({
     } else {
       setFeedback('idle');
       setSelected(null);
-      setShowExplanation(false);
     }
   };
 
@@ -64,23 +64,36 @@ export function Checkpoint({
     <div
       style={{
         padding: '24px',
-        background: feedback === 'correct' ? '#E8F5E9' : feedback === 'incorrect' ? '#FFEBEE' : '#F5F5F5',
-        borderRadius: '12px',
+        background: '#FFFCF6',
+        borderRadius: '18px',
         maxWidth: '600px',
-        border: feedback === 'correct' ? '2px solid #4CAF50' : feedback === 'incorrect' ? '2px solid #F44336' : '2px solid #ddd',
+        border: feedback === 'correct' ? '1px solid #86EFAC' : feedback === 'incorrect' ? '1px solid #FCA5A5' : '1px solid #E5D8C8',
+        boxShadow: '0 18px 45px rgba(58, 42, 20, 0.15)',
         transition: 'all 0.3s ease',
       }}
     >
       {/* Question */}
       <div style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-          <span style={{ fontSize: '24px' }}>❓</span>
-          <p style={{ fontSize: '18px', fontWeight: 'bold', margin: 0 }}>Checkpoint</p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
+            <span className="material-symbols-rounded" style={{ fontSize: 24, color: '#0F766E' }}>quiz</span>
+            <p style={{ fontSize: '18px', fontWeight: 950, margin: 0, color: '#1F2933' }}>Learning Checkpoint</p>
+          </div>
+          {conceptId && (
+            <span style={{ padding: '5px 8px', borderRadius: '999px', background: '#F5F3FF', color: '#5B21B6', fontSize: '11px', fontWeight: 850 }}>
+              {conceptId}
+            </span>
+          )}
         </div>
         {prompt && (
-          <p style={{ fontSize: '16px', fontWeight: '500', marginTop: '12px', color: '#333' }}>
+          <p style={{ fontSize: '17px', fontWeight: 800, marginTop: '12px', color: '#1F2933', lineHeight: 1.45 }}>
             {prompt}
           </p>
+        )}
+        {hint && feedback !== 'correct' && (
+          <div style={{ marginTop: '12px', padding: '10px 12px', borderRadius: '12px', background: '#F0FDFA', border: '1px solid #CCFBF1', color: '#115E59', fontSize: '13px', lineHeight: 1.45 }}>
+            <strong>Hint:</strong> {hint}
+          </div>
         )}
       </div>
 
@@ -98,13 +111,13 @@ export function Checkpoint({
                 key={idx}
                 style={{
                   display: 'block',
-                  padding: '12px',
-                  marginBottom: '8px',
-                  background: showAsCorrect ? '#C8E6C9' : showAsWrong ? '#FFCDD2' : isSelectedOption ? '#E1BEE7' : '#fafafa',
-                  border: `2px solid ${
-                    showAsCorrect ? '#4CAF50' : showAsWrong ? '#F44336' : isSelectedOption ? '#9C27B0' : '#ddd'
+                  padding: '13px',
+                  marginBottom: '9px',
+                  background: showAsCorrect ? '#DCFCE7' : showAsWrong ? '#FEE2E2' : isSelectedOption ? '#EEF2FF' : '#FFFFFF',
+                  border: `1px solid ${
+                    showAsCorrect ? '#22C55E' : showAsWrong ? '#EF4444' : isSelectedOption ? '#6366F1' : '#E7E5E4'
                   }`,
-                  borderRadius: '8px',
+                  borderRadius: '13px',
                   cursor: isAnswered ? 'default' : 'pointer',
                   transition: 'all 0.2s ease',
                   opacity: isAnswered && !isSelectedOption && !isCorrectOption ? 0.5 : 1,
@@ -120,11 +133,11 @@ export function Checkpoint({
                     disabled={isAnswered}
                     style={{ cursor: isAnswered ? 'default' : 'pointer' }}
                   />
-                  <span style={{ flex: 1, fontSize: '15px', color: showAsWrong ? '#C62828' : showAsCorrect ? '#1B5E20' : '#333' }}>
+                  <span style={{ flex: 1, fontSize: '14px', fontWeight: 700, color: showAsWrong ? '#991B1B' : showAsCorrect ? '#166534' : '#292524' }}>
                     {option}
                   </span>
-                  {showAsCorrect && <span style={{ fontSize: '18px' }}>✓</span>}
-                  {showAsWrong && <span style={{ fontSize: '18px' }}>✗</span>}
+                  {showAsCorrect && <span className="material-symbols-rounded" style={{ fontSize: 18, color: '#16A34A' }}>check_circle</span>}
+                  {showAsWrong && <span className="material-symbols-rounded" style={{ fontSize: 18, color: '#DC2626' }}>cancel</span>}
                 </div>
               </label>
             );
@@ -133,19 +146,52 @@ export function Checkpoint({
       )}
 
       {/* Feedback */}
+      {!isAnswered && (
+        <div style={{ marginBottom: '18px' }}>
+          <div style={{ fontSize: '11px', color: '#78716C', fontWeight: 900, marginBottom: '8px' }}>CONFIDENCE</div>
+          <div style={{ display: 'flex', gap: '7px' }}>
+            {(['low', 'medium', 'high'] as const).map((level) => (
+              <button
+                key={level}
+                onClick={() => setConfidence(level)}
+                style={{
+                  flex: 1,
+                  padding: '8px',
+                  borderRadius: '10px',
+                  border: confidence === level ? '1px solid #0F766E' : '1px solid #E7E5E4',
+                  background: confidence === level ? '#ECFDF5' : '#FFFFFF',
+                  color: confidence === level ? '#0F766E' : '#57534E',
+                  fontSize: '12px',
+                  fontWeight: 850,
+                  cursor: 'pointer',
+                  textTransform: 'capitalize',
+                }}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {isAnswered && (
         <div
           style={{
-            padding: '12px',
-            background: feedback === 'correct' ? '#A5D6A7' : '#EF9A9A',
-            borderRadius: '8px',
+            padding: '13px',
+            background: feedback === 'correct' ? '#DCFCE7' : '#FEF3C7',
+            border: `1px solid ${feedback === 'correct' ? '#86EFAC' : '#FCD34D'}`,
+            borderRadius: '13px',
             marginBottom: '16px',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            color: feedback === 'correct' ? '#1B5E20' : '#B71C1C',
+            fontSize: '13px',
+            fontWeight: 750,
+            color: feedback === 'correct' ? '#14532D' : '#78350F',
+            lineHeight: 1.55,
           }}
         >
-          {feedback === 'correct' ? '🎉 Excellent! Your answer is correct.' : '📚 Not quite. Review the explanation below.'}
+          <div style={{ fontWeight: 950, marginBottom: '4px' }}>
+            {feedback === 'correct' ? 'Correct. Lock that in.' : attempts >= 2 ? 'Still not quite. Use the explanation and try once more.' : 'Not quite. Good moment to adjust the idea.'}
+          </div>
+          {explanation || 'Review the concept, compare the options, and choose the answer that best matches the principle.'}
         </div>
       )}
 
@@ -158,12 +204,12 @@ export function Checkpoint({
               disabled={selected === null}
               style={{
                 padding: '10px 20px',
-                backgroundColor: selected === null ? '#ccc' : '#6750a4',
+                backgroundColor: selected === null ? '#D6D3D1' : '#0F766E',
                 color: 'white',
                 border: 'none',
-                borderRadius: '6px',
+                borderRadius: '11px',
                 cursor: selected === null ? 'not-allowed' : 'pointer',
-                fontWeight: 'bold',
+                fontWeight: 900,
                 fontSize: '14px',
               }}
             >
@@ -174,12 +220,13 @@ export function Checkpoint({
                 onClick={onSkip}
                 style={{
                   padding: '10px 20px',
-                  backgroundColor: '#9E9E9E',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
+                  backgroundColor: '#FFFFFF',
+                  color: '#57534E',
+                  border: '1px solid #D6D3D1',
+                  borderRadius: '11px',
                   cursor: 'pointer',
                   fontSize: '14px',
+                  fontWeight: 800,
                 }}
               >
                 Skip
@@ -191,17 +238,17 @@ export function Checkpoint({
             onClick={handleContinue}
             style={{
               padding: '10px 20px',
-              backgroundColor: feedback === 'correct' ? '#4CAF50' : '#FF9800',
+              backgroundColor: feedback === 'correct' ? '#15803D' : '#B45309',
               color: 'white',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: '11px',
               cursor: 'pointer',
-              fontWeight: 'bold',
+              fontWeight: 900,
               fontSize: '14px',
               flex: 1,
             }}
           >
-            {feedback === 'correct' ? 'Continue' : 'Try Again'}
+            {feedback === 'correct' ? 'Continue Lesson' : 'Try Again'}
           </button>
         )}
       </div>

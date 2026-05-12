@@ -52,6 +52,7 @@ interface Concept {
   id: string
   text: string
   belongsTo: string // entity id
+  spawnTimeMs: number
 }
 
 interface MatchedFact {
@@ -61,28 +62,23 @@ interface MatchedFact {
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
-
 function buildConcepts(config: BubbleMatchConfig | MemoryAttentionConfig): Concept[] {
   const all: Concept[] = []
-  const bubbleConfig = config as BubbleMatchConfig
+  let globalSpawnMs = 1000
+  const bubbleConfig = config as any
   if (!bubbleConfig.entities) {
     console.warn('AttentionGame requires BubbleMatchConfig with entities field')
     return []
   }
-  bubbleConfig.entities.forEach(e => {
-    e.facts.forEach((fact, fi) => {
-      all.push({ id: `${e.id}-f${fi}`, text: fact, belongsTo: e.id })
+  bubbleConfig.entities.forEach((e: any) => {
+    e.facts.forEach((fact: any, fi: number) => {
+      const text = typeof fact === 'string' ? fact : fact.text
+      const spawnTimeMs = typeof fact === 'string' ? globalSpawnMs : fact.spawnTimeMs
+      if (typeof fact === 'string') globalSpawnMs += 1500
+      all.push({ id: `${e.id}-f${fi}`, text, belongsTo: e.id, spawnTimeMs })
     })
   })
-  return shuffle(all)
+  return all.sort((a, b) => a.spawnTimeMs - b.spawnTimeMs)
 }
 
 // ─── Draggable Concept Chip ────────────────────────────────────────────────
@@ -316,7 +312,13 @@ function FeedbackFlash({ text, isCorrect }: { text: string; isCorrect: boolean }
         backdropFilter: 'blur(8px)',
       }}
     >
-      {isCorrect ? '✓ Correct!' : '✗ Wrong!'}
+      {/* Remove old text string */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span className="material-symbols-rounded" style={{ fontSize: 20, fontVariationSettings: "'FILL' 1, 'wght' 400" }}>
+          {isCorrect ? 'check_circle' : 'cancel'}
+        </span>
+        {isCorrect ? 'Correct!' : 'Wrong!'}
+      </div>
     </motion.div>
   )
 }
@@ -347,7 +349,10 @@ function StreakBadge({ streak }: { streak: number }) {
         gap: 6,
       }}
     >
-      🔥 {streak}x Streak!
+      <span className="material-symbols-rounded" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1, 'wght' 400" }}>
+        local_fire_department
+      </span>
+      {streak}x Streak!
     </motion.div>
   )
 }
@@ -391,7 +396,9 @@ function EndScreen({
         backdropFilter: 'blur(12px)',
       }}
     >
-      <div style={{ fontSize: 56 }}>{won ? '🎉' : '💀'}</div>
+      <span className="material-symbols-rounded" style={{ fontSize: 56, fontVariationSettings: "'FILL' 1, 'wght' 400", color: won ? '#a78bfa' : '#f87171' }}>
+        {won ? 'celebration' : 'sentiment_very_dissatisfied'}
+      </span>
       <p style={{ fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 900, fontSize: 28, color: won ? '#a78bfa' : '#f87171', letterSpacing: '-0.02em', margin: 0 }}>
         {won ? 'Brilliant!' : 'Game Over'}
       </p>
@@ -494,8 +501,8 @@ export function AttentionGame({ config, onBack }: Props) {
   const [totalCorrect, setTotalCorrect] = useState(0)
   const [totalAttempts, setTotalAttempts] = useState(0)
   const [showStreak, setShowStreak] = useState(false)
-  const spawnIdx = useRef(0)
-  const spawnTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [audioTimeMs, setAudioTimeMs] = useState(0)
 
   // sensors
   const sensors = useSensors(
@@ -503,47 +510,33 @@ export function AttentionGame({ config, onBack }: Props) {
     useSensor(TouchSensor,   { activationConstraint: { delay: 0, tolerance: 5 } })
   )
 
-  // Spawn concepts one by one
-  const spawnNext = useCallback(() => {
-    if (spawnIdx.current >= allConcepts.length) return
-    setVisible(v => [...v, allConcepts[spawnIdx.current]])
-    spawnIdx.current++
-  }, [allConcepts])
-
+  // Pause / Play audio sync
   useEffect(() => {
-    // Prevent strict mode double-spawning by resetting cleanly
-    let isMounted = true
-    const initial = Math.min(3, allConcepts.length)
-    
-    setVisible(allConcepts.slice(0, initial))
-    spawnIdx.current = initial
+    if (audioRef.current) {
+      if (paused || gameOver || gameWon) {
+        audioRef.current.pause()
+      } else {
+        audioRef.current.play().catch(e => console.warn('Audio auto-play blocked', e))
+      }
+    }
+  }, [paused, gameOver, gameWon])
 
-    // Then spawn rest with delay
-    const scheduleNext = () => {
-      if (!isMounted || spawnIdx.current >= allConcepts.length) return
-      
-      spawnTimer.current = setTimeout(() => {
-        if (!isMounted) return
-        const idx = spawnIdx.current
-        
-        setVisible(v => {
-          // Extra safety check to prevent duplicate keys
-          if (v.some(c => c.id === allConcepts[idx].id)) return v
-          return [...v, allConcepts[idx]]
-        })
-        
-        spawnIdx.current++
-        scheduleNext()
-      }, SPAWN_INTERVAL_MS)
-    }
+  // Sync concept visibility to audio time
+  useEffect(() => {
+    const newlyVisible = allConcepts.filter(concept => {
+      const hasSpawned = audioTimeMs >= concept.spawnTimeMs
+      const isMatched = Object.values(matched).flat().some(m => m.conceptId === concept.id)
+      return hasSpawned && !isMatched
+    })
     
-    scheduleNext()
-    
-    return () => { 
-      isMounted = false
-      if (spawnTimer.current) clearTimeout(spawnTimer.current) 
+    setVisible(newlyVisible)
+  }, [audioTimeMs, allConcepts, matched])
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setAudioTimeMs(audioRef.current.currentTime * 1000)
     }
-  }, [allConcepts])
+  }
 
   const showFeedbackMsg = (correct: boolean, text: string) => {
     setFeedback({ text, correct })
@@ -610,8 +603,11 @@ export function AttentionGame({ config, onBack }: Props) {
   }
 
   const restart = () => {
-    spawnIdx.current = 0
-    if (spawnTimer.current) clearTimeout(spawnTimer.current)
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      setAudioTimeMs(0)
+      audioRef.current.play().catch(e => console.warn('Audio auto-play blocked', e))
+    }
     const shuffled = buildConcepts(config)
     setVisible([])
     setMatched({})
@@ -625,10 +621,6 @@ export function AttentionGame({ config, onBack }: Props) {
     setGameWon(false)
     setFeedback(null)
     setFlashMap({})
-    const initial = Math.min(3, shuffled.length)
-    const newVis: Concept[] = []
-    for (let i = 0; i < initial; i++) { newVis.push(shuffled[i]); spawnIdx.current = i + 1 }
-    setVisible(newVis)
   }
 
   // Progress calculation
@@ -652,18 +644,28 @@ export function AttentionGame({ config, onBack }: Props) {
   // Fixed layout coordinates centered into a visual grouping
   // 3 entities create a centered triangle; up to 5 gracefully distribute
   const entityPositions: Record<number, { top: string; left: string }> = {
-    0: { top: '25%', left: '50%' }, // Top Center
-    1: { top: '65%', left: '30%' }, // Bottom Left
-    2: { top: '65%', left: '70%' }, // Bottom Right
-    3: { top: '45%', left: '15%' }, // Far Left
-    4: { top: '45%', left: '85%' }, // Far Right
+    0: { top: '25%', left: '30%' }, // Top Left
+    1: { top: '50%', left: '70%' }, // Middle Right
+    2: { top: '75%', left: '30%' }, // Bottom Left
+    3: { top: '25%', left: '70%' }, // Top Right
+    4: { top: '75%', left: '70%' }, // Bottom Right
   }
 
-  // Pool area positions for concept chips (bottom grid)
-  const conceptPositions: Array<{ x: number; y: number }> = visible.map((_, i) => ({
-    x: (i % 3) * 110 + 20,
-    y: Math.floor(i / 3) * 110 + 10,
-  }))
+  // Scattered positions for concept chips to appear around the screen
+  const conceptPositions: Record<number, { top: string; left: string }> = {
+    0: { top: '18%', left: '75%' },
+    1: { top: '38%', left: '45%' },
+    2: { top: '62%', left: '18%' },
+    3: { top: '82%', left: '65%' },
+    4: { top: '18%', left: '15%' },
+    5: { top: '52%', left: '20%' },
+    6: { top: '88%', left: '85%' },
+    7: { top: '38%', left: '85%' },
+    8: { top: '68%', left: '85%' },
+    9: { top: '45%', left: '35%' },
+    10: { top: '80%', left: '40%' },
+    11: { top: '20%', left: '55%' },
+  }
 
   return (
     <div
@@ -674,8 +676,20 @@ export function AttentionGame({ config, onBack }: Props) {
         overflow: 'hidden',
         fontFamily: 'Inter, system-ui',
         userSelect: 'none',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
+      {/* Background Audio */}
+      {bubbleConfig.audioSrc && (
+        <audio
+          ref={audioRef}
+          src={bubbleConfig.audioSrc}
+          onTimeUpdate={handleTimeUpdate}
+          autoPlay
+        />
+      )}
+
       {/* HUD */}
       <div
         style={{
@@ -694,23 +708,30 @@ export function AttentionGame({ config, onBack }: Props) {
             {onBack && (
               <button
                 onClick={onBack}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 20, padding: 0 }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: 0 }}
               >
-                ←
+                <span className="material-symbols-rounded" style={{ fontSize: 24, fontVariationSettings: "'FILL' 0, 'wght' 400" }}>
+                  arrow_back
+                </span>
               </button>
             )}
             <button
               onClick={() => setPaused(p => !p)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 18, padding: 0 }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', padding: 0 }}
             >
-              ⏸
+              <span className="material-symbols-rounded" style={{ fontSize: 24, fontVariationSettings: "'FILL' 0, 'wght' 400" }}>
+                pause
+              </span>
             </button>
             <span style={{ color: '#e9d5ff', fontFamily: 'Plus Jakarta Sans, system-ui', fontWeight: 800, fontSize: 22 }}>
               {score}
             </span>
             {streak >= 2 && (
-              <span style={{ color: '#f59e0b', fontFamily: 'Inter', fontWeight: 700, fontSize: 13 }}>
-                🔥{streak}x
+              <span style={{ color: '#f59e0b', fontFamily: 'Inter', fontWeight: 700, fontSize: 13, display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span className="material-symbols-rounded" style={{ fontSize: 16, fontVariationSettings: "'FILL' 1, 'wght' 400" }}>
+                  local_fire_department
+                </span>
+                {streak}x
               </span>
             )}
           </div>
@@ -722,8 +743,8 @@ export function AttentionGame({ config, onBack }: Props) {
             </span>
             <div style={{ display: 'flex', gap: 4 }}>
               {Array.from({ length: MAX_LIVES }).map((_, i) => (
-                <span key={i} style={{ fontSize: 15, opacity: i < lives ? 1 : 0.15, transition: 'opacity 0.3s' }}>
-                  ❤️
+                <span key={i} className="material-symbols-rounded" style={{ fontSize: 20, opacity: i < lives ? 1 : 0.15, transition: 'opacity 0.3s', fontVariationSettings: i < lives ? "'FILL' 1, 'wght' 400" : "'FILL' 0, 'wght' 400" }}>
+                  favorite
                 </span>
               ))}
             </div>
@@ -758,11 +779,11 @@ export function AttentionGame({ config, onBack }: Props) {
         onDragEnd={handleDragEnd}
         collisionDetection={coordinateGeometryCollision}
       >
-        {/* Entity bubbles – unified container bounds */}
+        {/* Unified Play Area */}
         <div
           style={{
             position: 'relative',
-            height: '60vh',
+            height: 'calc(100vh - 60px)',
             marginTop: 56,
             maxWidth: 800, // Clamp layout stretch on destkops 
             marginLeft: 'auto',
@@ -788,65 +809,35 @@ export function AttentionGame({ config, onBack }: Props) {
               </div>
             )
           })}
-        </div>
 
-        {/* Divider */}
-        <div
-          style={{
-            height: 1,
-            background: 'rgba(255,255,255,0.07)',
-            margin: '0 24px',
-          }}
-        />
-
-        {/* Concept chips pool – bottom area */}
-        <div
-          style={{
-            padding: '18px 20px 32px',
-            minHeight: 180,
-            position: 'relative',
-          }}
-        >
-          <p
-            style={{
-              color: '#6b7280',
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              marginBottom: 14,
-            }}
-          >
-            Drag to match ↑
-          </p>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 14,
-              justifyContent: 'center',
-            }}
-          >
-            <AnimatePresence>
-              {visible.map((concept, idx) => (
+          <AnimatePresence>
+            {visible.map((concept, idx) => {
+              const staticIdx = allConcepts.indexOf(concept)
+              const pos = conceptPositions[staticIdx % Object.keys(conceptPositions).length] || { top: '50%', left: '50%' }
+              return (
                 <motion.div
                   key={concept.id}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.5, opacity: 0 }}
                   transition={{ delay: Math.min(idx * 0.1, 0.5), type: 'spring', stiffness: 380, damping: 22 }}
+                  className="concept-floating"
+                  style={{
+                    position: 'absolute',
+                    ...pos,
+                    transform: 'translate(-50%,-50%)',
+                    zIndex: concept.id === activeId ? 999 : 50,
+                  }}
                 >
                   <ConceptChip
                     concept={concept}
                     isDragging={concept.id === activeId}
                   />
                 </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
+              )
+            })}
+          </AnimatePresence>
         </div>
-
-        {/* DragOverlay removed; ConceptChip intrinsically handles its state when dragged */}
       </DndContext>
 
       {/* End screens */}
@@ -885,7 +876,9 @@ export function AttentionGame({ config, onBack }: Props) {
               cursor: 'pointer',
             }}
           >
-            <span style={{ fontSize: 52 }}>⏸</span>
+            <span className="material-symbols-rounded" style={{ fontSize: 56, fontVariationSettings: "'FILL' 1, 'wght' 400" }}>
+              pause
+            </span>
             <p style={{ color: '#a78bfa', fontFamily: 'Plus Jakarta Sans', fontWeight: 800, fontSize: 22 }}>
               Paused
             </p>

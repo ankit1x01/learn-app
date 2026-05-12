@@ -23,6 +23,7 @@ import type {
   WidgetRevealAction,
   WbDrawTextAction,
   WbDrawShapeAction,
+  WbDrawLineAction,
 } from './action-types';
 
 // ==================== Types ====================
@@ -44,11 +45,28 @@ function delay(ms: number): Promise<void> {
 
 // ==================== ActionEngine ====================
 
+export type WhiteboardCallbacks = {
+  open?: () => void;
+  clear?: () => void;
+  drawText?: (text: string, x: number, y: number, color?: string, fontSize?: number) => void;
+  drawRect?: (x: number, y: number, w: number, h: number, color?: string) => void;
+  drawCircle?: (cx: number, cy: number, r: number, color?: string) => void;
+  drawLine?: (x1: number, y1: number, x2: number, y2: number, color?: string) => void;
+  drawArrow?: (x1: number, y1: number, x2: number, y2: number, color?: string) => void;
+};
+
 export class ActionEngine {
   private widgetMessageCallback: WidgetMessageCallback | null = null;
   private simulationCommandCallback: SimulationCommandCallback | null = null;
   private checkpointCallback: CheckpointCallback | null = null;
   private effectTimer: ReturnType<typeof setTimeout> | null = null;
+  private effectCallbacks: {
+    setSpotlight?: (effect: any) => void;
+    setLaser?: (effect: any) => void;
+    setFeedback?: (effect: any) => void;
+  } = {};
+  private whiteboardCallbacks: WhiteboardCallbacks = {};
+  public speechSpeed: number = 1;
 
   constructor(
     widgetMessageCallback?: WidgetMessageCallback | null,
@@ -58,6 +76,18 @@ export class ActionEngine {
     this.widgetMessageCallback = widgetMessageCallback ?? null;
     this.simulationCommandCallback = simulationCommandCallback ?? null;
     this.checkpointCallback = checkpointCallback ?? null;
+  }
+
+  setEffectCallbacks(callbacks: {
+    setSpotlight?: (effect: any) => void;
+    setLaser?: (effect: any) => void;
+    setFeedback?: (effect: any) => void;
+  }): void {
+    this.effectCallbacks = callbacks;
+  }
+
+  setWhiteboardCallbacks(callbacks: WhiteboardCallbacks): void {
+    this.whiteboardCallbacks = callbacks;
   }
 
   /** Set callback for widget iframe messages */
@@ -117,10 +147,18 @@ export class ActionEngine {
           return this.executeCheckpoint(action as CheckpointAction);
 
         // Whiteboard
+        case 'wb_open':
+          this.whiteboardCallbacks.open?.();
+          return;
+        case 'wb_clear':
+          this.whiteboardCallbacks.clear?.();
+          return;
         case 'wb_draw_text':
           return this.executeWbDrawText(action as WbDrawTextAction);
         case 'wb_draw_shape':
           return this.executeWbDrawShape(action as WbDrawShapeAction);
+        case 'wb_draw_line':
+          return this.executeWbDrawLine(action as WbDrawLineAction);
 
         // Widget actions
         case 'widget_setState':
@@ -157,23 +195,57 @@ export class ActionEngine {
 
   private executeSpotlight(action: SpotlightAction): void {
     console.log(`[ActionEngine] Spotlight on ${action.elementId}, dimOpacity=${action.dimOpacity ?? 0.5}`);
-    // TODO: Wire to CHITTA's spotlight store/component
-    // useEffectStore.getState().setSpotlight(action.elementId, { dimness: action.dimOpacity ?? 0.5 })
+
+    if (this.effectCallbacks.setSpotlight) {
+      this.effectCallbacks.setSpotlight({
+        elementId: action.elementId,
+        dimOpacity: action.dimOpacity ?? 0.5,
+      });
+
+      // Clear after 4 seconds
+      setTimeout(() => {
+        this.effectCallbacks.setSpotlight?.(null);
+      }, 4000);
+    }
+
     this.scheduleEffectClear();
   }
 
   private executeLaser(action: LaserAction): void {
     console.log(`[ActionEngine] Laser on ${action.elementId}, color=${action.color ?? '#ff0000'}`);
-    // TODO: Wire to CHITTA's laser store/component
-    // useEffectStore.getState().setLaser(action.elementId, { color: action.color ?? '#ff0000' })
+
+    if (this.effectCallbacks.setLaser) {
+      this.effectCallbacks.setLaser({
+        elementId: action.elementId,
+        color: action.color ?? '#ff0000',
+      });
+
+      // Clear after 3 seconds
+      setTimeout(() => {
+        this.effectCallbacks.setLaser?.(null);
+      }, 3000);
+    }
+
     this.scheduleEffectClear();
   }
 
   private executeFeedback(action: FeedbackAction): void {
     const duration = action.duration ?? 3000;
     console.log(`[ActionEngine] Feedback [${action.type_}]: ${action.message} (${duration}ms)`);
-    // TODO: Wire to CHITTA's feedback toast/notification system
-    // useNotificationStore.getState().show(action.message, action.type_, duration)
+
+    if (this.effectCallbacks.setFeedback) {
+      this.effectCallbacks.setFeedback({
+        message: action.message,
+        type: action.type_,
+        duration,
+      });
+
+      // Clear after duration
+      setTimeout(() => {
+        this.effectCallbacks.setFeedback?.(null);
+      }, duration);
+    }
+
     this.scheduleEffectClear();
   }
 
@@ -182,9 +254,20 @@ export class ActionEngine {
   private async executeSpeech(action: SpeechAction): Promise<void> {
     console.log(`[ActionEngine] Speech: ${action.text.substring(0, 50)}...`);
 
-    // TODO: Wire to CHITTA's audio system
-    // For now, just delay to simulate speech duration
-    const estimatedMs = Math.max(action.text.length * 50, 1000); // rough estimate
+    // Try to use Web Speech API
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window && action.text) {
+      try {
+        const { playBrowserTTS } = await import('@/lib/audio/browser-tts');
+        await playBrowserTTS(action.text, { rate: 0.9 * this.speechSpeed });
+        return;
+      } catch (err) {
+        console.warn(`[ActionEngine] Speech synthesis error:`, err);
+      }
+    }
+
+    // Fallback: delay based on text length estimate
+    // Rough estimate: 150ms per character for speech duration
+    const estimatedMs = Math.max(Math.min(action.text.length * 50, 60000), 1000);
     await delay(estimatedMs);
   }
 
@@ -243,19 +326,40 @@ export class ActionEngine {
     console.log(`[ActionEngine] Checkpoint ${action.checkpointId} result: ${passed ? 'PASS' : 'FAIL'}`);
   }
 
-  // ==================== Whiteboard (Stub) ====================
+  // ==================== Whiteboard ====================
 
   private async executeWbDrawText(action: WbDrawTextAction): Promise<void> {
-    console.log(`[ActionEngine] Whiteboard draw text: ${action.content.substring(0, 40)}...`);
-    // TODO: Wire to CHITTA's whiteboard component
-    // this.stageAPI.whiteboard.addElement({ ... }, whiteboardId)
-    await delay(800);
+    console.log(`[ActionEngine] Whiteboard draw text: ${action.content.substring(0, 40)}`);
+    this.whiteboardCallbacks.drawText?.(
+      action.content,
+      action.x,
+      action.y,
+      action.color,
+      action.fontSize,
+    );
+    await delay(300);
   }
 
   private async executeWbDrawShape(action: WbDrawShapeAction): Promise<void> {
     console.log(`[ActionEngine] Whiteboard draw shape: ${action.shape}`);
-    // TODO: Wire to CHITTA's whiteboard component
-    await delay(800);
+    const color = action.fillColor;
+    if (action.shape === 'rectangle') {
+      this.whiteboardCallbacks.drawRect?.(action.x, action.y, action.width, action.height, color);
+    } else if (action.shape === 'circle') {
+      this.whiteboardCallbacks.drawCircle?.(action.x + action.width / 2, action.y + action.height / 2, Math.min(action.width, action.height) / 2, color);
+    }
+    await delay(300);
+  }
+
+  private async executeWbDrawLine(action: WbDrawLineAction): Promise<void> {
+    console.log(`[ActionEngine] Whiteboard draw line: (${action.startX},${action.startY}) → (${action.endX},${action.endY})`);
+    const isArrow = action.points?.[1] === 'arrow';
+    if (isArrow) {
+      this.whiteboardCallbacks.drawArrow?.(action.startX, action.startY, action.endX, action.endY, action.color);
+    } else {
+      this.whiteboardCallbacks.drawLine?.(action.startX, action.startY, action.endX, action.endY, action.color);
+    }
+    await delay(300);
   }
 
   // ==================== Widget Actions ====================

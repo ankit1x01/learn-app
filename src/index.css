@@ -407,3 +407,5 @@
 
   .banner-shimmer { position: relative; }
 }
+
+@keyframes float-up-down { 0%, 100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-12px); } } .concept-floating { animation: float-up-down 3.5s ease-in-out infinite; }

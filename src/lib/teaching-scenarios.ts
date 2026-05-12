@@ -5,6 +5,7 @@
 
 import type { GameScene } from './playback/engine';
 import type { Action } from './action-types';
+import { masterDemoScenario } from './master-demo-scenario';
 
 /**
  * Scenario 1: Introduction to Variables
@@ -17,7 +18,7 @@ export const introToVariablesScenario: GameScene[] = [
       {
         id: 'spotlight-1',
         type: 'spotlight',
-        elementId: 'concept-box',
+        elementId: 'demo-element',
         dimOpacity: 0.7,
       },
       {
@@ -42,6 +43,12 @@ export const introToVariablesScenario: GameScene[] = [
   {
     id: 'scene-1-checkpoint',
     actions: [
+      {
+        id: 'laser-1',
+        type: 'laser',
+        elementId: 'demo-element',
+        color: '#FF6B6B',
+      },
       {
         id: 'speech-3',
         type: 'speech',
@@ -85,6 +92,12 @@ export const dataTypesScenario: GameScene[] = [
     id: 'scene-2-intro',
     actions: [
       {
+        id: 'spotlight-1',
+        type: 'spotlight',
+        elementId: 'demo-element',
+        dimOpacity: 0.6,
+      },
+      {
         id: 'speech-1',
         type: 'speech',
         text: 'Different types of data require different storage methods. There are three main data types we focus on: numbers for quantities, text also called strings for words, and booleans for true or false values.',
@@ -109,7 +122,7 @@ export const dataTypesScenario: GameScene[] = [
       {
         id: 'laser-1',
         type: 'laser',
-        elementId: 'number-example',
+        elementId: 'demo-element-2',
         color: '#FF6B6B',
       },
     ],
@@ -123,9 +136,9 @@ export const dataTypesScenario: GameScene[] = [
         text: 'Strings are text data. You write them in quotes. For example: let greeting equals "Hello World" creates a string variable. Strings can contain any characters: letters, numbers, spaces, and symbols.',
       } as Action,
       {
-        id: 'laser-1',
+        id: 'laser-2',
         type: 'laser',
-        elementId: 'string-example',
+        elementId: 'demo-element',
         color: '#4CAF50',
       },
     ],
@@ -139,9 +152,9 @@ export const dataTypesScenario: GameScene[] = [
         text: 'Booleans are the simplest type. They can only have two values: true or false. You use booleans to make decisions in your code. For example: let isRaining equals true.',
       } as Action,
       {
-        id: 'laser-1',
+        id: 'laser-3',
         type: 'laser',
-        elementId: 'boolean-example',
+        elementId: 'demo-element-2',
         color: '#2196F3',
       },
     ],
@@ -187,6 +200,12 @@ export const functionsScenario: GameScene[] = [
     id: 'scene-3-intro',
     actions: [
       {
+        id: 'spotlight-1',
+        type: 'spotlight',
+        elementId: 'demo-element',
+        dimOpacity: 0.6,
+      },
+      {
         id: 'speech-1',
         type: 'speech',
         text: 'Functions are reusable blocks of code. Instead of writing the same code repeatedly, you write it once in a function and call it many times. This saves time and makes code easier to maintain.',
@@ -208,6 +227,12 @@ export const functionsScenario: GameScene[] = [
   {
     id: 'scene-3-checkpoint',
     actions: [
+      {
+        id: 'laser-1',
+        type: 'laser',
+        elementId: 'demo-element-2',
+        color: '#6750A4',
+      },
       {
         id: 'speech-3',
         type: 'speech',
@@ -238,13 +263,220 @@ export const functionsScenario: GameScene[] = [
 ];
 
 /**
+ * Scenario 4: Algebra Basics - Linear Equations
+ * Teaches: How to solve simple linear equations
+ */
+export const algebraBasicsScenario: GameScene[] = [
+  {
+    id: 'scene-4-intro',
+    actions: [
+      {
+        id: 'spotlight-1',
+        type: 'spotlight',
+        elementId: 'demo-element',
+        dimOpacity: 0.6,
+      },
+      {
+        id: 'speech-1',
+        type: 'speech',
+        text: 'Algebra is about finding unknown values. We use equations to represent relationships. For example, 2x plus 3 equals 7 is an equation where we need to find the value of x.',
+      } as Action,
+      {
+        id: 'feedback-1',
+        type: 'feedback',
+        message: '📐 Algebra = solving for unknowns',
+        type_: 'hint',
+        duration: 3000,
+      } as Action,
+    ],
+  },
+  {
+    id: 'scene-4-solving',
+    actions: [
+      {
+        id: 'laser-1',
+        type: 'laser',
+        elementId: 'demo-element-2',
+        color: '#FF9800',
+      },
+      {
+        id: 'speech-2',
+        type: 'speech',
+        text: 'To solve 2x plus 3 equals 7, we undo operations in reverse order. First subtract 3 from both sides: 2x equals 4. Then divide both sides by 2: x equals 2.',
+      } as Action,
+    ],
+  },
+  {
+    id: 'scene-4-checkpoint',
+    actions: [
+      {
+        id: 'checkpoint-4',
+        type: 'checkpoint',
+        checkpointId: 'algebra-checkpoint',
+        prompt: 'Solve for x: 3x + 5 = 14',
+        options: ['x = 2', 'x = 3', 'x = 4', 'x = 5'],
+        expectedAnswer: 1,
+      } as Action,
+      {
+        id: 'feedback-success',
+        type: 'feedback',
+        message: '✅ Correct! x = 3',
+        type_: 'success',
+        duration: 3000,
+      } as Action,
+    ],
+  },
+];
+
+/**
+ * Scenario 5: Biology - Cell Structure
+ * Teaches: Basic cell components and their functions
+ */
+export const cellBiologyScenario: GameScene[] = [
+  {
+    id: 'scene-5-intro',
+    actions: [
+      {
+        id: 'spotlight-1',
+        type: 'spotlight',
+        elementId: 'demo-element',
+        dimOpacity: 0.6,
+      },
+      {
+        id: 'speech-1',
+        type: 'speech',
+        text: 'The cell is the basic unit of life. All living organisms are made of cells. Cells contain many parts called organelles, each with a specific function.',
+      } as Action,
+      {
+        id: 'feedback-1',
+        type: 'feedback',
+        message: '🔬 Cell = fundamental unit of life',
+        type_: 'hint',
+        duration: 3000,
+      } as Action,
+    ],
+  },
+  {
+    id: 'scene-5-organelles',
+    actions: [
+      {
+        id: 'speech-2',
+        type: 'speech',
+        text: 'The nucleus controls the cell and stores DNA. The mitochondria produces energy. The endoplasmic reticulum transports proteins. The Golgi apparatus packages proteins for delivery.',
+      } as Action,
+      {
+        id: 'laser-1',
+        type: 'laser',
+        elementId: 'demo-element-2',
+        color: '#4CAF50',
+      },
+    ],
+  },
+  {
+    id: 'scene-5-checkpoint',
+    actions: [
+      {
+        id: 'checkpoint-5',
+        type: 'checkpoint',
+        checkpointId: 'cell-checkpoint',
+        prompt: 'Which organelle produces energy for the cell?',
+        options: ['Nucleus', 'Mitochondria', 'Ribosome', 'Vacuole'],
+        expectedAnswer: 1,
+      } as Action,
+      {
+        id: 'feedback-success',
+        type: 'feedback',
+        message: '🎉 Right! Mitochondria = powerhouse of the cell',
+        type_: 'success',
+        duration: 3000,
+      } as Action,
+    ],
+  },
+];
+
+/**
+ * Scenario 6: History - Industrial Revolution
+ * Teaches: Key changes during the Industrial Revolution
+ */
+export const industrialRevolutionScenario: GameScene[] = [
+  {
+    id: 'scene-6-intro',
+    actions: [
+      {
+        id: 'spotlight-1',
+        type: 'spotlight',
+        elementId: 'demo-element',
+        dimOpacity: 0.6,
+      },
+      {
+        id: 'speech-1',
+        type: 'speech',
+        text: 'The Industrial Revolution was a period of massive change from roughly 1760 to 1840. It transformed societies from agricultural to industrial economies.',
+      } as Action,
+      {
+        id: 'feedback-1',
+        type: 'feedback',
+        message: '🏭 Industrial Revolution = 1760-1840',
+        type_: 'hint',
+        duration: 3000,
+      } as Action,
+    ],
+  },
+  {
+    id: 'scene-6-innovations',
+    actions: [
+      {
+        id: 'laser-1',
+        type: 'laser',
+        elementId: 'demo-element-2',
+        color: '#FF9800',
+      },
+      {
+        id: 'speech-2',
+        type: 'speech',
+        text: 'Major innovations included the steam engine by James Watt, the spinning jenny for textile production, and the railroad. These technologies increased manufacturing and transportation.',
+      } as Action,
+    ],
+  },
+  {
+    id: 'scene-6-checkpoint',
+    actions: [
+      {
+        id: 'checkpoint-6',
+        type: 'checkpoint',
+        checkpointId: 'history-checkpoint',
+        prompt: 'Which invention was key to the Industrial Revolution?',
+        options: [
+          'The printing press',
+          'The steam engine',
+          'The telephone',
+          'The light bulb',
+        ],
+        expectedAnswer: 1,
+      } as Action,
+      {
+        id: 'feedback-success',
+        type: 'feedback',
+        message: '✅ Correct! The steam engine powered factories.',
+        type_: 'success',
+        duration: 3000,
+      } as Action,
+    ],
+  },
+];
+
+/**
  * Scenario Registry
  * Maps scenario names to their scenes for easy loading
  */
 export const scenarioRegistry = {
+  'master-demo': masterDemoScenario,
   'intro-variables': introToVariablesScenario,
   'data-types': dataTypesScenario,
   'functions-intro': functionsScenario,
+  'algebra-basics': algebraBasicsScenario,
+  'cell-biology': cellBiologyScenario,
+  'industrial-revolution': industrialRevolutionScenario,
 };
 
 export type ScenarioName = keyof typeof scenarioRegistry;

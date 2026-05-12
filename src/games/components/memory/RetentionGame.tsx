@@ -29,24 +29,26 @@ export function RetentionGame({ config }: { config: MemoryRetentionConfig }) {
   const score = config.questions.reduce((acc, q) => acc + (answers[q.id] === q.answer ? 1 : 0), 0);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-surface overflow-y-auto">
-      <audio 
-        ref={audioRef} 
-        src={config.audioUrl} 
+    <div className="w-full h-full flex flex-col bg-surface">
+      <audio
+        ref={audioRef}
+        src={config.audioUrl}
         onEnded={handleAudioEnd}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       />
 
-      <AnimatePresence mode="wait">
-        {!hasFinishedAudio ? (
-          <motion.div
-            key="listening"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            className="flex flex-col items-center gap-12"
-          >
+      {/* Game Content */}
+      <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center p-6">
+        <AnimatePresence mode="wait">
+          {!hasFinishedAudio ? (
+            <motion.div
+              key="listening"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              className="flex flex-col items-center gap-12"
+            >
             <div className="text-headline-small text-on-surface text-center">Listen Carefully</div>
             
             {/* Pulsing Waveform Placeholder */}
@@ -142,7 +144,8 @@ export function RetentionGame({ config }: { config: MemoryRetentionConfig }) {
             </button>
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

@@ -101,6 +101,10 @@ export class PlaybackEngine {
       return;
     }
 
+    if (typeof window !== 'undefined' && window.speechSynthesis?.speaking) {
+      window.speechSynthesis.pause();
+    }
+
     if (this.speechTimer) {
       this.speechTimerRemaining = Math.max(
         0,
@@ -122,6 +126,10 @@ export class PlaybackEngine {
 
     this.setMode('playing');
 
+    if (typeof window !== 'undefined' && window.speechSynthesis?.paused) {
+      window.speechSynthesis.resume();
+    }
+
     if (this.speechTimerRemaining > 0) {
       this.speechTimerStart = Date.now();
       this.speechTimer = setTimeout(() => {
@@ -139,6 +147,9 @@ export class PlaybackEngine {
   stop(): void {
     this.setMode('idle');
     this.actionEngine.dispose();
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis?.cancel();
+    }
     if (this.speechTimer) {
       clearTimeout(this.speechTimer);
       this.speechTimer = null;
@@ -212,32 +223,9 @@ export class PlaybackEngine {
         const speechAction = action as SpeechAction;
         this.callbacks.onSpeechStart?.(speechAction.text);
 
-        // Estimate reading time for text without audio
-        // CJK: ~150ms/char; Non-CJK: ~240ms/word; Min 2s
-        const scheduleReadingTimer = () => {
-          const text = speechAction.text;
-          const cjkCount = (
-            text.match(/[一-鿿㐀-䶿぀-ゟ゠-ヿ가-힯]/g) || []
-          ).length;
-          const isCJK = cjkCount > text.length * 0.3;
-          const speed = this.callbacks.getPlaybackSpeed?.() ?? 1;
-          const rawMs = isCJK
-            ? Math.max(2000, text.length * 150)
-            : Math.max(2000, text.split(/\s+/).filter(Boolean).length * 240);
-          const readingMs = rawMs / speed;
-
-          this.speechTimerStart = Date.now();
-          this.speechTimerRemaining = readingMs;
-          this.speechTimer = setTimeout(() => {
-            this.speechTimer = null;
-            this.speechTimerRemaining = 0;
-            this.callbacks.onSpeechEnd?.();
-            if (this.mode === 'playing') this.processNext();
-          }, readingMs);
-        };
-
-        // No audio support in game engine — just schedule reading timer
-        scheduleReadingTimer();
+        await this.actionEngine.execute(speechAction).catch(console.warn);
+        this.callbacks.onSpeechEnd?.();
+        if (this.mode === 'playing') this.processNext();
         break;
       }
 

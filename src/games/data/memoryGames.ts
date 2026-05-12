@@ -13,24 +13,40 @@ export const sampleAttentionGame: GameConfig = {
   type: 'bubble-match',
   subject: 'Solar System',
   theme: 'Planets & Their Moons',
+  audioSrc: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Audio track for pacing
   entities: [
     {
       id: 'terrestrial',
       name: 'Terrestrial',
       color: 'hsl(35, 80%, 55%)',
-      facts: ['Mercury closest to sun', 'Venus hottest planet', 'Earth has life', 'Mars red planet'],
+      facts: [
+        { text: 'Mercury closest to sun', spawnTimeMs: 1000 },
+        { text: 'Venus hottest planet', spawnTimeMs: 5500 },
+        { text: 'Earth has life', spawnTimeMs: 10000 },
+        { text: 'Mars red planet', spawnTimeMs: 14500 }
+      ],
     },
     {
       id: 'gas-giant',
       name: 'Gas Giant',
       color: 'hsl(280, 60%, 60%)',
-      facts: ['Jupiter has Great Red Spot', 'Saturn has prominent rings', 'Uranus tilted 98°', 'Neptune coldest'],
+      facts: [
+        { text: 'Jupiter has Great Red Spot', spawnTimeMs: 2500 },
+        { text: 'Saturn has prominent rings', spawnTimeMs: 7000 },
+        { text: 'Uranus tilted 98°', spawnTimeMs: 11500 },
+        { text: 'Neptune coldest', spawnTimeMs: 16000 }
+      ],
     },
     {
       id: 'moon',
       name: 'Moon',
       color: 'hsl(200, 65%, 55%)',
-      facts: ['Earth\'s Moon causes tides', 'Mars has Phobos & Deimos', 'Jupiter has Io', 'Saturn has Titan'],
+      facts: [
+        { text: 'Earth\'s Moon causes tides', spawnTimeMs: 4000 },
+        { text: 'Mars has Phobos & Deimos', spawnTimeMs: 8500 },
+        { text: 'Jupiter has Io', spawnTimeMs: 13000 },
+        { text: 'Saturn has Titan', spawnTimeMs: 17500 }
+      ],
     },
   ],
 } as GameConfig;
@@ -77,15 +93,10 @@ export const sampleRetentionGame: MemoryRetentionConfig = {
 
 export const sampleSequencingGame: MemorySequencingConfig = {
   type: 'memory-sequencing',
-  subject: 'Navigation',
-  theme: 'Morning Route',
-  audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-  events: [
-    { id: 'e1', label: 'Left at the bank', order: 1 },
-    { id: 'e2', label: 'Right at the park', order: 2 },
-    { id: 'e3', label: 'Straight through the tunnel', order: 3 },
-    { id: 'e4', label: 'Arrive at the station', order: 4 },
-  ]
+  subject: 'Globalisation',
+  theme: 'Historical Context',
+  // audioUrl removed - uses TTS mode with globalisation passage instead
+  events: []
 };
 
 export const sampleSynthesisGame: MemorySynthesisConfig = {
@@ -102,3 +113,62 @@ export const sampleSynthesisGame: MemorySynthesisConfig = {
     isValid: true
   }
 };
+
+export const sampleVisualizationGame: import('../types').MemoryVisualizationConfig = {
+  type: 'memory-visualization',
+  theme: 'Biology',
+  subject: 'Human Anatomy',
+  items: [
+    {
+      id: 'heart',
+      label: 'Human Heart',
+      description: 'A muscular organ with four chambers. Imagine it pumping rhythmically, sending bright red oxygenated blood out through the aorta, and drawing in dark blue deoxygenated blood.'
+    },
+    {
+      id: 'lungs',
+      label: 'Lungs',
+      description: 'Two large spongy structures filling the chest. Picture them expanding like balloons when filled with air, covered in tiny branching tubes like an upside-down tree.'
+    },
+    {
+      id: 'brain',
+      label: 'Brain',
+      description: 'A highly folded, grayish-pink organ sitting inside the skull. Visualize electricity zipping across its surface as billions of neurons fire simultaneously.'
+    }
+  ]
+}
+
+export const sampleTeachBackGame: import('../types').MemoryTeachBackConfig = {
+  type: 'memory-teach-back',
+  theme: 'Economics',
+  subject: 'Public vs Private Sector',
+  concept: 'Public vs Private Sector',
+  prompt: 'Explain the key differences between the Public and Private sector. Focus on their primary motives, who owns them, and give an example of each.',
+  persona: 'A 12-year-old student',
+  requiredKeywords: ['government', 'profit', 'services', 'owned', 'example']
+}
+
+export const sampleInversionGame: import('../types').MemoryInversionConfig = {
+  type: 'memory-inversion',
+  theme: 'Civics',
+  subject: 'Federalism',
+  statements: [
+    {
+      id: 'stmt1',
+      text: 'In a Federal system, the central government can ALWAYS pass orders to the provincial government to do something.',
+      isTrap: true,
+      explanation: 'TRAP word: "ALWAYS". In a unitary system the center can order locals, but in Federalism, State governments have powers of their own for which they are not answerable to the center.'
+    },
+    {
+      id: 'stmt2',
+      text: 'Municipalities and Gram Panchayats are examples of the third tier of government in India.',
+      isTrap: false,
+      explanation: 'True. This represents the local self-government system introduced to decentralize power.'
+    },
+    {
+      id: 'stmt3',
+      text: 'Reserved Forests are those that are ONLY meant for producing timber and no other use is allowed ever.',
+      isTrap: true,
+      explanation: 'TRAP word: "ONLY". Reserved forests restrict activities, but they also protect wildlife and are not solely for timber.'
+    }
+  ]
+}

@@ -99,6 +99,17 @@ const MODES = [
     border: 'border-[#10A37F]/20',
     badge: 'TOOLS',
   },
+  {
+    id: '' as Screen,
+    icon: 'memory',
+    title: 'Local AI',
+    subtitle: 'On-Device · No API Key · Private',
+    desc: 'Chat with Gemma, Qwen, DeepSeek R1 running 100% on your device. Same models as AI Edge Gallery.',
+    color: 'text-[#6750A4]',
+    bg: 'bg-[#6750A4]/10',
+    border: 'border-[#6750A4]/20',
+    badge: 'ON-DEVICE',
+  },
 ];
 
 export const EliteHub: React.FC<Props> = ({ setScreen, chittaScore }) => (

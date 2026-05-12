@@ -70,6 +70,9 @@ export interface CheckpointAction extends ActionBase {
   options?: string[]; // Multiple choice
   expectedAnswer?: string | number; // For validation
   allowContinue?: boolean; // Can user skip without answering
+  explanation?: string; // Feedback shown after answering
+  hint?: string; // Optional learner hint before/after an attempt
+  conceptId?: string; // Concept mastery bucket
 }
 
 /** Feedback Message — show success/failure/hint */

@@ -26,6 +26,7 @@ import { DemoSession }       from './screens/DemoSession';
 import { PromptPlayground }  from './screens/PromptPlayground';
 import { TimelineDemo }      from './screens/TimelineDemo';
 import AIEngineeringCourse    from './screens/AIEngineeringCourse';
+import LocalAIChat            from './screens/LocalAIChat';
 import { GamesScreen }       from './games/GamesScreen';
 import { ShapeSlicerGame }   from './games/ShapeSlicerGame';
 import { PhysicsPlayground } from './games/playground/PhysicsPlayground';
@@ -210,10 +211,11 @@ function AppContent() {
           {screen === 'physics-arcade'    && <PhysicsArcade    onBack={() => setScreen('dashboard')} />}
           {screen === 'math-arcade'       && <MathArcade       onBack={() => setScreen('dashboard')} />}
           {screen === 'chemistry-arcade'  && <ChemistryArcade  onBack={() => setScreen('dashboard')} />}
+          {screen === 'local-ai'          && <LocalAIChat      onBack={() => setScreen('dashboard')} />}
         </motion.div>
       </AnimatePresence>
 
-      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade', 'math-arcade', 'chemistry-arcade', 'timeline-demo'].includes(screen) ? 'none' : 'block' }}>
+      <div style={{ display: ['games', 'shape-slicer', 'physics-sandbox', 'kinematics-cannon', 'coulombs-collider', 'physics-arcade', 'math-arcade', 'chemistry-arcade', 'timeline-demo', 'local-ai'].includes(screen) ? 'none' : 'block' }}>
         <BottomNav current={screen} setScreen={setScreen} />
       </div>
       </div>

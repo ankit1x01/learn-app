@@ -1,5 +1,5 @@
 // Auto-generated code content from lessons
-// Generated at: 2026-04-30T09:34:18.767Z
+// Generated at: 2026-05-12T07:05:26.435Z
 // DO NOT EDIT MANUALLY - run: npm run generate-code-content
 
 export const codeContent: Record<string, string> = {

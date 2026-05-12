@@ -1,5 +1,5 @@
 // Auto-generated course index from C:\Users\Ankit\Desktop\learn app\ai-engineering-from-scratch-main\phases
-// Generated at: 2026-04-30T09:34:16.307Z
+// Generated at: 2026-05-12T07:05:05.727Z
 // DO NOT EDIT MANUALLY - run: npm run generate-course-index
 
 import type { Phase } from './types';
